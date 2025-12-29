@@ -1,0 +1,96 @@
+{
+  "id": "react-26-color-picker",
+  "title": "Color Picker",
+  "technology": "React",
+  "difficulty": "mid",
+  "language": "javascript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "10 minutes",
+    "tests": "State, event handlers, styling",
+    "challenge_number": "26"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Color Picker in React\n2. Implement the solution using State, event handlers, styling\n3. Apply Angular best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write clean, maintainable React code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Have you ever needed to implement color picker in React?\n\n**The Challenge:**\n// Create color picker:\n// - Display 8-10 color swatches\n// - Click to select color\n// - Show selected color in preview box\n// - Display hex code of selected color\n// - Active swatch has border/checkmark\n\n**What We're Building:**\nThis challenge tests your understanding of color picker in React. You'll need to create a React component that demonstrates these concepts effectively while following React best practices.\n\n**Why This Matters:**\n\nColor Picker is a fundamental React concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in React teams\n\n**Real-World Applications:**\n\nFigma uses color pickers to let designers choose colors for shapes. You can click a color swatch or use the color wheel to select any color. The selected color is applied immediately to the selected shape.\n\nThis pattern is essential for building modern, interactive web applications.\n\nThis pattern is essential for building modern, interactive web applications.\n**Conceptual Foundation:**\n\nUNDERSTANDING COLOR_PICKER:\n\nThis concept is fundamental to React development. It enables you to build interactive, dynamic user interfaces that respond to user actions and data changes.\n\n**Key Concepts:**\n- Core React pattern used in production applications\n- Essential for building modern web applications\n- Follows React best practices and conventions\n- Industry-standard approach used by major companies\n\n**How It Works:**\n\nThe solution involves understanding React's component model, state management, and how to implement this specific pattern effectively. This pattern is used extensively in real-world React applications.\n\n**Step-by-Step Example:**\n\nLet's build a Color Picker component step by step:\n\n**Step 1: Set up the component structure**\nWe'll start by creating the basic React component structure with proper imports and decorators.\n\n**Step 2: Add the core functionality**\nBased on the challenge requirements, we'll implement the main feature using React best practices.\n\n**Step 3: Add enhancements and edge case handling**\nWe'll add proper error handling, edge cases, and React best practices.\n\n**Step 4: Export and use the component**\nWe'll make the component reusable and integrate it into a larger application.\n\n**Pattern Variations:**\n\n**PATTERN 1: Basic Implementation**\nThe simplest approach that solves the core requirement with React best practices.\n\n**PATTERN 2: Enhanced Implementation**\nAdds error handling, edge cases, and better React patterns.\n\n**PATTERN 3: Advanced Implementation**\nIncludes performance optimizations, advanced React patterns, and comprehensive error handling.\n\n**Which Pattern to Use:**\n\n- **Pattern 1**: Simple use cases, learning, quick prototypes\n- **Pattern 2**: Most common scenarios, production-ready code\n- **Pattern 3**: Complex requirements, performance-critical applications\n\n**Best Practices:**\n\n1. **Component Design**\n   - One component per file\n   - Clear, descriptive names\n   - Standalone components (modern React)\n   - Proper separation of concerns\n\n2. **JavaScript**\n   - Use explicit types\n   - Leverage JavaScript's type system\n   - Avoid `any` type\n   - Use interfaces for complex data\n\n3. **Templates/JSX**\n   - Keep templates simple\n   - Use structural directives/components correctly\n   - Use property and event binding correctly\n   - Avoid complex logic in templates\n\n4. **Services/Hooks**\n   - Use dependency injection/custom hooks\n   - Keep services/hooks focused\n   - Separate business logic from components\n   - Follow React conventions\n\n**Common Mistakes and How to Avoid Them:**\n\n**MISTAKE 1: Not Following React Patterns**\n\n❌ **Wrong:**\nNot following React conventions and best practices.\n\n✓ **Correct:**\nFollowing React best practices and established patterns.\n\n**Why it matters:** React patterns ensure maintainability and consistency.\n\n---\n\n**MISTAKE 2: Forgetting Modern React Features**\n\n❌ **Wrong:**\nUsing outdated patterns when modern alternatives exist.\n\n✓ **Correct:**\nUsing modern React features like standalone components or hooks.\n\n**Why it matters:** Modern React features are simpler and more maintainable.\n\n**Real-World Examples:**\n\n**Example 1: Simple Use Case**\nBasic implementation for simple scenarios that shows the core concept clearly.\n\n**Example 2: Common Production Pattern**\nTypical implementation used in production apps with error handling and edge cases.\n\n**Example 3: Advanced Usage**\nAdvanced implementation for complex requirements with optimizations and best practices.\n\n**Next Steps After This Lesson:**\n\nOnce you master this, you'll learn:\n1. **Related Concept 1** - Builds on this foundation\n2. **Related Concept 2** - Extends your knowledge\n3. **Related Concept 3** - Advanced patterns\n\n**Summary:**\n\nMastering Color Picker in React involves:\n1. ✅ Understanding the core React concept\n2. ✅ Implementing the solution correctly\n3. ✅ Following React best practices\n4. ✅ Handling edge cases properly\n5. ✅ Writing clean, maintainable code\n\n**Time estimate:** 5-15 min\n**Difficulty level:** Junior\n\n**Engaging Questions to Consider:**\n1. What React hooks or patterns do you think we'll need here?\n2. How would you structure this component for reusability?\n3. What React best practices would you apply to this solution?\n\nThis is a practical interview question that tests your understanding of core React concepts and your ability to implement them correctly.",
+      "example": "// Create color picker:\n// - Display 8-10 color swatches\n// - Click to select color\n// - Show selected color in preview box\n// - Display hex code of selected color\n// - Active swatch has border/checkmark",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Color Picker challenge?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach:\n\n```typescript\n\n```\n\nThis solution demonstrates best practices for React development and shows how to properly implement State, event handlers, styling.",
+      "example": "",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "variable-check-js"
+        },
+        {
+          "label": "TypeScript",
+          "next": "variable-check-ts"
+        },
+        {
+          "label": "Python",
+          "next": "variable-check-python"
+        }
+      ]
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Let's implement the solution:\n\nThis step follows React best practices for component structure and organization.\n\n**What We're Doing:**\nImporting the necessary React modules and dependencies. This step is crucial for building a complete, functional React component.\n\n**Why This Matters:**\nWithout proper imports, our React component won't have access to the features we need. This is the foundation that makes everything else possible. It's the difference between a static page and an interactive, dynamic React application.\n\n**What's Happening:**\nWe're bringing in React core functionality that we'll use throughout our component. Think of imports as gathering the tools we need before we start building. We're following React conventions to ensure our code is maintainable and follows industry standards.\n\n**Think of It Like:**\nIf the template/JSX is the face of your component that users see, this step is building the brain that makes decisions and controls behavior. Just like your brain processes information and decides how to react, this code processes data and controls what users see.\n\n**Look For:**\nThe `import` statements at the top of the file. These tell React what features we're using. Understanding this syntax helps you read and write React code more effectively.",
+      "example": "",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code. Make sure it works correctly for the Color Picker challenge.\n\n**Test Cases:**\n1. Test with basic input\n2. Test with edge cases\n3. Test with empty/null values\n4. Verify the output matches expected behavior\n\nTry running it and verify the solution works as expected.",
+      "example": "// Test cases for Color Picker\n// 1. Basic functionality\n// 2. Edge cases\n// 3. Error handling",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed the Color Picker challenge.\n\n**Key Takeaways:**\n- You've mastered State, event handlers, styling\n- You understand how to implement Color Picker in React\n- You've applied best practices for React development\n- You can handle this type of interview question confidently\n\n**Time Complexity:** Varies based on implementation\n**Space Complexity:** Varies based on implementation\n\n**Related Challenges:**\n- Practice similar React concepts\n- Try variations of this challenge\n- Explore more advanced React patterns\n\nKeep practicing!",
+      "action": "continue"
+    }
+  ]
+}

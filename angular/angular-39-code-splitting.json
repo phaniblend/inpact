@@ -1,0 +1,244 @@
+{
+  "id": "angular-39-code-splitting",
+  "title": "Code Splitting",
+  "technology": "Angular",
+  "difficulty": "mid",
+  "language": "typescript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "15-25 min",
+    "tests": "Bundle optimization",
+    "challenge_number": "39"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Code Splitting in Angular\n2. Implement the solution using Bundle optimization\n3. Apply Angular best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write maintainable, production-ready Angular code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Have you ever wondered how code splitting works in Angular?\n\n**The Challenge:**\n// Create an Angular component for: Code Splitting\n// Use @Component decorator\n// Make it standalone\n\n**What We're Building:**\nThis challenge tests your understanding of code splitting in Angular. You'll need to create a Angular component that demonstrates these concepts effectively while following Angular best practices.\n\n**Why This Matters:**\n\nCode Splitting is a fundamental Angular concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready Angular applications\n- Following Angular best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in Angular teams\n\n**Real-World Applications:**\n\nPayPal's checkout button uses Angular event binding (click) to process payments when clicked\n\nThis pattern is essential for building modern, interactive web applications.\n**Conceptual Foundation:**\n\nUNDERSTANDING CODE_SPLITTING:\n\nThis concept is fundamental to Angular development. It enables you to build interactive, dynamic user interfaces that respond to user actions and data changes.\n\n**Key Concepts:**\n- Core Angular pattern used in production applications\n- Essential for building modern web applications\n- Follows Angular best practices and conventions\n- Industry-standard approach used by major companies\n\n**How It Works:**\n\nThe solution involves understanding Angular's component model, state management, and how to implement this specific pattern effectively. This pattern is used extensively in real-world Angular applications.\n\n**Step-by-Step Example:**\n\nLet's build a Code Splitting component step by step:\n\n**Step 1: Set up the component structure**\nWe'll start by creating the basic Angular component structure with proper imports and decorators.\n\n**Step 2: Add the core functionality**\nBased on the challenge requirements, we'll implement the main feature using Angular best practices.\n\n**Step 3: Add enhancements and edge case handling**\nWe'll add proper error handling, edge cases, and Angular best practices.\n\n**Step 4: Export and use the component**\nWe'll make the component reusable and integrate it into a larger application.\n\n**Pattern Variations:**\n\n**PATTERN 1: Basic Implementation**\nThe simplest approach that solves the core requirement with Angular best practices.\n\n**PATTERN 2: Enhanced Implementation**\nAdds error handling, edge cases, and better Angular patterns.\n\n**PATTERN 3: Advanced Implementation**\nIncludes performance optimizations, advanced Angular patterns, and comprehensive error handling.\n\n**Which Pattern to Use:**\n\n- **Pattern 1**: Simple use cases, learning, quick prototypes\n- **Pattern 2**: Most common scenarios, production-ready code\n- **Pattern 3**: Complex requirements, performance-critical applications\n\n**Best Practices:**\n\n1. **Component Design**\n   - One component per file\n   - Clear, descriptive names\n   - Standalone components (modern Angular)\n   - Proper separation of concerns\n\n2. **TypeScript**\n   - Use explicit types\n   - Leverage TypeScript's type system\n   - Avoid `any` type\n   - Use interfaces for complex data\n\n3. **Templates/JSX**\n   - Keep templates simple\n   - Use structural directives/components correctly\n   - Use property and event binding correctly\n   - Avoid complex logic in templates\n\n4. **Services/Hooks**\n   - Use dependency injection/custom hooks\n   - Keep services/hooks focused\n   - Separate business logic from components\n   - Follow Angular conventions\n\n**Common Mistakes and How to Avoid Them:**\n\n**MISTAKE 1: Not Following Angular Patterns**\n\n❌ **Wrong:**\nNot following Angular conventions and best practices.\n\n✓ **Correct:**\nFollowing Angular best practices and established patterns.\n\n**Why it matters:** Angular patterns ensure maintainability and consistency.\n\n---\n\n**MISTAKE 2: Forgetting Modern Angular Features**\n\n❌ **Wrong:**\nUsing outdated patterns when modern alternatives exist.\n\n✓ **Correct:**\nUsing modern Angular features like standalone components or hooks.\n\n**Why it matters:** Modern Angular features are simpler and more maintainable.\n\n**Real-World Examples:**\n\n**Example 1: Simple Use Case**\nBasic implementation for simple scenarios that shows the core concept clearly.\n\n**Example 2: Common Production Pattern**\nTypical implementation used in production apps with error handling and edge cases.\n\n**Example 3: Advanced Usage**\nAdvanced implementation for complex requirements with optimizations and best practices.\n\n**Next Steps After This Lesson:**\n\nOnce you master this, you'll learn:\n1. **Related Concept 1** - Builds on this foundation\n2. **Related Concept 2** - Extends your knowledge\n3. **Related Concept 3** - Advanced patterns\n\n**Summary:**\n\nMastering Code Splitting in Angular involves:\n1. ✅ Understanding the core Angular concept\n2. ✅ Implementing the solution correctly\n3. ✅ Following Angular best practices\n4. ✅ Handling edge cases properly\n5. ✅ Writing clean, maintainable code\n\n**Time estimate:** 5-15 min\n**Difficulty level:** Junior\n\n**Engaging Questions to Consider:**\n1. What Angular concepts do you think we'll need to solve this?\n2. How would you structure this component in a real Angular application?\n3. What Angular patterns or best practices come to mind for this challenge?\n\nThis is a practical interview question that tests your understanding of core Angular concepts and your ability to implement them correctly.",
+      "example": "// Create an Angular component for: Code Splitting\n// Use @Component decorator\n// Make it standalone",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Code Splitting challenge in Angular?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach with Angular:\n\n```typescript\nimport { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}...\n```\n\nThis solution demonstrates Angular best practices and shows how to properly implement Bundle optimization.",
+      "example": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Since this is an Angular challenge, we'll use TypeScript. Let's start coding!",
+      "action": "continue",
+      "next": "typescript-check"
+    },
+    {
+      "stepId": "typescript-check",
+      "mentorSays": "Do you understand TypeScript basics and how it works with Angular?",
+      "choices": [
+        {
+          "label": "Yes, I understand typescript",
+          "next": "component-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "typescript-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "typescript-check-explanation",
+      "mentorSays": "TypeScript is a typed superset of JavaScript that Angular uses by default. It adds static type checking, interfaces, classes, and other features that help catch errors during development.\n\n**Why It Matters to YOU:**\n\nUnderstanding typescript is essential because:\n\n1. **Foundation for Everything**: typescript is used in almost every Angular application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test typescript. Mastering this concept helps you answer questions confidently and demonstrate your Angular knowledge.\n\n3. **Real-World Application**: Every production Angular application uses typescript. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in Angular applications come from misunderstanding typescript. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning typescript fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand typescript thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse typescript with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between typescript and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with typescript, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nCompanies like Google Material and Microsoft Office 365 use typescript extensively in their Angular applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see typescript in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for typescript-check",
+      "action": "continue",
+      "next": "component-check"
+    },
+    {
+      "stepId": "component-check",
+      "mentorSays": "Do you understand Angular components?",
+      "choices": [
+        {
+          "label": "Yes, I understand component",
+          "next": "decorator-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "component-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "component-check-explanation",
+      "mentorSays": "Angular components are TypeScript classes decorated with @Component. They consist of a class (logic), a template (HTML), and styles (CSS). Components are the fundamental building blocks of Angular applications.\n\n**Why It Matters to YOU:**\n\nUnderstanding component is essential because:\n\n1. **Foundation for Everything**: component is used in almost every Angular application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test component. Mastering this concept helps you answer questions confidently and demonstrate your Angular knowledge.\n\n3. **Real-World Application**: Every production Angular application uses component. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in Angular applications come from misunderstanding component. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning component fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand component thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse component with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between component and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with component, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nCompanies like Google Material and Microsoft Office 365 use component extensively in their Angular applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see component in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for component-check",
+      "action": "continue",
+      "next": "decorator-check"
+    },
+    {
+      "stepId": "decorator-check",
+      "mentorSays": "Do you understand Angular decorators like @Component?",
+      "choices": [
+        {
+          "label": "Yes, I understand decorator",
+          "next": "template-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "decorator-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "decorator-check-explanation",
+      "mentorSays": "Decorators in Angular are functions that modify classes, properties, or methods. @Component, @Input, @Output are common decorators. They provide metadata that Angular uses to configure components and dependency injection.\n\n**Why It Matters to YOU:**\n\nUnderstanding decorator is essential because:\n\n1. **Foundation for Everything**: decorator is used in almost every Angular application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test decorator. Mastering this concept helps you answer questions confidently and demonstrate your Angular knowledge.\n\n3. **Real-World Application**: Every production Angular application uses decorator. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in Angular applications come from misunderstanding decorator. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning decorator fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand decorator thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse decorator with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between decorator and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with decorator, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nCompanies like Google Material and Microsoft Office 365 use decorator extensively in their Angular applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see decorator in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for decorator-check",
+      "action": "continue",
+      "next": "template-check"
+    },
+    {
+      "stepId": "template-check",
+      "mentorSays": "Do you understand Angular templates?",
+      "choices": [
+        {
+          "label": "Yes, I understand template",
+          "next": "standalone-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "template-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "template-check-explanation",
+      "mentorSays": "Templates in Angular are HTML with Angular-specific syntax like interpolation {{ }}, property binding [property], event binding (event), and structural directives like *ngIf and *ngFor.\n\n**Why It Matters to YOU:**\n\nUnderstanding template is essential because:\n\n1. **Foundation for Everything**: template is used in almost every Angular application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test template. Mastering this concept helps you answer questions confidently and demonstrate your Angular knowledge.\n\n3. **Real-World Application**: Every production Angular application uses template. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in Angular applications come from misunderstanding template. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning template fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand template thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse template with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between template and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with template, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nCompanies like Google Material and Microsoft Office 365 use template extensively in their Angular applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see template in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for template-check",
+      "action": "continue",
+      "next": "standalone-check"
+    },
+    {
+      "stepId": "standalone-check",
+      "mentorSays": "Do you understand standalone components?",
+      "choices": [
+        {
+          "label": "Yes, I understand standalone",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, please explain",
+          "next": "standalone-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "standalone-check-explanation",
+      "mentorSays": "Standalone components are modern Angular components that don't require NgModules. They can be imported directly and are simpler to use. Standalone components declare their dependencies in the imports array.\n\n**Why It Matters to YOU:**\n\nUnderstanding standalone is essential because:\n\n1. **Foundation for Everything**: standalone is used in almost every Angular application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test standalone. Mastering this concept helps you answer questions confidently and demonstrate your Angular knowledge.\n\n3. **Real-World Application**: Every production Angular application uses standalone. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in Angular applications come from misunderstanding standalone. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning standalone fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand standalone thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse standalone with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between standalone and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with standalone, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nCompanies like Google Material and Microsoft Office 365 use standalone extensively in their Angular applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see standalone in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for standalone-check",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Now let's build the Code Splitting solution step by step.\n\n**What We're Doing:**\nImporting the necessary Angular modules and dependencies. This step is crucial for building a complete, functional Angular component.\n\n**Why This Matters:**\nWithout proper imports, our Angular component won't have access to the features we need. This is the foundation that makes everything else possible. It's the difference between a static page and an interactive, dynamic Angular application.\n\n**What's Happening:**\nWe're bringing in Angular core functionality that we'll use throughout our component. Think of imports as gathering the tools we need before we start building. We're following Angular conventions to ensure our code is maintainable and follows industry standards.\n\n**Think of It Like:**\nIf the template/JSX is the face of your component that users see, this step is building the brain that makes decisions and controls behavior. Just like your brain processes information and decides how to react, this code processes data and controls what users see.\n\n**Look For:**\nThe `import` statements at the top of the file. These tell Angular what features we're using. Understanding this syntax helps you read and write Angular code more effectively.",
+      "action": "continue",
+      "next": "coding-step-1-ts"
+    },
+    {
+      "stepId": "coding-step-1-ts",
+      "mentorSays": "**Step 1: importing necessary modules and dependencies\n\n**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Why This Matters:**\nThis code is necessary because it importing necessary modules and dependencies. Without it, our component wouldn't work correctly.\n\n**What's Happening:**\nimporting necessary modules and dependencies following Angular best practices. This ensures our code is maintainable and follows industry standards.\n\n**Look For:**\nPay attention to the syntax and structure. Notice how this connects to previous steps and sets up the next steps.",
+      "example": "import {{ Component }} from '@angular/core';\nimport {{ Input }} from '@angular/core';  // If needed",
+      "action": "continue",
+      "next": "coding-step-2-ts"
+    },
+    {
+      "stepId": "coding-step-2-ts",
+      "mentorSays": "**Step 2: implementing functionality\n\n**What We're Doing:**\nImplementing functionality to add this functionality to our component.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this builds on previous steps.",
+      "example": "@Component({\n  selector: 'app-codesplitting',\n  template: '<div>{{ title }}</div>',\n  standalone: true\n})",
+      "action": "continue",
+      "next": "coding-step-3-ts"
+    },
+    {
+      "stepId": "coding-step-3-ts",
+      "mentorSays": "**Step 3: exporting the component\n\n**Think of It Like:**\nJust like adding a key ingredient to a recipe, this step adds exporting the component that makes everything work together.\n\n**What We're Doing:**\nExporting the component following React best practices.\n\n**Why This Matters:**\nWithout this step, our component would be incomplete.",
+      "example": "export class CodesplittingComponent {\n  // Component properties and methods\n}",
+      "action": "continue",
+      "next": "coding-step-4-ts"
+    },
+    {
+      "stepId": "coding-step-4-ts",
+      "mentorSays": "**Step 4: importing React modules\n\n**What's Happening:**\nWe're importing React modules to implement this part of the solution. This follows React conventions and ensures our code is maintainable.\n\n**Look For:**\nPay attention to the syntax and how it connects to what we built before.",
+      "example": "// Step 4 implementation\n// import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<",
+      "action": "continue",
+      "next": "coding-step-5-ts"
+    },
+    {
+      "stepId": "coding-step-5-ts",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Think of It Like:**\nJust like building a house, this step adds a crucial piece that makes everything work together.\n\n**Why This Matters:**\nWithout this step, our solution would be incomplete.",
+      "example": "// Step 5 implementation\n// import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<",
+      "action": "continue",
+      "next": "coding-step-6-ts"
+    },
+    {
+      "stepId": "coding-step-6-ts",
+      "mentorSays": "**Step 6: importing React modules\n\n**What We're Doing:**\nImporting react modules to add this functionality to our component.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this builds on previous steps.",
+      "example": "// Step 6 implementation\n// import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<",
+      "action": "continue",
+      "next": "coding-step-7-ts"
+    },
+    {
+      "stepId": "coding-step-7-ts",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this connects to previous steps.",
+      "example": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}",
+      "action": "continue",
+      "next": "coding-complete-ts"
+    },
+    {
+      "stepId": "coding-complete-ts",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step is crucial for building a complete, functional Angular component.\n\n**Why This Matters:**\nThis code importing necessary modules and dependencies. It's the difference between a static page and an interactive, dynamic Angular application.\n\n**What's Happening:**\nWe're importing necessary modules and dependencies following Angular patterns and best practices. This ensures our code is maintainable and follows industry standards.\n\n**Look For:**\nNotice the syntax and how this connects to what we built before. Understanding this helps you read and write Angular code more effectively.",
+      "example": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now let's test your component and make sure everything works correctly.\n\n**Testing Steps:**\n\n1. **Save your component:**\n   - Create a file for your component (e.g., `code-splitting.component.ts`)\n   - Paste your component code\n   - Save the file\n\n2. **Import in app.component.ts:**\n   ```typescript\n   import { CodesplittingComponent } from './code-splitting.component';\n   ```\n\n3. **Use the component:**\n   ```typescript\n   @Component({\n     selector: 'app-root',\n     template: '<app-code-splitting></app-code-splitting>',\n     standalone: true,\n     imports: [CodesplittingComponent]\n   })\n   export class AppComponent {}\n   ```\n\n4. **Run your Angular app:**\n   ```bash\n   ng serve\n   ```\n\n5. **Verify in browser:**\n   - Open http://localhost:4200\n   - You should see your component working!\n\n**Expected Result:**\nYour component should work as expected based on the challenge requirements: Bundle optimization\n\n**Common Issues and Solutions:**\n\n**Problem 1: Component not found**\n```\nSymptom: \"Component is not a known element\"\nSolution: Check imports array includes the component\n         Verify standalone: true is set\n         Ensure component is properly exported\n```\n\n**Problem 2: Template errors**\n```\nSymptom: Template parse errors\nSolution: Check template syntax\n         Verify property binding syntax [property]\n         Check event binding syntax (event)\n         Ensure interpolation syntax {}\n```\n\n**Problem 3: Type errors**\n```\nSymptom: TypeScript compilation errors\nSolution: Check all types are correct\n         Verify interfaces match usage\n         Check for missing type annotations\n         Ensure all imports are correct\n```\n\n**Problem 4: @Input() not working**\n```\nSymptom: Input property not receiving data\nSolution: Check @Input() decorator is present\n         Verify property binding [property] in parent\n         Check property name matches\n         Ensure component is imported in parent\n```\n\n**Problem 5: Standalone component errors**\n```\nSymptom: \"Cannot find module\" or import errors\nSolution: Check imports array includes all dependencies\n         Verify standalone: true is set\n         Ensure all used components/directives are imported\n         Check Angular version supports standalone\n```\n\n**Try These Experiments:**\n\nOnce it's working, try modifying:\n- Add more @Input() properties\n- Add @Output() for events\n- Create child components\n- Add services\n- Experiment with directives\n\n**Success Indicators:**\n\n✅ Component renders without errors\n✅ All functionality works correctly\n✅ No TypeScript compilation errors\n✅ Code follows Angular best practices\n✅ Proper component structure\n✅ IDE autocomplete works correctly\n\nYou've successfully completed the Code Splitting challenge!",
+      "example": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-component',\n  template: '<div>Solution</div>',\n  standalone: true\n})\nexport class Component {\n  // Implementation\n}",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed the Code Splitting challenge in Angular!\n\n**Key Takeaways:**\n- You've mastered Bundle optimization in Angular\n- You understand how to implement Code Splitting correctly\n- You've applied Angular best practices\n- You can handle this type of interview question confidently\n- You're ready to use this pattern in real-world Angular applications\n\n**What You've Learned:**\n- How to implement Code Splitting correctly in Angular\n- Angular patterns and best practices for this concept\n- Problem-solving approaches for Angular challenges\n- Code organization and structure\n- Edge case handling\n\n**Next Steps:**\n- Practice similar Angular concepts\n- Try variations of this challenge\n- Explore more advanced Angular patterns\n- Build real-world applications using this pattern\n- Study related Angular concepts\n\n**Related Challenges:**\n- Practice related Angular concepts\n- Try more complex variations\n- Explore advanced patterns\n- Build complete features using this pattern\n\n**Time Complexity:** Varies based on implementation\n**Space Complexity:** Varies based on implementation\n\nKeep practicing! This pattern is essential for building Angular applications.",
+      "action": "continue"
+    }
+  ]
+}

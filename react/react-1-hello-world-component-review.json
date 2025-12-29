@@ -1,0 +1,230 @@
+{
+  "id": "react-1-hello-world-component",
+  "title": "Hello World Component",
+  "technology": "React",
+  "difficulty": "junior",
+  "language": "javascript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "5 minutes",
+    "tests": "Component basics, JSX syntax",
+    "challenge_number": "1"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what React components are and how they work\n2. Create your first functional React component\n3. Use JSX syntax to define component structure\n4. Export and use components in your application\n5. Understand the relationship between components and the DOM",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Have you ever needed to implement hello world component in React?\n\n**The Challenge:**\n// Example: Hello World Component\nfunction HelloWorld() {\n  return <h1>Hello World</h1>;\n}\n\nexport default HelloWorld;\n\n// Usage:\n<HelloWorld />\n\n**What We're Building:**\nThis challenge tests your understanding of hello world component in React. You'll need to create a React component that demonstrates these concepts effectively while following React best practices.\n\n**Why This Matters:**\n\nHello World Component is a fundamental React concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in React teams\n\n**Real-World Applications:**\n\nEvery React application starts with a Hello World component. Every React application starts with a Hello World component.  to display user posts dynamically. Each post is a component that receives data through props and renders consistently across the entire feed. When you scroll, new post components mount and display content instantly. to display user posts dynamically. Each post is a component that receives data through props and renders consistently across the entire feed. When you scroll, new post components mount and display content instantly.\n\nThis pattern is essential for building modern, interactive web applications.\n\nThis pattern is essential for building modern, interactive web applications.\n**Conceptual Foundation:**\n\nUNDERSTANDING HELLO_WORLD_COMPONENT:\n\nThis concept is fundamental to React development. It enables you to build interactive, dynamic user interfaces that respond to user actions and data changes.\n\n**Key Concepts:**\n- Core React pattern used in production applications\n- Essential for building modern web applications\n- Follows React best practices and conventions\n- Industry-standard approach used by major companies\n\n**How It Works:**\n\nThe solution involves understanding React's component model, state management, and how to implement this specific pattern effectively. This pattern is used extensively in real-world React applications.\n\n**Step-by-Step Example:**\n\nLet's build a Hello World Component component step by step:\n\n**Step 1: Set up the component structure**\nWe'll start by creating the basic React component structure with proper imports and decorators.\n\n**Step 2: Add the core functionality**\nBased on the challenge requirements, we'll implement the main feature using React best practices.\n\n**Step 3: Add enhancements and edge case handling**\nWe'll add proper error handling, edge cases, and React best practices.\n\n**Step 4: Export and use the component**\nWe'll make the component reusable and integrate it into a larger application.\n\n**Pattern Variations:**\n\n**PATTERN 1: Basic Implementation**\nThe simplest approach that solves the core requirement with React best practices.\n\n**PATTERN 2: Enhanced Implementation**\nAdds error handling, edge cases, and better React patterns.\n\n**PATTERN 3: Advanced Implementation**\nIncludes performance optimizations, advanced React patterns, and comprehensive error handling.\n\n**Which Pattern to Use:**\n\n- **Pattern 1**: Simple use cases, learning, quick prototypes\n- **Pattern 2**: Most common scenarios, production-ready code\n- **Pattern 3**: Complex requirements, performance-critical applications\n\n**Best Practices:**\n\n1. **Component Design**\n   - One component per file\n   - Clear, descriptive names\n   - Standalone components (modern React)\n   - Proper separation of concerns\n\n2. **JavaScript**\n   - Use explicit types\n   - Leverage JavaScript's type system\n   - Avoid `any` type\n   - Use interfaces for complex data\n\n3. **Templates/JSX**\n   - Keep templates simple\n   - Use structural directives/components correctly\n   - Use property and event binding correctly\n   - Avoid complex logic in templates\n\n4. **Services/Hooks**\n   - Use dependency injection/custom hooks\n   - Keep services/hooks focused\n   - Separate business logic from components\n   - Follow React conventions\n\n**Common Mistakes and How to Avoid Them:**\n\n**MISTAKE 1: Not Following React Patterns**\n\n❌ **Wrong:**\nNot following React conventions and best practices.\n\n✓ **Correct:**\nFollowing React best practices and established patterns.\n\n**Why it matters:** React patterns ensure maintainability and consistency.\n\n---\n\n**MISTAKE 2: Forgetting Modern React Features**\n\n❌ **Wrong:**\nUsing outdated patterns when modern alternatives exist.\n\n✓ **Correct:**\nUsing modern React features like standalone components or hooks.\n\n**Why it matters:** Modern React features are simpler and more maintainable.\n\n**Real-World Examples:**\n\n**Example 1: Simple Use Case**\nBasic implementation for simple scenarios that shows the core concept clearly.\n\n**Example 2: Common Production Pattern**\nTypical implementation used in production apps with error handling and edge cases.\n\n**Example 3: Advanced Usage**\nAdvanced implementation for complex requirements with optimizations and best practices.\n\n**Next Steps After This Lesson:**\n\nOnce you master this, you'll learn:\n1. **Related Concept 1** - Builds on this foundation\n2. **Related Concept 2** - Extends your knowledge\n3. **Related Concept 3** - Advanced patterns\n\n**Summary:**\n\nMastering Hello World Component in React involves:\n1. ✅ Understanding the core React concept\n2. ✅ Implementing the solution correctly\n3. ✅ Following React best practices\n4. ✅ Handling edge cases properly\n5. ✅ Writing clean, maintainable code\n\n**Time estimate:** 5-15 min\n**Difficulty level:** Junior\n\n**Engaging Questions to Consider:**\n1. What React hooks or patterns do you think we'll need here?\n2. How would you structure this component for reusability?\n3. What React best practices would you apply to this solution?\n\nThis is a practical interview question that tests your understanding of core React concepts and your ability to implement them correctly.",
+      "example": "// Example: Hello World Component\nfunction HelloWorld() {\n  return <h1>Hello World</h1>;\n}\n\nexport default HelloWorld;\n\n// Usage:\n<HelloWorld />",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what a component is, here's the real question:\n\nHow would YOU create your first React component?\n\nThink about it for a moment. What do you think you need to include?",
+      "choices": [
+        {
+          "label": "I'll start with a basic function and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the complete solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about React",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Perfect! Starting with a basic function is exactly the right approach. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Excellent! Here's the optimal solution approach:\n\n```javascript\nimport React from 'react';\n\nfunction HelloWorld() {\n  return (\n    <div>\n      <h1>Hello World</h1>\n    </div>\n  );\n}\n\nexport default HelloWorld;\n```\n\nThis solution demonstrates React best practices:\n- Uses functional component syntax (modern React)\n- Returns JSX wrapped in a parent element\n- Properly exports for reuse\n- Clean, readable code\n\nNow let's build this together step by step!",
+      "example": "import React from 'react';\n\nfunction HelloWorld() {\n  return (\n    <div>\n      <h1>Hello World</h1>\n    </div>\n  );\n}\n\nexport default HelloWorld;",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Since this is a React JavaScript challenge, we'll use JavaScript. Let's start coding!",
+      "action": "continue",
+      "next": "component-check"
+    },
+    {
+      "stepId": "component-check",
+      "mentorSays": "Before we start coding, let me check: Do you understand what a React component is and how it differs from regular JavaScript functions?",
+      "choices": [
+        {
+          "label": "Yes, I understand components",
+          "next": "jsx-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "component-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "component-explanation",
+      "mentorSays": "Great question! Let me explain React components clearly.\n\n**Why It Matters to YOU:**\n\nComponent isn't just a \"nice to have\" - it's fundamental to how React works. Here's why it matters:\n\n1. **Catches Errors Before Runtime**: JavaScript finds bugs while you're writing code, not when users are clicking buttons. This saves hours of debugging!\n\n2. **Better IDE Support**: Your code editor can autocomplete and suggest methods because it knows what type of data you're working with.\n\n3. **Self-Documenting Code**: When you see clear type annotations or component structure, you immediately understand what the code does.\n\n**Common Beginner Mistakes:**\n\n❌ Using incorrect patterns or ignoring React conventions:\n```javascript\n// Don't do this - violates React best practices\n```\n\n✓ Follow React conventions and best practices:\n```javascript\n// Correct approach following React patterns\n```\n\nOther common mistakes:\n❌ Not understanding the difference between similar concepts\n❌ Forgetting to handle edge cases\n❌ Not following React naming conventions\n\n**How This Helps YOU Build Components:**\n\nWhen you create React components, understanding Component ensures:\n- Your components have the right structure\n- Your code follows React patterns\n- Your templates/JSX are properly configured\n- Your application is maintainable\n\n**Troubleshooting Tip:**\n\nIf you see errors related to Component, READ THEM carefully. React errors actually tell you exactly what's wrong and where to fix it. Don't ignore them - they're trying to help you!\n\n**Real-World Use:**\n\nCompanies like Microsoft, Google, Facebook, Slack use Component in production. It's part of the foundation that makes React applications reliable and scalable. When you learn this with React, you're learning industry-standard tools.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see Component in action. Pay attention to how it helps you avoid bugs - it's like having a helpful partner checking your work as you code!",
+      "example": "// Regular function\nfunction calculate() {\n  return 2 + 2;\n}\n\n// React component\nfunction Calculator() {\n  return <div>2 + 2 = 4</div>;\n}\n\n// Usage:\n<Calculator />",
+      "action": "continue",
+      "next": "jsx-check"
+    },
+    {
+      "stepId": "jsx-check",
+      "mentorSays": "Do you understand JSX syntax - the HTML-like code inside JavaScript?",
+      "choices": [
+        {
+          "label": "Yes, I understand JSX",
+          "next": "export-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "jsx-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "jsx-explanation",
+      "mentorSays": "JSX (JavaScript XML) is React's way of writing HTML inside JavaScript. It looks like HTML but it's actually JavaScript!\n\n**Why It Matters to YOU:**\n\nJsx isn't just a \"nice to have\" - it's fundamental to how React works. Here's why it matters:\n\n1. **Catches Errors Before Runtime**: JavaScript finds bugs while you're writing code, not when users are clicking buttons. This saves hours of debugging!\n\n2. **Better IDE Support**: Your code editor can autocomplete and suggest methods because it knows what type of data you're working with.\n\n3. **Self-Documenting Code**: When you see clear type annotations or component structure, you immediately understand what the code does.\n\n**Common Beginner Mistakes:**\n\n❌ Using incorrect patterns or ignoring React conventions:\n```javascript\n// Don't do this - violates React best practices\n```\n\n✓ Follow React conventions and best practices:\n```javascript\n// Correct approach following React patterns\n```\n\nOther common mistakes:\n❌ Not understanding the difference between similar concepts\n❌ Forgetting to handle edge cases\n❌ Not following React naming conventions\n\n**How This Helps YOU Build Components:**\n\nWhen you create React components, understanding Jsx ensures:\n- Your components have the right structure\n- Your code follows React patterns\n- Your templates/JSX are properly configured\n- Your application is maintainable\n\n**Troubleshooting Tip:**\n\nIf you see errors related to Jsx, READ THEM carefully. React errors actually tell you exactly what's wrong and where to fix it. Don't ignore them - they're trying to help you!\n\n**Real-World Use:**\n\nCompanies like Microsoft, Google, Facebook, Slack use Jsx in production. It's part of the foundation that makes React applications reliable and scalable. When you learn this with React, you're learning industry-standard tools.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see Jsx in action. Pay attention to how it helps you avoid bugs - it's like having a helpful partner checking your work as you code!",
+      "example": "// JSX example\nconst name = 'React';\nreturn (\n  <div className=\"container\">\n    <h1>Hello {name}!</h1>\n    <p>This is JSX</p>\n  </div>\n);",
+      "action": "continue",
+      "next": "export-check"
+    },
+    {
+      "stepId": "export-check",
+      "mentorSays": "Do you understand JavaScript exports and how to make components available to other files?",
+      "choices": [
+        {
+          "label": "Yes, I understand exports",
+          "next": "function-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "export-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "export-explanation",
+      "mentorSays": "Exports let you share code between files. In React, you export components so other files can import and use them.\n\n**Why It Matters to YOU:**\n\nExport isn't just a \"nice to have\" - it's fundamental to how React works. Here's why it matters:\n\n1. **Catches Errors Before Runtime**: JavaScript finds bugs while you're writing code, not when users are clicking buttons. This saves hours of debugging!\n\n2. **Better IDE Support**: Your code editor can autocomplete and suggest methods because it knows what type of data you're working with.\n\n3. **Self-Documenting Code**: When you see clear type annotations or component structure, you immediately understand what the code does.\n\n**Common Beginner Mistakes:**\n\n❌ Using incorrect patterns or ignoring React conventions:\n```javascript\n// Don't do this - violates React best practices\n```\n\n✓ Follow React conventions and best practices:\n```javascript\n// Correct approach following React patterns\n```\n\nOther common mistakes:\n❌ Not understanding the difference between similar concepts\n❌ Forgetting to handle edge cases\n❌ Not following React naming conventions\n\n**How This Helps YOU Build Components:**\n\nWhen you create React components, understanding Export ensures:\n- Your components have the right structure\n- Your code follows React patterns\n- Your templates/JSX are properly configured\n- Your application is maintainable\n\n**Troubleshooting Tip:**\n\nIf you see errors related to Export, READ THEM carefully. React errors actually tell you exactly what's wrong and where to fix it. Don't ignore them - they're trying to help you!\n\n**Real-World Use:**\n\nCompanies like Microsoft, Google, Facebook, Slack use Export in production. It's part of the foundation that makes React applications reliable and scalable. When you learn this with React, you're learning industry-standard tools.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see Export in action. Pay attention to how it helps you avoid bugs - it's like having a helpful partner checking your work as you code!",
+      "example": "// File: HelloWorld.js\nexport default function HelloWorld() {\n  return <h1>Hello World</h1>;\n}\n\n// File: App.js\nimport HelloWorld from './HelloWorld';\n\nfunction App() {\n  return <HelloWorld />;\n}",
+      "action": "continue",
+      "next": "function-check"
+    },
+    {
+      "stepId": "function-check",
+      "mentorSays": "Do you understand JavaScript functions and how to define them?",
+      "choices": [
+        {
+          "label": "Yes, I understand functions",
+          "next": "return-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "function-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "function-explanation",
+      "mentorSays": "Functions are reusable blocks of code. In React, components ARE functions!\n\n**Why It Matters to YOU:**\n\nFunction isn't just a \"nice to have\" - it's fundamental to how React works. Here's why it matters:\n\n1. **Catches Errors Before Runtime**: JavaScript finds bugs while you're writing code, not when users are clicking buttons. This saves hours of debugging!\n\n2. **Better IDE Support**: Your code editor can autocomplete and suggest methods because it knows what type of data you're working with.\n\n3. **Self-Documenting Code**: When you see clear type annotations or component structure, you immediately understand what the code does.\n\n**Common Beginner Mistakes:**\n\n❌ Using incorrect patterns or ignoring React conventions:\n```javascript\n// Don't do this - violates React best practices\n```\n\n✓ Follow React conventions and best practices:\n```javascript\n// Correct approach following React patterns\n```\n\nOther common mistakes:\n❌ Not understanding the difference between similar concepts\n❌ Forgetting to handle edge cases\n❌ Not following React naming conventions\n\n**How This Helps YOU Build Components:**\n\nWhen you create React components, understanding Function ensures:\n- Your components have the right structure\n- Your code follows React patterns\n- Your templates/JSX are properly configured\n- Your application is maintainable\n\n**Troubleshooting Tip:**\n\nIf you see errors related to Function, READ THEM carefully. React errors actually tell you exactly what's wrong and where to fix it. Don't ignore them - they're trying to help you!\n\n**Real-World Use:**\n\nCompanies like Microsoft, Google, Facebook, Slack use Function in production. It's part of the foundation that makes React applications reliable and scalable. When you learn this with React, you're learning industry-standard tools.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see Function in action. Pay attention to how it helps you avoid bugs - it's like having a helpful partner checking your work as you code!",
+      "example": "// Regular function\nfunction calculate() {\n  return 2 + 2;\n}\n\n// React component function\nfunction Component() {\n  return <div>Hello</div>;\n}",
+      "action": "continue",
+      "next": "return-check"
+    },
+    {
+      "stepId": "return-check",
+      "mentorSays": "Do you understand the return statement and how components must return JSX?",
+      "choices": [
+        {
+          "label": "Yes, I understand return",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, please explain",
+          "next": "return-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "return-explanation",
+      "mentorSays": "The return statement sends a value back from a function. In React components, we return JSX.\n\n**Why It Matters to YOU:**\n\nReturn isn't just a \"nice to have\" - it's fundamental to how React works. Here's why it matters:\n\n1. **Catches Errors Before Runtime**: JavaScript finds bugs while you're writing code, not when users are clicking buttons. This saves hours of debugging!\n\n2. **Better IDE Support**: Your code editor can autocomplete and suggest methods because it knows what type of data you're working with.\n\n3. **Self-Documenting Code**: When you see clear type annotations or component structure, you immediately understand what the code does.\n\n**Common Beginner Mistakes:**\n\n❌ Using incorrect patterns or ignoring React conventions:\n```javascript\n// Don't do this - violates React best practices\n```\n\n✓ Follow React conventions and best practices:\n```javascript\n// Correct approach following React patterns\n```\n\nOther common mistakes:\n❌ Not understanding the difference between similar concepts\n❌ Forgetting to handle edge cases\n❌ Not following React naming conventions\n\n**How This Helps YOU Build Components:**\n\nWhen you create React components, understanding Return ensures:\n- Your components have the right structure\n- Your code follows React patterns\n- Your templates/JSX are properly configured\n- Your application is maintainable\n\n**Troubleshooting Tip:**\n\nIf you see errors related to Return, READ THEM carefully. React errors actually tell you exactly what's wrong and where to fix it. Don't ignore them - they're trying to help you!\n\n**Real-World Use:**\n\nCompanies like Microsoft, Google, Facebook, Slack use Return in production. It's part of the foundation that makes React applications reliable and scalable. When you learn this with React, you're learning industry-standard tools.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see Return in action. Pay attention to how it helps you avoid bugs - it's like having a helpful partner checking your work as you code!",
+      "example": "// Component with return\nfunction HelloWorld() {\n  return <h1>Hello World</h1>;\n}\n\n// Multi-line return\nfunction HelloWorld() {\n  return (\n    <div>\n      <h1>Hello</h1>\n      <p>World</p>\n    </div>\n  );\n}",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Now let's build the Hello World component step by step.\n\n**What We're Doing:**\nImporting the necessary React modules and dependencies. This step is crucial for building a complete, functional React component.\n\n**Why This Matters:**\nWithout proper imports, our React component won't have access to the features we need. This is the foundation that makes everything else possible. It's the difference between a static page and an interactive, dynamic React application.\n\n**What's Happening:**\nWe're bringing in React core functionality that we'll use throughout our component. Think of imports as gathering the tools we need before we start building. We're following React conventions to ensure our code is maintainable and follows industry standards.\n\n**Think of It Like:**\nIf the template/JSX is the face of your component that users see, this step is building the brain that makes decisions and controls behavior. Just like your brain processes information and decides how to react, this code processes data and controls what users see.\n\n**Look For:**\nThe `import` statements at the top of the file. These tell React what features we're using. Understanding this syntax helps you read and write React code more effectively.",
+      "action": "continue",
+      "next": "coding-step-1-js"
+    },
+    {
+      "stepId": "coding-step-1-js",
+      "mentorSays": "**Step 1: importing necessary modules and dependencies\n\n**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Why This Matters:**\nThis code is necessary because it importing necessary modules and dependencies. Without it, our component wouldn't work correctly.\n\n**What's Happening:**\nimporting necessary modules and dependencies following React best practices. This ensures our code is maintainable and follows industry standards.\n\n**Look For:**\nPay attention to the syntax and structure. Notice how this connects to previous steps and sets up the next steps.",
+      "example": "import React from 'react';",
+      "action": "continue",
+      "next": "coding-step-2-js"
+    },
+    {
+      "stepId": "coding-step-2-js",
+      "mentorSays": "**Step 2: importing React modules\n\n**What We're Doing:**\nImporting react modules to add this functionality to our component.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this builds on previous steps.",
+      "example": "import React from 'react';\n\nfunction HelloWorld() {\n  // Component body\n}",
+      "action": "continue",
+      "next": "coding-step-3-js"
+    },
+    {
+      "stepId": "coding-step-3-js",
+      "mentorSays": "**Step 3: importing React modules\n\n**Think of It Like:**\nJust like adding a key ingredient to a recipe, this step adds importing React modules that makes everything work together.\n\n**What We're Doing:**\nImporting react modules following React best practices.\n\n**Why This Matters:**\nWithout this step, our component would be incomplete.",
+      "example": "import React from 'react';\n\nfunction HelloWorld() {\n  return (\n    <div>\n      <h1>Hello World</h1>\n    </div>\n  );\n}",
+      "action": "continue",
+      "next": "coding-step-4-js"
+    },
+    {
+      "stepId": "coding-step-4-js",
+      "mentorSays": "**Step 4: importing React modules\n\n**What's Happening:**\nWe're importing React modules to implement this part of the solution. This follows React conventions and ensures our code is maintainable.\n\n**Look For:**\nPay attention to the syntax and how it connects to what we built before.",
+      "example": "import React from 'react';\n\nfunction HelloWorld() {\n  return (\n    <div>\n      <h1>Hello World</h1>\n    </div>\n  );\n}\n\nexport default HelloWorld;",
+      "action": "continue",
+      "next": "coding-step-5-js"
+    },
+    {
+      "stepId": "coding-step-5-js",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Think of It Like:**\nJust like building a house, this step adds a crucial piece that makes everything work together.\n\n**Why This Matters:**\nWithout this step, our solution would be incomplete.",
+      "example": "import React from 'react';\n\nfunction HelloWorld() {\n  return (\n    <div>\n      <h1>Hello World</h1>\n      <p>Welcome to React! This is your first component.</p>\n      <p>Components are the building blocks of React applications.</p>\n      <p>You can compose complex UIs from simple, reusable pieces.</p>\n    </div>\n  );\n}\n\nexport default HelloWorld;",
+      "action": "continue",
+      "next": "coding-complete-js"
+    },
+    {
+      "stepId": "coding-complete-js",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step is crucial for building a complete, functional React component.\n\n**Why This Matters:**\nThis code importing necessary modules and dependencies. It's the difference between a static page and an interactive, dynamic React application.\n\n**What's Happening:**\nWe're importing necessary modules and dependencies following React patterns and best practices. This ensures our code is maintainable and follows industry standards.\n\n**Look For:**\nNotice the syntax and how this connects to what we built before. Understanding this helps you read and write React code more effectively.",
+      "example": "import React from 'react';\n\nfunction HelloWorld() {\n  return (\n    <div>\n      <h1>Hello World</h1>\n      <p>Welcome to React! This is your first component.</p>\n      <p>Components are the building blocks of React applications.</p>\n      <p>You can compose complex UIs from simple, reusable pieces.</p>\n    </div>\n  );\n}\n\nexport default HelloWorld;\n\n// Usage in another file:\n// import HelloWorld from './HelloWorld';\n// <HelloWorld />",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now let's test your component and make sure everything works correctly.\n\n**Testing Steps:**\n\n1. **Save your component:**\n   - Create a file named `HelloWorld.js` in `src/components/`\n   - Paste your component code\n   - Save the file\n\n2. **Import in App.js:**\n   ```javascript\n   import HelloWorld from './components/HelloWorld';\n   ```\n\n3. **Use the component:**\n   ```javascript\n   function App() {\n     return (\n       <div className=\"App\">\n         <HelloWorld />\n       </div>\n     );\n   }\n   ```\n\n4. **Run your React app:**\n   ```bash\n   npm start\n   ```\n\n5. **Verify in browser:**\n   - Open http://localhost:3000\n   - You should see \"Hello World\" displayed!\n\n**Expected Result:**\n\nYour browser should display:\n- An h1 heading with \"Hello World\"\n- The paragraphs with \"Welcome to React...\"\n- All elements properly styled\n\n**Common Issues and Solutions:**\n\n**Problem 1: Component doesn't appear**\n```\nSymptom: Nothing shows on screen\nSolution: Check that you exported with 'export default'\n         Check that import path is correct\n         Check component name matches (PascalCase)\n```\n\n**Problem 2: Syntax error in JSX**\n```\nSymptom: Red error in console\nSolution: Make sure all tags are closed: <div></div> or <div />\n         Check for missing closing parenthesis in return\n         Verify all quotes are matched\n```\n\n**Problem 3: Import error**\n```\nSymptom: \"Module not found\"\nSolution: Check file path in import statement\n         Make sure filename matches exactly\n         Check file is in correct directory\n```\n\n**Problem 4: Nothing renders**\n```\nSymptom: Blank screen, no errors\nSolution: Check that function has 'return' statement\n         Verify JSX is wrapped in parentheses for multi-line\n         Make sure you're using the component in App.js\n```\n\n**Try These Experiments:**\n\nOnce it's working, try modifying:\n\n1. **Change the text:**\n   ```javascript\n   <h1>Hello React Developers!</h1>\n   ```\n\n2. **Add more elements:**\n   ```javascript\n   <div>\n     <h1>Hello World</h1>\n     <p>Welcome!</p>\n     <p>This is React.</p>\n     <button>Click Me</button>\n   </div>\n   ```\n\n3. **Use the component multiple times:**\n   ```javascript\n   <div>\n     <HelloWorld />\n     <HelloWorld />\n     <HelloWorld />\n   </div>\n   ```\n\n4. **Add CSS classes:**\n   ```javascript\n   <div className=\"hello-container\">\n     <h1 className=\"greeting\">Hello World</h1>\n   </div>\n   ```\n\n**Success Indicators:**\n\n✅ Component renders without errors\n✅ All text displays correctly\n✅ Multiple uses of component all work\n✅ Changes to component reflect immediately\n✅ No console errors\n\nYou've successfully created and tested your first React component!",
+      "example": "// App.js\nimport HelloWorld from './HelloWorld';\n\nfunction App() {\n  return (\n    <div>\n      <HelloWorld />\n    </div>\n  );\n}\n\nexport default App;",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've created your first React component!\n\n**Key Takeaways:**\n- React components are JavaScript functions that return JSX\n- Components use PascalCase naming (HelloWorld)\n- JSX looks like HTML but is JavaScript\n- Export components with `export default` to use them elsewhere\n- Components are reusable building blocks for React applications\n\n**What You've Learned:**\n- How to create a functional component\n- JSX syntax basics\n- Component export/import pattern\n- Component structure and organization\n\n**Next Steps:**\n- Try creating components with props (data passing)\n- Learn about component state\n- Explore event handling in components\n- Build more complex component compositions\n\n**Related Challenges:**\n- Props/Input Binding - Pass data to components\n- Event Handling - Make components interactive\n- State Management - Add dynamic behavior\n- Component Composition - Combine multiple components\n\nKeep practicing! Every React app is built from components like this one.",
+      "action": "continue"
+    }
+  ]
+}

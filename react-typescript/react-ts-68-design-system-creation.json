@@ -1,0 +1,244 @@
+{
+  "id": "react-ts-68-design-system-creation",
+  "title": "Design System Creation",
+  "technology": "React",
+  "difficulty": "lead",
+  "language": "typescript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "35-45 min",
+    "tests": "Component library, design tokens",
+    "challenge_number": "68"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Design System Creation in React with TypeScript\n2. Implement the solution using Component library, design tokens\n3. Apply TypeScript types and interfaces correctly\n4. Handle edge cases and error scenarios\n5. Write type-safe, maintainable React code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Have you ever wanted to build design system creation with type-safe React?\n\n**The Challenge:**\n// Create a React component for: Design System Creation\n// Use TypeScript with proper types\n// Export the component\n\n**What We're Building:**\nThis challenge tests your understanding of design system creation in React. You'll need to create a React component that demonstrates these concepts effectively while following React best practices.\n\n**Why This Matters:**\n\nDesign System Creation is a fundamental React concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in React teams\n\n**Real-World Applications:**\n\nAirbnb's search uses typed event handlers (React.MouseEvent<HTMLButtonElement>) for type-safe button clicks\n\nThis pattern is essential for building modern, interactive web applications.\n**Conceptual Foundation:**\n\nUNDERSTANDING DESIGN_SYSTEM_CREATION:\n\nThis concept is fundamental to React development. It enables you to build interactive, dynamic user interfaces that respond to user actions and data changes.\n\n**Key Concepts:**\n- Core React pattern used in production applications\n- Essential for building modern web applications\n- Follows React best practices and conventions\n- Industry-standard approach used by major companies\n\n**How It Works:**\n\nThe solution involves understanding React's component model, state management, and how to implement this specific pattern effectively. This pattern is used extensively in real-world React applications.\n\n**Step-by-Step Example:**\n\nLet's build a Design System Creation component step by step:\n\n**Step 1: Set up the component structure**\nWe'll start by creating the basic React component structure with proper imports and decorators.\n\n**Step 2: Add the core functionality**\nBased on the challenge requirements, we'll implement the main feature using React best practices.\n\n**Step 3: Add enhancements and edge case handling**\nWe'll add proper error handling, edge cases, and React best practices.\n\n**Step 4: Export and use the component**\nWe'll make the component reusable and integrate it into a larger application.\n\n**Pattern Variations:**\n\n**PATTERN 1: Basic Implementation**\nThe simplest approach that solves the core requirement with React best practices.\n\n**PATTERN 2: Enhanced Implementation**\nAdds error handling, edge cases, and better React patterns.\n\n**PATTERN 3: Advanced Implementation**\nIncludes performance optimizations, advanced React patterns, and comprehensive error handling.\n\n**Which Pattern to Use:**\n\n- **Pattern 1**: Simple use cases, learning, quick prototypes\n- **Pattern 2**: Most common scenarios, production-ready code\n- **Pattern 3**: Complex requirements, performance-critical applications\n\n**Best Practices:**\n\n1. **Component Design**\n   - One component per file\n   - Clear, descriptive names\n   - Standalone components (modern React)\n   - Proper separation of concerns\n\n2. **TypeScript**\n   - Use explicit types\n   - Leverage TypeScript's type system\n   - Avoid `any` type\n   - Use interfaces for complex data\n\n3. **Templates/JSX**\n   - Keep templates simple\n   - Use structural directives/components correctly\n   - Use property and event binding correctly\n   - Avoid complex logic in templates\n\n4. **Services/Hooks**\n   - Use dependency injection/custom hooks\n   - Keep services/hooks focused\n   - Separate business logic from components\n   - Follow React conventions\n\n**Common Mistakes and How to Avoid Them:**\n\n**MISTAKE 1: Not Following React Patterns**\n\n❌ **Wrong:**\nNot following React conventions and best practices.\n\n✓ **Correct:**\nFollowing React best practices and established patterns.\n\n**Why it matters:** React patterns ensure maintainability and consistency.\n\n---\n\n**MISTAKE 2: Forgetting Modern React Features**\n\n❌ **Wrong:**\nUsing outdated patterns when modern alternatives exist.\n\n✓ **Correct:**\nUsing modern React features like standalone components or hooks.\n\n**Why it matters:** Modern React features are simpler and more maintainable.\n\n**Real-World Examples:**\n\n**Example 1: Simple Use Case**\nBasic implementation for simple scenarios that shows the core concept clearly.\n\n**Example 2: Common Production Pattern**\nTypical implementation used in production apps with error handling and edge cases.\n\n**Example 3: Advanced Usage**\nAdvanced implementation for complex requirements with optimizations and best practices.\n\n**Next Steps After This Lesson:**\n\nOnce you master this, you'll learn:\n1. **Related Concept 1** - Builds on this foundation\n2. **Related Concept 2** - Extends your knowledge\n3. **Related Concept 3** - Advanced patterns\n\n**Summary:**\n\nMastering Design System Creation in React involves:\n1. ✅ Understanding the core React concept\n2. ✅ Implementing the solution correctly\n3. ✅ Following React best practices\n4. ✅ Handling edge cases properly\n5. ✅ Writing clean, maintainable code\n\n**Time estimate:** 5-15 min\n**Difficulty level:** Junior\n\n**Engaging Questions to Consider:**\n1. What TypeScript types and React patterns will we need?\n2. How would you ensure type safety while building this component?\n3. What React TypeScript best practices would you follow?\n\nThis is a practical interview question that tests your understanding of core React concepts and your ability to implement them correctly.",
+      "example": "// Create a React component for: Design System Creation\n// Use TypeScript with proper types\n// Export the component",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Design System Creation challenge using TypeScript?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach with TypeScript:\n\n```typescript\nimport React from 'react';\n\ninterface Props {\n  // Props interface\n}\n\nconst Component: React.FC<Props> = () => {\n  // TypeScript implementation\n  return <div>Solution</div>;\n};\n\nexport default Component;...\n```\n\nThis solution demonstrates React and TypeScript best practices and shows how to properly implement Component library, design tokens with type safety.",
+      "example": "import React from 'react';\n\ninterface Props {\n  // Props interface\n}\n\nconst Component: React.FC<Props> = () => {\n  // TypeScript implementation\n  return <div>Solution</div>;\n};\n\nexport default Component;",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Since this is a React TypeScript challenge, we'll use TypeScript. Let's start coding!",
+      "action": "continue",
+      "next": "typescript-check"
+    },
+    {
+      "stepId": "typescript-check",
+      "mentorSays": "Do you understand TypeScript basics and how it works with React?",
+      "choices": [
+        {
+          "label": "Yes, I understand typescript",
+          "next": "interface-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "typescript-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "typescript-check-explanation",
+      "mentorSays": "TypeScript with React provides type safety for components, props, state, and events. It helps catch bugs early and provides better IDE support with autocomplete and error detection.\n\n**Why It Matters to YOU:**\n\nUnderstanding typescript is essential because:\n\n1. **Foundation for Everything**: typescript is used in almost every React application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test typescript. Mastering this concept helps you answer questions confidently and demonstrate your React knowledge.\n\n3. **Real-World Application**: Every production React application uses typescript. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in React applications come from misunderstanding typescript. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning typescript fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand typescript thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse typescript with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between typescript and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with typescript, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nCompanies like Slack desktop app and Asana project management use typescript extensively in their React applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see typescript in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for typescript-check",
+      "action": "continue",
+      "next": "interface-check"
+    },
+    {
+      "stepId": "interface-check",
+      "mentorSays": "Do you understand TypeScript interfaces?",
+      "choices": [
+        {
+          "label": "Yes, I understand interface",
+          "next": "react-fc-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "interface-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "interface-check-explanation",
+      "mentorSays": "interface is a fundamental concept in React.\n\n**Why It Matters to YOU:**\n\nUnderstanding interface is essential because:\n\n1. **Foundation for Everything**: interface is used in almost every React application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test interface. Mastering this concept helps you answer questions confidently and demonstrate your React knowledge.\n\n3. **Real-World Application**: Every production React application uses interface. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in React applications come from misunderstanding interface. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning interface fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand interface thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse interface with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between interface and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with interface, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nCompanies like Slack desktop app and Asana project management use interface extensively in their React applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see interface in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for interface-check",
+      "action": "continue",
+      "next": "react-fc-check"
+    },
+    {
+      "stepId": "react-fc-check",
+      "mentorSays": "Do you understand React.FC and how to use it?",
+      "choices": [
+        {
+          "label": "Yes, I understand react-fc",
+          "next": "usestate-ts-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "react-fc-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "react-fc-check-explanation",
+      "mentorSays": "React.FC (React Function Component) is a TypeScript type for functional components.\n\n**Why It Matters to YOU:**\n\nReact Fc isn't just a \"nice to have\" - it's fundamental to how React works. Here's why it matters:\n\n1. **Catches Errors Before Runtime**: TypeScript finds bugs while you're writing code, not when users are clicking buttons. This saves hours of debugging!\n\n2. **Better IDE Support**: Your code editor can autocomplete and suggest methods because it knows what type of data you're working with.\n\n3. **Self-Documenting Code**: When you see clear type annotations or component structure, you immediately understand what the code does.\n\n**Common Beginner Mistakes:**\n\n❌ Using incorrect patterns or ignoring React conventions:\n```typescript\n// Don't do this - violates React best practices\n```\n\n✓ Follow React conventions and best practices:\n```typescript\n// Correct approach following React patterns\n```\n\nOther common mistakes:\n❌ Not understanding the difference between similar concepts\n❌ Forgetting to handle edge cases\n❌ Not following React naming conventions\n\n**How This Helps YOU Build Components:**\n\nWhen you create React components, understanding React Fc ensures:\n- Your components have the right structure\n- Your code follows React patterns\n- Your templates/JSX are properly configured\n- Your application is maintainable\n\n**Troubleshooting Tip:**\n\nIf you see errors related to React Fc, READ THEM carefully. React errors actually tell you exactly what's wrong and where to fix it. Don't ignore them - they're trying to help you!\n\n**Real-World Use:**\n\nCompanies like Microsoft, Google, IBM, Slack use React Fc in production. It's part of the foundation that makes React applications reliable and scalable. When you learn this with React, you're learning industry-standard tools.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see React Fc in action. Pay attention to how it helps you avoid bugs - it's like having a helpful partner checking your work as you code!",
+      "example": "// Example for react-fc-check",
+      "action": "continue",
+      "next": "usestate-ts-check"
+    },
+    {
+      "stepId": "usestate-ts-check",
+      "mentorSays": "Do you understand useState with TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I understand usestate-ts",
+          "next": "event-types-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "usestate-ts-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "usestate-ts-check-explanation",
+      "mentorSays": "useState hook in TypeScript requires type annotations for type safety.\n\n**Why It Matters to YOU:**\n\nUsestate Ts isn't just a \"nice to have\" - it's fundamental to how React works. Here's why it matters:\n\n1. **Catches Errors Before Runtime**: TypeScript finds bugs while you're writing code, not when users are clicking buttons. This saves hours of debugging!\n\n2. **Better IDE Support**: Your code editor can autocomplete and suggest methods because it knows what type of data you're working with.\n\n3. **Self-Documenting Code**: When you see clear type annotations or component structure, you immediately understand what the code does.\n\n**Common Beginner Mistakes:**\n\n❌ Using incorrect patterns or ignoring React conventions:\n```typescript\n// Don't do this - violates React best practices\n```\n\n✓ Follow React conventions and best practices:\n```typescript\n// Correct approach following React patterns\n```\n\nOther common mistakes:\n❌ Not understanding the difference between similar concepts\n❌ Forgetting to handle edge cases\n❌ Not following React naming conventions\n\n**How This Helps YOU Build Components:**\n\nWhen you create React components, understanding Usestate Ts ensures:\n- Your components have the right structure\n- Your code follows React patterns\n- Your templates/JSX are properly configured\n- Your application is maintainable\n\n**Troubleshooting Tip:**\n\nIf you see errors related to Usestate Ts, READ THEM carefully. React errors actually tell you exactly what's wrong and where to fix it. Don't ignore them - they're trying to help you!\n\n**Real-World Use:**\n\nCompanies like Microsoft, Google, IBM, Slack use Usestate Ts in production. It's part of the foundation that makes React applications reliable and scalable. When you learn this with React, you're learning industry-standard tools.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see Usestate Ts in action. Pay attention to how it helps you avoid bugs - it's like having a helpful partner checking your work as you code!",
+      "example": "// Example for usestate-ts-check",
+      "action": "continue",
+      "next": "event-types-check"
+    },
+    {
+      "stepId": "event-types-check",
+      "mentorSays": "Do you understand React event types in TypeScript?",
+      "choices": [
+        {
+          "label": "Yes, I understand event-types",
+          "next": "coding-start-ts"
+        },
+        {
+          "label": "No, please explain",
+          "next": "event-types-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "event-types-check-explanation",
+      "mentorSays": "React events in TypeScript require proper typing for event handlers.\n\n**Why It Matters to YOU:**\n\nEvent Types isn't just a \"nice to have\" - it's fundamental to how React works. Here's why it matters:\n\n1. **Catches Errors Before Runtime**: TypeScript finds bugs while you're writing code, not when users are clicking buttons. This saves hours of debugging!\n\n2. **Better IDE Support**: Your code editor can autocomplete and suggest methods because it knows what type of data you're working with.\n\n3. **Self-Documenting Code**: When you see clear type annotations or component structure, you immediately understand what the code does.\n\n**Common Beginner Mistakes:**\n\n❌ Using incorrect patterns or ignoring React conventions:\n```typescript\n// Don't do this - violates React best practices\n```\n\n✓ Follow React conventions and best practices:\n```typescript\n// Correct approach following React patterns\n```\n\nOther common mistakes:\n❌ Not understanding the difference between similar concepts\n❌ Forgetting to handle edge cases\n❌ Not following React naming conventions\n\n**How This Helps YOU Build Components:**\n\nWhen you create React components, understanding Event Types ensures:\n- Your components have the right structure\n- Your code follows React patterns\n- Your templates/JSX are properly configured\n- Your application is maintainable\n\n**Troubleshooting Tip:**\n\nIf you see errors related to Event Types, READ THEM carefully. React errors actually tell you exactly what's wrong and where to fix it. Don't ignore them - they're trying to help you!\n\n**Real-World Use:**\n\nCompanies like Microsoft, Google, IBM, Slack use Event Types in production. It's part of the foundation that makes React applications reliable and scalable. When you learn this with React, you're learning industry-standard tools.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see Event Types in action. Pay attention to how it helps you avoid bugs - it's like having a helpful partner checking your work as you code!",
+      "example": "// Example for event-types-check",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Perfect! Now let's build the Design System Creation solution step by step with TypeScript.\n\n**What We're Doing:**\nImporting the necessary React modules and dependencies. This step is crucial for building a complete, functional React component.\n\n**Why This Matters:**\nWithout proper imports, our React component won't have access to the features we need. This is the foundation that makes everything else possible. It's the difference between a static page and an interactive, dynamic React application.\n\n**What's Happening:**\nWe're bringing in React core functionality that we'll use throughout our component. Think of imports as gathering the tools we need before we start building. We're following React conventions to ensure our code is maintainable and follows industry standards.\n\n**Think of It Like:**\nIf the template/JSX is the face of your component that users see, this step is building the brain that makes decisions and controls behavior. Just like your brain processes information and decides how to react, this code processes data and controls what users see.\n\n**Look For:**\nThe `import` statements at the top of the file. These tell React what features we're using. Understanding this syntax helps you read and write React code more effectively.",
+      "action": "continue",
+      "next": "coding-step-1-ts"
+    },
+    {
+      "stepId": "coding-step-1-ts",
+      "mentorSays": "**Step 1: importing necessary modules and dependencies\n\n**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Why This Matters:**\nThis code is necessary because it importing necessary modules and dependencies. Without it, our component wouldn't work correctly.\n\n**What's Happening:**\nimporting necessary modules and dependencies following React best practices. This ensures our code is maintainable and follows industry standards.\n\n**Look For:**\nPay attention to the syntax and structure. Notice how this connects to previous steps and sets up the next steps.",
+      "example": "import React from 'react';\nimport { useState } from 'react';  // If needed",
+      "action": "continue",
+      "next": "coding-step-2-ts"
+    },
+    {
+      "stepId": "coding-step-2-ts",
+      "mentorSays": "**Step 2: defining TypeScript types\n\n**What We're Doing:**\nDefining typescript types to add this functionality to our component.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this builds on previous steps.",
+      "example": "interface DesignsystemcreationProps {\n  // Define props here\n}",
+      "action": "continue",
+      "next": "coding-step-3-ts"
+    },
+    {
+      "stepId": "coding-step-3-ts",
+      "mentorSays": "**Step 3: creating the component function\n\n**Think of It Like:**\nJust like adding a key ingredient to a recipe, this step adds creating the component function that makes everything work together.\n\n**What We're Doing:**\nCreating the component function following React best practices.\n\n**Why This Matters:**\nWithout this step, our component would be incomplete.",
+      "example": "const designsystemcreation: React.FC<DesignsystemcreationProps> = () => {\n  // Component body\n};",
+      "action": "continue",
+      "next": "coding-step-4-ts"
+    },
+    {
+      "stepId": "coding-step-4-ts",
+      "mentorSays": "**Step 4: importing React modules\n\n**What's Happening:**\nWe're importing React modules to implement this part of the solution. This follows React conventions and ensures our code is maintainable.\n\n**Look For:**\nPay attention to the syntax and how it connects to what we built before.",
+      "example": "// Step 4 implementation with TypeScript\n// import React from 'react';\n\ninterface Props {\n  // Props interface\n}\n\nconst Component: React.FC<Prop",
+      "action": "continue",
+      "next": "coding-step-5-ts"
+    },
+    {
+      "stepId": "coding-step-5-ts",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Think of It Like:**\nJust like building a house, this step adds a crucial piece that makes everything work together.\n\n**Why This Matters:**\nWithout this step, our solution would be incomplete.",
+      "example": "// Step 5 implementation with TypeScript\n// import React from 'react';\n\ninterface Props {\n  // Props interface\n}\n\nconst Component: React.FC<Prop",
+      "action": "continue",
+      "next": "coding-step-6-ts"
+    },
+    {
+      "stepId": "coding-step-6-ts",
+      "mentorSays": "**Step 6: importing React modules\n\n**What We're Doing:**\nImporting react modules to add this functionality to our component.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this builds on previous steps.",
+      "example": "// Step 6 implementation with TypeScript\n// import React from 'react';\n\ninterface Props {\n  // Props interface\n}\n\nconst Component: React.FC<Prop",
+      "action": "continue",
+      "next": "coding-step-7-ts"
+    },
+    {
+      "stepId": "coding-step-7-ts",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this connects to previous steps.",
+      "example": "import React from 'react';\n\ninterface Props {\n  // Props interface\n}\n\nconst Component: React.FC<Props> = () => {\n  // TypeScript implementation\n  return <div>Solution</div>;\n};\n\nexport default Component;",
+      "action": "continue",
+      "next": "coding-complete-ts"
+    },
+    {
+      "stepId": "coding-complete-ts",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step is crucial for building a complete, functional React component.\n\n**Why This Matters:**\nThis code importing necessary modules and dependencies. It's the difference between a static page and an interactive, dynamic React application.\n\n**What's Happening:**\nWe're importing necessary modules and dependencies following React patterns and best practices. This ensures our code is maintainable and follows industry standards.\n\n**Look For:**\nNotice the syntax and how this connects to what we built before. Understanding this helps you read and write React code more effectively.",
+      "example": "import React from 'react';\n\ninterface Props {\n  // Props interface\n}\n\nconst Component: React.FC<Props> = () => {\n  // TypeScript implementation\n  return <div>Solution</div>;\n};\n\nexport default Component;",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now let's test your component and make sure everything works correctly with TypeScript.\n\n**Testing Steps:**\n\n1. **Save your component:**\n   - Create a file for your component (e.g., `design-system-creation.tsx`)\n   - Paste your component code\n   - Save the file\n\n2. **Import in App.tsx:**\n   ```typescript\n   import designsystemcreation from './design-system-creation';\n   ```\n\n3. **Use the component:**\n   ```typescript\n   function App() {\n     return (\n       <div className=\"App\">\n         <designsystemcreation />\n       </div>\n     );\n   }\n   ```\n\n4. **Run your React TypeScript app:**\n   ```bash\n   npm start\n   ```\n\n5. **Verify in browser:**\n   - Open http://localhost:3000\n   - You should see your component working!\n\n**Expected Result:**\nYour component should work as expected based on the challenge requirements: Component library, design tokens\n\n**Common Issues and Solutions:**\n\n**Problem 1: TypeScript compilation errors**\n```\nSymptom: Red errors in IDE or build fails\nSolution: Check all types are correct\n         Verify interfaces match usage\n         Check for missing type annotations\n         Ensure all imports are correct\n```\n\n**Problem 2: Type errors with props**\n```\nSymptom: \"Property does not exist on type\"\nSolution: Check interface definition matches props\n         Verify prop names match exactly\n         Check for optional props (use ?)\n         Ensure React.FC<Props> is used correctly\n```\n\n**Problem 3: State type errors**\n```\nSymptom: \"Type is not assignable\"\nSolution: Check useState type annotation\n         Verify state type matches setter usage\n         Use union types for nullable: useState<Type | null>(null)\n         Check for type mismatches\n```\n\n**Problem 4: Event handler type errors**\n```\nSymptom: \"Type error in event handler\"\nSolution: Use proper React event types\n         React.MouseEvent<HTMLElement> for clicks\n         React.ChangeEvent<HTMLInputElement> for inputs\n         Check element type in generic\n```\n\n**Problem 5: Import/export errors**\n```\nSymptom: \"Cannot find module\" or type errors\nSolution: Check file extension is .tsx (not .ts for JSX)\n         Verify export default is used\n         Check import paths are correct\n         Ensure TypeScript config is correct\n```\n\n**Try These Experiments:**\n\nOnce it's working, try modifying:\n- Add more TypeScript types for better safety\n- Create interfaces for complex data\n- Add type guards for runtime safety\n- Experiment with generic types\n- Add JSDoc comments for better documentation\n\n**Success Indicators:**\n\n✅ Component renders without errors\n✅ All functionality works correctly\n✅ No TypeScript compilation errors\n✅ Code follows React and TypeScript best practices\n✅ Proper type safety throughout\n✅ IDE autocomplete works correctly\n\nYou've successfully completed the Design System Creation challenge with TypeScript!",
+      "example": "import React from 'react';\n\ninterface Props {\n  // Props interface\n}\n\nconst Component: React.FC<Props> = () => {\n  // TypeScript implementation\n  return <div>Solution</div>;\n};\n\nexport default Component;",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed the Design System Creation challenge with TypeScript!\n\n**Key Takeaways:**\n- You've mastered Component library, design tokens with TypeScript\n- You understand how to implement Design System Creation in React with proper types\n- You've applied React and TypeScript best practices\n- You can handle this type of interview question confidently\n- You're ready to use this pattern in real-world TypeScript applications\n\n**What You've Learned:**\n- How to implement Design System Creation correctly with TypeScript\n- React TypeScript patterns and best practices for this concept\n- Problem-solving approaches for React TypeScript challenges\n- Code organization and structure with types\n- Edge case handling with type safety\n\n**Next Steps:**\n- Practice similar React TypeScript concepts\n- Try variations of this challenge\n- Explore more advanced React TypeScript patterns\n- Build real-world applications using this pattern\n- Study related React TypeScript concepts\n\n**Related Challenges:**\n- Practice related React TypeScript concepts\n- Try more complex variations\n- Explore advanced patterns\n- Build complete features using this pattern\n\n**Time Complexity:** Varies based on implementation\n**Space Complexity:** Varies based on implementation\n\nKeep practicing! This pattern is essential for building React TypeScript applications.",
+      "action": "continue"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+{
+  "id": "python-69-api-gateway",
+  "title": "API Gateway",
+  "technology": "Python",
+  "difficulty": "lead",
+  "language": "python",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "45-60 minutes",
+    "tests": "Gateway pattern",
+    "challenge_number": "69"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand API Gateway in Python\n2. Implement the solution using Gateway pattern\n3. Apply Python best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write maintainable, production-ready Python code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Have you ever needed to implement api gateway in Python?\n\n**The Challenge:**\n// Create a Python implementation for: API Gateway\n// Follow Python best practices\n// Make it production-ready\n\n**What We're Building:**\nThis challenge tests your understanding of api gateway in Python. You'll need to create a Python implementation that demonstrates these concepts effectively while following Python best practices.\n\n**Why This Matters:**\n\nAPI Gateway is a fundamental Python concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready Python applications\n- Following Python best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in Python teams\n\n**Real-World Applications:**\n\nInstagram's backend is built entirely on Python and Django, serving 400 million daily active users. Spotify uses Python for data analysis and backend services, while Netflix uses Python for content recommendation algorithms.\n\nThis pattern is essential for building modern, interactive applications.\n\n**Conceptual Foundation:**\n\nUNDERSTANDING API_GATEWAY:\n\nThis concept is fundamental to Python development. It enables you to build robust, efficient applications that follow industry best practices.\n\n**Key Concepts:**\n- Core Python pattern used in production applications\n- Essential for building modern applications\n- Follows Python best practices and conventions\n- Industry-standard approach used by major companies\n\n**How It Works:**\n\nThe solution involves understanding Python's core concepts, best practices, and how to implement this specific pattern effectively. This pattern is used extensively in real-world Python applications.\n\n**Step-by-Step Example:**\n\nLet's build a API Gateway implementation step by step:\n\n**Step 1: Set up the basic structure**\nWe'll start by creating the basic Python structure with proper imports and setup.\n\n**Step 2: Add the core functionality**\nBased on the challenge requirements, we'll implement the main feature using Python best practices.\n\n**Step 3: Add enhancements and edge case handling**\nWe'll add proper error handling, edge cases, and Python best practices.\n\n**Step 4: Test and finalize**\nWe'll test the implementation and ensure it's production-ready.\n\n**Pattern Variations:**\n\n**PATTERN 1: Basic Implementation**\nThe simplest approach that solves the core requirement with Python best practices.\n\n**PATTERN 2: Enhanced Implementation**\nAdds error handling, edge cases, and better Python patterns.\n\n**PATTERN 3: Advanced Implementation**\nIncludes performance optimizations, advanced Python patterns, and comprehensive error handling.\n\n**Which Pattern to Use:**\n\n- **Pattern 1**: Simple use cases, learning, quick prototypes\n- **Pattern 2**: Most common scenarios, production-ready code\n- **Pattern 3**: Complex requirements, performance-critical applications\n\n**Best Practices:**\n\n1. **Code Structure**\n   - Clear, descriptive names\n   - Proper separation of concerns\n   - Follow Python conventions\n   - Write maintainable code\n\n2. **Error Handling**\n   - Handle edge cases properly\n   - Provide meaningful error messages\n   - Use appropriate error handling patterns\n   - Validate inputs\n\n3. **Performance**\n   - Optimize for the use case\n   - Consider scalability\n   - Use efficient algorithms\n   - Profile when needed\n\n4. **Testing**\n   - Write unit tests\n   - Test edge cases\n   - Ensure code coverage\n   - Follow testing best practices\n\n**Common Mistakes and How to Avoid Them:**\n\n**MISTAKE 1: Not Following Python Patterns**\n\n❌ **Wrong:**\nNot following Python conventions and best practices.\n\n✓ **Correct:**\nFollowing Python best practices and established patterns.\n\n**Why it matters:** Python patterns ensure maintainability and consistency.\n\n---\n\n**MISTAKE 2: Ignoring Error Handling**\n\n❌ **Wrong:**\nNot handling errors or edge cases properly.\n\n✓ **Correct:**\nImplementing proper error handling and edge case management.\n\n**Why it matters:** Robust error handling prevents production issues.\n\n**Real-World Examples:**\n\n**Example 1: Simple Use Case**\nBasic implementation for simple scenarios that shows the core concept clearly.\n\n**Example 2: Common Production Pattern**\nTypical implementation used in production apps with error handling and edge cases.\n\n**Example 3: Advanced Usage**\nAdvanced implementation for complex requirements with optimizations and best practices.\n\n**Next Steps After This Lesson:**\n\nOnce you master this, you'll learn:\n1. **Related Concept 1** - Builds on this foundation\n2. **Related Concept 2** - Extends your knowledge\n3. **Related Concept 3** - Advanced patterns\n\n**Summary:**\n\nMastering API Gateway in Python involves:\n1. ✅ Understanding the core Python concept\n2. ✅ Implementing the solution correctly\n3. ✅ Following Python best practices\n4. ✅ Handling edge cases properly\n5. ✅ Writing clean, maintainable code\n\n**Time estimate:** 45-60 minutes\n**Difficulty level:** Lead\n\n**Engaging Questions to Consider:**\n1. What Python concepts do you think we'll need to solve this?\n2. How would you structure this in a real Python application?\n3. What Python patterns or best practices come to mind for this challenge?\n\nThis is a practical interview question that tests your understanding of core Python concepts and your ability to implement them correctly.",
+      "example": "// Create a Python implementation for: API Gateway\n// Follow Python best practices\n// Make it production-ready",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this API Gateway challenge in Python?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach with Python:\n\n```python\n# Complete Python solution for: API Gateway\ndef solution():\n    # Implementation here\n    pass\n\nif __name__ == \"__main__\":\n    solution()\n```\n\nThis solution demonstrates Python best practices and shows how to properly implement Gateway pattern.",
+      "example": "# Complete Python solution for: API Gateway\ndef solution():\n    # Implementation here\n    pass\n\nif __name__ == \"__main__\":\n    solution()",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Since this is a Python challenge, we'll use Python. Let's start coding!",
+      "action": "continue",
+      "next": "python-check"
+    },
+    {
+      "stepId": "python-check",
+      "mentorSays": "Do you understand Python and how it works?",
+      "choices": [
+        {
+          "label": "Yes, I understand python",
+          "next": "functions-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "python-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "python-check-explanation",
+      "mentorSays": "Python is a fundamental concept in Python development. Understanding Python basics is essential for building production-ready applications.\n\n**Why It Matters to YOU:**\n\nUnderstanding python basics is essential because:\n\n1. **Foundation for Everything**: python basics is used in almost every Python application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test python basics. Mastering this concept helps you answer questions confidently and demonstrate your Python knowledge.\n\n3. **Real-World Application**: Every production Python application uses python basics. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in Python applications come from misunderstanding python basics. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning python basics fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand python basics thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse python basics with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between python basics and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with python basics, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nCompanies use python basics extensively in their Python applications. It's part of the foundation that makes modern applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see python basics in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for python-check",
+      "action": "continue",
+      "next": "functions-check"
+    },
+    {
+      "stepId": "functions-check",
+      "mentorSays": "Do you understand Functions and how it works?",
+      "choices": [
+        {
+          "label": "Yes, I understand functions",
+          "next": "coding-start-python"
+        },
+        {
+          "label": "No, please explain",
+          "next": "functions-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "functions-check-explanation",
+      "mentorSays": "Functions is a fundamental concept in Python development. Understanding functions and modules is essential for building production-ready applications.\n\n**Why It Matters to YOU:**\n\nUnderstanding functions and modules is essential because:\n\n1. **Foundation for Everything**: functions and modules is used in almost every Python application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test functions and modules. Mastering this concept helps you answer questions confidently and demonstrate your Python knowledge.\n\n3. **Real-World Application**: Every production Python application uses functions and modules. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in Python applications come from misunderstanding functions and modules. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning functions and modules fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand functions and modules thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse functions and modules with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between functions and modules and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with functions and modules, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nCompanies use functions and modules extensively in their Python applications. It's part of the foundation that makes modern applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see functions and modules in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for functions-check",
+      "action": "continue",
+      "next": "coding-start-python"
+    },
+    {
+      "stepId": "coding-start-python",
+      "mentorSays": "Perfect! Now let's build the API Gateway solution step by step.\n\n**What We're Doing:**\nSetting up the basic structure and imports. This step is crucial for building a complete, functional Python implementation.\n\n**Why This Matters:**\nWithout proper setup, our Python code won't have access to the features we need. This is the foundation that makes everything else possible.\n\n**What's Happening:**\nWe're bringing in Python core functionality that we'll use throughout our implementation. Think of this as gathering the tools we need before we start building.\n\n**Look For:**\nThe import statements and basic structure. Understanding this syntax helps you read and write Python code more effectively.",
+      "action": "continue",
+      "next": "coding-step-1-python"
+    },
+    {
+      "stepId": "coding-step-1-python",
+      "mentorSays": "**Step 1: **Step 1: Building API Gateway**\n\nLet's implement the next piece of our solution.\n\n**What We're Doing:**\nSetting up the foundation\n\n**Code:**\n\n```python\n# Your implementation here\n```\n\n**Why This Matters:**\nThis step builds toward a complete, production-ready solution.\n\n**What We're Doing:**\nImplementing step 1 of the solution.\n\n**Why This Matters:**\nThis step builds on what we've created so far and moves us closer to a complete solution.\n\n**Look For:**\nNotice how this connects to previous steps and sets up the next steps.",
+      "example": "# Python code for step 1\\ndef step_1():\\n    pass",
+      "action": "continue",
+      "next": "coding-step-2-python"
+    },
+    {
+      "stepId": "coding-step-2-python",
+      "mentorSays": "**Step 2: **Step 2: Building API Gateway**\n\nLet's implement the next piece of our solution.\n\n**What We're Doing:**\nImplementing core logic\n\n**Code:**\n\n```python\n# Your implementation here\n```\n\n**Why This Matters:**\nThis step builds toward a complete, production-ready solution.\n\n**What We're Doing:**\nImplementing step 2 of the solution.\n\n**Why This Matters:**\nThis step builds on what we've created so far and moves us closer to a complete solution.\n\n**Look For:**\nNotice how this connects to previous steps and sets up the next steps.",
+      "example": "# Python code for step 2\\ndef step_2():\\n    pass",
+      "action": "continue",
+      "next": "coding-step-3-python"
+    },
+    {
+      "stepId": "coding-step-3-python",
+      "mentorSays": "**Step 3: **Step 3: Building API Gateway**\n\nLet's implement the next piece of our solution.\n\n**What We're Doing:**\nAdding validation\n\n**Code:**\n\n```python\n# Your implementation here\n```\n\n**Why This Matters:**\nThis step builds toward a complete, production-ready solution.\n\n**What We're Doing:**\nImplementing step 3 of the solution.\n\n**Why This Matters:**\nThis step builds on what we've created so far and moves us closer to a complete solution.\n\n**Look For:**\nNotice how this connects to previous steps and sets up the next steps.",
+      "example": "# Python code for step 3\\ndef step_3():\\n    pass",
+      "action": "continue",
+      "next": "coding-step-4-python"
+    },
+    {
+      "stepId": "coding-step-4-python",
+      "mentorSays": "**Step 4: **Step 4: Building API Gateway**\n\nLet's implement the next piece of our solution.\n\n**What We're Doing:**\nHandling edge cases\n\n**Code:**\n\n```python\n# Your implementation here\n```\n\n**Why This Matters:**\nThis step builds toward a complete, production-ready solution.\n\n**What We're Doing:**\nImplementing step 4 of the solution.\n\n**Why This Matters:**\nThis step builds on what we've created so far and moves us closer to a complete solution.\n\n**Look For:**\nNotice how this connects to previous steps and sets up the next steps.",
+      "example": "# Python code for step 4\\ndef step_4():\\n    pass",
+      "action": "continue",
+      "next": "coding-step-5-python"
+    },
+    {
+      "stepId": "coding-step-5-python",
+      "mentorSays": "**Step 5: **Step 5: Building API Gateway**\n\nLet's implement the next piece of our solution.\n\n**What We're Doing:**\nFinalizing the solution\n\n**Code:**\n\n```python\n# Your implementation here\n```\n\n**Why This Matters:**\nThis step builds toward a complete, production-ready solution.\n\n**What We're Doing:**\nImplementing step 5 of the solution.\n\n**Why This Matters:**\nThis step builds on what we've created so far and moves us closer to a complete solution.\n\n**Look For:**\nNotice how this connects to previous steps and sets up the next steps.",
+      "example": "# Python code for step 5\\ndef step_5():\\n    pass",
+      "action": "continue",
+      "next": "coding-complete-python"
+    },
+    {
+      "stepId": "coding-complete-python",
+      "mentorSays": "**What We're Doing:**\nCompleting the API Gateway implementation. This step brings together all the pieces we've built.\n\n**Why This Matters:**\nThis code completes our solution. It's the difference between a partial implementation and a complete, working solution.\n\n**What's Happening:**\nWe're finalizing the implementation following Python patterns and best practices. This ensures our code is maintainable and follows industry standards.\n\n**Look For:**\nNotice the syntax and how this connects to what we built before. Understanding this helps you read and write Python code more effectively.",
+      "example": "# Complete Python solution for: API Gateway\ndef solution():\n    # Implementation here\n    pass\n\nif __name__ == \"__main__\":\n    solution()",
+      "action": "continue",
+      "next": "test-code-python"
+    },
+    {
+      "stepId": "test-code-python",
+      "mentorSays": "Perfect! Now let's test your implementation and make sure everything works correctly.\n\n**Testing Steps:**\n\n1. **Save your code:**\n   - Create a file for your implementation (e.g., `api-gateway.py`)\n   - Paste your code\n   - Save the file\n\n2. **Run your Python code:**\n   ```bash\n   python api-gateway.py\n   ```\n\n3. **Verify output:**\n   - Check that the output matches expected results\n   - Test with different inputs\n   - Verify edge cases\n\n**Expected Result:**\nYour implementation should work as expected based on the challenge requirements.\n\n**Common Issues and Solutions:**\n\n**Problem 1: Syntax errors**\n```\nSymptom: Python syntax errors\nSolution: Check indentation\n         Verify colons after if/for/def\n         Check brackets are matched\n```\n\n**Problem 2: Runtime errors**\n```\nSymptom: TypeError or other runtime errors\nSolution: Check for None values\n         Verify list/dict access\n         Handle exceptions properly\n```\n\n**Try These Experiments:**\n\nOnce it's working, try modifying:\n- Add more features or enhancements\n- Test with different data\n- Add error handling\n- Improve performance\n\n**Success Indicators:**\n\n✅ Code runs without errors\n✅ All functionality works correctly\n✅ Code follows Python best practices\n✅ No runtime errors\n✅ Code is readable and maintainable\n\nYou've successfully completed the API Gateway challenge!",
+      "example": "# Complete Python solution for: API Gateway\ndef solution():\n    # Implementation here\n    pass\n\nif __name__ == \"__main__\":\n    solution()",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed the API Gateway challenge in Python!\n\n**Key Takeaways:**\n- You've mastered Gateway pattern in Python\n- You understand how to implement API Gateway correctly\n- You've applied Python best practices\n- You can handle this type of interview question confidently\n- You're ready to use this pattern in real-world applications\n\n**What You've Learned:**\n- How to implement API Gateway correctly in Python\n- Python patterns and best practices for this concept\n- Problem-solving approaches for Python challenges\n- Code organization and structure\n- Edge case handling\n\n**Next Steps:**\n- Practice similar Python concepts\n- Try variations of this challenge\n- Explore more advanced Python patterns\n- Build real-world applications using this pattern\n- Study related Python concepts\n\n**Related Challenges:**\n- Practice related Python concepts\n- Try more complex variations\n- Explore advanced patterns\n- Build complete features using this pattern\n\n**Time Complexity:** Varies based on implementation\n**Space Complexity:** Varies based on implementation\n\nKeep practicing! This pattern is essential for building Python applications.",
+      "action": "continue"
+    }
+  ]
+}

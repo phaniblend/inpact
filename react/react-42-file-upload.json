@@ -1,0 +1,244 @@
+{
+  "id": "react-42-file-upload",
+  "title": "File Upload",
+  "technology": "React",
+  "difficulty": "mid",
+  "language": "javascript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "15-25 min",
+    "tests": "File handling, FormData",
+    "challenge_number": "42"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand File Upload in React\n2. Implement the solution using File handling, FormData\n3. Apply React best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write clean, maintainable React code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Have you ever needed to implement file upload in React?\n\n**The Challenge:**\n// Create a React component for: File Upload\n// Use functional component syntax\n// Export the component\n\n**What We're Building:**\nThis challenge tests your understanding of file upload in React. You'll need to create a React component that demonstrates these concepts effectively while following React best practices.\n\n**Why This Matters:**\n\nFile Upload is a fundamental React concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in React teams\n\n**Real-World Applications:**\n\nGoogle Drive uses file upload to let you drag and drop documents. As you upload, a progress bar shows the upload percentage, and the file appears in your drive once complete. Dropbox uses file upload with chunking—large files are split into smaller pieces and uploaded in parallel for faster uploads.\n\nThis pattern is essential for building modern, interactive web applications.\n\nThis pattern is essential for building modern, interactive web applications.\n**Conceptual Foundation:**\n\nUNDERSTANDING FILE_UPLOAD:\n\nThis concept is fundamental to React development. It enables you to build interactive, dynamic user interfaces that respond to user actions and data changes.\n\n**Key Concepts:**\n- Core React pattern used in production applications\n- Essential for building modern web applications\n- Follows React best practices and conventions\n- Industry-standard approach used by major companies\n\n**How It Works:**\n\nThe solution involves understanding React's component model, state management, and how to implement this specific pattern effectively. This pattern is used extensively in real-world React applications.\n\n**Step-by-Step Example:**\n\nLet's build a File Upload component step by step:\n\n**Step 1: Set up the component structure**\nWe'll start by creating the basic React component structure with proper imports and decorators.\n\n**Step 2: Add the core functionality**\nBased on the challenge requirements, we'll implement the main feature using React best practices.\n\n**Step 3: Add enhancements and edge case handling**\nWe'll add proper error handling, edge cases, and React best practices.\n\n**Step 4: Export and use the component**\nWe'll make the component reusable and integrate it into a larger application.\n\n**Pattern Variations:**\n\n**PATTERN 1: Basic Implementation**\nThe simplest approach that solves the core requirement with React best practices.\n\n**PATTERN 2: Enhanced Implementation**\nAdds error handling, edge cases, and better React patterns.\n\n**PATTERN 3: Advanced Implementation**\nIncludes performance optimizations, advanced React patterns, and comprehensive error handling.\n\n**Which Pattern to Use:**\n\n- **Pattern 1**: Simple use cases, learning, quick prototypes\n- **Pattern 2**: Most common scenarios, production-ready code\n- **Pattern 3**: Complex requirements, performance-critical applications\n\n**Best Practices:**\n\n1. **Component Design**\n   - One component per file\n   - Clear, descriptive names\n   - Standalone components (modern React)\n   - Proper separation of concerns\n\n2. **JavaScript**\n   - Use explicit types\n   - Leverage JavaScript's type system\n   - Avoid `any` type\n   - Use interfaces for complex data\n\n3. **Templates/JSX**\n   - Keep templates simple\n   - Use structural directives/components correctly\n   - Use property and event binding correctly\n   - Avoid complex logic in templates\n\n4. **Services/Hooks**\n   - Use dependency injection/custom hooks\n   - Keep services/hooks focused\n   - Separate business logic from components\n   - Follow React conventions\n\n**Common Mistakes and How to Avoid Them:**\n\n**MISTAKE 1: Not Following React Patterns**\n\n❌ **Wrong:**\nNot following React conventions and best practices.\n\n✓ **Correct:**\nFollowing React best practices and established patterns.\n\n**Why it matters:** React patterns ensure maintainability and consistency.\n\n---\n\n**MISTAKE 2: Forgetting Modern React Features**\n\n❌ **Wrong:**\nUsing outdated patterns when modern alternatives exist.\n\n✓ **Correct:**\nUsing modern React features like standalone components or hooks.\n\n**Why it matters:** Modern React features are simpler and more maintainable.\n\n**Real-World Examples:**\n\n**Example 1: Simple Use Case**\nBasic implementation for simple scenarios that shows the core concept clearly.\n\n**Example 2: Common Production Pattern**\nTypical implementation used in production apps with error handling and edge cases.\n\n**Example 3: Advanced Usage**\nAdvanced implementation for complex requirements with optimizations and best practices.\n\n**Next Steps After This Lesson:**\n\nOnce you master this, you'll learn:\n1. **Related Concept 1** - Builds on this foundation\n2. **Related Concept 2** - Extends your knowledge\n3. **Related Concept 3** - Advanced patterns\n\n**Summary:**\n\nMastering File Upload in React involves:\n1. ✅ Understanding the core React concept\n2. ✅ Implementing the solution correctly\n3. ✅ Following React best practices\n4. ✅ Handling edge cases properly\n5. ✅ Writing clean, maintainable code\n\n**Time estimate:** 5-15 min\n**Difficulty level:** Junior\n\n**Engaging Questions to Consider:**\n1. What React hooks or patterns do you think we'll need here?\n2. How would you structure this component for reusability?\n3. What React best practices would you apply to this solution?\n\nThis is a practical interview question that tests your understanding of core React concepts and your ability to implement them correctly.",
+      "example": "// Create a React component for: File Upload\n// Use functional component syntax\n// Export the component",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this File Upload challenge?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach:\n\n```javascript\n// Complete React solution for: File Upload\nimport React, { useState } from 'react';\n\nfunction Component() {\n  // Implementation here\n  return <div>Solution</div>;\n}\n\nexport default Component;...\n```\n\nThis solution demonstrates React best practices and shows how to properly implement File handling, FormData.",
+      "example": "// Complete React solution for: File Upload\nimport React, { useState } from 'react';\n\nfunction Component() {\n  // Implementation here\n  return <div>Solution</div>;\n}\n\nexport default Component;",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Since this is a React JavaScript challenge, we'll use JavaScript. Let's start coding!",
+      "action": "continue",
+      "next": "component-check"
+    },
+    {
+      "stepId": "component-check",
+      "mentorSays": "Do you understand React components and how they work?",
+      "choices": [
+        {
+          "label": "Yes, I understand component",
+          "next": "jsx-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "component-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "component-check-explanation",
+      "mentorSays": "React components are JavaScript functions that return JSX (JavaScript XML). They encapsulate UI logic and can be reused throughout your application. Components can receive data through props and manage internal state using hooks like useState.\n\n**Why It Matters to YOU:**\n\nUnderstanding component is essential because:\n\n1. **Foundation for Everything**: component is used in almost every React application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test component. Mastering this concept helps you answer questions confidently and demonstrate your React knowledge.\n\n3. **Real-World Application**: Every production React application uses component. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in React applications come from misunderstanding component. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning component fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand component thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse component with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between component and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with component, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nDropbox uses file upload components to let users drag and drop files. The component shows upload progress, handles multiple files, and validates file types and sizes before uploading. component extensively in their React applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see component in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for component-check",
+      "action": "continue",
+      "next": "jsx-check"
+    },
+    {
+      "stepId": "jsx-check",
+      "mentorSays": "Do you understand JSX syntax?",
+      "choices": [
+        {
+          "label": "Yes, I understand jsx",
+          "next": "props-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "jsx-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "jsx-check-explanation",
+      "mentorSays": "JSX (JavaScript XML) is a syntax extension that lets you write HTML-like code in JavaScript. JSX gets transpiled to React.createElement() calls. It allows you to write declarative UI code that looks like HTML but is actually JavaScript.\n\n**Why It Matters to YOU:**\n\nUnderstanding jsx is essential because:\n\n1. **Foundation for Everything**: jsx is used in almost every React application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test jsx. Mastering this concept helps you answer questions confidently and demonstrate your React knowledge.\n\n3. **Real-World Application**: Every production React application uses jsx. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in React applications come from misunderstanding jsx. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning jsx fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand jsx thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse jsx with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between jsx and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with jsx, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nDropbox uses file upload components to let users drag and drop files. The component shows upload progress, handles multiple files, and validates file types and sizes before uploading. jsx extensively in their React applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see jsx in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for jsx-check",
+      "action": "continue",
+      "next": "props-check"
+    },
+    {
+      "stepId": "props-check",
+      "mentorSays": "Do you understand React props?",
+      "choices": [
+        {
+          "label": "Yes, I understand props",
+          "next": "state-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "props-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "props-check-explanation",
+      "mentorSays": "Props (properties) are how you pass data from parent components to child components in React. Props are read-only and flow down the component tree. They allow components to be reusable and configurable.\n\n**Why It Matters to YOU:**\n\nUnderstanding props is essential because:\n\n1. **Foundation for Everything**: props is used in almost every React application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test props. Mastering this concept helps you answer questions confidently and demonstrate your React knowledge.\n\n3. **Real-World Application**: Every production React application uses props. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in React applications come from misunderstanding props. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning props fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand props thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse props with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between props and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with props, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nDropbox uses file upload components to let users drag and drop files. The component shows upload progress, handles multiple files, and validates file types and sizes before uploading. props extensively in their React applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see props in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for props-check",
+      "action": "continue",
+      "next": "state-check"
+    },
+    {
+      "stepId": "state-check",
+      "mentorSays": "Do you understand React state?",
+      "choices": [
+        {
+          "label": "Yes, I understand state",
+          "next": "event-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "state-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "state-check-explanation",
+      "mentorSays": "State in React is data that can change over time. When state changes, React re-renders the component. Use the useState hook to manage state in functional components. State is local to the component unless lifted up or shared via context.\n\n**Why It Matters to YOU:**\n\nUnderstanding state is essential because:\n\n1. **Foundation for Everything**: state is used in almost every React application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test state. Mastering this concept helps you answer questions confidently and demonstrate your React knowledge.\n\n3. **Real-World Application**: Every production React application uses state. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in React applications come from misunderstanding state. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning state fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand state thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse state with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between state and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with state, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nDropbox uses file upload components to let users drag and drop files. The component shows upload progress, handles multiple files, and validates file types and sizes before uploading. state extensively in their React applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see state in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for state-check",
+      "action": "continue",
+      "next": "event-check"
+    },
+    {
+      "stepId": "event-check",
+      "mentorSays": "Do you understand event handling in React?",
+      "choices": [
+        {
+          "label": "Yes, I understand event",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, please explain",
+          "next": "event-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "event-check-explanation",
+      "mentorSays": "Event handling in React uses synthetic events that wrap native browser events. You attach event handlers like onClick to JSX elements. React normalizes events across browsers and provides a consistent API.\n\n**Why It Matters to YOU:**\n\nUnderstanding event is essential because:\n\n1. **Foundation for Everything**: event is used in almost every React application. Without understanding it, you'll struggle with more advanced concepts.\n\n2. **Interview Success**: Technical interviews frequently test event. Mastering this concept helps you answer questions confidently and demonstrate your React knowledge.\n\n3. **Real-World Application**: Every production React application uses event. Understanding it means you can read and contribute to real codebases.\n\n4. **Prevents Common Bugs**: Many bugs in React applications come from misunderstanding event. Learning it properly saves hours of debugging.\n\n**Common Beginner Mistakes:**\n\n❌ **Mistake 1: Not Understanding the Basics**\nMany beginners try to skip learning event fundamentals and jump to advanced topics. This creates gaps in understanding that cause problems later.\n\n✓ **Correct Approach:**\nTake time to understand event thoroughly. Practice with simple examples before moving to complex scenarios.\n\n❌ **Mistake 2: Confusing Similar Concepts**\nBeginners often confuse event with related concepts. This leads to using the wrong approach for the problem.\n\n✓ **Correct Approach:**\nUnderstand the differences between event and related concepts. Know when to use each one.\n\n**Troubleshooting Tip:**\n\nIf you're struggling with event, start with the simplest possible example. Build it step by step, and only add complexity once you understand each part. Read error messages carefully - they often point directly to the issue.\n\n**Real-World Use:**\n\nDropbox uses file upload components to let users drag and drop files. The component shows upload progress, handles multiple files, and validates file types and sizes before uploading. event extensively in their React applications. It's part of the foundation that makes modern web applications work.\n\n**Next Step:**\n\nIn the upcoming coding steps, you'll see event in action. Pay attention to how it's used in context - this will help you understand not just what it is, but how to use it effectively.",
+      "example": "// Example for event-check",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Now let's build the File Upload solution step by step.\n\n**What We're Doing:**\nImporting the necessary React modules and dependencies. This step is crucial for building a complete, functional React component.\n\n**Why This Matters:**\nWithout proper imports, our React component won't have access to the features we need. This is the foundation that makes everything else possible. It's the difference between a static page and an interactive, dynamic React application.\n\n**What's Happening:**\nWe're bringing in React core functionality that we'll use throughout our component. Think of imports as gathering the tools we need before we start building. We're following React conventions to ensure our code is maintainable and follows industry standards.\n\n**Think of It Like:**\nIf the template/JSX is the face of your component that users see, this step is building the brain that makes decisions and controls behavior. Just like your brain processes information and decides how to react, this code processes data and controls what users see.\n\n**Look For:**\nThe `import` statements at the top of the file. These tell React what features we're using. Understanding this syntax helps you read and write React code more effectively.",
+      "action": "continue",
+      "next": "coding-step-1-js"
+    },
+    {
+      "stepId": "coding-step-1-js",
+      "mentorSays": "**Step 1: importing necessary modules and dependencies\n\n**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Why This Matters:**\nThis code is necessary because it importing necessary modules and dependencies. Without it, our component wouldn't work correctly.\n\n**What's Happening:**\nimporting necessary modules and dependencies following React best practices. This ensures our code is maintainable and follows industry standards.\n\n**Look For:**\nPay attention to the syntax and structure. Notice how this connects to previous steps and sets up the next steps.",
+      "example": "import React from 'react';\nimport { useState } from 'react';  // If needed",
+      "action": "continue",
+      "next": "coding-step-2-js"
+    },
+    {
+      "stepId": "coding-step-2-js",
+      "mentorSays": "**Step 2: creating the component function\n\n**What We're Doing:**\nCreating the component function to add this functionality to our component.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this builds on previous steps.",
+      "example": "function fileupload() {\n  // Component body\n}",
+      "action": "continue",
+      "next": "coding-step-3-js"
+    },
+    {
+      "stepId": "coding-step-3-js",
+      "mentorSays": "**Step 3: importing React modules\n\n**Think of It Like:**\nJust like adding a key ingredient to a recipe, this step adds importing React modules that makes everything work together.\n\n**What We're Doing:**\nImporting react modules following React best practices.\n\n**Why This Matters:**\nWithout this step, our component would be incomplete.",
+      "example": "// Step 3 implementation\n// // Complete React solution for: File Upload\nimport React, { useState } from 'react';\n\nfunction Compo",
+      "action": "continue",
+      "next": "coding-step-4-js"
+    },
+    {
+      "stepId": "coding-step-4-js",
+      "mentorSays": "**Step 4: importing React modules\n\n**What's Happening:**\nWe're importing React modules to implement this part of the solution. This follows React conventions and ensures our code is maintainable.\n\n**Look For:**\nPay attention to the syntax and how it connects to what we built before.",
+      "example": "// Step 4 implementation\n// // Complete React solution for: File Upload\nimport React, { useState } from 'react';\n\nfunction Compo",
+      "action": "continue",
+      "next": "coding-step-5-js"
+    },
+    {
+      "stepId": "coding-step-5-js",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Think of It Like:**\nJust like building a house, this step adds a crucial piece that makes everything work together.\n\n**Why This Matters:**\nWithout this step, our solution would be incomplete.",
+      "example": "// Step 5 implementation\n// // Complete React solution for: File Upload\nimport React, { useState } from 'react';\n\nfunction Compo",
+      "action": "continue",
+      "next": "coding-step-6-js"
+    },
+    {
+      "stepId": "coding-step-6-js",
+      "mentorSays": "**Step 6: importing React modules\n\n**What We're Doing:**\nImporting react modules to add this functionality to our component.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this builds on previous steps.",
+      "example": "// Step 6 implementation\n// // Complete React solution for: File Upload\nimport React, { useState } from 'react';\n\nfunction Compo",
+      "action": "continue",
+      "next": "coding-step-7-js"
+    },
+    {
+      "stepId": "coding-step-7-js",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step builds on what we've created so far.\n\n**Why This Matters:**\nThis step is essential for the solution to work correctly.\n\n**Look For:**\nNotice how this connects to previous steps.",
+      "example": "// Complete React solution for: File Upload\nimport React, { useState } from 'react';\n\nfunction Component() {\n  // Implementation here\n  return <div>Solution</div>;\n}\n\nexport default Component;",
+      "action": "continue",
+      "next": "coding-complete-js"
+    },
+    {
+      "stepId": "coding-complete-js",
+      "mentorSays": "**What We're Doing:**\nimporting necessary modules and dependencies. This step is crucial for building a complete, functional React component.\n\n**Why This Matters:**\nThis code importing necessary modules and dependencies. It's the difference between a static page and an interactive, dynamic React application.\n\n**What's Happening:**\nWe're importing necessary modules and dependencies following React patterns and best practices. This ensures our code is maintainable and follows industry standards.\n\n**Look For:**\nNotice the syntax and how this connects to what we built before. Understanding this helps you read and write React code more effectively.",
+      "example": "// Complete React solution for: File Upload\nimport React, { useState } from 'react';\n\nfunction Component() {\n  // Implementation here\n  return <div>Solution</div>;\n}\n\nexport default Component;",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Perfect! Now let's test your component and make sure everything works correctly.\n\n**Testing Steps:**\n\n1. **Save your component:**\n   - Create a file for your component (e.g., `file-upload.js`)\n   - Paste your component code\n   - Save the file\n\n2. **Import in App.js:**\n   ```javascript\n   import fileupload from './file-upload';\n   ```\n\n3. **Use the component:**\n   ```javascript\n   function App() {\n     return (\n       <div className=\"App\">\n         <fileupload />\n       </div>\n     );\n   }\n   ```\n\n4. **Run your React app:**\n   ```bash\n   npm start\n   ```\n\n5. **Verify in browser:**\n   - Open http://localhost:3000\n   - You should see your component working!\n\n**Expected Result:**\nYour component should work as expected based on the challenge requirements: File handling, FormData\n\n**Common Issues and Solutions:**\n\n**Problem 1: Component doesn't appear**\n```\nSymptom: Nothing shows on screen\nSolution: Check that you exported with 'export default'\n         Check that import path is correct\n         Check component name matches (PascalCase)\n         Verify component is used in App.js\n```\n\n**Problem 2: Syntax error in JSX**\n```\nSymptom: Red error in console\nSolution: Make sure all tags are closed: <div></div> or <div />\n         Check for missing closing parenthesis in return\n         Verify all quotes are matched\n         Check JSX syntax is correct\n```\n\n**Problem 3: Import error**\n```\nSymptom: \"Module not found\"\nSolution: Check file path in import statement\n         Make sure filename matches exactly\n         Check file is in correct directory\n         Verify file extension is .js or .jsx\n```\n\n**Problem 4: State/Props not working**\n```\nSymptom: Data not displaying or updating\nSolution: Check state is initialized correctly\n         Verify setter function is used (not direct mutation)\n         Check props are passed correctly from parent\n         Verify prop names match\n```\n\n**Problem 5: Event handler not working**\n```\nSymptom: Click/event doesn't trigger\nSolution: Check event name is camelCase: onClick not onclick\n         Verify handler function is passed (not called)\n         Check function is defined correctly\n         Verify event handler syntax\n```\n\n**Try These Experiments:**\n\nOnce it's working, try modifying:\n- Add more features or enhancements\n- Test with different data\n- Add error handling\n- Improve styling\n- Add accessibility features\n\n**Success Indicators:**\n\n✅ Component renders without errors\n✅ All functionality works correctly\n✅ Code follows React best practices\n✅ No console errors\n✅ Component is reusable and maintainable\n\nYou've successfully completed the File Upload challenge!",
+      "example": "// Complete React solution for: File Upload\nimport React, { useState } from 'react';\n\nfunction Component() {\n  // Implementation here\n  return <div>Solution</div>;\n}\n\nexport default Component;",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "🎉 Well done! You've completed the File Upload challenge!\n\n**Key Takeaways:**\n- You've mastered File handling, FormData\n- You understand how to implement File Upload in React\n- You've applied React best practices and patterns\n- You can handle this type of interview question confidently\n- You're ready to use this pattern in real-world applications\n\n**What You've Learned:**\n- How to implement File Upload correctly\n- React patterns and best practices for this concept\n- Problem-solving approaches for React challenges\n- Code organization and structure\n- Edge case handling\n\n**Next Steps:**\n- Practice similar React concepts\n- Try variations of this challenge\n- Explore more advanced React patterns\n- Build real-world applications using this pattern\n- Study related React concepts\n\n**Related Challenges:**\n- Practice related React concepts\n- Try more complex variations\n- Explore advanced patterns\n- Build complete features using this pattern\n\n**Time Complexity:** Varies based on implementation\n**Space Complexity:** Varies based on implementation\n\nKeep practicing! This pattern is essential for building React applications.",
+      "action": "continue"
+    }
+  ]
+}
