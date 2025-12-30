@@ -1,0 +1,277 @@
+{
+  "id": "two-sum",
+  "title": "Two Sum",
+  "pattern": "hash-map",
+  "difficulty": "easy",
+  "languages": [
+    "javascript",
+    "python",
+    "java",
+    "cpp",
+    "typescript"
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Two Sum lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in tons of coding interviews: **using hash maps for instant lookups**.\n\nAfter this, you'll be able to:\n- Recognize when a problem needs fast lookups\n- Use hash maps to avoid checking every pair of items\n- Build code step-by-step from scratch\n\nLet's dive in!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Two Sum problem is asking.\n\nImagine you're shopping and you have exactly $9 in your pocket. You see these items with prices:\n\nItem 1: $2\nItem 2: $7\nItem 3: $11\nItem 4: $15\n\nYour challenge: Find TWO items that cost exactly $9 together.\n\nLooking at the list:\n- Item 1 ($2) + Item 2 ($7) = $9 ✓\n\nSo the answer is: **Item 1 and Item 2** (positions 1 and 2).\n\nIn programming terms:\nprices = [2, 7, 11, 15]\nbudget = 9\nAnswer: positions 0 and 1 (remember, we start counting at 0!)\n\nMake sense so far?",
+      "example": "nums = [2, 7, 11, 15], target = 9\n\nFind two numbers that sum to 9:\n2 + 7 = 9 ✓\n\nIndices:\n- Index 0 has value 2\n- Index 1 has value 7\n\nAnswer: [0, 1]",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Great! Now here's the interesting part:\n\n**How would YOU find those two items?**\n\nThink about it for a moment. If you had that list of prices in front of you, what would your brain naturally do to find two that add up to $9?\n\nThere's no wrong answer here - I'm curious about your intuition!",
+      "choices": [
+        {
+          "label": "Check every possible pair",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Remember prices I've seen, check if I need any",
+          "next": "explore-hashmap"
+        },
+        {
+          "label": "Sort prices first, then search",
+          "next": "explore-sort"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-brute-force"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "**Excellent thinking!** 🎯 You've just discovered the \"brute force\" approach.\n\nHere's why your intuition is good:\n✅ It's simple and easy to understand\n✅ It WORKS - you'll definitely find the answer\n✅ It's the first thing professional programmers think of too!\n\nYour Strategy:\n1. Take the first item ($2)\n2. Check it with every other item ($7, $11, $15)\n3. Take the second item ($7)\n4. Check it with every remaining item ($11, $15)\n5. Keep going until you find a match\n\nLet's trace through:\nCheck: $2 + $7 = $9 ✓ Found it!\nAnswer: positions 0 and 1\n\n**Congratulations! 🎉 This solution works perfectly.**\n\nNow, here's an interesting question: Is there a way to find the answer WITHOUT checking every single pair?\n\nSpoiler: There is! And it's pretty clever.",
+      "action": "continue",
+      "next": "explore-hashmap"
+    },
+    {
+      "stepId": "explore-sort",
+      "mentorSays": "That's a clever approach! However, sorting changes the indices, so we'd need to track original indices. Also, sorting takes extra time.\n\nThere's a more efficient approach using a hash map that preserves indices. Would you like to learn that?",
+      "action": "continue",
+      "next": "explore-hashmap"
+    },
+    {
+      "stepId": "explore-hashmap",
+      "mentorSays": "Alright, here's the clever trick!\n\nImagine you're back at the store with $9. But this time, you have a **notebook**.\n\nAs you look at each item's price, you write down:\n- What you saw\n- What you're looking for\n\n**Item 1: $2**\n- You think: \"I need $7 to make $9\" (because $9 - $2 = $7)\n- You look in your notebook: \"Have I seen $7 yet?\"\n- Nope, notebook is empty\n- You write: \"Saw $2 at position 0\"\n\n**Item 2: $7**\n- You think: \"I need $2 to make $9\" (because $9 - $7 = $2)\n- You look in your notebook: \"Have I seen $2?\"\n- **YES!** It was at position 0!\n- Answer found: positions 0 and 1 ✓\n\n**That's it! Just 2 checks instead of 6!**\n\nThe \"notebook\" is what programmers call a **hash map** (or object in JavaScript).\n\nMake sense so far?",
+      "example": "nums = [2, 7, 11, 15], target = 9\n\ni=0: nums[0]=2, need 7\n  7 not in notebook\n  Write: saw 2 at position 0\n\ni=1: nums[1]=7, need 2\n  2 in notebook at position 0!\n  Return [0, 1] ✓",
+      "action": "continue",
+      "next": "hashmap-confirm"
+    },
+    {
+      "stepId": "hashmap-confirm",
+      "mentorSays": "Perfect! Let's make sure you've got the key insight:\n\n**Brute Force:** Check every pair\n- Item 1 with Item 2, Item 3, Item 4...\n- Lots of checking!\n\n**Hash Map:** Remember what you've seen\n- See $2 → Write it down, keep looking for $7\n- See $7 → Check notebook, found $2!\n- Done!\n\nThe magic is: **Instead of looking backward at everything you've seen, you just check your notebook once.**\n\nGot it?",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Excellent! You understand the hash map strategy. Now let's turn this idea into actual code!\n\nWhich programming language would you like to use?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start coding in JavaScript, let me make sure you have the building blocks.\n\nTo implement this solution, you'll need to know:\n- **Arrays** - How to store and access the list of prices\n- **Loops** - How to go through each price one by one\n- **Objects** - How to create the \"notebook\" (hash map)\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all three",
+          "next": "coding-function-js"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "No problem! Let's start with **arrays** in JavaScript.\n\nAn array is like a numbered list where you can store multiple values. Think of it like a row of boxes, each with a number:\n\nBox 0: $2\nBox 1: $7\nBox 2: $11\nBox 3: $15\n\nIn JavaScript, we write it like this:\nlet prices = [2, 7, 11, 15];\n\n**Important:** The first box is numbered 0, not 1! This is called \"zero-indexing.\"\n\nTo get a value from a specific box, we use square brackets:\nprices[0] → 2 (first box)\nprices[1] → 7 (second box)\nprices[3] → 15 (fourth box)\n\nReady to practice?",
+      "example": "let prices = [2, 7, 11, 15];\n\nprices[0] = 2\nprices[1] = 7\nprices[2] = 11\nprices[3] = 15",
+      "action": "continue",
+      "next": "practice-arrays-js"
+    },
+    {
+      "stepId": "practice-arrays-js",
+      "mentorSays": "Let's practice! Given this array:\n\nlet numbers = [10, 20, 30, 40];\n\n**Question:** What is numbers[2]?",
+      "choices": [
+        {
+          "label": "10",
+          "next": "arrays-incorrect-js",
+          "feedback": "incorrect"
+        },
+        {
+          "label": "20",
+          "next": "arrays-incorrect-js",
+          "feedback": "incorrect"
+        },
+        {
+          "label": "30",
+          "next": "arrays-correct-js",
+          "feedback": "correct"
+        },
+        {
+          "label": "40",
+          "next": "arrays-incorrect-js",
+          "feedback": "incorrect"
+        }
+      ]
+    },
+    {
+      "stepId": "arrays-correct-js",
+      "mentorSays": "Perfect! 🎉 numbers[2] is 30 because index 2 is the third position (we start counting at 0).\n\nYou've got it! ✓\n\nYou now understand:\n- Arrays store multiple values in order\n- Indexes start at 0\n- Use array[index] to access values\n\nReady to learn about loops?",
+      "action": "continue",
+      "next": "teach-loops-js"
+    },
+    {
+      "stepId": "arrays-incorrect-js",
+      "mentorSays": "Not quite! Let's look at it together:\n\nIndex:  0    1    2    3\nValue:  10   20   30   40\n\nnumbers[2] means \"give me the value at index 2.\"\n\nIndex 2 points to the third box, which contains 30.\n\nMake sense now?",
+      "action": "continue",
+      "next": "arrays-correct-js"
+    },
+    {
+      "stepId": "teach-loops-js",
+      "mentorSays": "Awesome! Now let's talk about **loops**.\n\nA loop is a way to repeat the same action multiple times without writing the same code over and over.\n\nHere's what a loop looks like in JavaScript:\n\nfor (let i = 0; i < 4; i++) {\n  // Do something with index i\n}\n\nThis means:\n- **Start:** i = 0 (start at position 0)\n- **Keep going while:** i < 4 (stop before position 4)\n- **After each round:** i++ (add 1 to i)\n\nSo it runs 4 times: when i is 0, then 1, then 2, then 3.\n\nMake sense?",
+      "action": "continue",
+      "next": "teach-console-js"
+    },
+    {
+      "stepId": "teach-console-js",
+      "mentorSays": "Before we practice, a quick note:\n\nIn examples, you'll see console.log(). This needs a quick explanation:\n\n**What is the console?**\nThe console is like a \"message window\" in your browser where JavaScript can display information.\n\n**Where can you see it?**\n- In Chrome/Edge: Press F12 or right-click → \"Inspect\" → Click \"Console\" tab\n\n**What does console.log() do?**\nconsole.log(i) means \"display the value of i in the console window.\"\n\nYou don't need to master the console to solve Two Sum, but you'll see it everywhere.\n\nReady to practice loops?",
+      "action": "continue",
+      "next": "practice-loops-js"
+    },
+    {
+      "stepId": "practice-loops-js",
+      "mentorSays": "Let's practice! Look at this loop:\n\nfor (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\n**Question:** What will this display in the console?",
+      "choices": [
+        {
+          "label": "0, 1, 2",
+          "next": "loops-correct-js",
+          "feedback": "correct"
+        },
+        {
+          "label": "1, 2, 3",
+          "next": "loops-incorrect-js",
+          "feedback": "incorrect"
+        },
+        {
+          "label": "0, 1, 2, 3",
+          "next": "loops-incorrect-js",
+          "feedback": "incorrect"
+        }
+      ]
+    },
+    {
+      "stepId": "loops-correct-js",
+      "mentorSays": "Perfect! 🎉 It displays 0, 1, 2 because:\n- Starts at i = 0\n- Stops when i < 3 (so it runs while i is 0, 1, 2)\n\nYou've got it! Ready to learn about objects?",
+      "action": "continue",
+      "next": "teach-objects-js"
+    },
+    {
+      "stepId": "loops-incorrect-js",
+      "mentorSays": "Not quite! Remember:\n- Starts at i = 0\n- Runs while i < 3\n- So it runs when i is 0, 1, and 2\n\nIt displays: 0, 1, 2",
+      "action": "continue",
+      "next": "loops-correct-js"
+    },
+    {
+      "stepId": "teach-objects-js",
+      "mentorSays": "Great! Now let's learn about **objects** - our \"notebook\"!\n\nAn object stores key-value pairs, like a real dictionary:\n\nlet notebook = {};\nnotebook[\"apple\"] = 5;\nnotebook[\"banana\"] = 3;\n\nNow:\n- notebook[\"apple\"] gives us 5\n- notebook[\"banana\"] gives us 3\n\nFor Two Sum, we'll use it to remember:\n- Key: the number we saw (like 2)\n- Value: the position where we saw it (like 0)\n\nReady to start coding?",
+      "example": "let map = {};\nmap[2] = 0;  // Saw number 2 at position 0\nmap[7] = 1;  // Saw number 7 at position 1\n\nmap[2]  // Returns 0",
+      "action": "continue",
+      "next": "coding-function-js"
+    },
+    {
+      "stepId": "coding-function-js",
+      "mentorSays": "Perfect! Let's code the hash map solution step by step.\n\nRemember when we learned about functions? Now we're going to create one for Two Sum.\n\nOur function signature:",
+      "example": "function twoSum(nums, target) {\n  \n}",
+      "action": "continue",
+      "next": "coding-map-js"
+    },
+    {
+      "stepId": "coding-map-js",
+      "mentorSays": "Great! Now let's add our \"notebook\" - the object that will remember what we've seen.",
+      "example": "function twoSum(nums, target) {\n  let map = {};\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Perfect! Now we need to look at each number in the array, one by one.\n\nLet's add the loop:\n\n**New syntax:** nums.length gives us how many items are in the array.",
+      "example": "function twoSum(nums, target) {\n  let map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-complement-js"
+    },
+    {
+      "stepId": "coding-complement-js",
+      "mentorSays": "Excellent! Now inside the loop, we calculate: \"What number do I need to find?\"",
+      "example": "function twoSum(nums, target) {\n  let map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    let complement = target - nums[i];\n  }\n}",
+      "action": "continue",
+      "next": "coding-check-js"
+    },
+    {
+      "stepId": "coding-check-js",
+      "mentorSays": "Great! Now comes the clever part: checking our \"notebook\".\n\n**New syntax:** The word 'in' checks if a key exists in an object.\n\n**return** means \"give back this answer and stop the function\".",
+      "example": "function twoSum(nums, target) {\n  let map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    let complement = target - nums[i];\n    \n    if (complement in map) {\n      return [map[complement], i];\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-store-js"
+    },
+    {
+      "stepId": "coding-store-js",
+      "mentorSays": "Perfect! Now, what if we DON'T find the complement? We write it in the notebook!",
+      "example": "function twoSum(nums, target) {\n  let map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    let complement = target - nums[i];\n    \n    if (complement in map) {\n      return [map[complement], i];\n    }\n    \n    map[nums[i]] = i;\n  }\n}",
+      "action": "continue",
+      "next": "coding-trace-js"
+    },
+    {
+      "stepId": "coding-trace-js",
+      "mentorSays": "Excellent! Now let's watch our complete solution work step-by-step.\n\nWith nums = [2, 7, 11, 15] and target = 9:\n\n**Round 1: i = 0**\nCurrent: nums[0] = 2\nComplement: 9 - 2 = 7\nIs 7 in map? No (empty)\nWrite: map[2] = 0\n\n**Round 2: i = 1**\nCurrent: nums[1] = 7\nComplement: 9 - 7 = 2\nIs 2 in map? YES! map[2] = 0\nReturn [0, 1] ✓\n\nSee how the notebook helped us?",
+      "example": "function twoSum(nums, target) {\n  let map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    let complement = target - nums[i];\n    \n    if (complement in map) {\n      return [map[complement], i];\n    }\n    \n    map[nums[i]] = i;\n  }\n}",
+      "action": "continue",
+      "next": "coding-test-js"
+    },
+    {
+      "stepId": "coding-test-js",
+      "mentorSays": "Perfect! Now let's test it!\n\nClick **\"▶ Run Code\"** to test with our example.",
+      "example": "function twoSum(nums, target) {\n  let map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    let complement = target - nums[i];\n    \n    if (complement in map) {\n      return [map[complement], i];\n    }\n    \n    map[nums[i]] = i;\n  }\n}\n\n// Test it!\nlet result = twoSum([2, 7, 11, 15], 9);\nconsole.log(result);  // Should display: [0, 1]",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved the Two Sum problem using the hash map approach!\n\n**What you've mastered:**\n✓ Using hash maps for O(n) lookup instead of checking every pair\n✓ The pattern: \"remember what you've seen to avoid rechecking\"\n✓ Building a complete solution from strategy to working code\n\n**This pattern shows up everywhere:**\n- Finding duplicates in an array\n- Checking if two strings are anagrams\n- Counting character frequencies\n- Many more problems!\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ]
+}
