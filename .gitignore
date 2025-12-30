@@ -42,3 +42,19 @@ coverage/
 .cache/
 temp/
 tmp/
+
+# Temporary/utility scripts (don't commit)
+dir.bat
+fix-pages.py
+genLesson.py
+status.txt
+temp_status.txt
+tree.txt
+consolidate.py
+
+# Environment example files (use as templates, don't commit)
+.env.example
+
+# Any other temp/test files
+*_temp.txt
+*_test.py
