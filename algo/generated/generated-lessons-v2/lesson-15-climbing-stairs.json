@@ -1,0 +1,639 @@
+{
+  "id": "climbing-stairs",
+  "title": "Climbing Stairs",
+  "pattern": "dynamic programming (basic)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 15,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-15",
+    "introduces": [
+      "dynamic-programming-concept",
+      "fibonacci-pattern",
+      "overlapping-subproblems",
+      "space-optimization"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "Math.max"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "house-robber"
+    ]
+  },
+  "problemStatement": {
+    "description": "Find the number of distinct ways to climb to the top of a staircase with n steps. You can climb either 1 or 2 steps at a time.",
+    "inputs": [
+      "n: integer representing total number of steps (1 to 45)"
+    ],
+    "outputs": [
+      "Integer representing the number of distinct ways to reach the top"
+    ],
+    "examples": [
+      {
+        "input": "n = 2",
+        "output": "2",
+        "explanation": "Two ways: (1) 1 step + 1 step, (2) 2 steps. dp[2] = dp[1] + dp[0] = 1 + 1 = 2."
+      },
+      {
+        "input": "n = 3",
+        "output": "3",
+        "explanation": "Three ways: (1) 1+1+1, (2) 1+2, (3) 2+1. dp[3] = dp[2] + dp[1] = 2 + 1 = 3."
+      },
+      {
+        "input": "n = 5",
+        "output": "8",
+        "explanation": "Fibonacci sequence: dp[5] = dp[4] + dp[3] = 5 + 3 = 8. Ways: 1+1+1+1+1, 1+1+1+2, 1+1+2+1, 1+2+1+1, 1+2+2, 2+1+1+1, 2+1+2, 2+2+1."
+      }
+    ],
+    "constraints": [
+      "1 <= n <= 45"
+    ],
+    "realWorldUse": [
+      "Counting paths and combinations",
+      "Fibonacci sequence applications",
+      "Optimization problems with choices",
+      "Dynamic programming introduction"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "This is a classic dynamic programming problem. To reach step n, you can come from step n-1 (taking 1 step) or step n-2 (taking 2 steps). This creates overlapping subproblems that DP solves efficiently.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks for number of ways/paths → think dynamic programming",
+      "SIGNAL 2: Can make choices (1 step or 2 steps) → DP with state transitions",
+      "SIGNAL 3: Optimal substructure (ways to n depends on ways to n-1 and n-2) → DP pattern"
+    ],
+    "patternRules": [
+      "If problem involves counting ways/paths with choices → use dynamic programming",
+      "When you see 'number of ways', 'distinct paths', or 'combinations' → consider DP",
+      "If problem follows Fibonacci pattern → use DP with space optimization"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - we need to count all possible ways, not make optimal choices.",
+      "bruteForce": "Recursive solution works but has overlapping subproblems, making it O(2^n). DP is O(n) and optimal.",
+      "alternative": "Mathematical formula (Fibonacci) works but DP approach teaches the pattern better."
+    }
+  },
+  "coreInvariant": {
+    "statement": "dp[i] represents the number of distinct ways to reach step i, where dp[i] = dp[i-1] + dp[i-2] for i > 2.",
+    "explanation": "This invariant holds because to reach step i, you must come from step i-1 (taking 1 step) or step i-2 (taking 2 steps). The number of ways to reach i is the sum of ways to reach i-1 and i-2. This creates the Fibonacci sequence.",
+    "whyItMatters": "This invariant guarantees correctness: after computing dp[i], it contains the correct number of ways to reach step i. The final answer dp[n] is the number of ways to reach the top."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "dp[i]",
+        "meaning": "Number of distinct ways to reach step i",
+        "indexing": "1-indexed: dp[1] = ways to reach step 1, dp[n] = ways to reach step n"
+      },
+      {
+        "name": "prev",
+        "meaning": "Ways to reach previous step (for space optimization)",
+        "indexing": "Starts at dp[1] = 1"
+      },
+      {
+        "name": "curr",
+        "meaning": "Ways to reach current step (for space optimization)",
+        "indexing": "Starts at dp[2] = 2"
+      }
+    ],
+    "baseCases": [
+      "dp[1] = 1 (one way to reach step 1: take 1 step)",
+      "dp[2] = 2 (two ways to reach step 2: 1+1 or 2)",
+      "For space-optimized: prev = 1, curr = 2"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "For step i from 3 to n:",
+        "transition": "dp[i] = dp[i-1] + dp[i-2]",
+        "explanation": "To reach step i, come from step i-1 (1 step) or step i-2 (2 steps). Sum the ways.",
+        "example": "dp[3] = dp[2] + dp[1] = 2 + 1 = 3"
+      },
+      {
+        "condition": "Space-optimized version:",
+        "transition": "next = prev + curr, then prev = curr, curr = next",
+        "explanation": "Only need previous two values, not entire array. Update variables for next iteration.",
+        "example": "For step 3: next = 1 + 2 = 3, prev = 2, curr = 3"
+      }
+    ],
+    "decisionTree": {
+      "root": "For each step i, calculate ways to reach it",
+      "branches": [
+        "If i == 1: return 1",
+        "If i == 2: return 2",
+        "Else: dp[i] = dp[i-1] + dp[i-2]",
+        "After computing all: return dp[n]"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "n = 5",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Base cases: dp[1] = 1, dp[2] = 2",
+        "state": "dp[1] = 1, dp[2] = 2",
+        "logic": "One way to reach step 1, two ways to reach step 2",
+        "result": "Base cases established"
+      },
+      {
+        "step": 2,
+        "description": "i=3: dp[3] = dp[2] + dp[1] = 2 + 1 = 3",
+        "state": "dp[3] = 3",
+        "logic": "Come from step 2 (take 1 step) or step 1 (take 2 steps)",
+        "result": "dp[3] = 3"
+      },
+      {
+        "step": 3,
+        "description": "i=4: dp[4] = dp[3] + dp[2] = 3 + 2 = 5",
+        "state": "dp[4] = 5",
+        "logic": "Come from step 3 or step 2",
+        "result": "dp[4] = 5"
+      },
+      {
+        "step": 4,
+        "description": "i=5: dp[5] = dp[4] + dp[3] = 5 + 3 = 8",
+        "state": "dp[5] = 8",
+        "logic": "Come from step 4 or step 3",
+        "result": "dp[5] = 8, return 8"
+      }
+    ],
+    "keyInsight": "This is the Fibonacci sequence! Each step's ways depend on the previous two steps. Dynamic programming avoids recalculating overlapping subproblems, transforming O(2^n) recursive solution into O(n) iterative solution."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Using recursion without memoization",
+      "symptom": "O(2^n) time complexity, very slow for large n",
+      "fix": "Use iterative DP or memoized recursion to avoid recalculating subproblems",
+      "example": "Recursive climbStairs(n) = climbStairs(n-1) + climbStairs(n-2) recalculates same values many times"
+    },
+    {
+      "mistake": "Wrong base cases",
+      "symptom": "Wrong answer for n=1 or n=2",
+      "fix": "dp[1] = 1 (one way: take 1 step), dp[2] = 2 (two ways: 1+1 or 2)",
+      "example": "If dp[1] = 1 and dp[2] = 1, you'll get wrong values for n > 2"
+    },
+    {
+      "mistake": "Not using space optimization",
+      "symptom": "Uses O(n) space unnecessarily when O(1) is possible",
+      "fix": "Use two variables (prev, curr) instead of entire dp array",
+      "example": "For large n, dp array uses O(n) space, but only need last two values"
+    },
+    {
+      "mistake": "Off-by-one errors in indexing",
+      "symptom": "Wrong answer due to 0-indexed vs 1-indexed confusion",
+      "fix": "Be consistent: if dp[i] = ways to reach step i, then dp[1] and dp[2] are base cases",
+      "example": "If using 0-indexed, dp[0]=1, dp[1]=2, then dp[i] = dp[i-1] + dp[i-2]"
+    },
+    {
+      "mistake": "Not handling edge case n=1",
+      "symptom": "Error or wrong answer when n=1",
+      "fix": "Check if n <= 2 and return directly: if n==1 return 1, if n==2 return 2",
+      "example": "For n=1, should return 1 without entering loop"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a dynamic programming problem following the Fibonacci pattern.",
+      "",
+      "I'll use DP with space optimization:",
+      "- Base cases: prev = 1 (ways to step 1), curr = 2 (ways to step 2)",
+      "- For i from 3 to n:",
+      "  - next = prev + curr",
+      "  - prev = curr",
+      "  - curr = next",
+      "- Return curr (ways to reach step n)",
+      "",
+      "Time complexity: O(n) - single pass through steps",
+      "Space complexity: O(1) - only using two variables",
+      "",
+      "Edge cases:",
+      "- n = 1: return 1",
+      "- n = 2: return 2",
+      "- This follows Fibonacci sequence: 1, 2, 3, 5, 8, 13, ..."
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Climbing Stairs (only 1 step at a time)",
+      "approachChange": "Can only take 1 step, so only one way to reach each step",
+      "solution": "Return 1 for all n (only one way: 1+1+1+...) or return n (if counting steps differently)"
+    },
+    "harder": {
+      "problem": "Climbing Stairs (can take 1, 2, or 3 steps)",
+      "approachChange": "More choices, recurrence becomes dp[i] = dp[i-1] + dp[i-2] + dp[i-3]",
+      "solution": "Base cases: dp[1]=1, dp[2]=2, dp[3]=4. Then dp[i] = dp[i-1] + dp[i-2] + dp[i-3]. Space-optimized needs 3 variables."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "If n == 1: return 1"
+    },
+    {
+      "id": "ps2",
+      "text": "If n == 2: return 2"
+    },
+    {
+      "id": "ps3",
+      "text": "Initialize prev = 1, curr = 2"
+    },
+    {
+      "id": "ps4",
+      "text": "For i from 3 to n:"
+    },
+    {
+      "id": "ps5",
+      "text": "  next = prev + curr"
+    },
+    {
+      "id": "ps6",
+      "text": "  prev = curr"
+    },
+    {
+      "id": "ps7",
+      "text": "  curr = next"
+    },
+    {
+      "id": "ps8",
+      "text": "Return curr"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great work conquering valid parentheses! Now let's tackle another classic problem: Climbing Stairs. This is where we'll dive into the powerful world of dynamic programming - a technique that breaks down complex problems into simpler subproblems and builds solutions step by step. Instead of recalculating the same values over and over, we'll learn to store and reuse our work efficiently.\n\nBy mastering this lesson, you'll gain three essential skills:\n• **Pattern Recognition** - Spot when a problem can be solved by combining solutions to smaller versions of itself\n• **Optimization Thinking** - Transform slow recursive solutions into lightning-fast iterative ones\n• **State Management** - Track and build upon previous results to solve increasingly complex scenarios\n\nYou're building some serious problem-solving muscles here, and dynamic programming is one of those game-changing techniques that will serve you well across countless coding challenges. Let's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Dynamic programming** - Understanding how to break problems into overlapping subproblems and store results\n- **Recurrence relations** - Ability to identify and formulate mathematical relationships between problem states\n- **Base cases** - Knowledge of defining stopping conditions for recursive or iterative solutions\n- **Memoization** - Technique for caching computed results to avoid redundant calculations\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Dynamic programming** - Understanding how to break problems into overlapping subproblems and store results\n- **Recurrence relations** - Ability to identify and formulate mathematical relationships between problem states\n- **Base cases** - Knowledge of defining stopping conditions for recursive or iterative solutions\n- **Memoization** - Technique for caching computed results to avoid redundant calculations\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Dynamic programming** - Understanding how to break problems into overlapping subproblems and store results\n- **Recurrence relations** - Ability to identify and formulate mathematical relationships between problem states\n- **Base cases** - Knowledge of defining stopping conditions for recursive or iterative solutions\n- **Memoization** - Technique for caching computed results to avoid redundant calculations\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Dynamic programming** - Understanding how to break problems into overlapping subproblems and store results\n- **Recurrence relations** - Ability to identify and formulate mathematical relationships between problem states\n- **Base cases** - Knowledge of defining stopping conditions for recursive or iterative solutions\n- **Memoization** - Technique for caching computed results to avoid redundant calculations\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Dynamic programming** - Understanding how to break problems into overlapping subproblems and store results\n- **Recurrence relations** - Ability to identify and formulate mathematical relationships between problem states\n- **Base cases** - Knowledge of defining stopping conditions for recursive or iterative solutions\n- **Memoization** - Technique for caching computed results to avoid redundant calculations\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Climbing Stairs problem asks for.\n\n**Imagine organizing a messy bookshelf where you can only move one book at a time to its correct position.** Each book represents a step, and you can either move it one shelf up, two shelves up, or sometimes take a shortcut by moving multiple books in one efficient motion. Just like the stair-climbing algorithm counts all possible ways to reach the top step, you're calculating all the different sequences of book movements to achieve the perfectly organized shelf.\n\n# The Climbing Stairs Problem\n\n## What's the Problem?\n\nImagine you're standing at the bottom of a staircase with **n** steps, and you want to reach the top. Here's the catch: you can only take **1 step** or **2 steps** at a time. The question is: **In how many different ways can you climb to the top?**\n\nThink of it like this - at each moment, you have a choice: take one step forward, or take a big stride and go two steps at once. Every different combination of these choices gives you a unique path to the top.\n\n## Let's Walk Through n=5\n\nSay we have 5 steps. Let me show you all 8 possible ways:\n\n1. `1+1+1+1+1` (five single steps)\n2. `2+1+1+1` (big step first, then three singles)\n3. `1+2+1+1` (single, big, single, single)\n4. `1+1+2+1` (single, single, big, single)\n5. `1+1+1+2` (three singles, then big)\n6. `2+2+1` (big, big, single)\n7. `2+1+2` (big, single, big)\n8. `1+2+2` (single, big, big)\n\nThat's **8 different ways** to climb 5 steps!\n\n## Why Does This Work?\n\nHere's the beautiful insight: to get to step **n**, you must have come from either:\n- Step **(n-1)** by taking 1 step, OR\n- Step **(n-2)** by taking 2 steps\n\nSo the number of ways to reach step **n** equals:\n**ways(n) = ways(n-1) + ways(n-2)**\n\nThis creates a pattern:\n- 1 step → 1 way\n- 2 steps → 2 ways  \n- 3 steps → 3 ways\n- 4 steps → 5 ways\n- 5 steps → 8 ways\n\nNotice something? It's the Fibonacci sequence! Each number is the sum of the two before it, which makes perfect sense given our recurrence relation.\n\nThe problem is really asking: \"How many ways can you write n as a sum of 1s and 2s?\" Pretty elegant, right?",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You're climbing a staircase with n steps. Each time you can climb either 1 or 2 steps. How many distinct ways can you reach the top? For example, with 3 steps you could go: (1,1,1), (1,2), or (2,1) = 3 ways total. What's the key insight for solving this efficiently?",
+      "choices": [
+        {
+          "label": "Use recursion to try all possible combinations: count ways by recursively exploring each choice (1 step or 2 steps) at every position",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use dynamic programming with the recurrence relation: ways(n) = ways(n-1) + ways(n-2), since you can reach step n from either step n-1 (take 1 step) or step n-2 (take 2 steps)",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this approach is conceptually correct, it's extremely inefficient due to exponential time complexity O(2^n). You'll recalculate the same subproblems many times - for example, ways to reach step 5 gets computed multiple times when calculating ways to reach steps 6, 7, 8, etc. This becomes impractical for larger values of n.",
+      "action": "next",
+      "next": "overlapping-subproblems"
+    },
+    {
+      "stepId": "overlapping-subproblems",
+      "mentorSays": "### Overlapping Subproblem Visualization\n\n**Why recursion → DP transition is needed:**\n\n**Recursion tree for n=5 (showing overlapping subproblems):**\n```\n                    ways(5)\n                   /        \\\n            ways(4)          ways(3)\n           /       \\        /       \\\n      ways(3)   ways(2)  ways(2)  ways(1)\n     /      \\\nways(2)  ways(1)\n```\n\n**Notice:**\n- `ways(3)` is calculated **2 times**\n- `ways(2)` is calculated **3 times**\n- `ways(1)` is calculated **2 times**\n\n**This is wasteful!** We're solving the same subproblem multiple times.\n\n**DP solution (bottom-up):**\n```\nways(1) = 1  (calculate once)\nways(2) = 2  (calculate once)\nways(3) = ways(2) + ways(1) = 2 + 1 = 3  (calculate once)\nways(4) = ways(3) + ways(2) = 3 + 2 = 5  (calculate once)\nways(5) = ways(4) + ways(3) = 5 + 3 = 8  (calculate once)\n```\n\n**Each subproblem solved exactly once!** O(n) time instead of O(2^n).\n\n**This builds DP intuition** - we store results of subproblems to avoid recomputation.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Fibonacci DP Pattern\n\n**This problem follows the \"Fibonacci-like DP\" pattern:**\n- **Recurrence relation** - Current value depends on previous two values\n- **Base cases** - Known values for small inputs (n=1, n=2)\n- **Bottom-up DP** - Build solution from base cases upward\n- **Space optimization** - Only need last two values, not entire array\n\n**Similar problems:**\n- Fibonacci Number (same pattern)\n- Min Cost Climbing Stairs (similar with costs)\n- Decode Ways (similar recurrence structure)\n\n**Key insight:** This is essentially the Fibonacci sequence. To reach step n, you can come from step n-1 (1 step) or step n-2 (2 steps), giving ways(n) = ways(n-1) + ways(n-2).",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: dp[i] = Ways to Reach Step i\n\n**Invariant maintained throughout:**\n- **State definition:** dp[i] = number of distinct ways to reach step i\n- **Base cases:** dp[1] = 1, dp[2] = 2\n- **Recurrence:** dp[i] = dp[i-1] + dp[i-2] for i > 2\n- **Optimal substructure:** Solution for step i uses solutions for steps i-1 and i-2\n\n**Why this works:**\n- To reach step i, you must come from step i-1 (taking 1 step) or step i-2 (taking 2 steps)\n- Ways to reach i = ways to reach i-1 + ways to reach i-2\n- This creates Fibonacci sequence: 1, 2, 3, 5, 8, 13, ...\n\n**Invariant guarantee:** After computing dp[i], it contains the correct number of ways to reach step i. The final answer dp[n] is the number of ways to reach the top.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: DP State for Climbing Stairs\n\n**State variables:**\n- **`dp`** - Array where dp[i] = ways to reach step i (or just two variables for space-optimized)\n- **`n`** - Target step number\n- **`prev`** - Ways to reach previous step (for space optimization)\n- **`curr`** - Ways to reach current step (for space optimization)\n\n**State transitions (space-optimized):**\n1. **Base cases:** prev = 1 (ways to reach step 1), curr = 2 (ways to reach step 2)\n2. **Loop:** For i from 3 to n:\n   - next = prev + curr\n   - prev = curr\n   - curr = next\n3. **Result:** Return curr (ways to reach step n)\n\n**State validity:** After processing step i, curr contains ways to reach step i, prev contains ways to reach step i-1.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Pure Recursion**\n- **Why it fails:** O(2^n) time complexity due to overlapping subproblems\n- **Issue:** Recalculates same subproblems many times (e.g., ways(3) calculated multiple times)\n- **Better:** DP stores results, reducing to O(n) time\n\n**Approach 2: Try All Combinations Explicitly**\n- **Why it fails:** Exponential time and space\n- **Issue:** Generates all possible step sequences, too many combinations\n- **Better:** DP uses recurrence relation, no need to enumerate\n\n**Approach 3: Greedy (Always Take 2 Steps)**\n- **Why it fails:** Doesn't count all ways\n- **Issue:** Only finds one path, not all possible paths\n- **Better:** DP counts all possible paths correctly\n\n**Our approach wins because:** DP with recurrence relation finds all ways to climb stairs in O(n) time with O(1) space (when optimized). The Fibonacci pattern emerges naturally from the problem structure.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that the number of **ways to reach step n** equals the sum of ways to reach the two previous steps: **ways(n) = ways(n-1) + ways(n-2)**, creating a **Fibonacci-like pattern**. This works because from any step, you can only take 1 or 2 steps forward, so to reach step n, you must have come from either step n-1 (taking 1 step) or step n-2 (taking 2 steps). For example, to reach step 4: you can get there from step 3 in ways(3) different ways, plus from step 2 in ways(2) different ways, giving ways(4) = ways(3) + ways(2) = 3 + 2 = 5 total ways.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `n=5`:\n- Step 1: Base cases - f(1)=1 way, f(2)=2 ways\n- Step 2: f(3) = f(2) + f(1) = 2 + 1 = 3 ways\n- Step 3: f(4) = f(3) + f(2) = 3 + 2 = 5 ways\n- Step 4: f(5) = f(4) + f(3) = 5 + 3 = 8 ways\n- Final: **8 ways**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function that takes number of steps as parameter\n\n```javascript\nfunction climbStairs(n) {\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function climbStairs(n) {\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Handle base cases: 1 step has 1 way, 2 steps have 2 ways\n\n```javascript\nfunction climbStairs(n) {\n    if (n <= 2) return n;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    if (n <= 2) return n;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Initialize variables to track previous two Fibonacci values\n\n```javascript\nfunction climbStairs(n) {\n    if (n <= 2) return n;\n    let prev1 = 1, prev2 = 2;\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    let prev1 = 1, prev2 = 2;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Start loop from step 3 up to n to calculate remaining values\n\n```javascript\nfunction climbStairs(n) {\n    if (n <= 2) return n;\n    let prev1 = 1, prev2 = 2;\n    for (let i = 3; i <= n; i++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    for (let i = 3; i <= n; i++) {\n    }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Calculate current step ways by adding previous two values (Fibonacci pattern)\n\n```javascript\nfunction climbStairs(n) {\n    if (n <= 2) return n;\n    let prev1 = 1, prev2 = 2;\n    for (let i = 3; i <= n; i++) {\n        let current = prev1 + prev2;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        let current = prev1 + prev2;"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Update variables: shift prev1 to prev2, current becomes new prev2\n\n```javascript\nfunction climbStairs(n) {\n    if (n <= 2) return n;\n    let prev1 = 1, prev2 = 2;\n    for (let i = 3; i <= n; i++) {\n        let current = prev1 + prev2;\n        prev1 = prev2;\n        prev2 = current;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        prev1 = prev2;\n        prev2 = current;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Return the final result stored in prev2 after loop completes\n\n```javascript\nfunction climbStairs(n) {\n    if (n <= 2) return n;\n    let prev1 = 1, prev2 = 2;\n    for (let i = 3; i <= n; i++) {\n        let current = prev1 + prev2;\n        prev1 = prev2;\n        prev2 = current;\n    }\n    return prev2;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "    return prev2;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the fundamentals of dynamic programming with \"Climbing Stairs\"! You've successfully learned how to break down a problem into smaller subproblems and build up optimal solutions step by step. Next, we'll tackle the \"House Robber\" problem, where you'll apply these same DP principles to solve a more complex optimization challenge involving strategic decision-making.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,410 @@
+{
+  "id": "merge-k-sorted-lists",
+  "title": "Merge K Sorted Lists",
+  "pattern": "heap (min heap)",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 59,
+    "tier": "EXPERT",
+    "lessonOrderTag": "EXPERT-59",
+    "introduces": [
+      "k-way-merge",
+      "heap-ordering",
+      "linked-list-merge"
+    ],
+    "assumesAlreadyTaught": [
+      "heap-concept",
+      "linked-lists",
+      "merge-pattern"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "alien-dictionary"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize a min heap to store (value, list_index, node_index) tuples"
+    },
+    {
+      "id": "ps2",
+      "text": "For each non-empty list in the k sorted lists, insert the first element into the min heap"
+    },
+    {
+      "id": "ps3",
+      "text": "Create a dummy head node and set current pointer to it for building the result list"
+    },
+    {
+      "id": "ps4",
+      "text": "While the min heap is not empty:"
+    },
+    {
+      "id": "ps5",
+      "text": "    Extract the minimum element (value, list_index, node_index) from the heap"
+    },
+    {
+      "id": "ps6",
+      "text": "    Add this minimum value to the result list by updating current.next"
+    },
+    {
+      "id": "ps7",
+      "text": "    If the extracted element has a next node in its original list, insert the next element into the heap"
+    },
+    {
+      "id": "ps8",
+      "text": "    Move the current pointer forward in the result list"
+    },
+    {
+      "id": "ps9",
+      "text": "Return dummy_head.next as the merged sorted list"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle one of the classic \"multiple data structures\" problems? Today we're diving into **Merge K Sorted Lists** - and trust me, this one's going to pull together everything you've been learning!\n\nRemember how we just conquered finding the kth-largest-element using heaps? Well, that heap knowledge is about to become your secret weapon here. We're dealing with multiple sorted linked lists that need to be merged into one beautifully sorted list.\n\n**Quick Heap Refresher (Min Heap Focus):**\nA min heap is our \"smallest-first\" data structure - the root always holds the minimum value. When we pop elements, we get them in ascending order (perfect for merging!). Think of it as an automatic sorter that always hands you the next smallest item.\n\n**3 Key Skills You'll Master:**\n1. **Heap-based merging** - Using a min heap to efficiently track and extract the smallest elements across multiple lists\n2. **Pointer manipulation** - Managing multiple list pointers simultaneously while building our result\n3. **Optimal complexity thinking** - Understanding why O(N log K) beats the naive O(NK) approach\n\nThis problem beautifully combines linked list traversal with heap operations. You'll see how the heap eliminates the need to repeatedly scan through all K lists to find the next minimum - instead, we'll let the heap do that work for us!\n\nLet's merge some lists! 🚀",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "To solve this in JavaScript, you'll need:\n- **Priority_queue_operations** - Understanding how to insert, extract minimum/maximum, and maintain heap properties in a priority queue data structure\n- **Linked_list_traversal** - Ability to iterate through linked lists, access node values, and handle null pointers during list navigation\n- **Two_pointer_merge** - Knowledge of merging two sorted sequences using comparison-based merging with pointer manipulation\n- **Divide_and_conquer** - Understanding how to break down problems into smaller subproblems and combine solutions efficiently\n- **Space_time_complexity** - Ability to analyze and compare different algorithmic approaches in terms of memory usage and runtime performance\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "To solve this in Python, you'll need:\n- **Priority_queue_operations** - Understanding how to insert, extract minimum/maximum, and maintain heap properties in a priority queue data structure\n- **Linked_list_traversal** - Ability to iterate through linked lists, access node values, and handle null pointers during list navigation\n- **Two_pointer_merge** - Knowledge of merging two sorted sequences using comparison-based merging with pointer manipulation\n- **Divide_and_conquer** - Understanding how to break down problems into smaller subproblems and combine solutions efficiently\n- **Space_time_complexity** - Ability to analyze and compare different algorithmic approaches in terms of memory usage and runtime performance\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "To solve this in Java, you'll need:\n- **Priority_queue_operations** - Understanding how to insert, extract minimum/maximum, and maintain heap properties in a priority queue data structure\n- **Linked_list_traversal** - Ability to iterate through linked lists, access node values, and handle null pointers during list navigation\n- **Two_pointer_merge** - Knowledge of merging two sorted sequences using comparison-based merging with pointer manipulation\n- **Divide_and_conquer** - Understanding how to break down problems into smaller subproblems and combine solutions efficiently\n- **Space_time_complexity** - Ability to analyze and compare different algorithmic approaches in terms of memory usage and runtime performance\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "To solve this in C++, you'll need:\n- **Priority_queue_operations** - Understanding how to insert, extract minimum/maximum, and maintain heap properties in a priority queue data structure\n- **Linked_list_traversal** - Ability to iterate through linked lists, access node values, and handle null pointers during list navigation\n- **Two_pointer_merge** - Knowledge of merging two sorted sequences using comparison-based merging with pointer manipulation\n- **Divide_and_conquer** - Understanding how to break down problems into smaller subproblems and combine solutions efficiently\n- **Space_time_complexity** - Ability to analyze and compare different algorithmic approaches in terms of memory usage and runtime performance\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "To solve this in TypeScript, you'll need:\n- **Priority_queue_operations** - Understanding how to insert, extract minimum/maximum, and maintain heap properties in a priority queue data structure\n- **Linked_list_traversal** - Ability to iterate through linked lists, access node values, and handle null pointers during list navigation\n- **Two_pointer_merge** - Knowledge of merging two sorted sequences using comparison-based merging with pointer manipulation\n- **Divide_and_conquer** - Understanding how to break down problems into smaller subproblems and combine solutions efficiently\n- **Space_time_complexity** - Ability to analyze and compare different algorithmic approaches in terms of memory usage and runtime performance\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Imagine you're a wedding planner merging guest lists from multiple families, where each family has already sorted their guests alphabetically. You need to create one master alphabetical list by comparing the first name from each family's list, picking the one that comes first alphabetically, then moving to the next name on that family's list. You continue this process until all guests from all families are combined into one perfectly sorted master list.\n\n# Merge K Sorted Lists\n\nHey! So here's a classic problem that comes up a lot in interviews and real-world scenarios.\n\n## The Problem\n\nYou're given an array of `k` linked lists, where each linked list is already sorted in ascending order. Your job is to merge all of them into one single sorted linked list and return it.\n\nThink of it like having multiple sorted to-do lists and wanting to combine them into one master list that's still in order!\n\n## Example\n\nLet's say you have these three sorted lists:\n```\nlists = [[1,4,5], [1,3,4], [2,6]]\n```\n\nBreaking it down:\n- List 1: 1 → 4 → 5\n- List 2: 1 → 3 → 4  \n- List 3: 2 → 6\n\nAfter merging them all together while keeping everything sorted, you'd get:\n```\n[1,1,2,3,4,4,5,6]\n```\n\nWhich represents: 1 → 1 → 2 → 3 → 4 → 4 → 5 → 6\n\n## What makes this tricky?\n\n- You need to efficiently compare elements across multiple lists simultaneously\n- You want to avoid just concatenating everything and then sorting (that would work, but it's not optimal)\n- There are several approaches you could take - some more efficient than others!\n\nThe key insight is that since each individual list is already sorted, you can be smart about how you merge them rather than starting from scratch.\n\nWhat approach would you take to solve this?",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You have K sorted linked lists and need to merge them into one sorted list. Which approach correctly handles this problem?",
+      "choices": [
+        {
+          "label": "Merge lists one by one sequentially - take the first list, merge it with the second list, then merge that result with the third list, and so on.",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use a min heap to track the smallest unprocessed node from each list. Extract the minimum, add it to result, and push the next node from that same list back into the heap.",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this approach works, it's inefficient with O(N*K) time complexity where N is total nodes and K is number of lists. Each merge operation processes all previously merged nodes again, leading to redundant comparisons. For large K, this becomes very slow.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Heap for K-Way Merge\n\n**This problem follows the \"K-way merge with heap\" pattern:**\n- **Min heap** - Maintains smallest element from each of K lists\n- **Multi-list processing** - Process K sorted lists simultaneously\n- **Greedy selection** - Always pick the globally smallest element\n- **Pointer advancement** - After picking element, advance pointer in that list\n\n**Similar problems:**\n- Merge Two Sorted Lists (K=2 case)\n- Find K Pairs with Smallest Sums (similar heap usage)\n- Smallest Range Covering Elements from K Lists (related)\n\n**Key insight:** A min heap of size K efficiently tracks the smallest unprocessed element from each list. Extracting minimum gives us the next element in merged result, and we only need to add the next element from that same list back to the heap.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Heap Contains Smallest Unprocessed Element from Each List\n\n**Invariant maintained throughout:**\n- **Heap contents:** Heap contains exactly one element from each non-empty list\n- **Heap property:** Root is the globally smallest unprocessed element\n- **Result ordering:** Result list is sorted and contains all processed elements\n- **List pointers:** Each list pointer advances as elements are processed\n\n**Why this works:**\n- Initially, heap contains first element from each list\n- Extracting minimum gives us the globally smallest element\n- Adding next element from that list maintains the invariant\n- When a list is exhausted, we stop adding from it\n\n**Invariant guarantee:** After processing N elements, the result list contains the N smallest elements from all K lists in sorted order. The heap always contains the next candidate elements, ensuring we process elements in correct order.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: K-Way Merge State\n\n**State variables:**\n- **`heap`** - Min heap containing (value, listIndex, nodeIndex) tuples\n- **`result`** - Merged sorted list being built\n- **`lists`** - Array of K sorted linked lists\n- **`current`** - Current node in result list\n\n**State transitions:**\n1. **Initialize:** Add first node from each list to heap\n2. **Extract:** Remove minimum from heap, add to result\n3. **Advance:** Move to next node in the list that provided minimum\n4. **Add back:** If list not exhausted, add next node to heap\n5. **Repeat:** Until heap is empty (all lists processed)\n\n**State validity:** Result is sorted and contains all processed elements when heap is empty.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Merge Lists Sequentially (One by One)**\n- **Why it fails:** O(N*K) time complexity\n- **Issue:** Each merge processes all previously merged nodes again\n- **Example:** Merging list 1 with list 2, then result with list 3 processes list 1 elements twice\n- **Better:** Heap approach is O(N log K), only processes each element once\n\n**Approach 2: Collect All Elements, Then Sort**\n- **Why it fails:** O(N log N) time, ignores that lists are already sorted\n- **Issue:** Doesn't leverage the sorted property of individual lists\n- **Better:** Heap approach uses sorted property, O(N log K) time\n\n**Approach 3: Compare All K Heads Linearly**\n- **Why it fails:** O(N*K) time - linear scan for each element\n- **Issue:** For each of N elements, scan K lists to find minimum\n- **Better:** Heap gives O(log K) per element, total O(N log K)\n\n**Our approach wins because:** Min heap maintains smallest elements from each list in O(log K) time, allowing us to merge K sorted lists in O(N log K) time, which is optimal.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use a **min heap** to efficiently track the smallest unprocessed element from each of the K sorted lists at any given time. By maintaining only the **current head** of each list in the heap, we can repeatedly extract the globally smallest element in O(log K) time and advance the corresponding list pointer. This works because the heap automatically maintains the ordering property among the K candidates, eliminating the need to scan all K lists linearly for each merge operation. The approach achieves **O(N log K)** time complexity where N is the total number of nodes, making it far more efficient than naive approaches that would require O(NK) comparisons.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through merging K sorted lists using a min-heap approach:\n\n**Initial Setup:**\n- Input: [[1,4,5], [1,3,4], [2,6]]\n- Min-heap: empty\n- Result: empty list\n\n**Step 1: Initialize heap with first element from each list**\n- Add (1, 0, 0) → list 0, index 0, value 1\n- Add (1, 1, 0) → list 1, index 0, value 1  \n- Add (2, 2, 0) → list 2, index 0, value 2\n- Heap: [(1,0,0), (1,1,0), (2,2,0)]\n\n**Step 2: Extract minimum (1,0,0)**\n- Remove (1,0,0) from heap\n- Add 1 to result: [1]\n- Add next from list 0: (4,0,1)\n- Heap: [(1,1,0), (2,2,0), (4,0,1)]\n\n**Step 3: Extract minimum (1,1,0)**\n- Remove (1,1,0) from heap\n- Add 1 to result: [1,1]\n- Add next from list 1: (3,1,1)\n- Heap: [(2,2,0), (4,0,1), (3,1,1)]\n\n**Step 4: Extract minimum (2,2,0)**\n- Remove (2,2,0) from heap\n- Add 2 to result: [1,1,2]\n- Add next from list 2: (6,2,1)\n- Heap: [(3,1,1), (4,0,1), (6,2,1)]\n\n**Step 5: Extract minimum (3,1,1)**\n- Remove (3,1,1) from heap\n- Add 3 to result: [1,1,2,3]\n- Add next from list 1: (4,1,2)\n- Heap: [(4,0,1), (6,2,1), (4,1,2)]\n\n**Step 6: Extract minimum (4,0,1)**\n- Remove (4,0,1) from heap\n- Add 4 to result: [1,1,2,3,4]\n- Add next from list 0: (5,0,2)\n- Heap: [(4,1,2), (6,2,1), (5,0,2)]\n\n**Step 7: Extract minimum (4,1,2)**\n- Remove (4,1,2) from heap\n- Add 4 to result: [1,1,2,3,4,4]\n- List 1 exhausted, don't add anything\n- Heap: [(5,0,2), (6,2,1)]\n\n**Step 8: Extract minimum (5,0,2)**\n- Remove (5,0,2) from heap\n- Add 5 to result: [1,1,2,3,4,4,5]\n- List 0 exhausted, don't add anything\n- Heap: [(6,2,1)]\n\n**Step 9: Extract minimum (6,2,1)**\n- Remove (6,2,1) from heap\n- Add 6 to result: [1,1,2,3,4,4,5,6]\n- List 2 exhausted, heap now empty\n\n**[1,1,2,3,4,4,5,6]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7",
+        "ps8",
+        "ps9"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now JavaScript, step by step.\n\n1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Define the function and initialize result array and min heap\n\n```javascript\nfunction mergeKLists(lists) {\n    const result = [];\n    const minHeap = new MinPriorityQueue({ priority: x => x.val });\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [],
+      "example": "function mergeKLists(lists) {\n    const result = [];\n    const minHeap = new MinPriorityQueue({ priority: x => x.val });\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Add the head of each non-empty list to the min heap\n\n```javascript\nfunction mergeKLists(lists) {\n    const result = [];\n    const minHeap = new MinPriorityQueue({ priority: x => x.val });\n    \n    for (let head of lists) {\n        if (head) minHeap.enqueue(head);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [],
+      "example": "    for (let head of lists) {\n        if (head) minHeap.enqueue(head);\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start main loop to process heap until empty\n\n```javascript\nfunction mergeKLists(lists) {\n    const result = [];\n    const minHeap = new MinPriorityQueue({ priority: x => x.val });\n    \n    for (let head of lists) {\n        if (head) minHeap.enqueue(head);\n    }\n    \n    while (!minHeap.isEmpty()) {\n        \n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [],
+      "example": "    while (!minHeap.isEmpty()) {\n        \n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Extract the smallest node from heap and add to result\n\n```javascript\nfunction mergeKLists(lists) {\n    const result = [];\n    const minHeap = new MinPriorityQueue({ priority: x => x.val });\n    \n    for (let head of lists) {\n        if (head) minHeap.enqueue(head);\n    }\n    \n    while (!minHeap.isEmpty()) {\n        const smallest = minHeap.dequeue().element;\n        result.push(smallest.val);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [],
+      "example": "        const smallest = minHeap.dequeue().element;\n        result.push(smallest.val);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "If the extracted node has a next node, add it to heap\n\n```javascript\nfunction mergeKLists(lists) {\n    const result = [];\n    const minHeap = new MinPriorityQueue({ priority: x => x.val });\n    \n    for (let head of lists) {\n        if (head) minHeap.enqueue(head);\n    }\n    \n    while (!minHeap.isEmpty()) {\n        const smallest = minHeap.dequeue().element;\n        result.push(smallest.val);\n        \n        if (smallest.next) {\n            minHeap.enqueue(smallest.next);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [],
+      "example": "        if (smallest.next) {\n            minHeap.enqueue(smallest.next);\n        }"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Return the merged result array\n\n```javascript\nfunction mergeKLists(lists) {\n    const result = [];\n    const minHeap = new MinPriorityQueue({ priority: x => x.val });\n    \n    for (let head of lists) {\n        if (head) minHeap.enqueue(head);\n    }\n    \n    while (!minHeap.isEmpty()) {\n        const smallest = minHeap.dequeue().element;\n        result.push(smallest.val);\n        \n        if (smallest.next) {\n            minHeap.enqueue(smallest.next);\n        }\n    }\n    \n    return result;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [],
+      "example": "    return result;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "🎉 Fantastic work conquering \"Merge K Sorted Lists\" using the min heap pattern! You've mastered the art of efficiently combining multiple sorted sequences by leveraging the heap's ability to always give you the smallest element across all lists.\n\nNow you're ready to tackle \"Alien Dictionary\" - another exciting challenge that will expand your algorithmic toolkit with topological sorting concepts. Keep up the momentum!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

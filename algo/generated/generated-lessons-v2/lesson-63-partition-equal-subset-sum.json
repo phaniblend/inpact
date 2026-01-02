@@ -1,0 +1,453 @@
+{
+  "id": "partition-equal-subset-sum",
+  "title": "Partition Equal Subset Sum - 0/1 Knapsack",
+  "pattern": "01-knapsack-dp",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 63,
+    "tier": "MASTERY-I",
+    "lessonOrderTag": "MASTERY-I-63",
+    "introduces": [
+      "01-knapsack",
+      "subset-sum",
+      "boolean-dp"
+    ],
+    "assumesAlreadyTaught": [
+      "dynamic-programming",
+      "arrays"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "target-sum"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Calculate total sum of all numbers"
+    },
+    {
+      "id": "ps2",
+      "text": "If sum is odd, return false (can't split evenly)"
+    },
+    {
+      "id": "ps3",
+      "text": "Set target = sum / 2"
+    },
+    {
+      "id": "ps4",
+      "text": "Create DP array where dp[i] = can we make sum i?"
+    },
+    {
+      "id": "ps5",
+      "text": "Initialize dp[0] = true (we can make 0 with empty set)"
+    },
+    {
+      "id": "ps6",
+      "text": "For each number in array:"
+    },
+    {
+      "id": "ps7",
+      "text": "  For each sum from target down to number:"
+    },
+    {
+      "id": "ps8",
+      "text": "    If dp[sum - number] is true:"
+    },
+    {
+      "id": "ps9",
+      "text": "      Set dp[sum] = true"
+    },
+    {
+      "id": "ps10",
+      "text": "Return dp[target]"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "# Welcome to Partition Equal Subset Sum! âš–ï¸\n\nYou're about to learn one of the most fundamental dynamic programming patterns: the **0/1 Knapsack problem**.\n\n## What You'll Master:\n\n- Understanding the knapsack paradigm\n- Using DP to solve subset problems\n- Space optimization techniques\n- Boolean DP arrays\n\nThis pattern appears in countless interview problems and real-world optimization scenarios!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which programming language would you like to use for this lesson?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "To solve this in JavaScript, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **Arrays and iteration**\n- **Boolean logic**\n- **Basic math operations**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "To solve this in Python, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **Lists and iteration**\n- **Boolean logic**\n- **Basic math operations**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "To solve this in Java, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **Arrays and loops**\n- **Boolean logic**\n- **Basic math operations**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "To solve this in C++, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **Vectors or arrays**\n- **Boolean logic**\n- **Basic math operations**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "To solve this in TypeScript, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **Arrays and iteration**\n- **Boolean logic**\n- **Basic math operations**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "# The Problem: Partition Equal Subset Sum 🎯\n\n**Real-world analogy:** Imagine you're dividing your belongings between two moving boxes before a move. You want both boxes to weigh exactly the same so they're balanced. Given a set of items with different weights, can you split them into two groups with equal total weight?\n\n## The Challenge:\n\nGiven an array of positive integers `nums`, determine if you can partition it into two subsets such that the sum of elements in both subsets is equal.\n\n## Example 1:\n```\nnums = [1, 5, 11, 5]\nOutput: true\nExplanation: [1, 5, 5] and [11] both sum to 11\n```\n\n## Example 2:\n```\nnums = [1, 2, 3, 5]\nOutput: false\nExplanation: Cannot partition into equal sum subsets\n```\n\n## Key Insight:\n\nIf we can partition into two equal subsets, then each subset must sum to `totalSum / 2`. So the question becomes: **Can we find a subset that sums to exactly half of the total?**",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "# 🤔 How Should We Approach This?\n\nLet's think about the problem transformation:\n\n**Question:** If the total sum is 22, and we need two equal subsets, what are we really looking for?",
+      "choices": [
+        {
+          "label": "Two subsets that both sum to 11",
+          "next": "wrong-two-subsets"
+        },
+        {
+          "label": "One subset that sums to 11 (the other automatically sums to 11 too)",
+          "next": "core-idea"
+        },
+        {
+          "label": "All possible subset combinations",
+          "next": "wrong-all-combos"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-two-subsets",
+      "mentorSays": "You're on the right track! Both subsets do need to sum to 11.\n\nBut here's the key insight: if we find ONE subset that sums to 11, the remaining elements automatically sum to 11 too (since 22 - 11 = 11).\n\nSo we only need to search for one subset, not two!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "wrong-all-combos",
+      "mentorSays": "That would work but is incredibly inefficient! With n elements, there are 2^n possible subsets.\n\nWe need something smarter that doesn't try every combination...",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "# The Key Insight: Subset Sum with DP 💡\n\n**Problem transformation:**\n1. Calculate total sum\n2. If odd, impossible to split evenly → return false\n3. If even, find if we can make a subset summing to `total / 2`\n\n**This is the classic Subset Sum problem!**\n\n## DP Approach:\n\n**State:** `dp[i]` = Can we make sum `i` using some subset of numbers?\n\n**Recurrence:** For each number `num`:\n- If we can make sum `s - num`, then we can make sum `s` by including `num`\n- `dp[s] = dp[s] OR dp[s - num]`\n\n**Base case:** `dp[0] = true` (we can always make 0 with empty subset)\n\n## The Trick:\n\nIterate backwards through sums to avoid using the same number twice!",
+      "action": "next",
+      "next": "dp-table-semantics"
+    },
+    {
+      "stepId": "dp-table-semantics",
+      "mentorSays": "### DP Table Row/Column Semantics\n\n**1D DP Table (optimized):**\n\n```\nColumns (sums):  0   1   2   3   4   5   6   7   8   9  10  11\n                ──────────────────────────────────────────────\nInitial:       [T,  F,  F,  F,  F,  F,  F,  F,  F,  F,  F,  F]\nAfter num=1:   [T,  T,  F,  F,  F,  F,  F,  F,  F,  F,  F,  F]\nAfter num=5:   [T,  T,  F,  F,  F,  T,  T,  F,  F,  F,  F,  F]\nAfter num=11:  [T,  T,  F,  F,  F,  T,  T,  F,  F,  F,  F,  T]\n```\n\n**What each column means:**\n- Column `j` = Can we make sum `j`?\n- `dp[j] = true` means \"Yes, we can make sum j\"\n\n**2D DP Table (conceptual):**\n\n```\n        Sums:  0   1   2   3   4   5   6   7   8   9  10  11\nNumbers\n  []         [T,  F,  F,  F,  F,  F,  F,  F,  F,  F,  F,  F]\n  [1]        [T,  T,  F,  F,  F,  F,  F,  F,  F,  F,  F,  F]\n  [1,5]      [T,  T,  F,  F,  F,  T,  T,  F,  F,  F,  F,  F]\n  [1,5,11]   [T,  T,  F,  F,  F,  T,  T,  F,  F,  F,  F,  T]\n```\n\n**What each row means:**\n- Row `i` = Using first `i` numbers\n\n**What each cell means:**\n- `dp[i][j]` = Can we make sum `j` using first `i` numbers?\n\n**This prevents DP confusion** - understanding row/column semantics is crucial!",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Subset Sum DP (0/1 Knapsack Variant)\n\n**This problem follows the \"subset sum DP\" pattern:**\n- **Problem transformation** - Partition into two equal subsets → find subset summing to total/2\n- **0/1 knapsack variant** - Each number can be used at most once\n- **1D DP optimization** - Can optimize from 2D to 1D by iterating backward\n- **Boolean DP** - dp[i] = true if sum i is achievable\n\n**Similar problems:**\n- Target Sum (similar subset sum with different constraint)\n- Coin Change (unbounded knapsack variant)\n- Subset Sum (same pattern, different problem)\n\n**Key insight:** This is a subset sum problem. We check if we can make sum = total/2 using some subset of numbers. The DP recurrence is: dp[sum] = dp[sum] OR dp[sum - num] for each number.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: dp[i] = Can We Make Sum i Using Processed Numbers\n\n**Invariant maintained throughout:**\n- **State definition:** dp[i] = true if sum i can be made using numbers processed so far\n- **Base case:** dp[0] = true (empty subset sums to 0)\n- **Recurrence:** For each number num, dp[sum] = dp[sum] OR dp[sum - num]\n- **Backward iteration:** Iterate sums backward to avoid using same number twice\n\n**Why this works:**\n- Initially, only dp[0] = true (can make 0 with empty subset)\n- For each number num, we can make sum s if:\n  - We could already make s (don't use num), OR\n  - We could make s - num (use num)\n- Backward iteration ensures we don't use num multiple times\n\n**Invariant guarantee:** After processing all numbers, dp[target] = true if and only if we can partition into two equal subsets. If dp[target] = false, partition is impossible.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Subset Sum DP State\n\n**State variables:**\n- **`dp`** - Boolean array where dp[i] = can make sum i (size target+1)\n- **`nums`** - Array of numbers\n- **`target`** - Target sum (total / 2)\n- **`num`** - Current number being processed\n\n**State transitions:**\n1. **Check total:** If total is odd, return false\n2. **Initialize:** target = total / 2, dp[0] = true, others = false\n3. **Process numbers:** For each num in nums:\n   - For sum from target down to num:\n     - dp[sum] = dp[sum] OR dp[sum - num]\n4. **Result:** Return dp[target]\n\n**State validity:** After processing all numbers, dp[target] indicates if partition is possible.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Try All Subset Combinations**\n- **Why it fails:** Exponential time O(2^n)\n- **Issue:** Too many subsets to try, especially for large n\n- **Better:** DP reduces to O(n * target) time\n\n**Approach 2: Greedy (Always Pick Largest)**\n- **Why it fails:** Doesn't guarantee optimal\n- **Issue:** May miss valid partitions\n- **Example:** [1,5,11,5] - greedy might not find partition\n- **Better:** DP considers all possibilities\n\n**Approach 3: Recursion Without Memoization**\n- **Why it fails:** Exponential time due to overlapping subproblems\n- **Issue:** Recalculates same sums many times\n- **Better:** DP stores results, avoiding recalculation\n\n**Our approach wins because:** DP with subset sum pattern finds if partition is possible in O(n * target) time with O(target) space. The backward iteration ensures each number is used at most once, and the boolean DP efficiently tracks achievable sums.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "# Let's Walk Through an Example 🚶\n\n```\nnums = [1, 5, 11, 5]\ntotal = 22, target = 11\n```\n\n**Initial:** dp = [true, false, false, ..., false] (size 12, for sums 0-11)\n\n**Process num = 1:**\n- Check sum 11: dp[11-1]=dp[10]=false, skip\n- Check sum 10: dp[10-1]=dp[9]=false, skip\n- ...\n- Check sum 1: dp[1-1]=dp[0]=true, so dp[1]=true ✓\n- Result: dp = [T, T, F, F, F, F, F, F, F, F, F, F]\n\n**Process num = 5:**\n- Check sum 11: dp[6]=false, skip\n- Check sum 6: dp[1]=true, so dp[6]=true ✓\n- Check sum 5: dp[0]=true, so dp[5]=true ✓\n- Result: dp = [T, T, F, F, F, T, T, F, F, F, F, F]\n\n**Process num = 11:**\n- Check sum 11: dp[0]=true, so dp[11]=true ✓ (FOUND!)\n\n**Answer:** dp[11] = true, partition possible!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "# Here's Our Battle Plan 📋\n\nLet's break down the subset sum DP approach:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7",
+        "ps8",
+        "ps9",
+        "ps10"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "# Time to Code! 💻\n\nWe'll build this solution step by step, using the 0/1 knapsack pattern.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Let's start by calculating the total sum and checking if partition is possible:\n\n```javascript\nfunction canPartition(nums) {\n    // Calculate total sum\n    const sum = nums.reduce((a, b) => a + b, 0);\n```\n\nWe need the total to determine our target.",
+      "action": "next",
+      "next": "code-02",
+      "example": "function canPartition(nums) {\n    const sum = nums.reduce((a, b) => a + b, 0);"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Check if the sum is odd (impossible to partition evenly):\n\n```javascript\n    // If sum is odd, can't partition into equal halves\n    if (sum % 2 !== 0) return false;\n```\n\nAn odd sum means each subset would need a fractional sum, which is impossible.",
+      "action": "next",
+      "next": "code-03",
+      "example": "    if (sum % 2 !== 0) return false;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Calculate our target sum:\n\n```javascript\n    const target = sum / 2;\n```\n\nThis is what one subset needs to sum to.",
+      "action": "next",
+      "next": "code-04",
+      "example": "    const target = sum / 2;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Create our DP array and set the base case:\n\n```javascript\n    // dp[i] = can we make sum i?\n    const dp = new Array(target + 1).fill(false);\n    dp[0] = true; // We can always make 0 with empty set\n```\n\nThe DP array tracks which sums are achievable.",
+      "action": "next",
+      "next": "code-05",
+      "example": "    const dp = new Array(target + 1).fill(false);\n    dp[0] = true;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Iterate through each number in the array:\n\n```javascript\n    for (const num of nums) {\n```\n\nFor each number, we'll update which sums we can make.",
+      "action": "next",
+      "next": "code-06",
+      "example": "    for (const num of nums) {"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Iterate backwards through possible sums (this is crucial!):\n\n```javascript\n        // Iterate backwards to avoid using same number twice\n        for (let sum = target; sum >= num; sum--) {\n```\n\nWhy backwards? If we go forwards, we might use the same number multiple times in one iteration!",
+      "action": "next",
+      "next": "code-07",
+      "example": "        for (let sum = target; sum >= num; sum--) {"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Update the DP array using the recurrence relation:\n\n```javascript\n            // If we can make (sum - num), we can make sum\n            dp[sum] = dp[sum] || dp[sum - num];\n```\n\nThis is the heart of the algorithm: if we can make `sum - num`, adding `num` gives us `sum`!",
+      "action": "next",
+      "next": "code-08",
+      "example": "            dp[sum] = dp[sum] || dp[sum - num];"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Close the loops:\n\n```javascript\n        }\n    }\n```",
+      "action": "next",
+      "next": "code-09",
+      "example": "        }\n    }"
+    },
+    {
+      "stepId": "code-09",
+      "mentorSays": "Return whether we can make the target sum:\n\n```javascript\n    return dp[target];\n}\n```\n\nIf `dp[target]` is true, we found a subset that sums to exactly half the total!",
+      "action": "next",
+      "next": "complexity-analysis",
+      "example": "    return dp[target];\n}"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "# Complexity Analysis 📊\n\n## Time Complexity: O(n × sum)\n- n = number of elements\n- sum = total sum of all elements\n- We process each number once\n- For each number, we check up to sum/2 positions\n\n## Space Complexity: O(sum)\n- We use a DP array of size (sum/2 + 1)\n- This is space-optimized! A 2D approach would use O(n × sum)\n\n## Why This Matters:\n\nThis is a **pseudo-polynomial** time complexity:\n- Polynomial in the value of inputs (sum)\n- Not polynomial in the size of inputs (n)\n- For small sums, very efficient\n- For huge sums, can be slow",
+      "action": "next",
+      "next": "why-backwards"
+    },
+    {
+      "stepId": "why-backwards",
+      "mentorSays": "# Why Iterate Backwards? 🔄\n\nThis is a crucial optimization! Let's see what happens with forwards iteration:\n\n**Forward iteration (WRONG):**\n```javascript\nnum = 5, target = 10\nfor (let sum = 5; sum <= 10; sum++)\n```\n- sum=5: dp[5] = dp[0]=true ✓\n- sum=10: dp[10] = dp[5]=true ✓ (PROBLEM!)\n\nWe used 5 twice to make 10! That's incorrect.\n\n**Backward iteration (CORRECT):**\n```javascript\nfor (let sum = 10; sum >= 5; sum--)\n```\n- sum=10: dp[10] = dp[5]=false (5 not achievable yet)\n- sum=5: dp[5] = dp[0]=true ✓\n\nWe only use each number once per iteration!",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "# Edge Cases to Consider 🎯\n\n1. **Single element:** [1] → false (can't partition one element)\n\n2. **Two equal elements:** [5, 5] → true (each subset gets one)\n\n3. **Odd sum:** [1, 2, 3] → false (sum=6 works, but [1,2,3,5] sum=11 doesn't)\n\n4. **All zeros:** [0, 0, 0] → true (both subsets sum to 0)\n\n5. **Large numbers:** If one number is larger than sum/2, impossible\n\nOur implementation handles all these correctly!",
+      "action": "next",
+      "next": "common-mistakes"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "# Congratulations! 🎉\n\nYou've mastered the **0/1 Knapsack** pattern - one of the most important DP patterns!\n\n## What You Learned:\n\n✅ Transforming problems into subset sum\n✅ Using boolean DP for existence queries\n✅ Space-optimized 1D DP arrays\n✅ Why backward iteration prevents reusing elements\n\n## Next Steps:\n\nReady for a variation? The next lesson covers **Target Sum** - a related problem where we assign +/- signs to numbers. It builds on the same knapsack foundation!\n\nThis pattern appears everywhere: coin change, knapsack problems, subset problems. Master it!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,379 @@
+{
+  "id": "range-sum-query",
+  "title": "Range Sum Query - Immutable",
+  "pattern": "prefix sum",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 29,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-29",
+    "introduces": [
+      "prefix-sum-array",
+      "precomputation",
+      "class-based-solution"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "counting-bits"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize a prefix sum array with size one larger than the input array"
+    },
+    {
+      "id": "ps2",
+      "text": "Set the first element of prefix array to 0 to handle empty ranges"
+    },
+    {
+      "id": "ps3",
+      "text": "Iterate through the input array and compute cumulative sums in the prefix array"
+    },
+    {
+      "id": "ps4",
+      "text": "For each index i, set prefix[i+1] = prefix[i] + nums[i]"
+    },
+    {
+      "id": "ps5",
+      "text": "To answer range query from left to right, return prefix[right+1] - prefix[left]"
+    },
+    {
+      "id": "ps6",
+      "text": "This gives the sum of elements from index left to right inclusive in O(1) time"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle a super useful pattern that'll make range calculations lightning fast? \n\nAfter working through sqrt-x and getting comfortable with binary approaches, you're perfectly set up to learn **prefix sums** - one of the most practical optimization techniques you'll use again and again.\n\nHere's what you'll master:\n• **Build cumulative sum arrays** to transform slow range queries into instant O(1) lookups\n• **Handle immutable data efficiently** using preprocessing techniques that pay off big time\n• **Recognize range sum scenarios** in interviews and know exactly when this pattern is your best friend\n\nThis pattern shows up everywhere - from solving array problems to optimizing database queries. Once you see it, you'll wonder how you lived without it!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Prefix-sums** - Technique to precompute cumulative sums for efficient range queries\n- **Array-indexing** - Understanding zero-based vs one-based indexing and boundary handling\n- **Time-complexity** - Analysis of preprocessing vs query time tradeoffs\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Prefix-sums** - Technique to precompute cumulative sums for efficient range queries\n- **Array-indexing** - Understanding zero-based vs one-based indexing and boundary handling\n- **Time-complexity** - Analysis of preprocessing vs query time tradeoffs\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Prefix-sums** - Technique to precompute cumulative sums for efficient range queries\n- **Array-indexing** - Understanding zero-based vs one-based indexing and boundary handling\n- **Time-complexity** - Analysis of preprocessing vs query time tradeoffs\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Prefix-sums** - Technique to precompute cumulative sums for efficient range queries\n- **Array-indexing** - Understanding zero-based vs one-based indexing and boundary handling\n- **Time-complexity** - Analysis of preprocessing vs query time tradeoffs\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Prefix-sums** - Technique to precompute cumulative sums for efficient range queries\n- **Array-indexing** - Understanding zero-based vs one-based indexing and boundary handling\n- **Time-complexity** - Analysis of preprocessing vs query time tradeoffs\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Range Sum Query - Immutable problem asks for.\n\nImagine you're a teacher with a gradebook containing 30 students' test scores in a row. Instead of adding up scores from scratch every time a parent asks \"What's my child's total points from test 5 to test 12?\", you create a cheat sheet with running totals after each test - so you can instantly answer by subtracting two numbers from your cheat sheet.\n\n# Range Sum Query - Immutable\n\n## What the problem asks\n\nYou're given an array of integers, and you need to build a data structure that can efficiently answer multiple queries about the sum of elements within specific ranges. \n\nSpecifically, you'll implement a class with:\n- A constructor that takes the array\n- A `sumRange(left, right)` method that returns the sum of elements from index `left` to `right` (inclusive)\n\nThe key challenge is that you'll be asked to handle many sum queries, so you want to avoid recalculating the same sums over and over again.\n\n## Example\n\nLet's say we have: `nums = [-2, 0, 3, -5, 2, -1]`\n\nWhen we call `sumRange(0, 2)`, we want the sum from index 0 to index 2:\n- Index 0: -2\n- Index 1: 0  \n- Index 2: 3\n- Sum: -2 + 0 + 3 = **1**\n\n## Why this works\n\nThe example demonstrates the basic functionality - we're finding the sum of a contiguous subarray. The indices are inclusive on both ends, so `sumRange(0, 2)` includes elements at positions 0, 1, and 2.\n\nThe \"immutable\" part means the original array never changes after construction, which opens up opportunities for preprocessing the data to make queries super fast (think O(1) instead of O(n) for each query).",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to handle multiple range sum queries on an immutable array. Given that queries come frequently and the array never changes, how would YOU approach this?",
+      "choices": [
+        {
+          "label": "Iterate through the range [left, right] for each query",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Precompute prefix sums, then use subtraction for each query",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This gives O(n) per query, leading to O(q×n) total time for q queries. While simple to implement, it's inefficient when dealing with many queries since we're recalculating overlapping work repeatedly.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Prefix Sum for Range Queries\n\n**This problem follows the \"precompute for fast queries\" pattern:**\n- **Prefix sum array** - Precompute cumulative sums during initialization\n- **Range query formula** - `sum[left..right] = prefix[right+1] - prefix[left]`\n- **Trade-off:** O(n) preprocessing for O(1) queries\n\n**Similar problems:**\n- Range Sum Query 2D (2D prefix sums)\n- Subarray Sum Equals K (prefix sum + hash map)\n- Maximum Subarray (Kadane's, related concept)\n\n**Key insight:** Prefix sums allow us to compute any range sum in O(1) time by subtracting two precomputed values, eliminating redundant calculations across multiple queries.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Prefix[i] = Sum of Elements [0..i-1]\n\n**Invariant maintained throughout:**\n- **Prefix array definition:** `prefix[i]` = sum of all elements from index 0 to i-1 (inclusive)\n- **Base case:** `prefix[0] = 0` (sum of empty range)\n- **Recurrence:** `prefix[i] = prefix[i-1] + nums[i-1]`\n\n**Why this works:**\n- To get sum of `[left, right]`, we need: sum of `[0, right]` minus sum of `[0, left-1]`\n- `prefix[right+1]` = sum of `[0, right]`\n- `prefix[left]` = sum of `[0, left-1]`\n- Therefore: `sum[left..right] = prefix[right+1] - prefix[left]`\n\n**Invariant guarantee:** After initialization, `prefix[i]` correctly represents the sum of all elements from index 0 to i-1 for all valid indices i. This allows O(1) range queries using the subtraction formula.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to **precompute prefix sums** during initialization to enable O(1) range queries. By storing cumulative sums where `prefix[i]` represents the sum of elements from index 0 to i-1, any range sum can be calculated as `prefix[right+1] - prefix[left]`. This works because the prefix sum at `right+1` contains all elements up to `right`, and subtracting the prefix sum at `left` removes all elements before the desired range, leaving only the sum of elements in `[left, right]`.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `nums=[-2,0,3,-5,2,-1], sumRange(0,2)`:\n\n- Step 1: Initialize NumArray with nums=[-2,0,3,-5,2,-1]\n- Step 2: Build prefix sum array: prefixSum=[0,-2,-2,1,-4,-2,-3]\n- Step 3: Call sumRange(0,2) to find sum from index 0 to 2\n- Step 4: Use formula: sum = prefixSum[right+1] - prefixSum[left]\n- Step 5: Calculate: sum = prefixSum[3] - prefixSum[0] = 1 - 0 = 1\n- Final answer: **1**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create the main function that takes the array parameter\n\n```javascript\nfunction NumArray(nums) {\n\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function NumArray(nums) {\n\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize prefix sum array with one extra element for easier calculation\n\n```javascript\nfunction NumArray(nums) {\n    this.prefix = new Array(nums.length + 1).fill(0);\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    this.prefix = new Array(nums.length + 1).fill(0);"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Build prefix sum array by accumulating values from original array\n\n```javascript\nfunction NumArray(nums) {\n    this.prefix = new Array(nums.length + 1).fill(0);\n    for (let i = 0; i < nums.length; i++) {\n        this.prefix[i + 1] = this.prefix[i] + nums[i];\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    for (let i = 0; i < nums.length; i++) {\n        this.prefix[i + 1] = this.prefix[i] + nums[i];\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Add the sumRange method signature\n\n```javascript\nfunction NumArray(nums) {\n    this.prefix = new Array(nums.length + 1).fill(0);\n    for (let i = 0; i < nums.length; i++) {\n        this.prefix[i + 1] = this.prefix[i] + nums[i];\n    }\n}\n\nNumArray.prototype.sumRange = function(left, right) {\n\n};\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "\nNumArray.prototype.sumRange = function(left, right) {\n\n};"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Calculate range sum using prefix sum difference formula\n\n```javascript\nfunction NumArray(nums) {\n    this.prefix = new Array(nums.length + 1).fill(0);\n    for (let i = 0; i < nums.length; i++) {\n        this.prefix[i + 1] = this.prefix[i] + nums[i];\n    }\n}\n\nNumArray.prototype.sumRange = function(left, right) {\n    return this.prefix[right + 1] - this.prefix[left];\n};\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "    return this.prefix[right + 1] - this.prefix[left];"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering prefix sum arrays! You've learned how to preprocess data for lightning-fast range queries, transforming O(n) operations into O(1) lookups. Next, we'll tackle counting-bits where you'll discover elegant bit manipulation techniques and dynamic programming patterns.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

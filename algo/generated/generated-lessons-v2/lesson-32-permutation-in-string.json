@@ -1,0 +1,364 @@
+{
+  "id": "permutation-in-string",
+  "title": "Permutation in String",
+  "pattern": "sliding window (fixed size) + frequency matching",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 32,
+    "tier": "INTERMEDIATE",
+    "lessonOrderTag": "INTERMEDIATE-32",
+    "introduces": [
+      "fixed-window-sliding",
+      "frequency-matching",
+      "window-comparison"
+    ],
+    "assumesAlreadyTaught": [
+      "strings",
+      "hash-map",
+      "sliding-window-concept"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "find-all-anagrams-in-string"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Count character frequencies in s1"
+    },
+    {
+      "id": "ps2",
+      "text": "Create a window of s1.length in s2"
+    },
+    {
+      "id": "ps3",
+      "text": "Count frequencies in current window"
+    },
+    {
+      "id": "ps4",
+      "text": "Compare window frequencies with s1 frequencies"
+    },
+    {
+      "id": "ps5",
+      "text": "If match found, return true"
+    },
+    {
+      "id": "ps6",
+      "text": "Slide window: remove left char, add right char"
+    },
+    {
+      "id": "ps7",
+      "text": "Repeat until end of s2"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle **Permutation in String**?\n\nThis problem teaches you the **fixed-size sliding window** pattern combined with **frequency matching** - a powerful technique for finding anagrams and character patterns.\n\nYou'll learn:\n• How to use a fixed window that slides through strings\n• Comparing character frequencies efficiently\n• Optimizing with window updates instead of recounting\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Strings** - Accessing and iterating through characters\n- **Hash map** - Using objects to count frequencies\n- **Sliding window concept** - Maintaining a moving window through data\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Strings** - Accessing and iterating through characters\n- **Hash map** - Using dictionaries to count frequencies\n- **Sliding window concept** - Maintaining a moving window through data\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Strings** - Accessing and iterating through characters\n- **Hash map** - Using HashMap to count frequencies\n- **Sliding window concept** - Maintaining a moving window through data\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Strings** - Accessing and iterating through characters\n- **Hash map** - Using unordered_map to count frequencies\n- **Sliding window concept** - Maintaining a moving window through data\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Strings** - Accessing and iterating through characters\n- **Hash map** - Using objects or Map to count frequencies\n- **Sliding window concept** - Maintaining a moving window through data\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Permutation in String problem asks for.\n\n**Imagine you're checking if a scrambled password exists within a longer text.** You know all the letters that should be in the password, but they might be in any order (a permutation). You need to check if any substring of the text contains exactly those letters.\n\nGiven two strings `s1` and `s2`, return `true` if `s2` contains a permutation of `s1`, or `false` otherwise.\n\nFor example:\n- Input: `s1 = \"ab\"`, `s2 = \"eidbaooo\"`\n- Output: `true`\n- Why? Because `s2` contains `\"ba\"` which is a permutation of `\"ab\"`\n\nA permutation means the same characters in any order - so \"ab\", \"ba\" are both permutations of each other.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "How should we check if s2 contains a permutation of s1?\n\nThink about what makes two strings permutations of each other...",
+      "choices": [
+        {
+          "label": "Check every substring of s2, sort both and compare",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use a fixed window of s1.length and compare character frequencies",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Sorting each substring would work, but it's inefficient! That would be O(n * m log m) where we sort m-length substrings n times.\n\nThere's a smarter way: two strings are permutations if they have the **same character frequencies**. We can check this with a sliding window without sorting!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is: **two strings are permutations if they have identical character frequencies**.\n\nSo we:\n1. Count frequencies in `s1` \n2. Use a **fixed window** of `s1.length` sliding through `s2`\n3. Count frequencies in the current window\n4. Compare the two frequency maps - if they match, we found a permutation!\n\nInstead of recounting the entire window each time, we **slide efficiently**: remove the left character's count, add the right character's count.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3"]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `s1=\"ab\"`, `s2=\"eidbaooo\"`:\n\n- **s1 frequencies:** `{a:1, b:1}`\n- **Window 1** (\"ei\"): `{e:1, i:1}` ❌ doesn't match\n- **Window 2** (\"id\"): `{i:1, d:1}` ❌ doesn't match  \n- **Window 3** (\"db\"): `{d:1, b:1}` ❌ doesn't match\n- **Window 4** (\"ba\"): `{b:1, a:1}` ✅ **MATCH!**\n\nFinal: **true** - found permutation \"ba\"",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3"]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "First, handle the edge case where s1 is longer than s2 - impossible to have a permutation.\n\n```javascript\nfunction checkInclusion(s1, s2) {\n  if (s1.length > s2.length) return false;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": ["ps1"],
+      "example": "if (s1.length > s2.length) return false;"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Create a helper function to count character frequencies in a string.\n\n```javascript\nfunction checkInclusion(s1, s2) {\n  if (s1.length > s2.length) return false;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n  };\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": ["ps1"],
+      "example": "const getFreq = (str, start, end) => {\n  const freq = {};"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Count each character in the specified range.\n\n```javascript\nfunction checkInclusion(s1, s2) {\n  if (s1.length > s2.length) return false;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": ["ps1"],
+      "example": "for (let i = start; i < end; i++) {\n  freq[str[i]] = (freq[str[i]] || 0) + 1;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Helper to check if two frequency maps are equal.\n\n```javascript\nfunction checkInclusion(s1, s2) {\n  if (s1.length > s2.length) return false;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": ["ps4"],
+      "example": "const isEqual = (freq1, freq2) => {\n  return JSON.stringify(freq1) === JSON.stringify(freq2);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Count s1's frequencies once.\n\n```javascript\nfunction checkInclusion(s1, s2) {\n  if (s1.length > s2.length) return false;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n  \n  const s1Freq = getFreq(s1, 0, s1.length);\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": ["ps1"],
+      "example": "const s1Freq = getFreq(s1, 0, s1.length);"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Slide the window through s2, checking each position.\n\n```javascript\nfunction checkInclusion(s1, s2) {\n  if (s1.length > s2.length) return false;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n  \n  const s1Freq = getFreq(s1, 0, s1.length);\n  \n  for (let i = 0; i <= s2.length - s1.length; i++) {\n  }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": ["ps6"],
+      "example": "for (let i = 0; i <= s2.length - s1.length; i++) {"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Get the window's frequencies and compare with s1.\n\n```javascript\nfunction checkInclusion(s1, s2) {\n  if (s1.length > s2.length) return false;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n  \n  const s1Freq = getFreq(s1, 0, s1.length);\n  \n  for (let i = 0; i <= s2.length - s1.length; i++) {\n    const windowFreq = getFreq(s2, i, i + s1.length);\n    if (isEqual(s1Freq, windowFreq)) return true;\n  }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": ["ps3", "ps4", "ps5"],
+      "example": "const windowFreq = getFreq(s2, i, i + s1.length);\nif (isEqual(s1Freq, windowFreq)) return true;"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "If no window matched, return false.\n\n```javascript\nfunction checkInclusion(s1, s2) {\n  if (s1.length > s2.length) return false;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n  \n  const s1Freq = getFreq(s1, 0, s1.length);\n  \n  for (let i = 0; i <= s2.length - s1.length; i++) {\n    const windowFreq = getFreq(s2, i, i + s1.length);\n    if (isEqual(s1Freq, windowFreq)) return true;\n  }\n  \n  return false;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": ["ps7"],
+      "example": "return false;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Excellent work! You've mastered the **fixed-size sliding window with frequency matching** pattern!\n\nThis technique is crucial for finding anagrams, character patterns, and substring problems. Next, we'll tackle **Find All Anagrams in a String** where you'll use the same pattern to find multiple matches.\n\nKeep up the great work! 🎉",
+      "action": "complete"
+    }
+  ]
+}

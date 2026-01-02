@@ -1,0 +1,639 @@
+{
+  "id": "best-time-buy-sell-stock",
+  "title": "Best Time to Buy and Sell Stock",
+  "pattern": "tracking minimum + maximum profit",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 11,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-11",
+    "introduces": [
+      "tracking-minimum",
+      "tracking-maximum",
+      "profit-calculation",
+      "Infinity",
+      "Math.min",
+      "Math.max"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "variables"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "maximum-subarray"
+    ]
+  },
+  "problemStatement": {
+    "description": "Find the maximum profit you can achieve by buying stock on one day and selling it on a later day. You can only make one transaction (buy once, sell once).",
+    "inputs": [
+      "prices: array of integers representing stock prices on each day (length 1 to 10^5)"
+    ],
+    "outputs": [
+      "Integer representing the maximum profit achievable. Return 0 if no profit is possible."
+    ],
+    "examples": [
+      {
+        "input": "prices = [7,1,5,3,6,4]",
+        "output": "5",
+        "explanation": "Buy on day 2 (price=1) and sell on day 5 (price=6), profit = 6-1 = 5. Track minPrice=1, at day 5 calculate profit=6-1=5, update maxProfit=5."
+      },
+      {
+        "input": "prices = [7,6,4,3,1]",
+        "output": "0",
+        "explanation": "Prices are decreasing, no profit possible. Track minPrice (decreases each day), but all profits are negative or zero."
+      },
+      {
+        "input": "prices = [1,2]",
+        "output": "1",
+        "explanation": "Buy on day 1 (price=1), sell on day 2 (price=2), profit = 2-1 = 1."
+      }
+    ],
+    "constraints": [
+      "1 <= prices.length <= 10^5",
+      "0 <= prices[i] <= 10^4"
+    ],
+    "realWorldUse": [
+      "Stock trading algorithms (finding optimal buy/sell points)",
+      "Financial analysis and portfolio optimization",
+      "Resource allocation problems",
+      "Optimization problems with time-series data"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "We need to track the minimum price seen so far and calculate maximum profit at each day. This is a single-pass greedy approach that avoids checking all buy-sell pairs.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem involves finding maximum/minimum over time with single transaction → think tracking min/max",
+      "SIGNAL 2: Need to optimize profit or difference → track minimum and calculate maximum difference",
+      "SIGNAL 3: Single pass optimization → maintain running minimum and maximum"
+    ],
+    "patternRules": [
+      "If problem involves finding optimal buy/sell or min/max over sequence → use single-pass tracking",
+      "When you see 'maximum profit', 'best time', or 'optimal transaction' → consider tracking minimum approach",
+      "If O(n) time needed (better than O(n²)) → single-pass with state tracking"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Actually uses greedy approach - at each day, we make locally optimal choice (track minimum, calculate profit). This is the greedy solution.",
+      "bruteForce": "Checking all buy-sell pairs is O(n²). Single-pass tracking is O(n) and more efficient.",
+      "alternative": "Dynamic programming works but is overkill. Simple tracking of minimum and maximum profit is optimal."
+    }
+  },
+  "coreInvariant": {
+    "statement": "minPrice is the minimum price seen from index 0 to current index i, and maxProfit is the maximum profit achievable by selling at any day from 0 to i.",
+    "explanation": "This invariant holds because we update minPrice whenever we see a lower price, ensuring it always represents the best buy price so far. We calculate profit at each day using the current minPrice and update maxProfit if we find a better profit.",
+    "whyItMatters": "This invariant guarantees correctness: after processing day i, maxProfit contains the maximum profit achievable using days 0 through i. The final maxProfit is the answer."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "minPrice",
+        "meaning": "Minimum price seen so far (best buy price encountered)",
+        "indexing": "Starts at prices[0] or Infinity, updated as we iterate"
+      },
+      {
+        "name": "maxProfit",
+        "meaning": "Maximum profit achievable so far",
+        "indexing": "Starts at 0, updated when we find better profit"
+      },
+      {
+        "name": "prices",
+        "meaning": "Array of stock prices",
+        "indexing": "0-indexed array, prices[i] is price on day i"
+      }
+    ],
+    "baseCases": [
+      "If prices.length <= 1: return 0 (need at least 2 days for transaction)",
+      "Initialize minPrice = prices[0], maxProfit = 0"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "For each day i from 1 to n-1:",
+        "transition": "Calculate profit = prices[i] - minPrice, update maxProfit = max(maxProfit, profit)",
+        "explanation": "At each day, calculate profit if we sell today (using best buy price seen so far). Update maxProfit if this is better.",
+        "example": "prices=[7,1,5,3,6], i=4: minPrice=1, profit=6-1=5, maxProfit=max(0,5)=5"
+      },
+      {
+        "condition": "After calculating profit, update minPrice = min(minPrice, prices[i])",
+        "transition": "Update minimum price seen so far for future profit calculations",
+        "explanation": "Update minPrice to ensure we always use the best buy price for future sell days.",
+        "example": "prices=[7,1,5], i=1: minPrice=min(7,1)=1 (better buy price)"
+      }
+    ],
+    "decisionTree": {
+      "root": "For each day, calculate profit and update minPrice",
+      "branches": [
+        "Calculate profit = current price - minPrice",
+        "Update maxProfit = max(maxProfit, profit)",
+        "Update minPrice = min(minPrice, current price)",
+        "After all days: return maxProfit"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "prices = [7,1,5,3,6,4]",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Initialize: minPrice = 7, maxProfit = 0",
+        "state": "minPrice = 7, maxProfit = 0, i = 0",
+        "logic": "Start with first day's price as minimum",
+        "result": "Ready to process"
+      },
+      {
+        "step": 2,
+        "description": "i=1: price=1, profit=1-7=-6, maxProfit=max(0,-6)=0, minPrice=min(7,1)=1",
+        "state": "minPrice = 1, maxProfit = 0, i = 1",
+        "logic": "Found lower price, update minPrice. Negative profit, don't update maxProfit.",
+        "result": "minPrice = 1"
+      },
+      {
+        "step": 3,
+        "description": "i=2: price=5, profit=5-1=4, maxProfit=max(0,4)=4, minPrice=min(1,5)=1",
+        "state": "minPrice = 1, maxProfit = 4, i = 2",
+        "logic": "Good profit found! Update maxProfit. minPrice stays 1.",
+        "result": "maxProfit = 4"
+      },
+      {
+        "step": 4,
+        "description": "i=3: price=3, profit=3-1=2, maxProfit=max(4,2)=4, minPrice=min(1,3)=1",
+        "state": "minPrice = 1, maxProfit = 4, i = 3",
+        "logic": "Profit is less than current max, don't update. minPrice unchanged.",
+        "result": "maxProfit = 4"
+      },
+      {
+        "step": 5,
+        "description": "i=4: price=6, profit=6-1=5, maxProfit=max(4,5)=5, minPrice=min(1,6)=1",
+        "state": "minPrice = 1, maxProfit = 5, i = 4",
+        "logic": "Better profit found! Update maxProfit to 5.",
+        "result": "maxProfit = 5"
+      },
+      {
+        "step": 6,
+        "description": "i=5: price=4, profit=4-1=3, maxProfit=max(5,3)=5, minPrice=min(1,4)=1",
+        "state": "minPrice = 1, maxProfit = 5, i = 5",
+        "logic": "Profit is less, don't update. Processing complete.",
+        "result": "Return maxProfit = 5"
+      }
+    ],
+    "keyInsight": "By tracking the minimum price seen so far, we can calculate the maximum profit at each day in O(1) time. This transforms O(n²) brute force (checking all pairs) into O(n) single-pass solution."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Updating minPrice before calculating profit",
+      "symptom": "Wrong profit calculation - uses new minPrice instead of previous minimum",
+      "fix": "Calculate profit first using current minPrice, then update minPrice",
+      "example": "If you update minPrice first, then calculate profit, you'll use the wrong buy price"
+    },
+    {
+      "mistake": "Not initializing minPrice correctly",
+      "symptom": "Wrong answer for first day or edge cases",
+      "fix": "Initialize minPrice = prices[0] (or Infinity), maxProfit = 0",
+      "example": "If minPrice starts at 0, you'll get wrong profits for positive prices"
+    },
+    {
+      "mistake": "Returning negative profit when no profit possible",
+      "symptom": "Should return 0 if no profit, not negative value",
+      "fix": "Initialize maxProfit = 0, and it will stay 0 if all profits are negative",
+      "example": "For prices=[7,6,4,3,1], return 0 not -6"
+    },
+    {
+      "mistake": "Checking all buy-sell pairs (brute force)",
+      "symptom": "O(n²) time complexity instead of O(n)",
+      "fix": "Use single-pass approach: track minPrice and calculate profit at each day",
+      "example": "Nested loops checking all pairs is inefficient"
+    },
+    {
+      "mistake": "Trying to buy and sell on same day",
+      "symptom": "May incorrectly calculate profit as 0 when should check future days",
+      "fix": "Start loop from index 1, not 0 (can't sell on same day as buy)",
+      "example": "If you start from i=0, you'd calculate profit using prices[0] as both buy and sell price"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a single-pass greedy problem for maximum profit.",
+      "",
+      "I'll track the minimum price and maximum profit:",
+      "- Initialize minPrice = prices[0], maxProfit = 0",
+      "- For each day i from 1 to n-1:",
+      "  - Calculate profit = prices[i] - minPrice",
+      "  - Update maxProfit = max(maxProfit, profit)",
+      "  - Update minPrice = min(minPrice, prices[i])",
+      "- Return maxProfit",
+      "",
+      "Time complexity: O(n) - single pass through array",
+      "Space complexity: O(1) - only using two variables",
+      "",
+      "Edge cases:",
+      "- Single day: return 0 (can't make transaction)",
+      "- Decreasing prices: return 0 (no profit possible)",
+      "- All same price: return 0"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Best Time to Buy and Sell Stock (return buy/sell days)",
+      "approachChange": "Same algorithm but also track the buy and sell day indices",
+      "solution": "Track minPriceIndex along with minPrice, and update buyDay/sellDay when maxProfit updates"
+    },
+    "harder": {
+      "problem": "Best Time to Buy and Sell Stock II (multiple transactions allowed)",
+      "approachChange": "Can buy and sell multiple times. Use greedy: buy before every price increase, sell before every price decrease.",
+      "solution": "Sum all positive price differences: profit += max(0, prices[i] - prices[i-1]) for all i."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize minPrice = prices[0] and maxProfit = 0"
+    },
+    {
+      "id": "ps2",
+      "text": "For each day i from 1 to prices.length - 1:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Calculate profit = prices[i] - minPrice"
+    },
+    {
+      "id": "ps4",
+      "text": "  Update maxProfit = Math.max(maxProfit, profit)"
+    },
+    {
+      "id": "ps5",
+      "text": "  Update minPrice = Math.min(minPrice, prices[i])"
+    },
+    {
+      "id": "ps6",
+      "text": "Return maxProfit"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle another exciting coding challenge? \n\nAfter mastering the two-sum pattern, we're moving on to \"Best Time to Buy and Sell Stock\" - a classic problem that teaches you how to track the minimum price you've seen so far while calculating the maximum profit you could make. This elegant pattern shows up everywhere in real-world applications, from financial algorithms to resource optimization!\n\nBy the end of this lesson, you'll have gained three powerful skills:\n• **Single-pass tracking** - Learn to maintain running minimums and maximums efficiently\n• **Profit optimization thinking** - Develop intuition for making optimal decisions with limited information  \n• **State management** - Master keeping track of multiple important values as you process data\n\nThis problem perfectly bridges the gap between algorithmic thinking and practical problem-solving. You're building such strong pattern recognition skills - I can't wait to see how quickly you pick this one up!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Dynamic programming** - Understanding optimal substructure and overlapping subproblems for finding maximum profit\n- **Greedy algorithms** - Making locally optimal choices at each step to achieve global optimum\n- **Min max tracking** - Keeping track of minimum and maximum values while iterating through data\n- **State machines** - Managing different states like buying, selling, or holding stock positions\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Dynamic programming** - Understanding optimal substructure and overlapping subproblems for finding maximum profit\n- **Greedy algorithms** - Making locally optimal choices at each step to achieve global optimum\n- **Min max tracking** - Keeping track of minimum and maximum values while iterating through data\n- **State machines** - Managing different states like buying, selling, or holding stock positions\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Dynamic programming** - Understanding optimal substructure and overlapping subproblems for finding maximum profit\n- **Greedy algorithms** - Making locally optimal choices at each step to achieve global optimum\n- **Min max tracking** - Keeping track of minimum and maximum values while iterating through data\n- **State machines** - Managing different states like buying, selling, or holding stock positions\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Dynamic programming** - Understanding optimal substructure and overlapping subproblems for finding maximum profit\n- **Greedy algorithms** - Making locally optimal choices at each step to achieve global optimum\n- **Min max tracking** - Keeping track of minimum and maximum values while iterating through data\n- **State machines** - Managing different states like buying, selling, or holding stock positions\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Dynamic programming** - Understanding optimal substructure and overlapping subproblems for finding maximum profit\n- **Greedy algorithms** - Making locally optimal choices at each step to achieve global optimum\n- **Min max tracking** - Keeping track of minimum and maximum values while iterating through data\n- **State machines** - Managing different states like buying, selling, or holding stock positions\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Best Time to Buy and Sell Stock problem asks for.\n\n**Imagine you're at a farmer's market that's open all day, and you can only buy one basket of strawberries and sell it once.** You walk through once in the morning noting all the prices, then walk through again in the afternoon when prices change - you want to find the cheapest morning price and the most expensive afternoon price to maximize your profit. **The algorithm works the same way: track the minimum price seen so far (morning low) and at each new price point, calculate the potential profit if you sold right then.**\n\n# Best Time to Buy and Sell Stock - Problem Breakdown\n\n## What's the problem asking?\n\nYou're given an array of stock prices where each number represents the price on a specific day. Your job is to find the **maximum profit** you can make by buying the stock on one day and selling it on a later day.\n\nThe key rules are:\n- You can only buy **once** and sell **once**\n- You must buy **before** you sell (no time travel!)\n- If you can't make any profit, return 0\n\n## Let's walk through the example\n\nGiven prices: `[7, 1, 5, 3, 6, 4]`\n\nLet me show you what happens day by day:\n- Day 0: Price = 7\n- Day 1: Price = 1  \n- Day 2: Price = 5\n- Day 3: Price = 3\n- Day 4: Price = 6\n- Day 5: Price = 4\n\n**The optimal strategy:** Buy on day 1 (price = 1) and sell on day 4 (price = 6)\n**Profit:** 6 - 1 = 5\n\n## Why does this work?\n\nThis gives us the maximum profit because:\n1. **Day 1 has the lowest price** in our array (1), so it's the best day to buy\n2. **Day 4 has the highest price after day 1** (6), so it's the best day to sell\n3. Any other buy/sell combination gives us less profit:\n   - Buy at 7, sell at 6 → Loss of 1\n   - Buy at 1, sell at 5 → Profit of 4 (less than 5)\n   - Buy at 1, sell at 3 → Profit of 2 (less than 5)\n\nThe trick is finding the day with the lowest price and then the day with the highest price that comes **after** that lowest price day.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You have an array of stock prices where prices[i] is the price on day i. You want to maximize profit by buying on one day and selling on a later day. Given prices = [7, 1, 5, 3, 6, 4], what's the most efficient approach to find the maximum profit?",
+      "choices": [
+        {
+          "label": "Check all possible buy-sell combinations using nested loops to find the maximum difference where sell day > buy day",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Track the minimum price seen so far while iterating once, and at each day calculate the potential profit and update maximum profit",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this brute force approach would work correctly (O(n²) time), it's inefficient. For each buy day, you'd check all future sell days, resulting in redundant calculations. You'd be recalculating profits for price differences you've already considered in different contexts.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Single-Pass Greedy\n\n**This problem follows the \"track minimum while maximizing\" pattern:**\n- **Single-pass optimization** - Process array once, tracking state as we go\n- **Greedy choice** - At each position, make the locally optimal decision\n- **State tracking** - Maintain minimum price seen so far and maximum profit found\n\n**Similar problems:**\n- Best Time to Buy and Sell Stock II (multiple transactions)\n- Maximum Subarray (track running sum)\n- Container With Most Water (track two pointers)\n\n**Key insight:** We don't need to check all buy-sell pairs - we only need to track the best buy price (minimum) and calculate profit at each sell opportunity.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Minimum Price and Maximum Profit\n\n**Invariant maintained throughout:**\n- **`minPrice`** = minimum price seen from index 0 to current index `i`\n- **`maxProfit`** = maximum profit achievable by selling at any day from 0 to `i`\n\n**Why this works:**\n- At each day `i`, the best buy price is the minimum price seen so far\n- The profit if selling on day `i` is `prices[i] - minPrice`\n- We update `maxProfit` if this profit is better than any previous profit\n\n**Invariant guarantee:** After processing day `i`, `maxProfit` contains the maximum profit achievable using days 0 through `i`.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to **track the minimum price seen so far** and calculate the **maximum possible profit** at each day by selling at the current price. This works because we only need to consider buying at the lowest price before any given selling day to maximize profit. For example, with prices [7,1,5,3,6,4], when we reach day 4 (price=6), we know the minimum so far is 1, so our **maximum profit** is 6-1=5. This **single-pass approach** eliminates the need to check all possible buy-sell combinations, reducing complexity from O(n²) to O(n).",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[7,1,5,3,6,4]`:\n- Step 1: At price 7, min_price = 7, max_profit = 0 (can't sell on first day)\n- Step 2: At price 1, min_price = 1, max_profit = 0 (profit would be 1-1 = 0)\n- Step 3: At price 5, min_price = 1, max_profit = 4 (profit is 5-1 = 4)\n- Step 4: At price 3, min_price = 1, max_profit = 4 (profit is 3-1 = 2, no update)\n- Step 5: At price 6, min_price = 1, max_profit = 5 (profit is 6-1 = 5)\n- Step 6: At price 4, min_price = 1, max_profit = 5 (profit is 4-1 = 3, no update)\n- Final: **5 (buy at 1, sell at 6)**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function with prices array parameter\n\n```javascript\nfunction maxProfit(prices) {\n\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function maxProfit(prices) {"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize minimum price tracker with first day's price\n\n```javascript\nfunction maxProfit(prices) {\n    let minPrice = prices[0];\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "let minPrice = prices[0];"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Initialize maximum profit tracker starting at zero\n\n```javascript\nfunction maxProfit(prices) {\n    let minPrice = prices[0];\n    let maxProfit = 0;\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "let maxProfit = 0;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Start loop from second day (index 1) through all prices\n\n```javascript\nfunction maxProfit(prices) {\n    let minPrice = prices[0];\n    let maxProfit = 0;\n    \n    for (let i = 1; i < prices.length; i++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "for (let i = 1; i < prices.length; i++) {"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Calculate potential profit by selling at current day's price\n\n```javascript\nfunction maxProfit(prices) {\n    let minPrice = prices[0];\n    let maxProfit = 0;\n    \n    for (let i = 1; i < prices.length; i++) {\n        let currentProfit = prices[i] - minPrice;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "let currentProfit = prices[i] - minPrice;"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Update maximum profit if current profit is higher\n\n```javascript\nfunction maxProfit(prices) {\n    let minPrice = prices[0];\n    let maxProfit = 0;\n    \n    for (let i = 1; i < prices.length; i++) {\n        let currentProfit = prices[i] - minPrice;\n        maxProfit = Math.max(maxProfit, currentProfit);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "maxProfit = Math.max(maxProfit, currentProfit);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Update minimum price if current day has lower price\n\n```javascript\nfunction maxProfit(prices) {\n    let minPrice = prices[0];\n    let maxProfit = 0;\n    \n    for (let i = 1; i < prices.length; i++) {\n        let currentProfit = prices[i] - minPrice;\n        maxProfit = Math.max(maxProfit, currentProfit);\n        minPrice = Math.min(minPrice, prices[i]);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "minPrice = Math.min(minPrice, prices[i]);"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return the maximum profit found after checking all days\n\n```javascript\nfunction maxProfit(prices) {\n    let minPrice = prices[0];\n    let maxProfit = 0;\n    \n    for (let i = 1; i < prices.length; i++) {\n        let currentProfit = prices[i] - minPrice;\n        maxProfit = Math.max(maxProfit, currentProfit);\n        minPrice = Math.min(minPrice, prices[i]);\n    }\n    \n    return maxProfit;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "return maxProfit;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the \"Best Time to Buy and Sell Stock\" problem! You've successfully learned the powerful pattern of tracking the minimum value seen so far while simultaneously calculating the maximum profit at each step. Next, we'll tackle the maximum subarray problem, where you'll apply similar dynamic thinking to find the contiguous subarray with the largest sum - another classic that builds beautifully on these optimization concepts!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

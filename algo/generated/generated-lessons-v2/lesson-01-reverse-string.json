@@ -1,0 +1,657 @@
+{
+  "id": "reverse-string",
+  "title": "Reverse String",
+  "pattern": "two pointers (toward each other)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 1,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-1",
+    "introduces": [
+      "two-pointers",
+      "in-place-swap",
+      "temporary-variable",
+      "pointer-convergence"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "variables"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "search-insert-position"
+    ]
+  },
+  "problemStatement": {
+    "description": "Reverse an array of characters in-place without using extra space.",
+    "inputs": [
+      "s: array of characters (length 1 to 10^5)"
+    ],
+    "outputs": [
+      "Modify the input array in-place (no return value needed, or return the reversed array)"
+    ],
+    "examples": [
+      {
+        "input": "s = ['h','e','l','l','o']",
+        "output": "['o','l','l','e','h']",
+        "explanation": "Swap 'h' (index 0) with 'o' (index 4) → ['o','e','l','l','h']. Then swap 'e' (index 1) with 'l' (index 3) → ['o','l','l','e','h']. Pointers meet at index 2, done."
+      },
+      {
+        "input": "s = ['H','a','n','n','a','h']",
+        "output": "['h','a','n','n','a','H']",
+        "explanation": "Swap 'H'↔'h', 'a'↔'a', 'n'↔'n'. After 3 swaps, the array is reversed."
+      },
+      {
+        "input": "s = ['A']",
+        "output": "['A']",
+        "explanation": "Single character array remains unchanged (left=0, right=0, loop doesn't execute)."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 10^5",
+      "s[i] is a printable ascii character",
+      "Must modify array in-place with O(1) extra space"
+    ],
+    "realWorldUse": [
+      "String manipulation in text editors (reverse selected text)",
+      "Palindrome checking algorithms",
+      "Data structure reversal operations",
+      "Memory-efficient array transformations"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "This problem requires in-place modification with O(1) space, which makes two pointers from opposite ends the optimal approach. Starting from both ends allows us to swap mirror positions simultaneously.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks for in-place modification → think two pointers",
+      "SIGNAL 2: Need to process elements from both ends → use opposite-end pointers",
+      "SIGNAL 3: Symmetric operations (swap, compare) → two pointers converging"
+    ],
+    "patternRules": [
+      "If problem requires in-place array/string manipulation → likely two pointers",
+      "When you see 'reverse', 'palindrome', or 'mirror' keywords → consider opposite-end pointers",
+      "If O(1) space constraint exists → avoid creating new arrays, use pointers"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply here - there's no local optimal choice to make. We need to swap all pairs symmetrically.",
+      "bruteForce": "Brute force would create a new array and copy elements in reverse order, using O(n) extra space, violating the in-place requirement.",
+      "alternative": "Using built-in reverse() function works but doesn't demonstrate algorithmic understanding. Two pointers show you understand the underlying mechanism."
+    }
+  },
+  "coreInvariant": {
+    "statement": "Elements at indices < left and > right are in their final reversed positions, while elements in [left, right] still need processing.",
+    "explanation": "This invariant holds because each swap places two elements (at left and right positions) into their correct final positions. As pointers converge, the unprocessed range shrinks until all elements are correctly positioned.",
+    "whyItMatters": "This invariant guarantees correctness: when left >= right, all elements are processed and the array is fully reversed. It also shows we only need ⌊n/2⌋ swaps."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "left",
+        "meaning": "Pointer starting at index 0, moving rightward, tracks the leftmost unprocessed element",
+        "indexing": "0-indexed, starts at 0"
+      },
+      {
+        "name": "right",
+        "meaning": "Pointer starting at index n-1, moving leftward, tracks the rightmost unprocessed element",
+        "indexing": "0-indexed, starts at s.length - 1"
+      },
+      {
+        "name": "s",
+        "meaning": "The array being reversed in-place",
+        "indexing": "0-indexed array"
+      }
+    ],
+    "baseCases": [
+      "If s.length <= 1: array is already reversed, no swaps needed",
+      "When left >= right: all elements processed, algorithm terminates"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "while left < right",
+        "transition": "Swap s[left] and s[right], then left++, right--",
+        "explanation": "We swap the mirror elements to place them in correct positions, then move pointers inward to process the next pair. The condition left < right ensures we don't swap the middle element twice.",
+        "example": "For ['h','e','l','l','o']: left=0, right=4 → swap → ['o','e','l','l','h'], then left=1, right=3"
+      }
+    ],
+    "decisionTree": {
+      "root": "At each iteration, check if left < right",
+      "branches": [
+        "If left < right: swap s[left] and s[right], increment left, decrement right",
+        "If left >= right: terminate (all elements processed)"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "s = ['h','e','l','l','o']",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Initialize pointers: left = 0, right = 4",
+        "state": "left = 0 (pointing to 'h'), right = 4 (pointing to 'o'), s = ['h','e','l','l','o']",
+        "logic": "We start from both ends to process mirror positions",
+        "result": "Pointers positioned at opposite ends"
+      },
+      {
+        "step": 2,
+        "description": "Swap s[0] and s[4]: 'h' ↔ 'o'",
+        "state": "left = 0, right = 4, temp = 'h', s[0] = 'o', s[4] = 'h'",
+        "logic": "Swap places the first and last characters in their final positions",
+        "result": "s = ['o','e','l','l','h']"
+      },
+      {
+        "step": 3,
+        "description": "Move pointers: left = 1, right = 3",
+        "state": "left = 1 (pointing to 'e'), right = 3 (pointing to 'l'), s = ['o','e','l','l','h']",
+        "logic": "Pointers converge toward center to process next pair",
+        "result": "Next pair ready for swapping"
+      },
+      {
+        "step": 4,
+        "description": "Swap s[1] and s[3]: 'e' ↔ 'l'",
+        "state": "left = 1, right = 3, temp = 'e', s[1] = 'l', s[3] = 'e'",
+        "logic": "Swap places the second and second-to-last characters in their final positions",
+        "result": "s = ['o','l','l','e','h']"
+      },
+      {
+        "step": 5,
+        "description": "Move pointers: left = 2, right = 2",
+        "state": "left = 2, right = 2, s = ['o','l','l','e','h']",
+        "logic": "Pointers meet at the middle element",
+        "result": "Loop condition left < right is now false"
+      },
+      {
+        "step": 6,
+        "description": "Terminate: left >= right",
+        "state": "left = 2, right = 2, s = ['o','l','l','e','h']",
+        "logic": "All elements are in their final positions. Middle element (if odd length) stays in place.",
+        "result": "Array is fully reversed"
+      }
+    ],
+    "keyInsight": "Each swap correctly positions two elements simultaneously. By the time pointers meet, exactly ⌊n/2⌋ swaps have placed all elements in their final reversed positions."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Using left <= right instead of left < right in loop condition",
+      "symptom": "For odd-length arrays, the middle element gets swapped with itself unnecessarily, though it doesn't break correctness",
+      "fix": "Use left < right to stop when pointers meet, avoiding redundant swap of middle element",
+      "example": "For ['a','b','c']: with left <= right, you'd swap s[1] with itself when left=right=1, which is unnecessary"
+    },
+    {
+      "mistake": "Forgetting to save arr[left] in temp before swapping",
+      "symptom": "After arr[left] = arr[right], the original arr[left] value is lost, so arr[right] gets the wrong value",
+      "fix": "Always do: temp = arr[left], arr[left] = arr[right], arr[right] = temp",
+      "example": "Without temp: arr[left] = arr[right] overwrites arr[left], then arr[right] = arr[left] copies the wrong value"
+    },
+    {
+      "mistake": "Forgetting to move pointers after swap",
+      "symptom": "Infinite loop - pointers never converge, loop never terminates",
+      "fix": "Always increment left and decrement right after each swap",
+      "example": "Missing left++ and right-- causes infinite loop since left < right always remains true"
+    },
+    {
+      "mistake": "Starting right pointer at s.length instead of s.length - 1",
+      "symptom": "Array index out of bounds error when accessing s[right]",
+      "fix": "Right pointer must start at s.length - 1 (last valid index, 0-indexed)",
+      "example": "For array of length 5, right should be 4 (not 5), since valid indices are 0-4"
+    },
+    {
+      "mistake": "Trying to reverse a string directly in languages where strings are immutable",
+      "symptom": "Error or no change - strings can't be modified in-place in Python/Java",
+      "fix": "Convert string to character array first, reverse the array, then convert back to string if needed",
+      "example": "In Python: s = list(s) to convert to list, reverse list, then ''.join(s) to convert back"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a two-pointer problem that requires in-place reversal.",
+      "",
+      "I'll use two pointers starting from opposite ends of the array:",
+      "- left pointer at index 0, moving rightward",
+      "- right pointer at index n-1, moving leftward",
+      "",
+      "The algorithm:",
+      "- While left < right:",
+      "  - Swap the elements at left and right positions",
+      "  - Increment left, decrement right",
+      "",
+      "Time complexity: O(n) - we visit each element once",
+      "Space complexity: O(1) - only using a few variables (left, right, temp)",
+      "",
+      "Edge cases:",
+      "- Empty array: handled (loop doesn't execute)",
+      "- Single element: handled (left = right, loop doesn't execute)",
+      "- Even/odd length: both work correctly"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Reverse String (with extra space allowed)",
+      "approachChange": "Can create a new array and copy elements in reverse order, no need for two pointers",
+      "solution": "Create result array, iterate from end to start, copy each element to result array"
+    },
+    "harder": {
+      "problem": "Reverse Words in a String",
+      "approachChange": "Need to reverse individual words first, then reverse the entire string, or use two-pointer approach to reverse word by word",
+      "solution": "Use two pointers to identify word boundaries, reverse each word in-place, then reverse the entire string. Requires careful pointer management for spaces."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize left = 0 and right = s.length - 1"
+    },
+    {
+      "id": "ps2",
+      "text": "While left < right:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Store s[left] in temporary variable: temp = s[left]"
+    },
+    {
+      "id": "ps4",
+      "text": "  Assign s[right] to s[left]: s[left] = s[right]"
+    },
+    {
+      "id": "ps5",
+      "text": "  Assign temp to s[right]: s[right] = temp"
+    },
+    {
+      "id": "ps6",
+      "text": "  Increment left: left = left + 1"
+    },
+    {
+      "id": "ps7",
+      "text": "  Decrement right: right = right - 1"
+    },
+    {
+      "id": "ps8",
+      "text": "Array is now reversed in-place (no return needed if modifying in-place)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to your first lesson on the Reverse String pattern! \n\nToday we're diving into one of the most fundamental and elegant patterns in programming - the **two pointers technique moving toward each other**. Picture this: you place one pointer at the beginning of your string and another at the end, then have them \"walk\" toward each other, swapping characters as they meet in the middle. It's like having two friends start from opposite ends of a hallway and exchange gifts as they pass each other!\n\nBy mastering this pattern, you'll gain three incredible skills:\n\n1. **Efficient in-place manipulation** - Learn to transform data without using extra memory space\n2. **Two-pointer problem-solving** - Build the foundation for tackling dozens of similar coding challenges\n3. **Optimization thinking** - Develop the mindset to spot when a simple approach can beat complex solutions\n\nThis pattern is your gateway to understanding how elegant algorithms can solve problems with minimal resources. You're about to discover how two simple pointers can unlock solutions that are both beautiful and efficient!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **String manipulation** - Understanding how to access and modify individual characters in strings\n- **Array indexing** - Ability to access elements at specific positions using index notation\n- **Two pointer technique** - Using pointers from both ends of a data structure moving toward center\n- **Swap operations** - Exchanging values between two variables or array positions\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **String manipulation** - Understanding how to access and modify individual characters in strings\n- **Array indexing** - Ability to access elements at specific positions using index notation\n- **Two pointer technique** - Using pointers from both ends of a data structure moving toward center\n- **Swap operations** - Exchanging values between two variables or array positions\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **String manipulation** - Understanding how to access and modify individual characters in strings\n- **Array indexing** - Ability to access elements at specific positions using index notation\n- **Two pointer technique** - Using pointers from both ends of a data structure moving toward center\n- **Swap operations** - Exchanging values between two variables or array positions\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **String manipulation** - Understanding how to access and modify individual characters in strings\n- **Array indexing** - Ability to access elements at specific positions using index notation\n- **Two pointer technique** - Using pointers from both ends of a data structure moving toward center\n- **Swap operations** - Exchanging values between two variables or array positions\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **String manipulation** - Understanding how to access and modify individual characters in strings\n- **Array indexing** - Ability to access elements at specific positions using index notation\n- **Two pointer technique** - Using pointers from both ends of a data structure moving toward center\n- **Swap operations** - Exchanging values between two variables or array positions\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Reverse String problem asks for.\n\nImagine you're reading a word spelled out in magnetic letters on your refrigerator - to reverse it, you'd peel off each letter from right to left and stick them in a new row, so \"PIZZA\" becomes \"AZZIP.\" Just like the algorithm, you're taking each character from the end position and placing it at the beginning of your new arrangement, working backwards through the original until you've repositioned every letter.\n\n# Reverse String Problem\n\n## What it's asking for\n\nYou're given an array of characters, and you need to reverse it **in-place**. That means you can't create a new array - you have to modify the original array directly by rearranging its elements.\n\nThink of it like flipping a word backwards, but you have to do it by swapping the letters in the original word rather than writing out a new backwards version.\n\n## Example walkthrough\n\nLet's say we start with: `['h', 'e', 'l', 'l', 'o']`\n\nWe want to end up with: `['o', 'l', 'l', 'e', 'h']`\n\n## Why the solution works\n\nThe key insight is to use the **two-pointer technique**:\n\n1. **Start from both ends**: Place one pointer at the beginning (index 0) and another at the end (last index)\n\n2. **Swap and move inward**: Swap the characters at these positions, then move both pointers toward the center\n\n3. **Stop when they meet**: Continue until the pointers meet in the middle\n\nHere's how it looks step by step:\n\n```\nInitial: ['h', 'e', 'l', 'l', 'o']\n          ↑                   ↑\n        left                right\n\nStep 1: Swap 'h' and 'o'\n        ['o', 'e', 'l', 'l', 'h']\n               ↑           ↑\n             left        right\n\nStep 2: Swap 'e' and 'l' \n        ['o', 'l', 'l', 'e', 'h']\n                   ↑   \n              left=right (done!)\n```\n\nThis works because we're systematically swapping each character with its \"mirror position\" from the other end. By the time our pointers meet in the middle, every character has been swapped exactly once, giving us the perfectly reversed array.\n\nThe beauty is that it's efficient (O(n/2) swaps) and uses no extra space beyond a couple of variables!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to reverse a string in-place. You have two pointers: one at the beginning (left) and one at the end (right) of the string. What should be your strategy to efficiently reverse the string?",
+      "choices": [
+        {
+          "label": "Move both pointers from left to right, swapping each character with the next one",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Swap characters at left and right positions, then move left pointer forward and right pointer backward until they meet",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach is incorrect because moving both pointers in the same direction doesn't utilize the two-pointer technique effectively. It would essentially be swapping adjacent elements, which doesn't reverse the string and would require multiple passes through the array.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Two Pointers from Opposite Ends\n\n**This problem follows the \"two pointers from opposite ends\" pattern:**\n- **Opposite ends** - One pointer at start, one at end\n- **Converge toward center** - Move pointers inward until they meet\n- **Swap operations** - Swap elements at pointer positions\n- **In-place modification** - No extra space needed\n\n**Similar problems:**\n- Valid Palindrome (same two-pointer approach)\n- Reverse Array (same pattern)\n- Move Zeroes (two pointers, different logic)\n- Container With Most Water (two pointers, different goal)\n\n**Key insight:** This is a fundamental two-pointer template. Starting from opposite ends and converging allows us to process pairs of elements simultaneously, making it perfect for reversal and palindrome problems.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Elements Outside [left, right] Are in Final Positions\n\n**Invariant maintained throughout:**\n- **Processed range:** Elements at indices < left and > right are in their final reversed positions\n- **Unprocessed range:** Elements in [left, right] still need processing\n- **Symmetry:** After each swap, two more elements are correctly positioned\n\n**Why this works:**\n- Initially, no elements are processed (left=0, right=n-1)\n- Each swap places two elements in their final positions\n- Pointers converge, reducing unprocessed range\n- When left >= right, all elements are processed\n\n**Invariant guarantee:** After the loop completes (when left >= right), all elements are in their final reversed positions. The number of swaps needed is ⌊n/2⌋.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Two Pointer State\n\n**State variables:**\n- **`left`** - Pointer starting at index 0, moving right\n- **`right`** - Pointer starting at index n-1, moving left\n- **`s`** - Array being reversed in-place\n\n**State transitions:**\n1. **Initialize:** left = 0, right = s.length - 1\n2. **Loop condition:** while left < right\n3. **Swap:** Exchange s[left] and s[right]\n4. **Move pointers:** left++, right--\n5. **Terminate:** When left >= right\n\n**State validity:** Array is fully reversed when left >= right.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Create New Array**\n- **Why it fails:** Violates \"in-place\" requirement\n- **Issue:** Uses O(n) extra space\n- **Better:** Two pointers use O(1) space\n\n**Approach 2: Move Both Pointers Same Direction**\n- **Why it fails:** Doesn't reverse correctly\n- **Issue:** Would swap adjacent elements, not mirror positions\n- **Better:** Opposite ends ensure correct mirror swapping\n\n**Approach 3: Use Built-in Reverse**\n- **Why it doesn't fail:** Actually works, but not educational\n- **Issue:** Doesn't demonstrate algorithm understanding\n- **Better:** Two pointers show algorithmic thinking\n\n**Our approach wins because:** Two pointers from opposite ends correctly reverse the array in-place with O(n/2) swaps and O(1) space, which is optimal for this problem.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **two pointers** starting from opposite ends of the string and **swap characters while moving toward the center**. This works because each swap correctly places two characters in their final reversed positions simultaneously, reducing the problem size by half with each iteration. For example, in \"hello\": swap 'h'↔'o' → \"oellh\", then 'e'↔'l' → \"olleh\", leaving the middle 'l' unchanged. This approach achieves O(n/2) time complexity and O(1) space complexity by avoiding the need for additional storage.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `['h', 'e', 'l', 'l', 'o']`:\n- Step 1: Initialize two pointers: left = 0 (at 'h'), right = 4 (at 'o')\n- Step 2: Swap s[0] and s[4]: ['o', 'e', 'l', 'l', 'h'], move pointers: left = 1, right = 3\n- Step 3: Swap s[1] and s[3]: ['o', 'l', 'l', 'e', 'h'], move pointers: left = 2, right = 2\n- Step 4: Pointers meet at index 2, no more swaps needed\n- Final: **['o', 'l', 'l', 'e', 'h']**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function to reverse array and initialize left pointer at start\n\n```javascript\nfunction reverseArray(arr) {\n    let left = 0;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function reverseArray(arr) {\n    let left = 0;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize right pointer at the end of array\n\n```javascript\nfunction reverseArray(arr) {\n    let left = 0;\n    let right = arr.length - 1;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let right = arr.length - 1;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start while loop to continue until pointers meet in the middle\n\n```javascript\nfunction reverseArray(arr) {\n    let left = 0;\n    let right = arr.length - 1;\n    \n    while (left < right) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    while (left < right) {\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Store left element in temporary variable for swapping\n\n```javascript\nfunction reverseArray(arr) {\n    let left = 0;\n    let right = arr.length - 1;\n    \n    while (left < right) {\n        let temp = arr[left];\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        let temp = arr[left];"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Assign right element to left position\n\n```javascript\nfunction reverseArray(arr) {\n    let left = 0;\n    let right = arr.length - 1;\n    \n    while (left < right) {\n        let temp = arr[left];\n        arr[left] = arr[right];\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        arr[left] = arr[right];"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Complete the swap by assigning temp to right position\n\n```javascript\nfunction reverseArray(arr) {\n    let left = 0;\n    let right = arr.length - 1;\n    \n    while (left < right) {\n        let temp = arr[left];\n        arr[left] = arr[right];\n        arr[right] = temp;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        arr[right] = temp;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Move pointers toward center - increment left and decrement right\n\n```javascript\nfunction reverseArray(arr) {\n    let left = 0;\n    let right = arr.length - 1;\n    \n    while (left < right) {\n        let temp = arr[left];\n        arr[left] = arr[right];\n        arr[right] = temp;\n        left++;\n        right--;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "        left++;\n        right--;"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return the reversed array\n\n```javascript\nfunction reverseArray(arr) {\n    let left = 0;\n    let right = arr.length - 1;\n    \n    while (left < right) {\n        let temp = arr[left];\n        arr[left] = arr[right];\n        arr[right] = temp;\n        left++;\n        right--;\n    }\n    return arr;\n}\n```",
+      "action": "next",
+      "next": "pattern-generalization",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "    return arr;"
+    },
+    {
+      "stepId": "pattern-generalization",
+      "mentorSays": "### This Pattern Applies To...\n\nThe two-pointer technique (starting from both ends) is used in many problems:\n\n1. **Reverse array** - Swap elements from both ends\n2. **Valid palindrome** - Compare characters from both ends\n3. **Move zeros to end** - Two pointers moving in same direction\n4. **Container with most water** - Two pointers finding max area\n5. **Two sum (sorted array)** - Two pointers finding pairs\n6. **Trapping rain water** - Two pointers finding boundaries\n\n**Key insight:** When you need to process elements from both ends or find pairs, think two pointers! This builds pattern recognition.",
+      "action": "next",
+      "next": "common-mistakes"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Losing the next pointer** - Always save `temp = arr[left]` before reassigning\n2. **Wrong loop condition** - Use `left < right` not `left <= right` (avoid swapping middle element twice)\n3. **Forgetting to move pointers** - Must increment left and decrement right after swap\n4. **Array vs string** - Strings are immutable in some languages, need to convert to array first\n5. **Off-by-one errors** - Right pointer should start at `length - 1` not `length`",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I use two pointers starting from both ends of the array\"**\n2. **\"I swap the elements at both pointers\"**\n3. **\"Then I move both pointers inward: left increments, right decrements\"**\n4. **\"I continue until the pointers meet or cross\"**\n5. **\"This gives us O(n) time complexity with O(1) space, reversing in-place\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the two pointers technique with Reverse String! You've successfully learned how to use pointers moving toward each other to solve problems efficiently in-place.\n\n**Follow-up variant:**\n\n**Reverse Words in a String:** Given a string, reverse the order of words. How would you use two pointers to solve this?",
+      "action": "complete"
+    }
+  ]
+}

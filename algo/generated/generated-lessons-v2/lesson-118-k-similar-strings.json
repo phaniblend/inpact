@@ -1,0 +1,368 @@
+{
+  "id": "k-similar-strings",
+  "title": "K-Similar Strings",
+  "pattern": "BFS with string states",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 118,
+    "tier": "ULTIMATE",
+    "lessonOrderTag": "ULTIMATE-118",
+    "introduces": [
+      "string-bfs",
+      "swap-distance"
+    ],
+    "assumesAlreadyTaught": [
+      "BFS-concept",
+      "strings"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "smallest-range-k-lists"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize BFS queue with starting string s1 and distance 0"
+    },
+    {
+      "id": "ps2",
+      "text": "Create visited set to track explored string states"
+    },
+    {
+      "id": "ps3",
+      "text": "While queue is not empty, process current string state"
+    },
+    {
+      "id": "ps4",
+      "text": "Find first mismatch index i where s1[i] != s2[i]"
+    },
+    {
+      "id": "ps5",
+      "text": "For each index j > i where s1[j] == s2[i] (useful swap candidate)"
+    },
+    {
+      "id": "ps6",
+      "text": "Swap characters at positions i and j to create new state"
+    },
+    {
+      "id": "ps7",
+      "text": "If new state equals s2, return current distance + 1"
+    },
+    {
+      "id": "ps8",
+      "text": "If new state not visited, add to queue with distance + 1"
+    },
+    {
+      "id": "ps9",
+      "text": "Mark new state as visited"
+    },
+    {
+      "id": "ps10",
+      "text": "Continue BFS until target string s2 is found"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! **K-Similar Strings** - master BFS with string states!\n\nThis lesson teaches: string-bfs, swap-distance\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which language?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Prerequisites: BFS-concept, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Prerequisites: BFS-concept, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Prerequisites: BFS-concept, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Prerequisites: BFS-concept, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Prerequisites: BFS-concept, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "### K-Similar Strings Problem\n\n**Given:** Two strings `s1` and `s2` that are anagrams (same characters, different order).\n\n**Goal:** Find the minimum number of adjacent swaps needed to transform `s1` into `s2`.\n\n**Rules:**\n- You can only swap two **adjacent** characters at a time\n- Each swap counts as 1 operation\n- Find the minimum swaps needed\n\n**Example:**\n```\ns1 = \"abc\"\ns2 = \"bca\"\n\nSwap 1: 'a' and 'b' → \"bac\"\nSwap 2: 'a' and 'c' → \"bca\"\n\nAnswer: 2 swaps\n```\n\n**This uses BFS with string states** - each string is a state, swaps are transitions.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "How to solve this efficiently?",
+      "choices": [
+        {
+          "label": "Brute force approach",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use BFS with string states",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Brute force won't be efficient!\n\nThe optimal approach is better.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight: **BFS with smart pruning**.\n\n**Basic BFS approach:**\n- Each string state is a node\n- Swapping adjacent characters creates new states\n- BFS finds shortest path (minimum swaps)\n\n**Problem:** Too many states! For string of length n, there are n! possible states.\n\n**Solution: Pruning with first mismatch index and useful swaps**\n- Find first position `i` where `s1[i] != s2[i]`\n- Only swap characters that fix this mismatch\n- This dramatically reduces the search space",
+      "action": "next",
+      "next": "bfs-pruning-explanation"
+    },
+    {
+      "stepId": "bfs-pruning-explanation",
+      "mentorSays": "### BFS Pruning: First Mismatch Index + Only Useful Swaps\n\n**Key optimization 1: First mismatch index**\n\nInstead of trying all possible swaps, we:\n1. Find the **first index `i`** where `s1[i] != s2[i]`\n2. Focus on fixing position `i` first\n3. Once position `i` is fixed, move to next mismatch\n\n**Why this works:**\n- We need to fix mismatches from left to right\n- Fixing earlier positions first is optimal\n- No need to swap characters that are already correct\n\n**Key optimization 2: Only useful swaps**\n\nFor position `i`, we only consider swaps that:\n- Move the **correct character** (s2[i]) to position `i`\n- Don't break already-correct positions\n\n**Algorithm:**\n```\n1. Find first mismatch: i where s1[i] != s2[i]\n2. Find all j > i where s1[j] == s2[i] (correct char for position i)\n3. For each j, swap s1[i] and s1[j]\n4. Add new state to BFS queue\n5. Continue until s1 == s2\n```\n\n**Example:**\n```\ns1 = \"abc\"\ns2 = \"bca\"\n\nFirst mismatch: i=0 (s1[0]='a' != s2[0]='b')\nFind j where s1[j] == 'b': j=1\nSwap s1[0] and s1[1]: \"bac\"\n\nNext: i=1 (s1[1]='a' != s2[1]='c')\nFind j where s1[j] == 'c': j=2\nSwap s1[1] and s1[2]: \"bca\" ✓\n```\n\n**This pruning reduces search space from O(n!) to manageable size!**",
+      "action": "next",
+      "next": "queue-evolution-example"
+    },
+    {
+      "stepId": "queue-evolution-example",
+      "mentorSays": "### Queue Evolution Example\n\n**Input:** `s1 = \"abc\"`, `s2 = \"bca\"`\n\n**Initial state:**\n```\nQueue: [(\"abc\", distance=0)]\nVisited: {\"abc\"}\n```\n\n**Level 0 (distance 0):**\n- Process: \"abc\"\n- First mismatch: i=0 (need 'b' at position 0)\n- Find j where s1[j]=='b': j=1\n- Swap: \"abc\" → \"bac\"\n- Add to queue: `(\"bac\", distance=1)`\n\n```\nQueue: [(\"bac\", 1)]\nVisited: {\"abc\", \"bac\"}\n```\n\n**Level 1 (distance 1):**\n- Process: \"bac\"\n- First mismatch: i=1 (need 'c' at position 1)\n- Find j where s1[j]=='c': j=2\n- Swap: \"bac\" → \"bca\"\n- Check: \"bca\" == \"bca\" ✓ (target found!)\n\n**Answer: 2 swaps**\n\n**Queue states explored:**\n```\nDistance 0: [\"abc\"]\nDistance 1: [\"bac\"]\nDistance 2: [\"bca\"] → TARGET FOUND!\n```\n\n**Without pruning:** Would explore many useless states like \"acb\", \"cab\", etc.\n**With pruning:** Only explores states that fix first mismatch - much faster!\n\n**This queue evolution example shows how BFS with pruning efficiently finds the solution!**",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Detailed Walkthrough: s1=\"ab\", s2=\"ba\"\n\n**Step 1: Initialize BFS**\n```\nQueue: [(\"ab\", 0)]\nVisited: {}\n```\n\n**Step 2: Process \"ab\" (distance 0)**\n- Compare with \"ba\": first mismatch at i=0\n- Need 'b' at position 0\n- Find j where s1[j]=='b': j=1\n- Swap s1[0] and s1[1]: \"ab\" → \"ba\"\n- Check: \"ba\" == \"ba\" ✓\n- **Answer: 1 swap**\n\n**Final:** Minimum swaps = 1\n\n**This walkthrough demonstrates the BFS pruning strategy in action!**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7",
+        "ps8",
+        "ps9",
+        "ps10"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's the algorithm:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Let's code it step by step!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize data structures.\n\n```javascript\nfunction solve() {\n  // Setup\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "// Initialize"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Implement core logic.\n\n```javascript\nfunction solve() {\n  // Setup\n  // Main algorithm\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "// Core logic"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Complete solution.\n\n```javascript\nfunction solve() {\n  // Full implementation\n  return result;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4"
+      ],
+      "example": "return result;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Excellent! **K-Similar Strings** complete!\n\nNext lesson continues your journey to mastery! 🚀",
+      "action": "complete"
+    }
+  ]
+}

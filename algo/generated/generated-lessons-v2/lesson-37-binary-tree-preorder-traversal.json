@@ -1,0 +1,427 @@
+{
+  "id": "binary-tree-preorder-traversal",
+  "title": "Binary Tree Preorder Traversal",
+  "pattern": "tree traversal (DFS - preorder)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 37,
+    "tier": "INTERMEDIATE",
+    "lessonOrderTag": "INTERMEDIATE-37",
+    "introduces": [
+      "preorder-traversal",
+      "root-left-right",
+      "tree-copying"
+    ],
+    "assumesAlreadyTaught": [
+      "binary-tree-concept",
+      "recursion-on-trees",
+      "arrays"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "binary-tree-postorder-traversal"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Start at the root node of the binary tree"
+    },
+    {
+      "id": "ps2",
+      "text": "Process the current node (visit/print/store the node's value)"
+    },
+    {
+      "id": "ps3",
+      "text": "If the current node has a left child, recursively traverse the left subtree"
+    },
+    {
+      "id": "ps4",
+      "text": "If the current node has a right child, recursively traverse the right subtree"
+    },
+    {
+      "id": "ps5",
+      "text": "Return to the parent node and repeat the process"
+    },
+    {
+      "id": "ps6",
+      "text": "Continue until all nodes in the tree have been visited"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to explore another powerful tree traversal technique? After mastering inorder traversal, let's tackle preorder traversal - another essential depth-first search pattern that visits nodes in a different but equally important sequence.\n\nIn preorder traversal, we follow the pattern: **root → left subtree → right subtree**. This means we process the current node first, then recursively traverse the left subtree, and finally the right subtree. This approach is particularly useful when you need to process parent nodes before their children, like copying a tree structure or evaluating prefix expressions.\n\nHere are 3 key skills you'll develop:\n\n1. **Pattern Recognition** - Master the preorder DFS traversal sequence and understand when to apply it\n2. **Recursive Thinking** - Strengthen your ability to break down tree problems into smaller subproblems\n3. **Algorithm Implementation** - Build both recursive and iterative solutions using stacks\n\nYou're building an amazing foundation in tree algorithms, and each traversal method adds another powerful tool to your problem-solving toolkit. These patterns will serve you well across countless coding challenges!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left and right children\n- **Recursion on trees** - Knowledge of recursive algorithms applied to tree structures\n- **Arrays** - Familiarity with array data structure for storing traversal results\n- **Tree traversal basics** - Understanding of different tree traversal methods and their purposes\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left and right children\n- **Recursion on trees** - Knowledge of recursive algorithms applied to tree structures\n- **Arrays** - Familiarity with array data structure for storing traversal results\n- **Tree traversal basics** - Understanding of different tree traversal methods and their purposes\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left and right children\n- **Recursion on trees** - Knowledge of recursive algorithms applied to tree structures\n- **Arrays** - Familiarity with array data structure for storing traversal results\n- **Tree traversal basics** - Understanding of different tree traversal methods and their purposes\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left and right children\n- **Recursion on trees** - Knowledge of recursive algorithms applied to tree structures\n- **Arrays** - Familiarity with array data structure for storing traversal results\n- **Tree traversal basics** - Understanding of different tree traversal methods and their purposes\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left and right children\n- **Recursion on trees** - Knowledge of recursive algorithms applied to tree structures\n- **Arrays** - Familiarity with array data structure for storing traversal results\n- **Tree traversal basics** - Understanding of different tree traversal methods and their purposes\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Binary Tree Preorder Traversal problem asks for.\n\nImagine exploring a family tree starting with yourself - you first write down your own name, then explore your father's entire side of the family (writing each person's name when you first meet them), and finally explore your mother's side the same way. Just like preorder traversal visits the root node first, then recursively explores the left subtree completely before moving to the right subtree, always processing each person/node the moment you encounter them.\n\n# Binary Tree Preorder Traversal - Problem Breakdown\n\nHey! Let's break down this classic tree traversal problem in a way that actually makes sense.\n\n## What are we trying to do?\n\nThe problem is asking us to visit every node in a binary tree and collect their values in a specific order called **preorder**. Think of it like reading a book - there's a particular sequence we need to follow.\n\nIn preorder traversal, the rule is simple:\n1. **Visit the current node first** (process/record its value)\n2. **Then go left** (traverse the entire left subtree)\n3. **Finally go right** (traverse the entire right subtree)\n\nYou can remember it as: **Root → Left → Right**\n\n## Let's walk through the example\n\nGiven this tree structure:\n```\n    1\n     \\\n      2\n     /\n    3\n```\n\nWhich represents the array `[1, null, 2, 3]`, let's trace through step by step:\n\n**Step 1:** Start at root (1)\n- Visit node 1 → add `1` to our result\n- Check left child → it's null, so skip\n- Check right child → it's node 2, so go there\n\n**Step 2:** Now at node 2\n- Visit node 2 → add `2` to our result  \n- Check left child → it's node 3, so go there\n\n**Step 3:** Now at node 3\n- Visit node 3 → add `3` to our result\n- Check left child → null, skip\n- Check right child → null, skip\n- Done with node 3, go back up\n\n**Step 4:** Back at node 2\n- Already visited node 2\n- Already checked left child (node 3)\n- Check right child → null, skip\n- Done with node 2, go back up\n\n**Step 5:** Back at root (1)\n- We're done!\n\n**Final result:** `[1, 2, 3]`\n\n## Why does this work?\n\nThe beauty of preorder is that it naturally follows a \"depth-first\" approach. By visiting the root first, we're essentially saying \"let me record where I am before I dive deeper.\" \n\nThis creates a natural top-down, left-to-right reading pattern that's intuitive and useful for many applications (like creating a copy of the tree or serializing it).\n\nThe recursive nature means we apply the same rule at every level: current node first, then explore left, then explore right. It's like having a consistent strategy that works no matter how complex the tree gets!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Given a binary tree with root value 1, left child 2 (with children 4, 5), and right child 3 (with children 6, 7), what is the correct preorder traversal sequence?",
+      "choices": [
+        {
+          "label": "[4, 2, 5, 1, 6, 3, 7]",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "[1, 2, 4, 5, 3, 6, 7]",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This is an inorder traversal (Left → Root → Right), not preorder. While it's a valid tree traversal method, it processes the left subtree completely before visiting the root, which violates the preorder principle of visiting the root first.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: DFS Preorder Traversal (Root-Left-Right)\n\n**This problem follows the \"preorder DFS traversal\" pattern:**\n- **Root-Left-Right order** - Process root first, then left subtree, then right subtree\n- **Top-down processing** - Process parent before children\n- **Recursive structure** - Natural recursion on tree structure\n\n**Similar problems:**\n- Binary Tree Inorder Traversal (Left-Root-Right)\n- Binary Tree Postorder Traversal (Left-Right-Root)\n- Serialize Binary Tree (often uses preorder)\n\n**Key insight:** Preorder processes nodes in the order they would appear when reconstructing the tree, making it useful for tree copying and serialization.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Result Contains Nodes in Preorder Sequence\n\n**Invariant maintained throughout:**\n- **Processing order:** For each node, we process root → left subtree → right subtree\n- **Result array:** Contains all processed nodes in preorder sequence\n- **Top-down guarantee:** Parent is always processed before its children\n\n**Why this works:**\n- We visit and process the root node first\n- Then recursively process left subtree\n- Finally recursively process right subtree\n- This ensures parent is always before children in result\n\n**Invariant guarantee:** After processing a node and its subtrees, the result array contains the node followed by all nodes from its left subtree, followed by all nodes from its right subtree, in preorder sequence.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Recursive Preorder State\n\n**State variables:**\n- **`result`** - Array accumulating node values in preorder order\n- **`node`** - Current node being processed\n- **Call stack** - Implicit state tracking recursion depth\n\n**State transitions:**\n1. **Base case:** If `node === null`, return\n2. **Recursive case:**\n   - Process current node: `result.push(node.val)`\n   - Process left subtree: `preorder(node.left, result)`\n   - Process right subtree: `preorder(node.right, result)`\n\n**State validity:** Result is valid when all nodes are processed in root-left-right order.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Inorder Traversal (Left-Root-Right)**\n- **Why it fails:** Wrong order - doesn't match preorder requirement\n- **Issue:** Processes left subtree before root\n- **Better:** Preorder processes root first\n\n**Approach 2: Postorder Traversal (Left-Right-Root)**\n- **Why it fails:** Wrong order - processes root last\n- **Issue:** Doesn't match preorder requirement\n- **Better:** Preorder processes root first\n\n**Approach 3: Level-Order (BFS)**\n- **Why it fails:** Different order - processes by level, not depth-first\n- **Issue:** Doesn't match preorder's depth-first nature\n- **Better:** Preorder is depth-first, root-first\n\n**Our approach wins because:** Recursive preorder traversal naturally follows the root-left-right pattern, is simple to implement, and processes nodes in the correct order for tree copying and serialization tasks.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that **preorder traversal processes the root node first**, then recursively visits the **left subtree**, followed by the **right subtree**. This works because it naturally follows the **\"process-then-explore\"** pattern - we handle the current node's data immediately upon visiting it, before diving deeper into its children. For example, in tree [1,2,3,4,5], we get [1,2,4,5,3] because we process 1 first, then explore left subtree (2,4,5), then right subtree (3). This ordering is particularly useful for **creating copies** of trees or **prefix expressions**, since we encounter each node in the same order we would need to reconstruct the tree.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `root=[1,null,2,3]`:\n- Step 1: Visit root node 1, add 1 to result [1], push right child 2 to stack\n- Step 2: Pop node 2 from stack, visit it, add 2 to result [1,2], push right child null and left child 3 to stack\n- Step 3: Pop node 3 from stack, visit it, add 3 to result [1,2,3], no children to push\n- Step 4: Stack is empty, traversal complete\n- Final: **[1,2,3]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function to perform preorder traversal and initialize empty result array\n\n```javascript\nfunction preorderTraversal(root) {\n    const result = [];\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function preorderTraversal(root) {\n    const result = [];\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Create helper function to recursively traverse tree nodes\n\n```javascript\nfunction preorderTraversal(root) {\n    const result = [];\n    \n    function traverse(node) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    function traverse(node) {\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Add base case to stop recursion when node is null\n\n```javascript\nfunction preorderTraversal(root) {\n    const result = [];\n    \n    function traverse(node) {\n        if (!node) return;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "        if (!node) return;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Process current node by adding its value to result array (Root step)\n\n```javascript\nfunction preorderTraversal(root) {\n    const result = [];\n    \n    function traverse(node) {\n        if (!node) return;\n        result.push(node.val);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        result.push(node.val);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Recursively traverse left subtree (Left subtree step)\n\n```javascript\nfunction preorderTraversal(root) {\n    const result = [];\n    \n    function traverse(node) {\n        if (!node) return;\n        result.push(node.val);\n        traverse(node.left);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        traverse(node.left);"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Recursively traverse right subtree (Right subtree step)\n\n```javascript\nfunction preorderTraversal(root) {\n    const result = [];\n    \n    function traverse(node) {\n        if (!node) return;\n        result.push(node.val);\n        traverse(node.left);\n        traverse(node.right);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        traverse(node.right);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Start traversal by calling helper function with root node\n\n```javascript\nfunction preorderTraversal(root) {\n    const result = [];\n    \n    function traverse(node) {\n        if (!node) return;\n        result.push(node.val);\n        traverse(node.left);\n        traverse(node.right);\n    }\n    \n    traverse(root);\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "    traverse(root);"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return the completed result array containing preorder traversal\n\n```javascript\nfunction preorderTraversal(root) {\n    const result = [];\n    \n    function traverse(node) {\n        if (!node) return;\n        result.push(node.val);\n        traverse(node.left);\n        traverse(node.right);\n    }\n    \n    traverse(root);\n    return result;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "    return result;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering binary tree preorder traversal! You've successfully implemented the depth-first search pattern that visits nodes in root-left-right order, building a solid foundation for tree traversal algorithms. Next, we'll tackle binary tree postorder traversal, where you'll explore the left-right-root visiting pattern that's particularly useful for cleanup operations and mathematical expressions.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,608 @@
+{
+  "id": "valid-anagram",
+  "title": "Valid Anagram",
+  "pattern": "frequency map (hash table)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 8,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-8",
+    "introduces": [
+      "objects",
+      "hash-map-concept",
+      "frequency-counting",
+      "key-value-pairs",
+      "for-of-loop"
+    ],
+    "assumesAlreadyTaught": [
+      "strings",
+      "loops",
+      "arrays"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "contains-duplicate"
+    ]
+  },
+  "problemStatement": {
+    "description": "Determine if two strings are anagrams of each other. An anagram is a word formed by rearranging the letters of another word, using all original letters exactly once.",
+    "inputs": [
+      "s: string (length 1 to 5*10^4)",
+      "t: string (length 1 to 5*10^4)"
+    ],
+    "outputs": [
+      "Boolean: true if s and t are anagrams, false otherwise"
+    ],
+    "examples": [
+      {
+        "input": "s = \"anagram\", t = \"nagaram\"",
+        "output": "true",
+        "explanation": "Both strings contain same characters with same frequencies: 3 'a's, 1 'n', 1 'g', 1 'r', 1 'm'. Frequency map: increment for s, decrement for t, all counts end at 0."
+      },
+      {
+        "input": "s = \"rat\", t = \"car\"",
+        "output": "false",
+        "explanation": "Different character frequencies. 'r' appears in both but 't' in s and 'c' in t are different. Frequency map shows non-zero counts."
+      },
+      {
+        "input": "s = \"a\", t = \"ab\"",
+        "output": "false",
+        "explanation": "Different lengths - cannot be anagrams. Quick check: if lengths differ, return false immediately."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length, t.length <= 5 * 10^4",
+      "s and t consist of lowercase English letters"
+    ],
+    "realWorldUse": [
+      "Word games and puzzles (finding anagrams)",
+      "Text analysis and comparison",
+      "Cryptography (anagram-based ciphers)",
+      "Data validation (checking if two strings have same character composition)"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "Anagrams have identical character frequencies. A frequency map allows us to count characters efficiently. Using a single map with increment/decrement is more efficient than two separate maps or sorting.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks to compare character frequencies between strings → think frequency map",
+      "SIGNAL 2: Need to check if strings have same characters → hash map for counting",
+      "SIGNAL 3: Anagram, permutation, or character composition check → frequency counting pattern"
+    ],
+    "patternRules": [
+      "If problem involves comparing character frequencies → use frequency map",
+      "When you see 'anagram', 'same characters', or 'character count' → consider frequency counting",
+      "If O(n) time needed (better than sorting) → frequency map is O(n) vs sorting O(n log n)"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - we need to count all characters systematically, not make local choices.",
+      "bruteForce": "Sorting both strings and comparing works but is O(n log n). Frequency counting is O(n) and more efficient.",
+      "alternative": "Using two separate frequency maps works but uses more space. Single map with increment/decrement is more efficient."
+    }
+  },
+  "coreInvariant": {
+    "statement": "After processing both strings, the frequency map contains zero for all characters if and only if the strings are anagrams.",
+    "explanation": "This invariant holds because we increment counts for characters in s and decrement for characters in t. If strings are anagrams, each character appears the same number of times in both, so increments and decrements cancel out to zero. If not anagrams, some counts will be non-zero.",
+    "whyItMatters": "This invariant guarantees correctness: checking if all values in the frequency map are zero is equivalent to checking if strings are anagrams. Any non-zero value indicates a frequency mismatch."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "freq",
+        "meaning": "Frequency map (hash map/object) storing character counts, keyed by character",
+        "indexing": "Character as key, count as value"
+      },
+      {
+        "name": "s",
+        "meaning": "First string to process",
+        "indexing": "0-indexed string"
+      },
+      {
+        "name": "t",
+        "meaning": "Second string to process",
+        "indexing": "0-indexed string"
+      }
+    ],
+    "baseCases": [
+      "If s.length != t.length: return false immediately (different lengths cannot be anagrams)",
+      "If both strings are empty: return true (empty strings are anagrams)"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "For each character c in string s:",
+        "transition": "freq[c] = (freq[c] || 0) + 1 (increment count)",
+        "explanation": "Count occurrences of each character in first string",
+        "example": "s=\"anagram\": freq['a']=3, freq['n']=1, freq['g']=1, etc."
+      },
+      {
+        "condition": "For each character c in string t:",
+        "transition": "freq[c] = (freq[c] || 0) - 1 (decrement count)",
+        "explanation": "Decrement counts for characters in second string. If character doesn't exist, it becomes negative.",
+        "example": "t=\"nagaram\": decrement each character, freq['a'] goes from 3 to 0, etc."
+      },
+      {
+        "condition": "After processing both strings, check all values in freq:",
+        "transition": "If all values are 0: return true, else return false",
+        "explanation": "All counts should be zero for anagrams. Any non-zero indicates frequency mismatch.",
+        "example": "If freq has any non-zero value, strings are not anagrams"
+      }
+    ],
+    "decisionTree": {
+      "root": "Check if lengths are equal, then process both strings with frequency map",
+      "branches": [
+        "If lengths differ: return false",
+        "Else: increment for s, decrement for t",
+        "Check if all frequencies are zero: return true if yes, false otherwise"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "s = \"anagram\", t = \"nagaram\"",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Check lengths: both are 7, continue",
+        "state": "s.length = 7, t.length = 7, lengths match",
+        "logic": "Quick check - different lengths cannot be anagrams",
+        "result": "Proceed with frequency counting"
+      },
+      {
+        "step": 2,
+        "description": "Process s: increment counts for each character",
+        "state": "freq = {'a': 3, 'n': 1, 'g': 1, 'r': 1, 'm': 1}",
+        "logic": "Count frequency of each character in first string",
+        "result": "Frequency map built for s"
+      },
+      {
+        "step": 3,
+        "description": "Process t: decrement counts for each character",
+        "state": "freq = {'a': 0, 'n': 0, 'g': 0, 'r': 0, 'm': 0}",
+        "logic": "Decrement for each character in second string. If anagrams, all cancel to zero.",
+        "result": "All frequencies are zero"
+      },
+      {
+        "step": 4,
+        "description": "Check all values: all are zero",
+        "state": "All freq values = 0",
+        "logic": "Zero counts indicate same frequencies in both strings",
+        "result": "Return true (anagrams)"
+      }
+    ],
+    "keyInsight": "Using a single frequency map with increment/decrement is efficient. If strings are anagrams, increments and decrements cancel out to zero. This is O(n) time, better than sorting which is O(n log n)."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Not checking string lengths first",
+      "symptom": "Unnecessary processing when strings have different lengths (cannot be anagrams)",
+      "fix": "Check if s.length != t.length and return false immediately",
+      "example": "s=\"a\", t=\"ab\": different lengths, return false without processing"
+    },
+    {
+      "mistake": "Using two separate frequency maps instead of one",
+      "symptom": "Uses more space and requires comparing two maps",
+      "fix": "Use single map: increment for s, decrement for t, then check if all values are zero",
+      "example": "Two maps require extra comparison step, single map is more efficient"
+    },
+    {
+      "mistake": "Not handling characters that appear only in one string",
+      "symptom": "May miss cases where one string has extra characters",
+      "fix": "Decrement handles this - if character only in t, it becomes negative. Check all values are zero.",
+      "example": "s=\"rat\", t=\"car\": 't' in s makes freq['t']=1, 'c' in t makes freq['c']=-1, non-zero indicates not anagrams"
+    },
+    {
+      "mistake": "Case-sensitive comparison when problem allows case-insensitive",
+      "symptom": "Wrong answer for strings like \"A\" and \"a\" if case matters",
+      "fix": "Convert both strings to same case (lowercase) before processing, or handle case in frequency map",
+      "example": "If case-insensitive, \"A\" and \"a\" should be treated as same character"
+    },
+    {
+      "mistake": "Sorting both strings and comparing (works but suboptimal)",
+      "symptom": "O(n log n) time complexity instead of O(n)",
+      "fix": "Use frequency counting for O(n) time. Sorting is slower for large strings.",
+      "example": "For large strings, frequency map is faster than sorting"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a frequency counting problem using hash maps.",
+      "",
+      "I'll use a single frequency map:",
+      "- First check if lengths are equal (quick rejection)",
+      "- Iterate through string s, increment count for each character",
+      "- Iterate through string t, decrement count for each character",
+      "- Check if all values in frequency map are zero",
+      "- Return true if all zero, false otherwise",
+      "",
+      "Time complexity: O(n) - two passes through strings",
+      "Space complexity: O(k) where k is number of unique characters (at most 26 for lowercase)",
+      "",
+      "Edge cases:",
+      "- Different lengths: return false immediately",
+      "- Empty strings: return true (empty strings are anagrams)",
+      "- Same string: return true"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Valid Anagram (case-sensitive, only lowercase)",
+      "approachChange": "No case conversion needed, simpler implementation",
+      "solution": "Same frequency counting approach, no lowercase conversion step"
+    },
+    "harder": {
+      "problem": "Group Anagrams",
+      "approachChange": "Need to group multiple strings that are anagrams of each other. Use frequency map as key to group strings.",
+      "solution": "For each string, create frequency map (or sorted string) as key. Group strings with same key together. O(n*k) where k is average string length."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "If s.length != t.length, return false"
+    },
+    {
+      "id": "ps2",
+      "text": "Create frequency map: freq = {}"
+    },
+    {
+      "id": "ps3",
+      "text": "For each character c in s: freq[c] = (freq[c] || 0) + 1"
+    },
+    {
+      "id": "ps4",
+      "text": "For each character c in t: freq[c] = (freq[c] || 0) - 1"
+    },
+    {
+      "id": "ps5",
+      "text": "Check if all values in freq are zero: return Object.values(freq).every(count => count === 0)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great job on mastering the remove-element problem! Now we're moving into an exciting new territory with \"Valid Anagram\" where we'll explore the powerful frequency map pattern using hash tables.\n\nAn anagram is when two words contain exactly the same letters with the same frequencies - just rearranged! Think \"listen\" and \"silent\". The frequency map pattern is your secret weapon here: we count how many times each character appears in both strings and compare those counts. Hash tables make this super efficient by giving us instant lookups and updates.\n\nHere are 3 key skills you'll gain:\n• Master the frequency counting technique using hash tables\n• Learn to compare character distributions between strings\n• Develop pattern recognition for problems involving character analysis\n\nThis pattern opens doors to so many string manipulation problems, and you're going to love how elegant and efficient it is! Let's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Hash maps** - Using dictionaries/maps to count character frequencies\n- **String iteration** - Traversing through string characters using loops\n- **Character comparison** - Comparing individual characters and handling case sensitivity\n- **Sorting algorithms** - Understanding how to sort arrays/strings for comparison approach\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Hash maps:** Use objects `{}` or `Map` to store key-value pairs. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks existence.\n\n**String iteration:** Use `for (let char of s)` to loop through each character.\n\n**Character comparison:** Characters are compared by their ASCII values. Case matters unless you convert to lowercase first.\n\n**Sorting:** `s.split('').sort().join('')` sorts characters, but it's slower (O(n log n)) than counting (O(n)).\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Hash maps:** `const freq = {}` creates a map. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks if key exists.\n\n**String iteration:** `for (let char of s)` iterates through each character.\n\n**Character comparison:** Characters are compared by ASCII values. Use `toLowerCase()` if case-insensitive.\n\n**Frequency counting:** Count how many times each character appears using a map.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Hash maps** - Using dictionaries/maps to count character frequencies\n- **String iteration** - Traversing through string characters using loops\n- **Character comparison** - Comparing individual characters and handling case sensitivity\n- **Sorting algorithms** - Understanding how to sort arrays/strings for comparison approach\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Hash maps:** Use objects `{}` or `Map` to store key-value pairs. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks existence.\n\n**String iteration:** Use `for (let char of s)` to loop through each character.\n\n**Character comparison:** Characters are compared by their ASCII values. Case matters unless you convert to lowercase first.\n\n**Sorting:** `s.split('').sort().join('')` sorts characters, but it's slower (O(n log n)) than counting (O(n)).\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Hash maps:** `const freq = {}` creates a map. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks if key exists.\n\n**String iteration:** `for (let char of s)` iterates through each character.\n\n**Character comparison:** Characters are compared by ASCII values. Use `toLowerCase()` if case-insensitive.\n\n**Frequency counting:** Count how many times each character appears using a map.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Hash maps** - Using dictionaries/maps to count character frequencies\n- **String iteration** - Traversing through string characters using loops\n- **Character comparison** - Comparing individual characters and handling case sensitivity\n- **Sorting algorithms** - Understanding how to sort arrays/strings for comparison approach\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Hash maps:** Use objects `{}` or `Map` to store key-value pairs. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks existence.\n\n**String iteration:** Use `for (let char of s)` to loop through each character.\n\n**Character comparison:** Characters are compared by their ASCII values. Case matters unless you convert to lowercase first.\n\n**Sorting:** `s.split('').sort().join('')` sorts characters, but it's slower (O(n log n)) than counting (O(n)).\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Hash maps:** `const freq = {}` creates a map. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks if key exists.\n\n**String iteration:** `for (let char of s)` iterates through each character.\n\n**Character comparison:** Characters are compared by ASCII values. Use `toLowerCase()` if case-insensitive.\n\n**Frequency counting:** Count how many times each character appears using a map.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Hash maps** - Using dictionaries/maps to count character frequencies\n- **String iteration** - Traversing through string characters using loops\n- **Character comparison** - Comparing individual characters and handling case sensitivity\n- **Sorting algorithms** - Understanding how to sort arrays/strings for comparison approach\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Hash maps:** Use objects `{}` or `Map` to store key-value pairs. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks existence.\n\n**String iteration:** Use `for (let char of s)` to loop through each character.\n\n**Character comparison:** Characters are compared by their ASCII values. Case matters unless you convert to lowercase first.\n\n**Sorting:** `s.split('').sort().join('')` sorts characters, but it's slower (O(n log n)) than counting (O(n)).\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Hash maps:** `const freq = {}` creates a map. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks if key exists.\n\n**String iteration:** `for (let char of s)` iterates through each character.\n\n**Character comparison:** Characters are compared by ASCII values. Use `toLowerCase()` if case-insensitive.\n\n**Frequency counting:** Count how many times each character appears using a map.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Hash maps** - Using dictionaries/maps to count character frequencies\n- **String iteration** - Traversing through string characters using loops\n- **Character comparison** - Comparing individual characters and handling case sensitivity\n- **Sorting algorithms** - Understanding how to sort arrays/strings for comparison approach\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Hash maps:** Use objects `{}` or `Map` to store key-value pairs. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks existence.\n\n**String iteration:** Use `for (let char of s)` to loop through each character.\n\n**Character comparison:** Characters are compared by their ASCII values. Case matters unless you convert to lowercase first.\n\n**Sorting:** `s.split('').sort().join('')` sorts characters, but it's slower (O(n log n)) than counting (O(n)).\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Hash maps:** `const freq = {}` creates a map. `freq[char] = value` stores, `freq[char]` retrieves, `char in freq` checks if key exists.\n\n**String iteration:** `for (let char of s)` iterates through each character.\n\n**Character comparison:** Characters are compared by ASCII values. Use `toLowerCase()` if case-insensitive.\n\n**Frequency counting:** Count how many times each character appears using a map.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Valid Anagram problem asks for.\n\nImagine you have two bags of Scrabble tiles and want to check if they contain the exact same letters. You'd dump out each bag and count how many A's, B's, C's, etc. are in each pile - if the counts match perfectly for every letter, then the bags are equivalent (valid anagrams). This is exactly how the algorithm works: count the frequency of each character in both strings and compare the counts.\n\n# Valid Anagram Problem\n\nHey! So here's what this problem is asking you to do:\n\n**Given two strings, figure out if one is an anagram of the other.**\n\nAn anagram means you can rearrange all the letters of one word to make the other word - no letters left over, no extra letters needed.\n\n## Example\nLet's say we have:\n- `s = \"anagram\"`\n- `t = \"nagaram\"`\n\nThe answer would be `true`. Here's why it works:\n\nIf you take \"anagram\" and shuffle the letters around, you can make \"nagaram\":\n- Both have: 3 a's, 1 n, 1 g, 1 r, 1 m\n- Same exact letters, same exact counts\n- Just arranged differently!\n\n## What makes it click\nThink of it like having two bags of Scrabble tiles. If both bags contain the exact same tiles (same letters, same quantities), then the words are anagrams. If one bag has an extra 'e' or is missing a 't', then they're not anagrams.\n\nSo your job is to write a function that returns `true` if the strings are anagrams, `false` if they're not.\n\nPretty straightforward, right? The tricky part is just figuring out the most efficient way to compare those \"letter inventories\"!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to determine if two strings are anagrams by checking if they contain the same characters with the same frequencies. You decide to use a frequency map approach. How should you implement this efficiently?",
+      "choices": [
+        {
+          "label": "Create separate frequency maps for both strings, then compare the maps for equality",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use a single frequency map: increment count for each character in the first string, decrement for each character in the second string, then verify all counts are zero",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works, it's inefficient because it requires extra space for two hash tables and additional time to compare them. You're essentially doing twice the work and using twice the memory when a single frequency map would suffice.",
+      "action": "next",
+      "next": "why-sorting-slower"
+    },
+    {
+      "stepId": "why-sorting-slower",
+      "mentorSays": "### Why Sorting is Slower\n\n**Alternative approach (sorting):**\n```javascript\nfunction isAnagram(s, t) {\n  return s.split('').sort().join('') === t.split('').sort().join('');\n}\n```\n\n**Time complexity:** O(n log n)\n- `split()`: O(n)\n- `sort()`: O(n log n) - this is the bottleneck!\n- `join()`: O(n)\n- Total: O(n log n)\n\n**Frequency counting approach:**\n```javascript\n// Count characters: O(n)\n// Check counts: O(n)\n// Total: O(n)\n```\n\n**Why sorting is slower:**\n- Sorting requires comparing and rearranging elements\n- Best sorting algorithms are O(n log n)\n- Frequency counting just increments/decrements: O(1) per character\n- **Frequency counting is O(n) vs sorting's O(n log n)**\n\n**For large strings:** With n=1,000,000 characters:\n- Sorting: ~20 million operations\n- Counting: ~1 million operations\n- **20x faster!**\n\n**This prevents confusion between sorting vs counting approaches** - counting is both simpler and faster.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Frequency Counting with Hash Map\n\n**This problem follows the \"frequency counting\" pattern:**\n- **Character frequency** - Count occurrences of each character\n- **Hash map/array** - Store character counts efficiently\n- **Single pass counting** - Increment for one string, decrement for other\n- **Zero check** - All counts should be zero for anagrams\n\n**Similar problems:**\n- Group Anagrams (uses frequency counting)\n- First Unique Character (frequency counting)\n- Ransom Note (similar frequency comparison)\n\n**Key insight:** Anagrams have identical character frequencies. We can use a single frequency map, incrementing for one string and decrementing for the other. If all counts end up zero, they're anagrams.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Frequency Map Tracks Character Difference\n\n**Invariant maintained throughout:**\n- **Count meaning:** count[char] = (occurrences in s) - (occurrences in t)\n- **Anagram condition:** All counts are zero if and only if strings are anagrams\n- **Single map:** One map tracks difference, not two separate maps\n- **Efficiency:** O(1) operations per character\n\n**Why this works:**\n- Increment count for each character in s\n- Decrement count for each character in t\n- If strings are anagrams, increments and decrements cancel out → all zeros\n- If not anagrams, some counts will be non-zero\n\n**Invariant guarantee:** After processing both strings, if all character counts are zero, the strings are anagrams. If any count is non-zero, they are not anagrams.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Frequency Counting State\n\n**State variables:**\n- **`count`** - Map/array storing character frequencies (char → count)\n- **`s`** - First string\n- **`t`** - Second string\n\n**State transitions:**\n1. **Check lengths:** If len(s) != len(t), return false\n2. **Count s:** For each char in s, increment count[char]\n3. **Count t:** For each char in t, decrement count[char]\n4. **Verify:** Check if all counts are zero\n\n**State validity:** Strings are anagrams when all counts are zero after processing both strings.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Sort Both Strings**\n- **Why it fails:** O(n log n) time complexity\n- **Issue:** Sorting is slower than counting\n- **Better:** Frequency counting is O(n) time\n\n**Approach 2: Two Separate Frequency Maps**\n- **Why it fails:** Uses more space and time\n- **Issue:** Need to compare two maps, uses 2x space\n- **Better:** Single map with increment/decrement is more efficient\n\n**Approach 3: Nested Loops to Count**\n- **Why it fails:** O(n²) time complexity\n- **Issue:** For each character, scan entire other string\n- **Better:** Single pass counting is O(n)\n\n**Our approach wins because:** Single frequency map with increment/decrement finds anagrams in O(n) time with O(1) space (or O(k) where k is alphabet size). This is optimal and simpler than sorting or using two maps.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use a **frequency counter** that tracks character occurrences by incrementing for string `s` and decrementing for string `t`. This works because anagrams must have exactly the same character frequencies - any excess characters in either string will leave non-zero counts. For example, with `s = \"anagram\"` and `t = \"nagaram\"`, after processing both strings, all characters end up with a count of zero, confirming they're anagrams. If any character has a non-zero final count, the strings cannot be anagrams.",
+      "action": "next",
+      "next": "visual-frequency-table",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "visual-frequency-table",
+      "mentorSays": "### Visual Frequency Table Walkthrough\n\n**Concrete example:** s = \"anagram\", t = \"nagaram\"\n\n**Step 1: Count characters in s**\n```\ncount = {}\n'a' → count['a'] = 1\n'n' → count['n'] = 1\n'a' → count['a'] = 2\n'g' → count['g'] = 1\n'r' → count['r'] = 1\n'a' → count['a'] = 3\n'm' → count['m'] = 1\n\nFinal count: {a: 3, n: 1, g: 1, r: 1, m: 1}\n```\n\n**Step 2: Decrement for each character in t**\n```\n'n' → count['n'] = 1 - 1 = 0\n'a' → count['a'] = 3 - 1 = 2\n'g' → count['g'] = 1 - 1 = 0\n'a' → count['a'] = 2 - 1 = 1\n'r' → count['r'] = 1 - 1 = 0\n'a' → count['a'] = 1 - 1 = 0\n'm' → count['m'] = 1 - 1 = 0\n\nFinal count: {a: 0, n: 0, g: 0, r: 0, m: 0}\n```\n\n**All counts are zero → valid anagram!**\n\n**Why this works:** Counting ensures both strings have the exact same character frequencies, just in different orders. This prevents confusion between sorting vs counting approaches.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `s=\"anagram\", t=\"nagaram\"`:\n- Step 1: Check if lengths are equal: len(\"anagram\") = 7, len(\"nagaram\") = 7 ✓\n- Step 2: Count characters in s: {'a': 3, 'n': 1, 'g': 1, 'r': 1, 'm': 1}\n- Step 3: Count characters in t: {'n': 1, 'a': 3, 'g': 1, 'r': 1, 'm': 1}\n- Step 4: Compare character counts: both have same character frequencies\n- Final: **true**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function signature and create frequency counter object\n\n```javascript\nfunction isAnagram(s, t) {\n    const freq = {};\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function isAnagram(s, t) {\n    const freq = {};\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Loop through string s and increment character frequencies\n\n```javascript\nfunction isAnagram(s, t) {\n    const freq = {};\n    for (let char of s) {\n        freq[char] = (freq[char] || 0) + 1;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    for (let char of s) {\n        freq[char] = (freq[char] || 0) + 1;\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Loop through string t and decrement character frequencies\n\n```javascript\nfunction isAnagram(s, t) {\n    const freq = {};\n    for (let char of s) {\n        freq[char] = (freq[char] || 0) + 1;\n    }\n    for (let char of t) {\n        freq[char] = (freq[char] || 0) - 1;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    for (let char of t) {\n        freq[char] = (freq[char] || 0) - 1;\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Check if all frequency values are zero using Object.values\n\n```javascript\nfunction isAnagram(s, t) {\n    const freq = {};\n    for (let char of s) {\n        freq[char] = (freq[char] || 0) + 1;\n    }\n    for (let char of t) {\n        freq[char] = (freq[char] || 0) - 1;\n    }\n    return Object.values(freq).every(count => count === 0);\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    return Object.values(freq).every(count => count === 0);"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Forgetting length check** - Different lengths can't be anagrams, check first\n2. **Using `!freq[char]` incorrectly** - This fails when count is 0 (falsy), use `freq[char] === undefined` or check before decrementing\n3. **Not handling case sensitivity** - The problem usually expects case-insensitive comparison\n4. **Sorting instead of counting** - Sorting works but is O(n log n), counting is O(n)\n5. **Decrementing before checking** - Always check if character exists before decrementing",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"First, I check if the strings have the same length - if not, they can't be anagrams\"**\n2. **\"I use a frequency map to count characters in the first string\"**\n3. **\"Then I iterate through the second string and decrement counts\"**\n4. **\"If any character doesn't exist or count goes negative, it's not an anagram\"**\n5. **\"This gives us O(n) time complexity, better than sorting which is O(n log n)\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the frequency map pattern with Valid Anagram! You've demonstrated a solid understanding of how hash tables can efficiently track character counts and compare string compositions.\n\n**Follow-up variant:**\n\n**Group Anagrams:** Given an array of strings, group all anagrams together. How would you use frequency maps to solve this?\n\nNext, we'll tackle Contains Duplicate, where you'll apply similar hash table techniques to detect repeated elements in an array - another fundamental skill that will serve you well in many coding challenges ahead!",
+      "action": "complete"
+    }
+  ]
+}

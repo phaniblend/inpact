@@ -1,0 +1,356 @@
+{
+  "id": "binary-tree-maximum-path-sum",
+  "title": "Binary Tree Maximum Path Sum - Postorder DP",
+  "pattern": "tree-dp-postorder",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 82,
+    "tier": "COMPETITIVE",
+    "lessonOrderTag": "COMPETITIVE-82",
+    "introduces": [
+      "tree-dp"
+    ],
+    "assumesAlreadyTaught": [
+      "binary-trees",
+      "dfs"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": []
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Track global max"
+    },
+    {
+      "id": "ps2",
+      "text": "For each node: max path through node"
+    },
+    {
+      "id": "ps3",
+      "text": "Return max gain to parent"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "# Binary Tree Max Path!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Language?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Ready?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Review",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Ready?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Review",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Ready?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Review",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Ready?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Review",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Ready?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Review",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Find maximum path sum",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Approach?",
+      "choices": [
+        {
+          "label": "Brute",
+          "next": "wrong"
+        },
+        {
+          "label": "Optimal",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong",
+      "mentorSays": "Slow!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "# Solution!",
+      "action": "next",
+      "next": "two-values-per-node"
+    },
+    {
+      "stepId": "two-values-per-node",
+      "mentorSays": "### Explicit \"Two Values Per Node\" Explanation\n\n**Critical hard-problem clarity:**\n\nEach node in the recursion needs to handle **two different values**:\n\n**1. Return value (max gain upward):**\n- What we return to the parent\n- Represents the maximum path sum that **starts at this node and goes upward**\n- Can only use **one child** (left OR right), not both\n- Formula: `node.val + max(left, right)`\n\n**2. Global update (max path including both sides):**\n- What we update in the global `maxSum`\n- Represents the maximum path that **passes through this node**\n- Can use **both children** (left AND right)\n- Formula: `node.val + left + right`\n\n**Why two values?**\n\n```\n     -10\n     /  \\\n    9   20\n       /  \\\n      15   7\n```\n\n**At node 20:**\n- **Return value:** `20 + max(15, 7) = 35` (can only use one child upward)\n- **Global update:** `20 + 15 + 7 = 42` (can use both children for path through 20)\n\n**At node -10:**\n- **Return value:** `-10 + max(9, 35) = 25` (uses right child's return value)\n- **Global update:** `-10 + 9 + 35 = 34` (but we already saw 42 at node 20, so maxSum = 42)\n\n**Example:**\n- Path `15 → 20 → 7` has sum 42 (uses both children of 20)\n- But when returning from 20 to -10, we can only return `20 + max(15, 7) = 35`\n\n**This distinction is subtle but critical** - the return value is for building paths upward, while the global update tracks the best path through each node.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Tree DFS with Two Return Values\n\n**This problem follows the \"tree DFS with dual values\" pattern:**\n- **Postorder DFS** - Process children before parent\n- **Return value** - Maximum path sum going upward (can use one child)\n- **Global update** - Maximum path sum through current node (can use both children)\n- **Negative handling** - Ignore negative contributions (use max(0, child))\n\n**Similar problems:**\n- Diameter of Binary Tree (similar dual value pattern)\n- Binary Tree Maximum Path Sum (same problem)\n- Path Sum (different but tree path related)\n\n**Key insight:** Each node contributes to two types of paths: paths going upward (returned to parent) and paths passing through the node (updated globally). The distinction is critical - upward paths can only use one child, while paths through the node can use both.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Return Value vs Global Update Distinction\n\n**Invariant maintained throughout:**\n- **Return value:** maxGain(node) returns maximum path sum starting at node and going upward\n- **Global update:** maxSum tracks the maximum path sum found anywhere in the tree\n- **Path types:** Return value uses one child (upward path), global update can use both children (path through node)\n- **Negative handling:** We use max(0, child) to ignore negative contributions\n\n**Why this works:**\n- When returning to parent, we can only extend upward using one child (left OR right)\n- When updating global max, we can consider paths through the node using both children\n- This distinction ensures we find all possible paths while correctly building upward paths\n\n**Invariant guarantee:** After DFS completes, maxSum contains the maximum path sum in the entire tree. The return value correctly represents the maximum upward path from each node.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Tree DFS with Dual Values State\n\n**State variables:**\n- **`maxSum`** - Global maximum path sum found so far\n- **`node`** - Current node being processed\n- **`leftGain`** - Maximum gain from left subtree (max(0, maxGain(left)))\n- **`rightGain`** - Maximum gain from right subtree (max(0, maxGain(right)))\n- **`returnValue`** - Maximum path sum going upward from current node\n\n**State transitions:**\n1. **Base case:** If node is null, return 0\n2. **Recurse:** leftGain = max(0, maxGain(node.left)), rightGain = max(0, maxGain(node.right))\n3. **Update global:** maxSum = max(maxSum, node.val + leftGain + rightGain)\n4. **Return:** return node.val + max(leftGain, rightGain)\n\n**State validity:** After DFS, maxSum contains maximum path sum in tree.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Return Maximum Path Through Node**\n- **Why it fails:** Can't build upward paths correctly\n- **Issue:** Parent needs upward path (one child), not path through node (both children)\n- **Better:** Return upward path, update global for path through node\n\n**Approach 2: Try All Paths Explicitly**\n- **Why it fails:** Exponential time complexity\n- **Issue:** Too many paths to enumerate\n- **Better:** DFS with dual values finds optimal in O(n) time\n\n**Approach 3: Use Only Return Value**\n- **Why it fails:** Misses paths that use both children\n- **Issue:** Return value can only use one child, misses optimal paths\n- **Better:** Global update tracks paths through node (both children)\n\n**Our approach wins because:** DFS with dual values (return value for upward, global update for through-node) finds the maximum path sum in O(n) time. The distinction between return value and global update is critical for correctness.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "# Example",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "# Plan",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "# Code!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Setup:\n\n```javascript\nfunction maxPathSum(root) {\n    let maxSum = -Infinity;\n```",
+      "action": "next",
+      "next": "code-02",
+      "example": "function maxPathSum(root) {\n    let maxSum = -Infinity;"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Helper:\n\n```javascript\n    function maxGain(node) {\n        if (!node) return 0;\n        const left = Math.max(maxGain(node.left), 0);\n        const right = Math.max(maxGain(node.right), 0);\n```",
+      "action": "next",
+      "next": "code-03",
+      "example": "    function maxGain(node) {\n        if (!node) return 0;\n        const left = Math.max(maxGain(node.left), 0);\n        const right = Math.max(maxGain(node.right), 0);"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Update:\n\n```javascript\n        maxSum = Math.max(maxSum, node.val + left + right);\n        return node.val + Math.max(left, right);\n    }\n    maxGain(root);\n    return maxSum;\n}\n```",
+      "action": "next",
+      "next": "complexity-analysis",
+      "example": "        maxSum = Math.max(maxSum, node.val + left + right);\n        return node.val + Math.max(left, right);\n    }\n    maxGain(root);\n    return maxSum;\n}"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "# Complexity",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "# Edge Cases",
+      "action": "next",
+      "next": "common-mistakes"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "# Done!🎉\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

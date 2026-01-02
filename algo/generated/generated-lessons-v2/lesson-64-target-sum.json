@@ -1,0 +1,415 @@
+{
+  "id": "target-sum",
+  "title": "Target Sum - Knapsack with Signs",
+  "pattern": "knapsack-variation",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 64,
+    "tier": "MASTERY-I",
+    "lessonOrderTag": "MASTERY-I-64",
+    "introduces": [
+      "sign-assignment-dp",
+      "sum-transformation"
+    ],
+    "assumesAlreadyTaught": [
+      "01-knapsack",
+      "subset-sum",
+      "dynamic-programming"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "unique-paths-ii"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Transform problem: Find subset P where sum(P) - sum(N) = target"
+    },
+    {
+      "id": "ps2",
+      "text": "Since sum(P) + sum(N) = total, we get sum(P) = (target + total) / 2"
+    },
+    {
+      "id": "ps3",
+      "text": "Problem becomes: count subsets that sum to (target + total) / 2"
+    },
+    {
+      "id": "ps4",
+      "text": "Check if (target + total) is even and target <= total"
+    },
+    {
+      "id": "ps5",
+      "text": "Create DP array where dp[i] = number of ways to make sum i"
+    },
+    {
+      "id": "ps6",
+      "text": "Initialize dp[0] = 1 (one way to make 0: use nothing)"
+    },
+    {
+      "id": "ps7",
+      "text": "For each number in array:"
+    },
+    {
+      "id": "ps8",
+      "text": "  For sum from target down to number:"
+    },
+    {
+      "id": "ps9",
+      "text": "    dp[sum] += dp[sum - number]"
+    },
+    {
+      "id": "ps10",
+      "text": "Return dp[target]"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "# Welcome to Target Sum! 🎯\n\nReady for a mind-bending twist on the knapsack problem? We're adding +/- signs to numbers!\n\n## What You'll Master:\n\n- Transforming complex problems into simpler ones\n- Counting variations in DP\n- Math-based problem simplification\n- Advanced knapsack applications\n\nThis is one of those \"aha!\" problems where the solution is elegant once you see it!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which programming language would you like to use for this lesson?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "To solve this in JavaScript, you'll need to know:\n\n- **0/1 Knapsack** pattern\n- **Subset sum** DP\n- **Array operations**\n- **Basic algebra** for problem transformation\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "To solve this in Python, you'll need to know:\n\n- **0/1 Knapsack** pattern\n- **Subset sum** DP\n- **List operations**\n- **Basic algebra** for problem transformation\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "To solve this in Java, you'll need to know:\n\n- **0/1 Knapsack** pattern\n- **Subset sum** DP\n- **Array operations**\n- **Basic algebra** for problem transformation\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "To solve this in C++, you'll need to know:\n\n- **0/1 Knapsack** pattern\n- **Subset sum** DP\n- **Vector operations**\n- **Basic algebra** for problem transformation\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "To solve this in TypeScript, you'll need to know:\n\n- **0/1 Knapsack** pattern\n- **Subset sum** DP\n- **Array operations**\n- **Basic algebra** for problem transformation\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "# The Problem: Target Sum ➕➖\n\n**Real-world analogy:** You're a teacher creating a math quiz. You have a list of numbers and want students to place + or - signs in front of each number to reach a target sum. For example, with [1, 2, 3] and target 0, they could write: +1 -2 +3 - 2 = 0. How many different ways can students assign signs to hit the target?\n\n## The Challenge:\n\nGiven an array of non-negative integers `nums` and an integer `target`, find the number of ways to assign + or - signs to each number to make the sum equal target.\n\nYou must use all numbers exactly once.\n\n## Example:\n```\nnums = [1, 1, 1, 1, 1]\ntarget = 3\n\nOutput: 5\nExplanation:\n-1 + 1 + 1 + 1 + 1 = 3\n+1 - 1 + 1 + 1 + 1 = 3\n+1 + 1 - 1 + 1 + 1 = 3\n+1 + 1 + 1 - 1 + 1 = 3\n+1 + 1 + 1 + 1 - 1 = 3\n```\n\nThere are 5 different ways!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "# 🤔 How Can We Simplify This?\n\nAt first glance, this seems like we need to try every combination of +/- signs (2^n possibilities!).\n\nBut there's a mathematical transformation that makes this much simpler...\n\n**Question:** If we split numbers into two groups - P (positive signs) and N (negative signs) - what equation must hold?",
+      "choices": [
+        {
+          "label": "sum(P) - sum(N) = target",
+          "next": "correct-equation"
+        },
+        {
+          "label": "sum(P) + sum(N) = target",
+          "next": "wrong-addition"
+        },
+        {
+          "label": "sum(P) = sum(N) = target/2",
+          "next": "wrong-equal"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-addition",
+      "mentorSays": "Not quite! Remember, numbers in N have negative signs, so they're subtracted.\n\nThink about what the equation +1 -2 +3 = 2 really means...",
+      "action": "next",
+      "next": "correct-equation"
+    },
+    {
+      "stepId": "wrong-equal",
+      "mentorSays": "That would be true if target was 0, but we need to handle any target.\n\nThink about the general relationship between P, N, and target...",
+      "action": "next",
+      "next": "correct-equation"
+    },
+    {
+      "stepId": "correct-equation",
+      "mentorSays": "# The Mathematical Transformation! 🎓\n\nExactly! If P = positive numbers and N = negative numbers:\n\n**sum(P) - sum(N) = target** ... (1)\n\nWe also know:\n**sum(P) + sum(N) = total** ... (2) (all numbers)\n\nAdding equations (1) and (2):\n```\nsum(P) - sum(N) = target\nsum(P) + sum(N) = total\n----------------------------\n2 × sum(P) = target + total\n\nsum(P) = (target + total) / 2\n```\n\n**🎯 The insight:** We just need to count subsets that sum to `(target + total) / 2`!\n\nThis transforms our problem into subset sum - which we already know how to solve!",
+      "action": "next",
+      "next": "math-transformation-derivation"
+    },
+    {
+      "stepId": "math-transformation-derivation",
+      "mentorSays": "### Math Transformation Derivation (Step-by-Step)\n\n**Step 1: Define the problem mathematically**\n\nGiven: Assign + or - to each number in `nums` to get `target`\n\nSplit numbers into two groups:\n- **P** = numbers with + sign (positive group)\n- **N** = numbers with - sign (negative group)\n\n**Step 2: Write the constraint equation**\n\n```\nsum(P) - sum(N) = target  ... (Equation 1)\n```\n\nThis says: positive sum minus negative sum equals target.\n\n**Step 3: Write the total sum equation**\n\nSince we use all numbers exactly once:\n```\nsum(P) + sum(N) = total  ... (Equation 2)\n```\n\nWhere `total = sum(nums)` (sum of all numbers).\n\n**Step 4: Solve the system of equations**\n\nWe have two equations:\n```\n(1) sum(P) - sum(N) = target\n(2) sum(P) + sum(N) = total\n```\n\n**Method: Add equations to eliminate sum(N)**\n\n```\n(1) + (2):\n  sum(P) - sum(N) = target\n+ sum(P) + sum(N) = total\n----------------------------\n  2 × sum(P)      = target + total\n```\n\n**Step 5: Solve for sum(P)**\n\n```\nsum(P) = (target + total) / 2\n```\n\n**Step 6: Transform the problem**\n\nOriginal problem: Count ways to assign +/- to get `target`\n\nNew problem: Count subsets of `nums` that sum to `(target + total) / 2`\n\n**Step 7: Check validity conditions**\n\n1. `(target + total)` must be even (otherwise no solution)\n2. `target <= total` (otherwise impossible)\n3. `(target + total) / 2 >= 0` (subset sum must be non-negative)\n\n**This step-by-step derivation transforms a complex sign-assignment problem into a simple subset-sum problem!**",
+      "action": "next",
+      "next": "dp-update-numerically"
+    },
+    {
+      "stepId": "dp-update-numerically",
+      "mentorSays": "### One DP Update Numerically\n\n**Example:** `nums = [1, 1, 1, 1, 1]`, `target = 3`\n\n**After transformation:**\n- `total = 5`\n- `subsetSum = (3 + 5) / 2 = 4`\n- We need to count subsets that sum to 4\n\n**DP state:** `dp[i] = number of ways to make sum i`\n\n**Initial state:**\n```\ndp = [1, 0, 0, 0, 0, 0]\n     ↑\n   sum=0: 1 way (use nothing)\n```\n\n**Processing first number (1):**\n\nWe iterate backwards from `sum = 4` down to `1`:\n\n```\nFor sum = 4: dp[4] += dp[4-1] = dp[3] = 0 → dp[4] = 0\nFor sum = 3: dp[3] += dp[3-1] = dp[2] = 0 → dp[3] = 0\nFor sum = 2: dp[2] += dp[2-1] = dp[1] = 0 → dp[2] = 0\nFor sum = 1: dp[1] += dp[1-1] = dp[0] = 1 → dp[1] = 1 ✓\n```\n\n**After first number:**\n```\ndp = [1, 1, 0, 0, 0, 0]\n     ↑  ↑\n     0  1 ways to make sum 1: {1}\n```\n\n**Processing second number (1):**\n\n```\nFor sum = 4: dp[4] += dp[3] = 0 → dp[4] = 0\nFor sum = 3: dp[3] += dp[2] = 0 → dp[3] = 0\nFor sum = 2: dp[2] += dp[1] = 1 → dp[2] = 1 ✓\nFor sum = 1: dp[1] += dp[0] = 1 → dp[1] = 2 ✓\n```\n\n**After second number:**\n```\ndp = [1, 2, 1, 0, 0, 0]\n     ↑  ↑  ↑\n     0  1  2 ways to make sum 1: {1}, {1}\n         1 way to make sum 2: {1,1}\n```\n\n**Continue for all 5 numbers...**\n\n**Final:** `dp[4] = 5` (5 ways to make sum 4)\n\n**This numeric DP update shows how each number contributes to the count!**",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "# Let's Walk Through an Example 🚶\n\n```\nnums = [1, 1, 1, 1, 1]\ntarget = 3\ntotal = 5\nsubsetSum = (3 + 5) / 2 = 4\n```\n\nWe need to count subsets that sum to 4.\n\n**Initial:** dp = [1, 0, 0, 0, 0] (one way to make 0)\n\n**Process 1:**\n- dp[4] += dp[3] = 0\n- dp[3] += dp[2] = 0\n- dp[2] += dp[1] = 0\n- dp[1] += dp[0] = 1 ✓\n- Result: dp = [1, 1, 0, 0, 0]\n\n**Process 1 (second):**\n- dp[2] += dp[1] = 1 ✓\n- dp[1] += dp[0] = 1 (2 ways now!)\n- Result: dp = [1, 2, 1, 0, 0]\n\n**Process 1 (third):**\n- dp[3] += dp[2] = 1 ✓\n- dp[2] += dp[1] = 2 (3 ways!)\n- dp[1] += dp[0] = 1 (3 ways!)\n- Result: dp = [1, 3, 3, 1, 0]\n\n**Continue...**\n\nFinal: dp[4] = 5 ways!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "# Here's Our Battle Plan 📋",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7",
+        "ps8",
+        "ps9",
+        "ps10"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "# Time to Code! 💻\n\nWe'll transform the problem mathematically, then use subset sum counting.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Start with calculating the total and target subset sum:\n\n```javascript\nfunction findTargetSumWays(nums, target) {\n    const total = nums.reduce((a, b) => a + b, 0);\n```",
+      "action": "next",
+      "next": "code-02",
+      "example": "function findTargetSumWays(nums, target) {\n    const total = nums.reduce((a, b) => a + b, 0);"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Check if the problem is solvable:\n\n```javascript\n    // If (target + total) is odd or target > total, impossible\n    if ((target + total) % 2 !== 0 || Math.abs(target) > total) {\n        return 0;\n    }\n```\n\nWe need (target + total) / 2 to be an integer!",
+      "action": "next",
+      "next": "code-03",
+      "example": "    if ((target + total) % 2 !== 0 || Math.abs(target) > total) {\n        return 0;\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Calculate the subset sum we're looking for:\n\n```javascript\n    const subsetSum = (target + total) / 2;\n```",
+      "action": "next",
+      "next": "code-04",
+      "example": "    const subsetSum = (target + total) / 2;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Create DP array for counting subsets:\n\n```javascript\n    // dp[i] = number of ways to make sum i\n    const dp = new Array(subsetSum + 1).fill(0);\n    dp[0] = 1; // One way to make 0: use nothing\n```",
+      "action": "next",
+      "next": "code-05",
+      "example": "    const dp = new Array(subsetSum + 1).fill(0);\n    dp[0] = 1;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Iterate through each number:\n\n```javascript\n    for (const num of nums) {\n```",
+      "action": "next",
+      "next": "code-06",
+      "example": "    for (const num of nums) {"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Update DP array backwards (to avoid reusing same number):\n\n```javascript\n        for (let sum = subsetSum; sum >= num; sum--) {\n            dp[sum] += dp[sum - num];\n        }\n```\n\nWe ADD the number of ways (not just set to true like boolean DP)!",
+      "action": "next",
+      "next": "code-07",
+      "example": "        for (let sum = subsetSum; sum >= num; sum--) {\n            dp[sum] += dp[sum - num];\n        }"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Close loops and return result:\n\n```javascript\n    }\n    return dp[subsetSum];\n}\n```",
+      "action": "next",
+      "next": "complexity-analysis",
+      "example": "    }\n    return dp[subsetSum];\n}"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "# Complexity Analysis 📊\n\n## Time Complexity: O(n × sum)\n- n = number of elements\n- sum = (target + total) / 2\n- Same as subset sum problem\n\n## Space Complexity: O(sum)\n- Single DP array of size sum + 1\n\n## Comparison:\n\n**Brute force:** O(2^n) - try all sign combinations\n**Our solution:** O(n × sum) - polynomial in value\n\nMassive improvement through mathematical transformation!",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "# Edge Cases 🎯\n\n1. **Impossible target:** target > total sum → return 0\n\n2. **Odd (target + total):** Can't split into integer → return 0\n\n3. **Zeros in array:** [0, 0, 1], target = 1 → 4 ways (both zeros can be +/- )\n\n4. **Single element:** [1], target = 1 → 1 way (+1)\n\n5. **Negative target:** [-1, 1], target = -2 → 1 way (-1 -1)\n\nOur solution handles all of these!",
+      "action": "next",
+      "next": "common-mistakes"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "# Congratulations! 🎉\n\nYou've mastered **problem transformation** - turning a complex problem into one you already know!\n\n## What You Learned:\n\n✅ Mathematical problem transformation\n✅ Counting variations with DP (vs boolean DP)\n✅ When algebra simplifies coding problems\n✅ Advanced knapsack applications\n\n## Next Steps:\n\nReady for grid DP? The next lesson is **Unique Paths II** - navigating grids with obstacles. Different domain, but similar DP thinking!\n\nThe transformation technique you learned here is incredibly powerful - watch for it in other problems!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

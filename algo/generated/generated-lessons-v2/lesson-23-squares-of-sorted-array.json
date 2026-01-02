@@ -1,0 +1,670 @@
+{
+  "id": "squares-of-sorted-array",
+  "title": "Squares of a Sorted Array",
+  "pattern": "two pointers (from ends)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 23,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-23",
+    "introduces": [
+      "absolute-value-comparison",
+      "building-result-backward",
+      "Math.abs"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "two-pointers"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "first-unique-character"
+    ]
+  },
+  "problemStatement": {
+    "description": "Return an array of the squares of each number in a sorted array, sorted in non-decreasing order.",
+    "inputs": [
+      "nums: sorted array of integers in non-decreasing order (length 1 to 10^4)"
+    ],
+    "outputs": [
+      "Array of squares sorted in non-decreasing order"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-4,-1,0,3,10]",
+        "output": "[0,1,9,16,100]",
+        "explanation": "Squares: 16,1,0,9,100. Sorted: 0,1,9,16,100. Use two pointers from ends: compare absolute values, larger square goes to end of result."
+      },
+      {
+        "input": "nums = [-7,-3,2,3,11]",
+        "output": "[4,9,9,49,121]",
+        "explanation": "Squares: 49,9,4,9,121. Sorted: 4,9,9,49,121. Compare abs(-7)=7 vs abs(11)=11, place 121 at end, then continue."
+      },
+      {
+        "input": "nums = [1]",
+        "output": "[1]",
+        "explanation": "Single element, square is 1."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^4",
+      "-10^4 <= nums[i] <= 10^4",
+      "nums is sorted in non-decreasing order"
+    ],
+    "realWorldUse": [
+      "Signal processing (squaring values)",
+      "Mathematical computations",
+      "Data transformation",
+      "Leveraging sorted property for efficiency"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "After squaring, the array is no longer sorted (negatives become large positives). However, the largest squares come from the ends (most negative or most positive). Two pointers from ends allow us to build the result from largest to smallest.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem involves sorted array and transformation that breaks order → think two pointers from ends",
+      "SIGNAL 2: Need to build result in sorted order → fill from back (largest to smallest)",
+      "SIGNAL 3: Transformation reverses order for negatives → largest results come from ends"
+    ],
+    "patternRules": [
+      "If problem involves sorted array with transformation that breaks order → use two pointers from ends",
+      "When you see 'squares', 'absolute values', or 'transformation of sorted array' → consider end-to-end pointers",
+      "If largest results come from ends → fill result array from back to front"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Actually uses greedy approach - at each step, choose larger absolute value. This is the greedy choice.",
+      "bruteForce": "Squaring all then sorting works but is O(n log n). Two-pointer approach is O(n) and leverages sorted property.",
+      "alternative": "Squaring first destroys sorted property, requiring O(n log n) sort. Two pointers use existing order for O(n) solution."
+    }
+  },
+  "coreInvariant": {
+    "statement": "Result array is filled from right to left (largest to smallest). At each step, we place the larger of the two squares (from left or right pointer) at the current position.",
+    "explanation": "This invariant holds because we compare absolute values of elements at both ends, and the larger absolute value produces the larger square. By filling from the end, we build the sorted result efficiently.",
+    "whyItMatters": "This invariant guarantees correctness: after filling all positions, the result array is sorted in non-decreasing order, with the largest squares at the end (filled first)."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "left",
+        "meaning": "Pointer starting at beginning, moving rightward (0-indexed)",
+        "indexing": "0-indexed, starts at 0"
+      },
+      {
+        "name": "right",
+        "meaning": "Pointer starting at end, moving leftward (0-indexed)",
+        "indexing": "0-indexed, starts at n-1"
+      },
+      {
+        "name": "result",
+        "meaning": "Result array to store squares, filled from back to front",
+        "indexing": "0-indexed array, filled from index n-1 down to 0"
+      },
+      {
+        "name": "pos",
+        "meaning": "Current position in result array (filled from back)",
+        "indexing": "Starts at n-1, decrements to 0"
+      }
+    ],
+    "baseCases": [
+      "If nums.length == 1: return [nums[0]^2]",
+      "Initialize left = 0, right = n-1, pos = n-1"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "While left <= right:",
+        "transition": "Compare Math.abs(nums[left]) and Math.abs(nums[right])",
+        "explanation": "Compare absolute values to determine which produces larger square.",
+        "example": "nums=[-4,3], abs(-4)=4, abs(3)=3, so -4 produces larger square"
+      },
+      {
+        "condition": "If Math.abs(nums[left]) > Math.abs(nums[right]):",
+        "transition": "result[pos] = nums[left]^2, left++, pos--",
+        "explanation": "Left element has larger absolute value, square it and place at current position, move left pointer right.",
+        "example": "nums=[-4,3], place 16 at result[pos], left=1, pos--"
+      },
+      {
+        "condition": "Else:",
+        "transition": "result[pos] = nums[right]^2, right--, pos--",
+        "explanation": "Right element has larger or equal absolute value, square it and place, move right pointer left.",
+        "example": "nums=[-1,3], place 9 at result[pos], right--, pos--"
+      }
+    ],
+    "decisionTree": {
+      "root": "Compare absolute values from both ends, place larger square",
+      "branches": [
+        "If abs(left) > abs(right): place left^2, left++, pos--",
+        "Else: place right^2, right--, pos--",
+        "Continue until left > right",
+        "Result array is sorted"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "nums = [-4,-1,0,3,10]",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Initialize: left = 0, right = 4, pos = 4, result = [0,0,0,0,0]",
+        "state": "left = 0 (value -4), right = 4 (value 10), pos = 4",
+        "logic": "Start from both ends, fill result from back",
+        "result": "Ready to build result"
+      },
+      {
+        "step": 2,
+        "description": "Compare: abs(-4)=4, abs(10)=10, 10 > 4, place 10^2=100 at result[4], right--, pos--",
+        "state": "result = [0,0,0,0,100], left = 0, right = 3, pos = 3",
+        "logic": "Right has larger absolute value, place its square at end",
+        "result": "result[4] = 100"
+      },
+      {
+        "step": 3,
+        "description": "Compare: abs(-4)=4, abs(3)=3, 4 > 3, place (-4)^2=16 at result[3], left++, pos--",
+        "state": "result = [0,0,0,16,100], left = 1, right = 3, pos = 2",
+        "logic": "Left has larger absolute value",
+        "result": "result[3] = 16"
+      },
+      {
+        "step": 4,
+        "description": "Compare: abs(-1)=1, abs(3)=3, 3 > 1, place 3^2=9 at result[2], right--, pos--",
+        "state": "result = [0,0,9,16,100], left = 1, right = 2, pos = 1",
+        "logic": "Right has larger absolute value",
+        "result": "result[2] = 9"
+      },
+      {
+        "step": 5,
+        "description": "Compare: abs(-1)=1, abs(0)=0, 1 > 0, place (-1)^2=1 at result[1], left++, pos--",
+        "state": "result = [0,1,9,16,100], left = 2, right = 2, pos = 0",
+        "logic": "Left has larger absolute value",
+        "result": "result[1] = 1"
+      },
+      {
+        "step": 6,
+        "description": "Compare: abs(0)=0, abs(0)=0, equal, place 0^2=0 at result[0], left++, pos--",
+        "state": "result = [0,1,9,16,100], left = 3, right = 2, pos = -1",
+        "logic": "Equal values, place square and advance",
+        "result": "Return [0,1,9,16,100]"
+      }
+    ],
+    "keyInsight": "The largest squares come from the ends (most negative or most positive). By comparing absolute values and filling the result from back to front, we build the sorted array in O(n) time without needing to sort after squaring."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Squaring first then sorting",
+      "symptom": "O(n log n) time complexity instead of O(n)",
+      "fix": "Use two pointers from ends, compare absolute values, fill result from back",
+      "example": "Squaring [-4,-1,0,3,10] gives [16,1,0,9,100], then sorting is O(n log n)"
+    },
+    {
+      "mistake": "Not comparing absolute values",
+      "symptom": "Wrong order - may place smaller squares before larger ones",
+      "fix": "Compare Math.abs(nums[left]) and Math.abs(nums[right]), not nums[left] and nums[right]",
+      "example": "If you compare -4 and 3 directly, you'd think 3 is larger, but abs(-4)=4 > 3"
+    },
+    {
+      "mistake": "Filling result from front instead of back",
+      "symptom": "Wrong order - smallest squares at end instead of beginning",
+      "fix": "Fill result from index n-1 down to 0 (back to front)",
+      "example": "If you fill from front, you'd place largest squares first, resulting in descending order"
+    },
+    {
+      "mistake": "Not handling equal absolute values correctly",
+      "symptom": "May skip elements or place incorrectly",
+      "fix": "When abs(left) == abs(right), can place either (or both if they're the same element)",
+      "example": "For [0,0], both have abs=0, place one 0^2, then the other"
+    },
+    {
+      "mistake": "Using wrong loop condition",
+      "symptom": "May miss elements or process incorrectly",
+      "fix": "Use left <= right to process all elements, including when left == right",
+      "example": "If you use left < right, you might miss the middle element"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a two-pointer problem from opposite ends.",
+      "",
+      "I'll build the result from back to front:",
+      "- Initialize left = 0, right = n-1, pos = n-1",
+      "- Create result array of size n",
+      "- While left <= right:",
+      "  - If abs(nums[left]) > abs(nums[right]):",
+      "    - result[pos] = nums[left]^2, left++, pos--",
+      "  - Else:",
+      "    - result[pos] = nums[right]^2, right--, pos--",
+      "- Return result",
+      "",
+      "Time complexity: O(n) - single pass through array",
+      "Space complexity: O(n) - result array (or O(1) if modifying in-place allowed)",
+      "",
+      "Edge cases:",
+      "- All positive: squares are already sorted",
+      "- All negative: squares are in reverse order",
+      "- Mixed: largest squares come from ends"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Squares of Sorted Array (all positive)",
+      "approachChange": "If all numbers are positive, squares are already sorted",
+      "solution": "Simply square each element, result is already sorted. O(n) time."
+    },
+    "harder": {
+      "problem": "Squares of Sorted Array (modify in-place)",
+      "approachChange": "Need to modify original array in-place without extra space",
+      "solution": "More complex - need to handle overlapping regions. May require three-pointer approach or temporary storage."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize left = 0, right = nums.length - 1, pos = nums.length - 1"
+    },
+    {
+      "id": "ps2",
+      "text": "Create result array of size nums.length"
+    },
+    {
+      "id": "ps3",
+      "text": "While left <= right:"
+    },
+    {
+      "id": "ps4",
+      "text": "  If Math.abs(nums[left]) > Math.abs(nums[right]):"
+    },
+    {
+      "id": "ps5",
+      "text": "    result[pos] = nums[left] * nums[left], left++, pos--"
+    },
+    {
+      "id": "ps6",
+      "text": "  Else:"
+    },
+    {
+      "id": "ps7",
+      "text": "    result[pos] = nums[right] * nums[right], right--, pos--"
+    },
+    {
+      "id": "ps8",
+      "text": "Return result"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle another classic two-pointer problem? After mastering Move Zeroes, you're perfectly set up for \"Squares of a Sorted Array\" - where we'll discover how starting from both ends of an array can be way more elegant than the obvious approach.\n\nHere's what you'll master:\n\n🎯 **Two-pointer technique from array endpoints** - Learn when and why to work inward from both ends instead of left-to-right\n\n🎯 **Reverse result building** - Master the technique of filling your answer array from back to front for optimal efficiency  \n\n🎯 **Comparing absolute values strategically** - Handle negative numbers like a pro by focusing on magnitudes rather than signs\n\nThis pattern shows up everywhere in array problems, and once you see it, you'll start spotting opportunities to use it in tons of other challenges!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Array-indexing** - Understanding array access and manipulation using indices\n- **Two-pointers-technique** - Using two pointers to traverse array from different positions\n- **Absolute-values** - Computing absolute values and comparing magnitudes of negative numbers\n- **Array-sorting** - Understanding sorted arrays and how negative/positive values affect ordering after squaring\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Array-indexing** - Understanding array access and manipulation using indices\n- **Two-pointers-technique** - Using two pointers to traverse array from different positions\n- **Absolute-values** - Computing absolute values and comparing magnitudes of negative numbers\n- **Array-sorting** - Understanding sorted arrays and how negative/positive values affect ordering after squaring\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Array-indexing** - Understanding array access and manipulation using indices\n- **Two-pointers-technique** - Using two pointers to traverse array from different positions\n- **Absolute-values** - Computing absolute values and comparing magnitudes of negative numbers\n- **Array-sorting** - Understanding sorted arrays and how negative/positive values affect ordering after squaring\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Array-indexing** - Understanding array access and manipulation using indices\n- **Two-pointers-technique** - Using two pointers to traverse array from different positions\n- **Absolute-values** - Computing absolute values and comparing magnitudes of negative numbers\n- **Array-sorting** - Understanding sorted arrays and how negative/positive values affect ordering after squaring\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Array-indexing** - Understanding array access and manipulation using indices\n- **Two-pointers-technique** - Using two pointers to traverse array from different positions\n- **Absolute-values** - Computing absolute values and comparing magnitudes of negative numbers\n- **Array-sorting** - Understanding sorted arrays and how negative/positive values affect ordering after squaring\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Squares of a Sorted Array problem asks for.\n\nImagine you're a photographer arranging height measurements of people standing in a line from shortest to tallest, but some measurements are negative (people below ground level) and some positive (above ground). To create a portfolio ordered by \"distance from ground level,\" you square each measurement to remove the negative signs, then rearrange the results from smallest to largest squared values.\n\n# Squares of a Sorted Array - Problem Statement\n\n## What we're trying to do\n\nGiven an array of integers sorted in **non-decreasing order**, return a new array containing the squares of each number, also sorted in **non-decreasing order**.\n\nSounds simple, right? The tricky part is that negative numbers can throw off our sorting once we square them!\n\n## Let's see it in action\n\n**Input:** `[-4, -1, 0, 3, 10]`\n**Output:** `[0, 1, 9, 16, 100]`\n\n## Why this example works\n\nHere's what happens step by step:\n\n1. **Start with:** `[-4, -1, 0, 3, 10]` (sorted)\n2. **Square each number:** `[16, 1, 0, 9, 100]` (no longer sorted!)\n3. **Sort the squares:** `[0, 1, 9, 16, 100]` ✅\n\nThe key insight is that even though our input is nicely sorted, squaring the numbers messes up that order. Notice how `-4` squared gives us `16`, which is larger than `-1` squared (`1`). The negative numbers essentially \"flip\" their relative positions once squared.\n\n**The challenge:** Can you solve this more efficiently than just squaring everything and sorting from scratch? 🤔",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Given a sorted array with negative and positive integers, you need to return squares in non-decreasing order. Where should you start comparing to build the result efficiently?",
+      "choices": [
+        {
+          "label": "Start from the beginning, square each element and sort the result",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use two pointers at both ends, compare absolute values, and fill result from the back",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach works but is inefficient. Squaring all elements and then sorting takes O(n log n) time, ignoring the fact that the original array is already sorted. You're throwing away valuable information about the relative ordering.",
+      "action": "next",
+      "next": "brute-force-rejection"
+    },
+    {
+      "stepId": "brute-force-rejection",
+      "mentorSays": "### Explicit Brute Force Rejection\n\n**Why not square first?**\n\n**Squaring breaks order** - The sorted property is lost after squaring:\n\n```\nInput: [-4, -1, 0, 3, 10]  (sorted)\nAfter squaring: [16, 1, 0, 9, 100]  (NOT sorted!)\n```\n\n**The problem:**\n- `-4` squared = 16 (large)\n- `-1` squared = 1 (small)\n- But in original array: -4 < -1\n\n**After squaring, the order is reversed for negatives!**\n\n**Why we need two pointers:**\n- The largest squares come from the **ends** (most negative or most positive)\n- We can't just square and sort - that's O(n log n)\n- Two pointers let us use the **existing sorted property** to build result in O(n)\n\n**This clarifies the necessity of the pattern** - we must leverage the sorted input, not destroy it.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Two Pointers from Opposite Ends\n\n**This problem follows the \"two pointers from opposite ends\" pattern:**\n- **Opposite ends** - One pointer at start, one at end\n- **Fill from back** - Build result array from largest to smallest (back to front)\n- **Absolute value comparison** - Compare absolute values to find larger square\n- **Leverage sorted property** - Use existing order instead of destroying it\n\n**Similar problems:**\n- Merge Sorted Array (two pointers merge)\n- Container With Most Water (two pointers from ends)\n- Reverse String (two pointers from ends)\n\n**Key insight:** The largest squares come from the ends (most negative or most positive). By comparing absolute values and filling from the back, we can build the sorted result in O(n) time without sorting.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Result Positions [p+1..n-1] Contain Largest Squares\n\n**Invariant maintained throughout:**\n- **Final positions:** All positions > p in result contain squares in sorted order\n- **Unprocessed positions:** Positions ≤ p are available for placement\n- **Pointer positions:** Left and right point to unprocessed elements\n- **Comparison basis:** We compare absolute values to determine larger square\n\n**Why this works:**\n- Initially, p = n-1 (last position)\n- Compare |nums[left]|² and |nums[right]|²\n- Place larger square at result[p], decrement p and the pointer that provided it\n- Positions > p are never overwritten because we only move backward\n\n**Invariant guarantee:** After each iteration, all squares at positions > p are in their final sorted positions. When p < 0, the entire result array is sorted.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Two Pointer Squaring State\n\n**State variables:**\n- **`left`** - Pointer at start of array (starts at 0)\n- **`right`** - Pointer at end of array (starts at n-1)\n- **`result`** - Array to store sorted squares\n- **`p`** - Write position in result (starts at n-1, moves backward)\n\n**State transitions:**\n1. **Initialize:** left = 0, right = n-1, p = n-1\n2. **Loop:** While left <= right:\n   - If |nums[left]| > |nums[right]|: result[p] = nums[left]², left++, p--\n   - Else: result[p] = nums[right]², right--, p--\n3. **Result:** Return result (sorted squares)\n\n**State validity:** After loop, result contains all squares in sorted order.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Square All Then Sort**\n- **Why it fails:** O(n log n) time complexity\n- **Issue:** Ignores the sorted property of input, requires sorting\n- **Better:** Two pointers use sorted property, O(n) time\n\n**Approach 2: Find Zero Then Expand**\n- **Why it fails:** More complex, still O(n) but harder to implement\n- **Issue:** Need to find zero first, then merge from center\n- **Better:** Two pointers from ends is simpler and equally efficient\n\n**Approach 3: Create New Array and Sort**\n- **Why it fails:** O(n log n) time, doesn't leverage input order\n- **Issue:** Wastes the sorted property\n- **Better:** Two pointers preserve and use the sorted property\n\n**Our approach wins because:** Two pointers from opposite ends leverage the sorted property to build sorted squares in O(n) time, which is optimal. We avoid sorting by using the existing order.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that the **largest squared values** will always come from the elements at the **ends of the array** (either the most negative or most positive numbers), not from the middle. Since we need the result sorted, we can use **two pointers** at both ends, compare their absolute values, and **fill the result array from back to front** with the larger square. This works because squaring makes negative numbers positive, so the element with the larger absolute value will always produce the larger square, allowing us to build the sorted result in reverse order.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[-4,-1,0,3,10]`:\n\n- Step 1: Initialize two pointers: left = 0 (at -4), right = 4 (at 10), and result array of size 5\n- Step 2: Compare |−4|² = 16 vs |10|² = 100, place 100 at result[4], move right to 3\n- Step 3: Compare |−4|² = 16 vs |3|² = 9, place 16 at result[3], move left to -1\n- Step 4: Compare |−1|² = 1 vs |3|² = 9, place 9 at result[2], move right to 0\n- Step 5: Compare |−1|² = 1 vs |0|² = 0, place 1 at result[1], move left to 0\n- Step 6: Only 0 remains, place |0|² = 0 at result[0]\n- Final answer: **[0,1,9,16,100]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function signature and result array\n\n```javascript\nfunction sortedSquares(nums) {\n    const result = new Array(nums.length);\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function sortedSquares(nums) {\n    const result = new Array(nums.length);\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Set up two pointers at array ends\n\n```javascript\nfunction sortedSquares(nums) {\n    const result = new Array(nums.length);\n    let left = 0;\n    let right = nums.length - 1;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let left = 0;\n    let right = nums.length - 1;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Initialize position counter for filling result from back\n\n```javascript\nfunction sortedSquares(nums) {\n    const result = new Array(nums.length);\n    let left = 0;\n    let right = nums.length - 1;\n    let pos = nums.length - 1;\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    let pos = nums.length - 1;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Start while loop to process all elements\n\n```javascript\nfunction sortedSquares(nums) {\n    const result = new Array(nums.length);\n    let left = 0;\n    let right = nums.length - 1;\n    let pos = nums.length - 1;\n    \n    while (left <= right) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    while (left <= right) {\n    }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Compare absolute values to find larger square\n\n```javascript\nfunction sortedSquares(nums) {\n    const result = new Array(nums.length);\n    let left = 0;\n    let right = nums.length - 1;\n    let pos = nums.length - 1;\n    \n    while (left <= right) {\n        if (Math.abs(nums[left]) > Math.abs(nums[right])) {\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        if (Math.abs(nums[left]) > Math.abs(nums[right])) {\n        }"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Handle case when left element has larger absolute value\n\n```javascript\nfunction sortedSquares(nums) {\n    const result = new Array(nums.length);\n    let left = 0;\n    let right = nums.length - 1;\n    let pos = nums.length - 1;\n    \n    while (left <= right) {\n        if (Math.abs(nums[left]) > Math.abs(nums[right])) {\n            result[pos] = nums[left] * nums[left];\n            left++;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "            result[pos] = nums[left] * nums[left];\n            left++;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Handle case when right element has larger/equal absolute value\n\n```javascript\nfunction sortedSquares(nums) {\n    const result = new Array(nums.length);\n    let left = 0;\n    let right = nums.length - 1;\n    let pos = nums.length - 1;\n    \n    while (left <= right) {\n        if (Math.abs(nums[left]) > Math.abs(nums[right])) {\n            result[pos] = nums[left] * nums[left];\n            left++;\n        } else {\n            result[pos] = nums[right] * nums[right];\n            right--;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "        } else {\n            result[pos] = nums[right] * nums[right];\n            right--;\n        }"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Decrement position and return final result\n\n```javascript\nfunction sortedSquares(nums) {\n    const result = new Array(nums.length);\n    let left = 0;\n    let right = nums.length - 1;\n    let pos = nums.length - 1;\n    \n    while (left <= right) {\n        if (Math.abs(nums[left]) > Math.abs(nums[right])) {\n            result[pos] = nums[left] * nums[left];\n            left++;\n        } else {\n            result[pos] = nums[right] * nums[right];\n            right--;\n        }\n        pos--;\n    }\n    \n    return result;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "        pos--;\n    }\n    \n    return result;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the two pointers technique from the ends! You've successfully learned how to efficiently process sorted arrays by comparing elements from both boundaries and building your result strategically. Next, we'll tackle finding the first unique character, where you'll explore hash map patterns for character frequency tracking.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

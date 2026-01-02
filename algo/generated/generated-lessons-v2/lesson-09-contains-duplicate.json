@@ -1,0 +1,638 @@
+{
+  "id": "contains-duplicate",
+  "title": "Contains Duplicate",
+  "pattern": "hash set",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 9,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-9",
+    "introduces": [
+      "Set-constructor",
+      "set-add-method",
+      "set-has-method",
+      "early-termination"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "hash-map-concept"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "two-sum"
+    ]
+  },
+  "problemStatement": {
+    "description": "Determine if an array contains any duplicate values. Return true if any value appears at least twice, false if all elements are distinct.",
+    "inputs": [
+      "nums: array of integers (length 1 to 10^5)"
+    ],
+    "outputs": [
+      "Boolean: true if array contains duplicates, false if all elements are unique"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3,1]",
+        "output": "true",
+        "explanation": "Value 1 appears twice (at indices 0 and 3). Set: add 1, add 2, add 3, then 1 is already in set → duplicate found."
+      },
+      {
+        "input": "nums = [1,2,3,4]",
+        "output": "false",
+        "explanation": "All elements are unique. Set: add 1, add 2, add 3, add 4. No duplicates found, return false."
+      },
+      {
+        "input": "nums = [1,1,1,3,3,4,3,2,4,2]",
+        "output": "true",
+        "explanation": "Multiple duplicates: 1 appears 3 times, 3 appears 3 times, 4 and 2 each appear twice. Early exit on first duplicate found."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-10^9 <= nums[i] <= 10^9"
+    ],
+    "realWorldUse": [
+      "Data validation (checking for duplicate records)",
+      "Database constraint checking",
+      "Duplicate detection in user inputs",
+      "Data quality assurance pipelines"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "We need to check membership efficiently. A Set provides O(1) lookup time, allowing us to detect duplicates in a single pass. Early exit optimizes the best case.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks to check for duplicates or repeated values → think Set",
+      "SIGNAL 2: Need O(1) membership testing → hash set is optimal",
+      "SIGNAL 3: Early exit possible → return immediately when duplicate found"
+    ],
+    "patternRules": [
+      "If problem involves duplicate detection → use Set for O(1) membership testing",
+      "When you see 'contains duplicate', 'repeated', or 'unique' → consider Set-based approach",
+      "If O(n) time needed (better than sorting) → Set is O(n) vs sorting O(n log n)"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - we need to check all elements systematically, not make local choices.",
+      "bruteForce": "Nested loops checking all pairs is O(n²). Set-based approach is O(n) with O(1) lookups.",
+      "alternative": "Sorting then checking adjacent elements works but is O(n log n). Set is O(n) and more efficient."
+    }
+  },
+  "coreInvariant": {
+    "statement": "The Set contains all unique elements from indices [0..i-1]. If nums[i] is already in the Set, a duplicate exists.",
+    "explanation": "This invariant holds because we add each element to the Set as we process it. If we encounter an element that's already in the Set, it means we've seen it before at an earlier index, indicating a duplicate.",
+    "whyItMatters": "This invariant guarantees correctness: by checking membership before adding, we detect duplicates immediately. Early exit when duplicate found optimizes performance."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "seen",
+        "meaning": "Set storing all unique elements encountered so far",
+        "indexing": "Set of integer values"
+      },
+      {
+        "name": "nums",
+        "meaning": "Array being checked for duplicates",
+        "indexing": "0-indexed array"
+      },
+      {
+        "name": "i",
+        "meaning": "Current index being processed",
+        "indexing": "0-indexed, iterates from 0 to n-1"
+      }
+    ],
+    "baseCases": [
+      "If nums.length <= 1: return false (single or no elements cannot have duplicates)",
+      "If duplicate found at any index: return true immediately (early exit)"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "if nums[i] in seen",
+        "transition": "return true (duplicate found)",
+        "explanation": "Current element is already in the Set, meaning we've seen it before. Duplicate detected.",
+        "example": "nums=[1,2,3,1], i=3: nums[3]=1 is in seen={1,2,3}, return true"
+      },
+      {
+        "condition": "if nums[i] not in seen",
+        "transition": "seen.add(nums[i]), then continue",
+        "explanation": "New unique element found. Add it to Set for future duplicate checks.",
+        "example": "nums=[1,2,3,1], i=1: nums[1]=2 not in seen, add 2 to seen"
+      }
+    ],
+    "decisionTree": {
+      "root": "For each element nums[i], check if it's in the Set",
+      "branches": [
+        "If in Set: return true immediately (duplicate found)",
+        "If not in Set: add to Set, continue to next element",
+        "If loop completes: return false (no duplicates)"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "nums = [1,2,3,1]",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Initialize: seen = new Set(), i = 0",
+        "state": "seen = {}, i = 0, nums[0] = 1",
+        "logic": "Start with empty Set, ready to track seen elements",
+        "result": "Begin processing"
+      },
+      {
+        "step": 2,
+        "description": "i=0: nums[0]=1 not in seen, add to Set",
+        "state": "seen = {1}, i = 0",
+        "logic": "First element is always new, add it",
+        "result": "seen = {1}"
+      },
+      {
+        "step": 3,
+        "description": "i=1: nums[1]=2 not in seen, add to Set",
+        "state": "seen = {1, 2}, i = 1",
+        "logic": "New unique element, add it",
+        "result": "seen = {1, 2}"
+      },
+      {
+        "step": 4,
+        "description": "i=2: nums[2]=3 not in seen, add to Set",
+        "state": "seen = {1, 2, 3}, i = 2",
+        "logic": "Another new unique element",
+        "result": "seen = {1, 2, 3}"
+      },
+      {
+        "step": 5,
+        "description": "i=3: nums[3]=1 is in seen, duplicate found!",
+        "state": "seen = {1, 2, 3}, i = 3, nums[3] = 1",
+        "logic": "Element 1 is already in Set (seen at index 0), duplicate detected",
+        "result": "Return true immediately"
+      }
+    ],
+    "keyInsight": "Set provides O(1) membership testing. As we iterate, we check if current element is already in the Set. If yes, duplicate found. If no, add it for future checks. Early exit optimizes best case."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Using array.includes() instead of Set.has()",
+      "symptom": "O(n²) time complexity instead of O(n) - array.includes() is O(n) per call",
+      "fix": "Use Set.has() which is O(1) lookup time",
+      "example": "For each element, array.includes() scans entire array, making it O(n²) total"
+    },
+    {
+      "mistake": "Not using early exit when duplicate found",
+      "symptom": "Unnecessary processing after duplicate is found",
+      "fix": "Return true immediately when duplicate detected, don't continue processing",
+      "example": "If duplicate found at index 2, return immediately instead of checking remaining elements"
+    },
+    {
+      "mistake": "Adding element to Set before checking membership",
+      "symptom": "May incorrectly identify element as duplicate of itself",
+      "fix": "Check if element is in Set first, then add if not present",
+      "example": "If you add then check, you'll always find the element you just added"
+    },
+    {
+      "mistake": "Using object {} instead of Set for tracking",
+      "symptom": "Works but less semantic - Set is designed for membership testing",
+      "fix": "Use Set for clearer intent and built-in membership operations",
+      "example": "Set.has() is more readable than 'key in object' for membership checks"
+    },
+    {
+      "mistake": "Sorting array first then checking adjacent elements",
+      "symptom": "O(n log n) time complexity instead of O(n)",
+      "fix": "Use Set-based approach for O(n) time. Sorting is unnecessary overhead.",
+      "example": "For large arrays, Set is faster than sorting"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a Set-based membership testing problem.",
+      "",
+      "I'll use a Set to track seen elements:",
+      "- Initialize empty Set",
+      "- For each element in array:",
+      "  - If element is already in Set: return true (duplicate found)",
+      "  - Else: add element to Set",
+      "- If loop completes: return false (no duplicates)",
+      "",
+      "Time complexity: O(n) - single pass through array, O(1) Set operations",
+      "Space complexity: O(n) - Set may store all elements in worst case",
+      "",
+      "Edge cases:",
+      "- Single element: return false",
+      "- All elements unique: return false",
+      "- Duplicate at beginning: early exit optimizes to O(1) best case"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Contains Duplicate (sorted array)",
+      "approachChange": "Array is sorted, can check adjacent elements without Set",
+      "solution": "Iterate through array, check if nums[i] == nums[i+1]. O(n) time, O(1) space."
+    },
+    "harder": {
+      "problem": "Contains Duplicate II (duplicate within k distance)",
+      "approachChange": "Need to check if duplicate exists within k indices. Use sliding window with Set.",
+      "solution": "Maintain Set of last k elements. For each new element, check if it's in Set (duplicate within k), then update Set to remove element k positions back."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize seen = new Set()"
+    },
+    {
+      "id": "ps2",
+      "text": "For each element num in nums:"
+    },
+    {
+      "id": "ps3",
+      "text": "  If num is in seen: return true (duplicate found)"
+    },
+    {
+      "id": "ps4",
+      "text": "  Else: add num to seen: seen.add(num)"
+    },
+    {
+      "id": "ps5",
+      "text": "Return false (no duplicates found)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great job mastering the Valid Anagram challenge! Now let's tackle \"Contains Duplicate\" - another fantastic problem that will strengthen your hash set pattern skills. Just like how we used character frequency tracking before, this time we'll use a hash set to efficiently detect if any element appears more than once in an array.\n\nBy completing this lesson, you'll gain these key skills:\n• **Duplicate Detection Mastery** - Learn the most efficient way to identify repeated elements in datasets\n• **Hash Set Optimization** - Master when and how to use hash sets for O(1) lookups versus other approaches\n• **Early Exit Strategy** - Develop the intuition to stop processing as soon as you find what you're looking for\n\nThis pattern shows up everywhere in real coding interviews and production systems - from detecting duplicate user registrations to finding repeated transactions. You've got the foundation from our anagram work, so this will feel familiar but with a fresh twist!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Array traversal** - Ability to iterate through array elements using loops\n- **Hash set operations** - Understanding insert and lookup operations in hash-based data structures\n- **Boolean logic** - Knowledge of conditional statements and return true/false based on conditions\n- **Time space complexity** - Basic understanding of algorithm efficiency trade-offs between time and memory usage\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Array traversal** - Ability to iterate through array elements using loops\n- **Hash set operations** - Understanding insert and lookup operations in hash-based data structures\n- **Boolean logic** - Knowledge of conditional statements and return true/false based on conditions\n- **Time space complexity** - Basic understanding of algorithm efficiency trade-offs between time and memory usage\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Array traversal** - Ability to iterate through array elements using loops\n- **Hash set operations** - Understanding insert and lookup operations in hash-based data structures\n- **Boolean logic** - Knowledge of conditional statements and return true/false based on conditions\n- **Time space complexity** - Basic understanding of algorithm efficiency trade-offs between time and memory usage\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Array traversal** - Ability to iterate through array elements using loops\n- **Hash set operations** - Understanding insert and lookup operations in hash-based data structures\n- **Boolean logic** - Knowledge of conditional statements and return true/false based on conditions\n- **Time space complexity** - Basic understanding of algorithm efficiency trade-offs between time and memory usage\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Array traversal** - Ability to iterate through array elements using loops\n- **Hash set operations** - Understanding insert and lookup operations in hash-based data structures\n- **Boolean logic** - Knowledge of conditional statements and return true/false based on conditions\n- **Time space complexity** - Basic understanding of algorithm efficiency trade-offs between time and memory usage\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Contains Duplicate problem asks for.\n\nImagine you're unpacking groceries and checking your pantry - you need to know if you already have any of the items you just bought. You scan through each grocery item and compare it against what's already on your shelves, and if you find a match (like two boxes of cereal), you've found a duplicate. This is exactly how the \"Contains Duplicate\" algorithm works: it examines each element in a list and checks if it appears elsewhere, returning true the moment it finds any repeated value.\n\n# Contains Duplicate Problem\n\nHey! So this is a pretty straightforward problem that comes up a lot in coding interviews.\n\n## What it's asking\n\nGiven an array of integers, you need to determine if **any value appears at least twice**. If there are duplicates, return `true`. If all elements are unique, return `false`.\n\n## Example walkthrough\n\nLet's say we have the array `[1, 2, 3, 1]`:\n\n- We see `1` at index 0\n- We see `2` at index 1 (new number, keep going)\n- We see `3` at index 2 (new number, keep going)  \n- We see `1` at index 3 (wait, we've seen this before!)\n\nSince we found `1` appearing twice, we return `true`.\n\n## Why this works\n\nThe key insight is that we just need to find **one duplicate** to return true. We don't need to count how many times each number appears or find all duplicates - as soon as we spot any number we've seen before, we have our answer.\n\nIf we make it through the entire array without seeing any repeats, then all elements are unique and we return `false`.\n\nPretty simple concept, but there are some neat ways to implement it efficiently! The main trade-off is usually between time and space complexity.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to determine if an array contains any duplicate values. You're considering two approaches: (1) sorting the array first, then checking adjacent elements, or (2) using a hash set to track seen values. Which approach better demonstrates the core algorithmic insight for this problem?",
+      "choices": [
+        {
+          "label": "Sort the array first, then iterate through and compare each element with its adjacent element to find duplicates",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use a hash set to track seen values as you iterate, returning true immediately when you encounter a value already in the set",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works and has O(n log n) time complexity, it masks the key insight. Sorting is overkill - we don't need the elements in order, we just need to know if we've seen them before. This approach also modifies the input and doesn't leverage the fundamental concept of membership testing.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "set-mental-model",
+      "mentorSays": "### Set Mental Model\n\n**Think of a Set as a \"memory\" of what you've seen:**\n\n- **Seen before?** → duplicate found, return true\n- **Never seen?** → store it in the set for future checks\n\n**Example walkthrough:**\n\nnums = [1, 2, 3, 1]\n\n- i=0, num=1: Not in set → add to set: {1}\n- i=1, num=2: Not in set → add to set: {1, 2}\n- i=2, num=3: Not in set → add to set: {1, 2, 3}\n- i=3, num=1: **Already in set!** → duplicate found!\n\n**Why this works:** Sets provide O(1) lookup time, making duplicate detection fast. This helps juniors reason before coding - they understand the mental model first.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Set-Based Membership Testing\n\n**This problem follows the \"set membership testing\" pattern:**\n- **Hash set** - Store seen elements for O(1) lookup\n- **Early exit** - Return immediately when duplicate found\n- **Single pass** - Process array in one iteration\n- **Membership check** - Test if element exists before adding\n\n**Similar problems:**\n- Contains Duplicate II (with distance constraint)\n- First Unique Character (similar membership testing)\n- Intersection of Two Arrays (set operations)\n\n**Key insight:** Sets provide O(1) membership testing. As we iterate, we check if current element is already in the set. If yes, duplicate found. If no, add it to the set for future checks.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Set Contains All Elements Seen So Far\n\n**Invariant maintained throughout:**\n- **Set contents:** Set contains all unique elements from indices [0..i-1]\n- **Duplicate detection:** If nums[i] is in set, duplicate found\n- **Early exit:** As soon as duplicate found, return true immediately\n- **No duplicates yet:** If we've processed i elements without duplicates, set has i unique elements\n\n**Why this works:**\n- Initially, set is empty (no elements seen)\n- For each element, check if it's in set\n- If in set → duplicate found, return true\n- If not in set → add to set, continue\n- If we finish without duplicates, return false\n\n**Invariant guarantee:** After processing index i, if no duplicate found yet, the set contains exactly i unique elements (one for each index processed). If a duplicate is found at index i, it means we've seen nums[i] at some earlier index.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Set-Based Duplicate Detection State\n\n**State variables:**\n- **`seen`** - Set storing elements we've encountered\n- **`nums`** - Array being checked for duplicates\n- **`i`** - Current index being processed\n\n**State transitions:**\n1. **Initialize:** seen = new Set()\n2. **Loop:** For each element nums[i]:\n   - If nums[i] in seen: return true (duplicate found)\n   - Else: add nums[i] to seen, continue\n3. **Result:** If loop completes, return false (no duplicates)\n\n**State validity:** Set contains all unique elements seen so far. If duplicate found, return true immediately.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Sort Then Check Adjacent Elements**\n- **Why it fails:** O(n log n) time complexity\n- **Issue:** Sorting is unnecessary - we don't need order, just membership\n- **Better:** Set-based approach is O(n) time\n\n**Approach 2: Nested Loops (Compare All Pairs)**\n- **Why it fails:** O(n²) time complexity\n- **Issue:** For each element, check all previous elements\n- **Better:** Set provides O(1) lookup, making it O(n) total\n\n**Approach 3: Use Array.includes()**\n- **Why it fails:** O(n²) time complexity\n- **Issue:** Array.includes() is O(n) per call, called n times\n- **Better:** Set.has() is O(1) per call\n\n**Our approach wins because:** Set-based membership testing finds duplicates in O(n) time with O(n) space. Early exit optimizes best-case to O(1) when duplicate is at the beginning.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use a **Set data structure** to track previously seen values as we iterate through the array. When we encounter a value that's already in the Set, we immediately return true since we've found a duplicate. This works because Sets only store unique values and provide **O(1) lookup time**, making duplicate detection efficient. For example, with array [1,2,3,1], we add 1,2,3 to the Set, then when we see 1 again, it's already present so we return true.",
+      "action": "next",
+      "next": "early-exit-explanation"
+    },
+    {
+      "stepId": "early-exit-explanation",
+      "mentorSays": "### Early Exit Explanation\n\n**Why we return immediately:**\n\n**The seen set grows as we iterate:**\n```\nnums = [1, 2, 3, 1, 4, 5]\n\ni=0, num=1: seen = {1}\ni=1, num=2: seen = {1, 2}\ni=2, num=3: seen = {1, 2, 3}\ni=3, num=1: **Already in seen!** → return true immediately\n```\n\n**Key insight:** The first repeat we find = the answer. We don't need to check the rest!\n\n**Why this matters:**\n- **Early exit:** As soon as we find one duplicate, we return true\n- **No need to continue:** We don't need to find ALL duplicates, just check if ANY exists\n- **Optimization:** In best case (duplicate at index 1), we only check 2 elements instead of n\n\n**Example:**\n```\nnums = [1, 1, 2, 3, 4, 5, ... 1000 more elements]\n\nWithout early exit: Check all 1000+ elements\nWith early exit: Check only 2 elements, return true!\n```\n\n**The seen set grows → first repeat = answer** - we can stop immediately!",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[1,2,3,1]`:\n- Step 1: Initialize empty set, start with first element 1\n- Step 2: 1 not in set, add 1 to set → set = {1}\n- Step 3: Check element 2, not in set, add 2 → set = {1,2}\n- Step 4: Check element 3, not in set, add 3 → set = {1,2,3}\n- Step 5: Check element 1, found 1 already in set → duplicate detected\n- Final: **true**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function signature that takes an array parameter\n\n```javascript\nfunction containsDuplicate(nums) {\n\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function containsDuplicate(nums) {"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize empty Set to track seen values\n\n```javascript\nfunction containsDuplicate(nums) {\n    const seen = new Set();\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    const seen = new Set();"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start for-of loop to iterate through each number\n\n```javascript\nfunction containsDuplicate(nums) {\n    const seen = new Set();\n    for (const num of nums) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    for (const num of nums) {"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Check if current number already exists in Set\n\n```javascript\nfunction containsDuplicate(nums) {\n    const seen = new Set();\n    for (const num of nums) {\n        if (seen.has(num)) {\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        if (seen.has(num)) {"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Return true immediately when duplicate found\n\n```javascript\nfunction containsDuplicate(nums) {\n    const seen = new Set();\n    for (const num of nums) {\n        if (seen.has(num)) {\n            return true;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "            return true;"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Add current number to Set for future checks\n\n```javascript\nfunction containsDuplicate(nums) {\n    const seen = new Set();\n    for (const num of nums) {\n        if (seen.has(num)) {\n            return true;\n        }\n        seen.add(num);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        seen.add(num);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Return false if no duplicates found after checking all elements\n\n```javascript\nfunction containsDuplicate(nums) {\n    const seen = new Set();\n    for (const num of nums) {\n        if (seen.has(num)) {\n            return true;\n        }\n        seen.add(num);\n    }\n    return false;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "    return false;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the hash set pattern with \"Contains Duplicate\"! You've learned how to efficiently track seen elements and detect duplicates in linear time. Next, we'll tackle \"Two Sum\" where you'll expand your hash set skills to solve a classic pairing problem - you've got this!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

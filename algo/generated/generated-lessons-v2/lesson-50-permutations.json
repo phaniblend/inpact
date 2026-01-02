@@ -1,0 +1,432 @@
+{
+  "id": "permutations",
+  "title": "Permutations",
+  "pattern": "backtracking (arrangements)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 50,
+    "tier": "ADVANCED",
+    "lessonOrderTag": "ADVANCED-50",
+    "introduces": [
+      "permutation-generation",
+      "swap-backtrack",
+      "arrangement-pattern"
+    ],
+    "assumesAlreadyTaught": [
+      "backtracking-concept",
+      "arrays",
+      "recursion-concept"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "subsets"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Define a function that takes an array and starting index as parameters"
+    },
+    {
+      "id": "ps2",
+      "text": "If starting index equals array length, we have a complete permutation - add it to results"
+    },
+    {
+      "id": "ps3",
+      "text": "For each position from starting index to end of array"
+    },
+    {
+      "id": "ps4",
+      "text": "Swap the current element with the element at starting index"
+    },
+    {
+      "id": "ps5",
+      "text": "Recursively call the function with starting index incremented by one"
+    },
+    {
+      "id": "ps6",
+      "text": "Swap back to restore the original array state (backtrack)"
+    },
+    {
+      "id": "ps7",
+      "text": "Return the collected results after all recursive calls complete"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome back! Now that you've mastered combination-sum, we're ready to tackle **Permutations** – one of the most elegant applications of backtracking!\n\nRemember how we built combinations by making choices? Permutations takes this further by focusing on **arrangements** where order matters. The key pattern here is backtracking through all possible arrangements: we make a choice, explore that path completely, then backtrack and try the next choice. It's like systematically trying every possible way to arrange items, ensuring we never miss a configuration!\n\nIn this lesson, you'll gain three powerful skills:\n1. **Master arrangement-based backtracking** – learn to generate all possible orderings efficiently\n2. **Handle duplicate elements gracefully** – discover techniques to avoid redundant permutations\n3. **Optimize with pruning strategies** – speed up your solutions by cutting unnecessary branches early\n\nYou're building on solid foundations from combination-sum, and permutations will unlock a whole new category of problems. This pattern appears everywhere – from solving puzzles to generating test cases to optimization problems!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Backtracking concept** - Understanding how to explore solution spaces by making choices and undoing them when they don't lead to valid solutions\n- **Arrays** - Knowledge of array data structures, indexing, and basic operations like swapping elements\n- **Recursion concept** - Understanding recursive function calls, base cases, and how functions call themselves with modified parameters\n- **Combinatorics basics** - Basic understanding of counting principles and the difference between permutations and combinations\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Backtracking concept** - Understanding how to explore solution spaces by making choices and undoing them when they don't lead to valid solutions\n- **Arrays** - Knowledge of array data structures, indexing, and basic operations like swapping elements\n- **Recursion concept** - Understanding recursive function calls, base cases, and how functions call themselves with modified parameters\n- **Combinatorics basics** - Basic understanding of counting principles and the difference between permutations and combinations\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Backtracking concept** - Understanding how to explore solution spaces by making choices and undoing them when they don't lead to valid solutions\n- **Arrays** - Knowledge of array data structures, indexing, and basic operations like swapping elements\n- **Recursion concept** - Understanding recursive function calls, base cases, and how functions call themselves with modified parameters\n- **Combinatorics basics** - Basic understanding of counting principles and the difference between permutations and combinations\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Backtracking concept** - Understanding how to explore solution spaces by making choices and undoing them when they don't lead to valid solutions\n- **Arrays** - Knowledge of array data structures, indexing, and basic operations like swapping elements\n- **Recursion concept** - Understanding recursive function calls, base cases, and how functions call themselves with modified parameters\n- **Combinatorics basics** - Basic understanding of counting principles and the difference between permutations and combinations\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Backtracking concept** - Understanding how to explore solution spaces by making choices and undoing them when they don't lead to valid solutions\n- **Arrays** - Knowledge of array data structures, indexing, and basic operations like swapping elements\n- **Recursion concept** - Understanding recursive function calls, base cases, and how functions call themselves with modified parameters\n- **Combinatorics basics** - Basic understanding of counting principles and the difference between permutations and combinations\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Permutations problem asks for.\n\nImagine you're organizing 5 different books on a shelf - the number of ways to arrange them is 5! = 120 permutations, because the first position has 5 choices, second has 4 remaining choices, third has 3, and so on. The algorithm works just like physically placing books: pick one for the first spot, then pick from the remaining for the second spot, continuing until all positions are filled. Each unique arrangement (like having the red book first vs. the blue book first) represents a different permutation.\n\n# Permutations Problem\n\n## What it's asking for\n\nThe **Permutations** problem asks you to generate all possible arrangements (permutations) of a given array of distinct integers. Think of it like asking \"In how many different ways can I arrange these numbers?\"\n\nFor an array with `n` elements, you need to return all `n!` (n factorial) different orderings where each number appears exactly once in each arrangement.\n\n## Example walkthrough\n\nLet's say we have `nums = [1, 2, 3]`. Here's what we want to generate:\n\n```\nInput: [1, 2, 3]\nOutput: [[1,2,3], [1,3,2], [2,1,3], [2,3,1], [3,1,2], [3,2,1]]\n```\n\n## Why this works / makes sense\n\nThink about it step by step:\n\n1. **First position choices**: We can put any of the 3 numbers (1, 2, or 3) in the first spot\n2. **Second position choices**: Once we pick the first number, we have 2 remaining choices for the second spot  \n3. **Third position choices**: After picking the first two, only 1 number is left for the final spot\n\nSo we get 3 × 2 × 1 = 6 total permutations, which matches our output!\n\nLet's trace through how we build them:\n- Start with **1**: remaining [2,3] → can make [1,2,3] and [1,3,2]\n- Start with **2**: remaining [1,3] → can make [2,1,3] and [2,3,1]  \n- Start with **3**: remaining [1,2] → can make [3,1,2] and [3,2,1]\n\nThe key insight is that this is a classic **backtracking** problem - at each step, you try all possible choices, explore that path completely, then backtrack and try the next choice.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to generate all permutations of the array [1, 2, 3]. Which approach correctly implements the backtracking algorithm to find all possible arrangements?",
+      "choices": [
+        {
+          "label": "Use nested loops: for each position i, iterate through all elements and place them at position i, then move to the next position",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "For each position, swap the current position with each remaining unused element, recurse to fill the next position, then swap back to restore the original state",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach seems logical but fails because it doesn't properly handle the constraint that each element can only be used once per permutation. Nested loops would allow the same element to appear multiple times in a single permutation (like [1,1,1]) and wouldn't systematically explore all valid arrangements. It also doesn't provide a way to 'undo' choices when backtracking.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Backtracking for Arrangements\n\n**This problem follows the \"backtracking for arrangements\" pattern:**\n- **Swap-based backtracking** - Swap elements to try different arrangements\n- **Position-based** - Fill positions one by one, trying each unused element\n- **Restore state** - Swap back after recursion to restore original state\n- **Complete exploration** - Systematically tries all arrangements\n\n**Similar problems:**\n- Permutations II (handle duplicates)\n- Next Permutation (find next lexicographic permutation)\n- Generate Parentheses (different but uses backtracking)\n\n**Key insight:** We can use swapping to place each element at each position. After exploring, we swap back to restore the original state, allowing us to try the next element.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Elements Before Index Are Fixed, After Index Are Available\n\n**Invariant maintained throughout:**\n- **Fixed positions:** Elements at indices `[0..start-1]` are fixed in current permutation\n- **Available positions:** Elements at indices `[start..n-1]` can be swapped to position `start`\n- **State restoration:** After recursion, array is restored to original state\n\n**Why this works:**\n- We fill positions from left to right\n- For position `start`, we try each element from `[start..n-1]` by swapping\n- After exploring with an element at position `start`, we swap back\n- This ensures we try all arrangements systematically\n\n**Invariant guarantee:** After processing position `start`, all permutations with elements `[0..start-1]` fixed have been generated and added to result. The array is restored to its original state after each recursive call.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Swap-Based Backtracking State\n\n**State variables:**\n- **`nums`** - Array being permuted (modified in-place)\n- **`start`** - Current position being filled (0-indexed)\n- **`result`** - Array collecting all permutations\n\n**State transitions:**\n1. **Base case:** If `start === nums.length`, add current `nums` to `result`\n2. **For each index `i` from `start` to `n-1`:**\n   - Swap `nums[start]` and `nums[i]`\n   - Recurse with `start + 1`\n   - Swap back to restore state\n\n**State validity:** Result contains all permutations when `start` reaches `nums.length` for all swap choices.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Nested Loops**\n- **Why it fails:** Doesn't handle \"each element once\" constraint\n- **Issue:** Would generate [1,1,1] type duplicates\n- **Better:** Backtracking ensures each element used exactly once\n\n**Approach 2: Generate All Then Filter Duplicates**\n- **Why it fails:** Inefficient - generates duplicates then filters\n- **Issue:** Wastes computation on invalid permutations\n- **Better:** Swap-based approach naturally avoids duplicates\n\n**Approach 3: Use Set to Track Used Elements**\n- **Why it doesn't fail:** Actually works, but more complex\n- **Issue:** Requires extra space for tracking, more code\n- **Better:** Swap-based approach uses O(1) extra space\n\n**Our approach wins because:** Swap-based backtracking systematically generates all permutations without duplicates, uses O(1) extra space (just the result array), and naturally handles the \"each element once\" constraint through the swap mechanism.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **backtracking with swapping** - for each position in the permutation, try placing each remaining unused element there by swapping it to the current position, recursively generating permutations for the rest, then swapping back to restore the original state.\n\nThis works because swapping moves an element to the \"current position\" while preserving all other elements for future choices, and swapping back ensures we can try the next element in that same position. For example, with [1,2,3], we first try 1 at position 0, recurse on [2,3], then swap back and try 2 at position 0, recurse on [1,3], etc. The **swap-back step** is crucial because it undoes our choice, allowing us to explore all possibilities from the same starting state.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `nums=[1,2,3]`:\n- Step 1: Start with empty result=[] and call backtrack with current_permutation=[]\n- Step 2: Try adding 1: current=[1], remaining=[2,3], recurse deeper\n- Step 3: Try adding 2: current=[1,2], remaining=[3], recurse deeper\n- Step 4: Try adding 3: current=[1,2,3], remaining=[], add [1,2,3] to result\n- Step 5: Backtrack to [1,2], try adding 3: current=[1,3], remaining=[2], recurse deeper\n- Step 6: Add 2: current=[1,3,2], remaining=[], add [1,3,2] to result\n- Step 7: Backtrack to [], try starting with 2: current=[2], remaining=[1,3]\n- Step 8: Add 1: current=[2,1], then 3: current=[2,1,3], add to result\n- Step 9: Backtrack to [2], add 3: current=[2,3], then 1: current=[2,3,1], add to result\n- Step 10: Backtrack to [], try starting with 3: current=[3], generate [3,1,2] and [3,2,1]\n- Final: **[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create the main permutation function that takes an array and returns all permutations\n\n```javascript\nfunction permute(nums) {\n    const result = [];\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function permute(nums) {\n    const result = [];\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Define the recursive backtracking helper function that takes current position index\n\n```javascript\nfunction permute(nums) {\n    const result = [];\n    \n    function backtrack(start) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    function backtrack(start) {\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Add base case: when we've filled all positions, add current permutation to results\n\n```javascript\nfunction permute(nums) {\n    const result = [];\n    \n    function backtrack(start) {\n        if (start === nums.length) {\n            result.push([...nums]);\n            return;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "        if (start === nums.length) {\n            result.push([...nums]);\n            return;\n        }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Start the main loop to try each remaining element at current position\n\n```javascript\nfunction permute(nums) {\n    const result = [];\n    \n    function backtrack(start) {\n        if (start === nums.length) {\n            result.push([...nums]);\n            return;\n        }\n        \n        for (let i = start; i < nums.length; i++) {\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        for (let i = start; i < nums.length; i++) {\n        }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "SWAP: Place element at index i into the current position (start)\n\n```javascript\nfunction permute(nums) {\n    const result = [];\n    \n    function backtrack(start) {\n        if (start === nums.length) {\n            result.push([...nums]);\n            return;\n        }\n        \n        for (let i = start; i < nums.length; i++) {\n            [nums[start], nums[i]] = [nums[i], nums[start]];\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "            [nums[start], nums[i]] = [nums[i], nums[start]];"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "RECURSE: Generate all permutations for remaining positions\n\n```javascript\nfunction permute(nums) {\n    const result = [];\n    \n    function backtrack(start) {\n        if (start === nums.length) {\n            result.push([...nums]);\n            return;\n        }\n        \n        for (let i = start; i < nums.length; i++) {\n            [nums[start], nums[i]] = [nums[i], nums[start]];\n            backtrack(start + 1);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "            backtrack(start + 1);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "SWAP BACK: Restore original array state for next iteration (backtrack)\n\n```javascript\nfunction permute(nums) {\n    const result = [];\n    \n    function backtrack(start) {\n        if (start === nums.length) {\n            result.push([...nums]);\n            return;\n        }\n        \n        for (let i = start; i < nums.length; i++) {\n            [nums[start], nums[i]] = [nums[i], nums[start]];\n            backtrack(start + 1);\n            [nums[start], nums[i]] = [nums[i], nums[start]];\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "            [nums[start], nums[i]] = [nums[i], nums[start]];"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Start the backtracking process from position 0 and return all permutations\n\n```javascript\nfunction permute(nums) {\n    const result = [];\n    \n    function backtrack(start) {\n        if (start === nums.length) {\n            result.push([...nums]);\n            return;\n        }\n        \n        for (let i = start; i < nums.length; i++) {\n            [nums[start], nums[i]] = [nums[i], nums[start]];\n            backtrack(start + 1);\n            [nums[start], nums[i]] = [nums[i], nums[start]];\n        }\n    }\n    \n    backtrack(0);\n    return result;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "    backtrack(0);\n    return result;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering permutations and the backtracking pattern for generating arrangements! You've built a solid foundation in exploring all possible orderings of elements, which is a crucial algorithmic technique. Next, we'll tackle subsets, where you'll learn to generate all possible combinations of elements - another powerful application of backtracking that will expand your problem-solving toolkit!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

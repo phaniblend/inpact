@@ -1,0 +1,438 @@
+{
+  "id": "daily-temperatures",
+  "title": "Daily Temperatures",
+  "pattern": "monotonic stack (indices)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 55,
+    "tier": "EXPERT",
+    "lessonOrderTag": "EXPERT-55",
+    "introduces": [
+      "decreasing-stack",
+      "index-tracking",
+      "next-greater"
+    ],
+    "assumesAlreadyTaught": [
+      "monotonic-stack-concept",
+      "arrays",
+      "stack-concept"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "next-greater-element"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize empty stack to store indices and result array filled with zeros"
+    },
+    {
+      "id": "ps2",
+      "text": "For each day i from 0 to n-1:"
+    },
+    {
+      "id": "ps3",
+      "text": "  While stack is not empty AND current temperature > temperature at stack top index:"
+    },
+    {
+      "id": "ps4",
+      "text": "    Pop index from stack"
+    },
+    {
+      "id": "ps5",
+      "text": "    Set result[popped_index] = current_day - popped_index"
+    },
+    {
+      "id": "ps6",
+      "text": "  Push current day index i onto stack"
+    },
+    {
+      "id": "ps7",
+      "text": "Return result array (remaining indices in stack stay 0)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome back! \n\nRemember yesterday when we tackled Trapping Rain Water? We used a monotonic decreasing stack to track potential \"walls\" that could trap water. Today we're diving into **Daily Temperatures** - a classic problem that flips our stack approach!\n\nInstead of looking for walls, we're now hunting for the **next warmer day**. Here's where it gets interesting: we'll use a **monotonic decreasing stack**, but this time we're storing **indices** (not values!). Why indices? Because we need to calculate the *distance* between days, not just find the warmer temperature.\n\nThe stack maintains temperatures in decreasing order. When we hit a warmer day, we pop all the cooler days from our stack - each popped index represents a day that just found its \"next warmer day\"!\n\n**3 Key Skills You'll Master:**\n1. **Index-based monotonic stacks** - storing positions instead of values for distance calculations\n2. **Stack maintenance patterns** - when to pop, when to push, and why the order matters\n3. **Result array construction** - building answers as you process, not at the end\n\nReady to feel the heat? Let's turn up the temperature on our stack skills! 🌡️",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "To solve this in JavaScript, you'll need:\n- **Monotonic stack concept** - Understanding of monotonic stacks - stacks that maintain elements in either increasing or decreasing order, used to find next greater/smaller elements efficiently\n- **Arrays** - Proficiency with array operations including indexing, iteration, and result array construction\n- **Stack concept** - Knowledge of stack data structure operations (push, pop, peek) and LIFO principle\n- **Indices tracking** - Ability to store and manipulate array indices in stack rather than values to calculate distances between positions\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "To solve this in Python, you'll need:\n- **Monotonic stack concept** - Understanding of monotonic stacks - stacks that maintain elements in either increasing or decreasing order, used to find next greater/smaller elements efficiently\n- **Arrays** - Proficiency with array operations including indexing, iteration, and result array construction\n- **Stack concept** - Knowledge of stack data structure operations (push, pop, peek) and LIFO principle\n- **Indices tracking** - Ability to store and manipulate array indices in stack rather than values to calculate distances between positions\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "To solve this in Java, you'll need:\n- **Monotonic stack concept** - Understanding of monotonic stacks - stacks that maintain elements in either increasing or decreasing order, used to find next greater/smaller elements efficiently\n- **Arrays** - Proficiency with array operations including indexing, iteration, and result array construction\n- **Stack concept** - Knowledge of stack data structure operations (push, pop, peek) and LIFO principle\n- **Indices tracking** - Ability to store and manipulate array indices in stack rather than values to calculate distances between positions\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "To solve this in C++, you'll need:\n- **Monotonic stack concept** - Understanding of monotonic stacks - stacks that maintain elements in either increasing or decreasing order, used to find next greater/smaller elements efficiently\n- **Arrays** - Proficiency with array operations including indexing, iteration, and result array construction\n- **Stack concept** - Knowledge of stack data structure operations (push, pop, peek) and LIFO principle\n- **Indices tracking** - Ability to store and manipulate array indices in stack rather than values to calculate distances between positions\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "To solve this in TypeScript, you'll need:\n- **Monotonic stack concept** - Understanding of monotonic stacks - stacks that maintain elements in either increasing or decreasing order, used to find next greater/smaller elements efficiently\n- **Arrays** - Proficiency with array operations including indexing, iteration, and result array construction\n- **Stack concept** - Knowledge of stack data structure operations (push, pop, peek) and LIFO principle\n- **Indices tracking** - Ability to store and manipulate array indices in stack rather than values to calculate distances between positions\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Imagine you're a weather forecaster creating viewer alerts for when temperatures will get warmer. For each day's forecast, you need to tell viewers exactly how many days they'll have to wait until it gets warmer than today - like telling someone on a chilly Monday that they'll have to wait 3 days until Thursday for warmer weather. If no warmer days are coming in your forecast period, you simply tell them to wait 0 days (meaning it won't happen).\n\n# Daily Temperatures Problem\n\nHey! So here's a fun weather-related coding challenge for you.\n\n## The Problem\n\nYou're given an array of daily temperatures, and you need to figure out: **for each day, how many days do you have to wait until it gets warmer?**\n\nIf there's no warmer day coming up, just put 0 for that day.\n\n## Example\n\nLet's say we have these temperatures over 8 days:\n```\ntemperatures = [73, 74, 75, 71, 69, 72, 76, 73]\n```\n\nHere's how we'd think through it:\n\n- **Day 1 (73°)**: Tomorrow is 74° - that's warmer! So we wait **1 day**\n- **Day 2 (74°)**: Tomorrow is 75° - warmer again! Wait **1 day**  \n- **Day 3 (75°)**: Next few days are 71°, 69°, 72°... we have to wait until day 7 (76°) - that's **4 days**\n- **Day 4 (71°)**: Day 6 has 72° - that's **2 days** away\n- **Day 5 (69°)**: Day 6 has 72° - just **1 day** away\n- **Day 6 (72°)**: Tomorrow is 76° - **1 day**\n- **Day 7 (76°)**: Last day is only 73°, no warmer days coming - **0**\n- **Day 8 (73°)**: No more days left - **0**\n\nSo our answer is: `[1, 1, 4, 2, 1, 1, 0, 0]`\n\n## Your Task\n\nWrite a function that takes in the temperatures array and returns an array of how many days to wait for warmer weather for each day.\n\nThink about how you might solve this efficiently - there are some clever approaches using stacks that can solve this in one pass! 🌡️",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You have an array of daily temperatures [73, 74, 75, 71, 69, 72, 76, 73] and need to find how many days to wait for a warmer temperature for each day. When processing temperature 72 (at index 5), what should your algorithm do with the stack that currently contains indices [3, 4] (temperatures 71, 69)?",
+      "choices": [
+        {
+          "label": "Push index 5 onto the stack since 72 > 69, maintaining the decreasing order",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Pop indices 4 and 3 from the stack, calculate their waiting days (5-4=1, 5-3=2), then push index 5",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This is incorrect because it only compares with the top element. A monotonic decreasing stack means ALL elements must be in decreasing order. Since 72 > 71 (at index 3), we cannot simply push. We must first pop all indices with temperatures ≤ 72 and update their answers before pushing.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use a **monotonic decreasing stack** to efficiently track unresolved temperatures while iterating through the array. When we encounter a **warmer temperature**, we can immediately resolve all previously cooler days by **popping indices** from the stack and calculating their waiting periods. This works because the stack maintains temperatures in decreasing order, ensuring that when we find a warmer day, it serves as the \"next warmer day\" for all cooler temperatures still waiting in the stack. The approach achieves **O(n) time complexity** since each element is pushed and popped at most once.",
+      "action": "next",
+      "next": "what-stack-stores"
+    },
+    {
+      "stepId": "what-stack-stores",
+      "mentorSays": "### What Stack Stores (Critical Declaration)\n\n**The stack stores indices of decreasing temperatures.**\n\n**Important:** We store **indices**, not temperatures!\n\n**Why indices?**\n- We need to calculate the **difference** between current index and stored index\n- This gives us the number of days to wait\n\n**Example:**\n```\nStack: [2, 3, 4]  (indices)\nTemps at these indices: [75, 71, 69]  (decreasing)\n\nWhen we see temp=72 at index 5:\n- 72 > 69 (temp at index 4) → pop 4, result[4] = 5-4 = 1\n- 72 > 71 (temp at index 3) → pop 3, result[3] = 5-3 = 2\n- 72 < 75 (temp at index 2) → push 5\n```\n\n**This clarifies monotonic stacks** - the stack maintains indices where temperatures are in decreasing order.",
+      "action": "next",
+      "next": "pattern-recognition",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Monotonic Stack for Next Greater Element\n\n**This problem follows the \"monotonic stack\" pattern:**\n- **Monotonic decreasing stack** - Stack maintains indices in decreasing temperature order\n- **Next greater element** - When we find a warmer temperature, it's the answer for cooler days\n- **Index difference** - Waiting days = current index - stored index\n- **Single pass** - Process array in one iteration\n\n**Similar problems:**\n- Next Greater Element (similar stack usage)\n- Largest Rectangle in Histogram (monotonic stack)\n- Trapping Rain Water (different but uses stack)\n\n**Key insight:** A monotonic decreasing stack helps us find the next greater element efficiently. When we encounter a warmer temperature, we can resolve all cooler temperatures waiting in the stack.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Stack Contains Indices Waiting for Warmer Temperature\n\n**Invariant maintained throughout:**\n- **Stack property:** Temperatures at stack indices are in decreasing order (top is coolest)\n- **Unresolved days:** All indices in stack are waiting for a warmer temperature\n- **Resolution:** When we find a warmer temperature, it resolves all cooler temperatures in stack\n- **Result completeness:** After processing, all resolved days have their waiting period calculated\n\n**Why this works:**\n- Initially, stack is empty\n- When temperature[i] <= temperature[stack.top], push i (maintains decreasing order)\n- When temperature[i] > temperature[stack.top], pop and calculate: result[popped] = i - popped\n- Continue popping until stack is empty or temperature[i] <= temperature[stack.top]\n\n**Invariant guarantee:** After processing all temperatures, all days that found warmer temperatures have their waiting periods calculated. Days remaining in stack have no warmer days (result = 0).",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Monotonic Stack State\n\n**State variables:**\n- **`stack`** - Stack storing indices (temperatures at these indices are decreasing)\n- **`temperatures`** - Array of daily temperatures\n- **`result`** - Array storing waiting days for each day\n- **`i`** - Current index being processed\n\n**State transitions:**\n1. **Initialize:** stack = [], result = [0, 0, ..., 0]\n2. **Loop:** For i from 0 to n-1:\n   - While stack not empty and temperatures[i] > temperatures[stack.top]:\n     - Pop index, result[popped] = i - popped\n   - Push i\n3. **Result:** Return result (days remaining in stack already have 0)\n\n**State validity:** After processing, result[i] contains waiting days for day i.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: For Each Day, Scan Forward**\n- **Why it fails:** O(n²) time complexity\n- **Issue:** For each day, scan all future days to find warmer temperature\n- **Better:** Monotonic stack processes in O(n) time\n\n**Approach 2: Precompute Next Greater Array**\n- **Why it doesn't fail:** Actually works, but uses O(n) extra space\n- **Issue:** Requires additional array\n- **Better:** Stack approach uses O(n) space but is more intuitive\n\n**Approach 3: Sort and Binary Search**\n- **Why it fails:** Doesn't preserve order, loses index information\n- **Issue:** Need original indices to calculate waiting days\n- **Better:** Stack preserves order and indices naturally\n\n**Our approach wins because:** Monotonic stack finds next warmer temperature in O(n) time. The stack efficiently tracks unresolved days and resolves them as soon as a warmer temperature is found.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through the \"Daily Temperatures\" problem step by step.\n\n**Problem**: For each day, find how many days you have to wait until a warmer temperature. If no warmer day exists, return 0.\n\n**Input**: temperatures = [73,74,75,71,69,72,76,73]\n**Approach**: Use a monotonic decreasing stack to store indices.\n\n**Initial setup**:\n- result = [0,0,0,0,0,0,0,0]\n- stack = [] (will store indices)\n\n**Step-by-step trace**:\n\n**i=0, temp=73**:\n- Stack is empty, push index 0\n- stack = [0]\n- result = [0,0,0,0,0,0,0,0]\n\n**i=1, temp=74**:\n- 74 > 73 (temp at index 0), so pop 0\n- result[0] = 1-0 = 1 (found warmer temp 1 day later)\n- Push index 1\n- stack = [1]\n- result = [1,0,0,0,0,0,0,0]\n\n**i=2, temp=75**:\n- 75 > 74 (temp at index 1), so pop 1\n- result[1] = 2-1 = 1 (found warmer temp 1 day later)\n- Push index 2\n- stack = [2]\n- result = [1,1,0,0,0,0,0,0]\n\n**i=3, temp=71**:\n- 71 < 75, so just push index 3\n- stack = [2,3]\n- result = [1,1,0,0,0,0,0,0]\n\n**i=4, temp=69**:\n- 69 < 71, so just push index 4\n- stack = [2,3,4]\n- result = [1,1,0,0,0,0,0,0]\n\n**i=5, temp=72**:\n- 72 > 69 (temp at index 4), so pop 4\n- result[4] = 5-4 = 1\n- 72 > 71 (temp at index 3), so pop 3\n- result[3] = 5-3 = 2\n- 72 < 75, so push index 5\n- stack = [2,5]\n- result = [1,1,0,2,1,0,0,0]\n\n**i=6, temp=76**:\n- 76 > 72 (temp at index 5), so pop 5\n- result[5] = 6-5 = 1\n- 76 > 75 (temp at index 2), so pop 2\n- result[2] = 6-2 = 4\n- Push index 6\n- stack = [6]\n- result = [1,1,4,2,1,1,0,0]\n\n**i=7, temp=73**:\n- 73 < 76, so just push index 7\n- stack = [6,7]\n- result = [1,1,4,2,1,1,0,0]\n\n**Final result**: Indices 6 and 7 remain in stack, meaning no warmer days found for them (already 0 in result).\n\n**[1,1,4,2,1,1,0,0]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now JavaScript, step by step.\n\n1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function and create result array filled with zeros\n\n```javascript\nfunction dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "init-result"
+      ],
+      "example": "function dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Create stack to store indices in decreasing temperature order\n\n```javascript\nfunction dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);\n    const stack = [];\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "init-stack"
+      ],
+      "example": "    const stack = [];"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start iterating through temperatures array with index\n\n```javascript\nfunction dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);\n    const stack = [];\n    \n    for (let i = 0; i < temperatures.length; i++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "iterate"
+      ],
+      "example": "    for (let i = 0; i < temperatures.length; i++) {"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "While stack not empty and current temp is warmer than stack top\n\n```javascript\nfunction dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);\n    const stack = [];\n    \n    for (let i = 0; i < temperatures.length; i++) {\n        while (stack.length > 0 && temperatures[i] > temperatures[stack[stack.length - 1]]) {\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "check-warmer"
+      ],
+      "example": "        while (stack.length > 0 && temperatures[i] > temperatures[stack[stack.length - 1]]) {"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Pop the previous day's index from stack\n\n```javascript\nfunction dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);\n    const stack = [];\n    \n    for (let i = 0; i < temperatures.length; i++) {\n        while (stack.length > 0 && temperatures[i] > temperatures[stack[stack.length - 1]]) {\n            const prevIndex = stack.pop();\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "pop-index"
+      ],
+      "example": "            const prevIndex = stack.pop();"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Calculate days difference and store in result array\n\n```javascript\nfunction dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);\n    const stack = [];\n    \n    for (let i = 0; i < temperatures.length; i++) {\n        while (stack.length > 0 && temperatures[i] > temperatures[stack[stack.length - 1]]) {\n            const prevIndex = stack.pop();\n            result[prevIndex] = i - prevIndex;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "calculate-days"
+      ],
+      "example": "            result[prevIndex] = i - prevIndex;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Push current day's index onto stack for future comparisons\n\n```javascript\nfunction dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);\n    const stack = [];\n    \n    for (let i = 0; i < temperatures.length; i++) {\n        while (stack.length > 0 && temperatures[i] > temperatures[stack[stack.length - 1]]) {\n            const prevIndex = stack.pop();\n            result[prevIndex] = i - prevIndex;\n        }\n        stack.push(i);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "push-current"
+      ],
+      "example": "        stack.push(i);"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return the result array containing days to wait for warmer temperature\n\n```javascript\nfunction dailyTemperatures(temperatures) {\n    const result = new Array(temperatures.length).fill(0);\n    const stack = [];\n    \n    for (let i = 0; i < temperatures.length; i++) {\n        while (stack.length > 0 && temperatures[i] > temperatures[stack[stack.length - 1]]) {\n            const prevIndex = stack.pop();\n            result[prevIndex] = i - prevIndex;\n        }\n        stack.push(i);\n    }\n    \n    return result;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "return-result"
+      ],
+      "example": "    return result;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "🎉 Fantastic work conquering \"Daily Temperatures\" with the monotonic stack pattern! You've mastered the elegant technique of using a stack to store indices and efficiently find the next greater element for each position in O(n) time. This powerful pattern will serve you incredibly well in similar problems like \"Next Greater Element\" - you're building a strong foundation in stack-based optimization techniques!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

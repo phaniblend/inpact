@@ -1,0 +1,452 @@
+{
+  "id": "longest-repeating-character-replacement",
+  "title": "Longest Repeating Character Replacement",
+  "pattern": "sliding window + greedy",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 34,
+    "tier": "INTERMEDIATE",
+    "lessonOrderTag": "INTERMEDIATE-34",
+    "introduces": [
+      "window-validation",
+      "character-frequency-tracking",
+      "greedy-window-expansion"
+    ],
+    "assumesAlreadyTaught": [
+      "sliding-window-concept",
+      "hash-map",
+      "Math.max"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "max-consecutive-ones-iii"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize left pointer to 0, max_freq to 0, max_length to 0, and a frequency map to track character counts in current window"
+    },
+    {
+      "id": "ps2",
+      "text": "For each right pointer from 0 to end of string, add current character to frequency map and update its count"
+    },
+    {
+      "id": "ps3",
+      "text": "Update max_freq to be the maximum of current max_freq and the frequency of the character just added"
+    },
+    {
+      "id": "ps4",
+      "text": "While current window size minus max_freq is greater than k, shrink window by moving left pointer right and decreasing frequency of leftmost character"
+    },
+    {
+      "id": "ps5",
+      "text": "Update max_length to be the maximum of current max_length and current window size (right - left + 1)"
+    },
+    {
+      "id": "ps6",
+      "text": "Continue expanding window with right pointer until end of string is reached"
+    },
+    {
+      "id": "ps7",
+      "text": "Return max_length as the longest substring length where at most k characters can be replaced"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great job conquering anagram detection! Now we're leveling up to \"Longest Repeating Character Replacement\" - another fantastic sliding window challenge with a greedy twist!\n\nHere's the pattern: We'll use a **sliding window combined with greedy strategy**. Instead of just tracking characters like we did with anagrams, we'll maintain a window where we can replace up to k characters to create the longest possible substring of identical characters. The greedy part? We always try to keep our window as large as possible by replacing the least frequent characters first!\n\nBy mastering this problem, you'll gain three powerful skills:\n\n1. **Advanced sliding window optimization** - Learn when to expand vs. shrink your window based on replacement constraints\n2. **Frequency-based greedy decisions** - Master the art of choosing which characters to replace for maximum benefit  \n3. **Dynamic constraint management** - Handle problems where you have a limited \"budget\" (k replacements) to work with\n\nYou're building such strong pattern recognition skills! This problem beautifully combines the sliding window technique you know with smart greedy choices - it's like having a strategic superpower for substring optimization.\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Sliding window concept** - Understanding of two-pointer technique with expanding and contracting window boundaries\n- **Hash map** - Knowledge of character frequency counting and constant-time lookups\n- **String manipulation** - Basic operations on strings including indexing and character access\n- **Two pointers** - Left and right pointer management for dynamic window sizing\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Sliding window concept** - Understanding of two-pointer technique with expanding and contracting window boundaries\n- **Hash map** - Knowledge of character frequency counting and constant-time lookups\n- **String manipulation** - Basic operations on strings including indexing and character access\n- **Two pointers** - Left and right pointer management for dynamic window sizing\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Sliding window concept** - Understanding of two-pointer technique with expanding and contracting window boundaries\n- **Hash map** - Knowledge of character frequency counting and constant-time lookups\n- **String manipulation** - Basic operations on strings including indexing and character access\n- **Two pointers** - Left and right pointer management for dynamic window sizing\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Sliding window concept** - Understanding of two-pointer technique with expanding and contracting window boundaries\n- **Hash map** - Knowledge of character frequency counting and constant-time lookups\n- **String manipulation** - Basic operations on strings including indexing and character access\n- **Two pointers** - Left and right pointer management for dynamic window sizing\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Sliding window concept** - Understanding of two-pointer technique with expanding and contracting window boundaries\n- **Hash map** - Knowledge of character frequency counting and constant-time lookups\n- **String manipulation** - Basic operations on strings including indexing and character access\n- **Two pointers** - Left and right pointer management for dynamic window sizing\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Longest Repeating Character Replacement problem asks for.\n\nImagine you're organizing a bookshelf where you want the longest possible section of identical books, but you can temporarily remove up to k different books and replace them with copies of your target book. You slide a \"window\" along the shelf, keeping track of how many replacements you'd need in each section, and expand the window as long as you stay within your k replacement budget - when you exceed k, you shrink the window from the left until it's valid again.\n\n# Longest Repeating Character Replacement\n\n## What's the problem asking?\n\nYou're given a string and a number `k`. Your goal is to find the **longest substring** you can create where all characters are the same, but here's the catch - you're allowed to change up to `k` characters to make this happen.\n\nThink of it like this: you can \"fix\" up to `k` wrong characters in any substring to make them all match the most common character in that substring.\n\n## Let's walk through the example\n\nGiven: `s = \"AABABBA\"` and `k = 1` (we can change 1 character)\n\nThe answer is **4**. But why?\n\nLet's think through this step by step:\n\n1. **Look at substring \"AABA\"** (positions 0-3):\n   - We have: A, A, B, A\n   - Most frequent character: A (appears 3 times)\n   - Characters that need changing: just 1 B\n   - Since k=1, we can change that B to A\n   - Result: \"AAAA\" - length 4! ✅\n\n2. **What about other substrings?**\n   - \"AABAB\" (length 5): has 3 A's and 2 B's, so we'd need to change 2 characters - but k=1, so this won't work\n   - \"ABABB\" (length 5): has 3 B's and 2 A's, so we'd need to change 2 characters - again, won't work with k=1\n\n## Why does this work?\n\nThe key insight is: **for any substring, count how many characters are NOT the most frequent character. If that number ≤ k, then we can make the whole substring uniform.**\n\nIn \"AABA\":\n- Most frequent: A (3 times)\n- Need to change: 4 - 3 = 1 character\n- Since 1 ≤ k (which is 1), we're good to go!\n\nSo we replace that one B with A, giving us \"AAAA\" with length 4.\n\nThe problem is asking: **what's the maximum length substring where (total length - most frequent character count) ≤ k?**",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You have string 'AABABBA' and can replace at most k=1 character. To find the longest substring of repeating characters, what's the most efficient approach when the sliding window contains 'AABA' (window_size=4, freq: A=3, B=1)?",
+      "choices": [
+        {
+          "label": "Replace the least frequent character (B) and continue expanding the window since we have k=1 replacement available",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Track that max_frequency=3, check if (4-3)=1 <= k=1, and since it's valid, continue expanding while maintaining the most frequent character count",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This seems logical but misses the key insight. We shouldn't just replace any character - we need to track if (window_size - max_frequency) <= k. Here: 4 - 3 = 1 <= 1, so the window is valid. The strategy should be to always try to maximize the most frequent character in the current window, not just replace the least frequent one.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Variable-Window Sliding with Constraint Tracking\n\n**This problem follows the \"expand-contract sliding window\" pattern:**\n- **Variable window size** - Window can grow and shrink\n- **Constraint tracking** - Track `(window_size - max_frequency) <= k`\n- **Greedy expansion** - Always try to expand, contract only when constraint violated\n\n**Similar problems:**\n- Longest Substring Without Repeating Characters (different constraint)\n- Minimum Window Substring (different optimization goal)\n- Max Consecutive Ones III (similar constraint pattern)\n\n**Key insight:** The window is valid when `(window_size - max_frequency) <= k`. We expand greedily and contract only when this constraint is violated.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Window Maintains (Size - MaxFreq) <= k\n\n**Invariant maintained throughout:**\n- **Window validity:** `(right - left + 1 - maxFreq) <= k`\n- **maxFreq:** Maximum frequency of any character in current window\n- **Window size:** `right - left + 1`\n\n**Why this works:**\n- To make window uniform, we need to replace `(window_size - maxFreq)` characters\n- If this number ≤ k, the window is valid (we can make it uniform)\n- We expand when valid, contract when invalid\n\n**Invariant guarantee:** At each step, if the window is valid, then we can make all characters in the window the same by replacing at most `k` characters. The maximum length seen so far is stored in `maxLength`.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Window State with Frequency Tracking\n\n**State variables:**\n- **`charCount`** - Frequency map of characters in current window\n- **`maxFreq`** - Maximum frequency in current window\n- **`left`** - Start index of window\n- **`right`** - End index of window\n- **`maxLength`** - Longest valid window seen so far\n\n**State transitions:**\n1. **Expand:** Add `s[right]` to window, update `charCount` and `maxFreq`\n2. **Check validity:** If `(window_size - maxFreq) > k`, contract from left\n3. **Contract:** Remove `s[left]` from window, update `charCount` and `maxFreq`\n4. **Update maxLength:** When window is valid, update `maxLength = max(maxLength, window_size)`\n\n**State validity:** Window is valid when `(window_size - maxFreq) <= k`.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Try All Possible Replacements**\n- **Why it fails:** Exponential time complexity O(C(n,k) * n)\n- **Issue:** Too many combinations to try, especially for large k\n- **Better:** Sliding window explores all valid windows efficiently\n\n**Approach 2: Greedy Replace Least Frequent**\n- **Why it fails:** Doesn't guarantee optimal window size\n- **Issue:** May miss longer valid windows by making suboptimal choices\n- **Better:** Expand-contract strategy guarantees we find the maximum window\n\n**Approach 3: Fixed Window with Frequency Check**\n- **Why it fails:** Window size is variable, not fixed\n- **Issue:** Don't know optimal window size in advance\n- **Better:** Variable window allows us to find the maximum valid window\n\n**Our approach wins because:** We use expand-contract sliding window to efficiently explore all valid window sizes, tracking the maximum length found, achieving O(n) time complexity.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to **track the most frequent character** in the current sliding window and expand the window as long as **(window_size - max_freq) ≤ k**. This works because the **difference between window size and max frequency** tells us exactly how many characters need to be replaced to make the entire window uniform. For example, in window \"AABA\" with k=1: window_size=4, max_freq=3 (for 'A'), so we need 4-3=1 replacement, which equals our k limit. When this condition fails, we shrink the window from the left until it's valid again.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `s=\"AABABBA\", k=1`:\n- Step 1: Initialize left=0, right=0, maxCount=0, maxLength=0, count={'A':0, 'B':0}\n- Step 2: right=0, s[0]='A', count={'A':1, 'B':0}, maxCount=1, window size=1, replacements needed=0≤1, maxLength=1\n- Step 3: right=1, s[1]='A', count={'A':2, 'B':0}, maxCount=2, window size=2, replacements needed=0≤1, maxLength=2\n- Step 4: right=2, s[2]='B', count={'A':2, 'B':1}, maxCount=2, window size=3, replacements needed=1≤1, maxLength=3\n- Step 5: right=3, s[3]='A', count={'A':3, 'B':1}, maxCount=3, window size=4, replacements needed=1≤1, maxLength=4\n- Step 6: right=4, s[4]='B', count={'A':3, 'B':2}, maxCount=3, window size=5, replacements needed=2>1, shrink window\n- Step 7: left=1, count={'A':2, 'B':2}, window size=4, replacements needed=2>1, continue shrinking\n- Step 8: left=2, count={'A':2, 'B':1}, window size=3, replacements needed=1≤1, valid window\n- Step 9: right=5, s[5]='B', count={'A':2, 'B':2}, maxCount=2, window size=4, replacements needed=2>1, shrink window\n- Step 10: right=6, after shrinking to maintain k=1, final maxLength remains 4\n- Final: **4 (replace one B: \"AABA\")**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function signature and setup character frequency map\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function characterReplacement(s, k) {\n    const charCount = {};\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize sliding window pointers and max frequency tracker\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n    let left = 0, maxFreq = 0;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let left = 0, maxFreq = 0;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Initialize result variable to track maximum valid window size\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n    let left = 0, maxFreq = 0;\n    let maxLength = 0;\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    let maxLength = 0;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Start main loop to expand window with right pointer\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n    let left = 0, maxFreq = 0;\n    let maxLength = 0;\n    \n    for (let right = 0; right < s.length; right++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    for (let right = 0; right < s.length; right++) {\n    }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Add current character to frequency map and update its count\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n    let left = 0, maxFreq = 0;\n    let maxLength = 0;\n    \n    for (let right = 0; right < s.length; right++) {\n        const char = s[right];\n        charCount[char] = (charCount[char] || 0) + 1;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        const char = s[right];\n        charCount[char] = (charCount[char] || 0) + 1;"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Update maximum frequency seen so far in current window\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n    let left = 0, maxFreq = 0;\n    let maxLength = 0;\n    \n    for (let right = 0; right < s.length; right++) {\n        const char = s[right];\n        charCount[char] = (charCount[char] || 0) + 1;\n        maxFreq = Math.max(maxFreq, charCount[char]);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        maxFreq = Math.max(maxFreq, charCount[char]);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Check if current window needs shrinking: if replacements needed > k\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n    let left = 0, maxFreq = 0;\n    let maxLength = 0;\n    \n    for (let right = 0; right < s.length; right++) {\n        const char = s[right];\n        charCount[char] = (charCount[char] || 0) + 1;\n        maxFreq = Math.max(maxFreq, charCount[char]);\n        \n        if ((right - left + 1) - maxFreq > k) {\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "        if ((right - left + 1) - maxFreq > k) {\n        }"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Shrink window from left: decrease count of leftmost character\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n    let left = 0, maxFreq = 0;\n    let maxLength = 0;\n    \n    for (let right = 0; right < s.length; right++) {\n        const char = s[right];\n        charCount[char] = (charCount[char] || 0) + 1;\n        maxFreq = Math.max(maxFreq, charCount[char]);\n        \n        if ((right - left + 1) - maxFreq > k) {\n            charCount[s[left]]--;\n            left++;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-09",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "            charCount[s[left]]--;\n            left++;"
+    },
+    {
+      "stepId": "code-09",
+      "mentorSays": "Update maximum valid window length found so far\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n    let left = 0, maxFreq = 0;\n    let maxLength = 0;\n    \n    for (let right = 0; right < s.length; right++) {\n        const char = s[right];\n        charCount[char] = (charCount[char] || 0) + 1;\n        maxFreq = Math.max(maxFreq, charCount[char]);\n        \n        if ((right - left + 1) - maxFreq > k) {\n            charCount[s[left]]--;\n            left++;\n        }\n        \n        maxLength = Math.max(maxLength, right - left + 1);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-10",
+      "pseudocodeLineIds": [
+        "ps9"
+      ],
+      "example": "        maxLength = Math.max(maxLength, right - left + 1);"
+    },
+    {
+      "stepId": "code-10",
+      "mentorSays": "Return the maximum length of valid substring found\n\n```javascript\nfunction characterReplacement(s, k) {\n    const charCount = {};\n    let left = 0, maxFreq = 0;\n    let maxLength = 0;\n    \n    for (let right = 0; right < s.length; right++) {\n        const char = s[right];\n        charCount[char] = (charCount[char] || 0) + 1;\n        maxFreq = Math.max(maxFreq, charCount[char]);\n        \n        if ((right - left + 1) - maxFreq > k) {\n            charCount[s[left]]--;\n            left++;\n        }\n        \n        maxLength = Math.max(maxLength, right - left + 1);\n    }\n    \n    return maxLength;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps10"
+      ],
+      "example": "    return maxLength;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the Longest Repeating Character Replacement problem! You've successfully implemented the sliding window technique with a greedy approach to efficiently track character frequencies and maintain the optimal window size. Next, we'll tackle Max Consecutive Ones III, where you'll apply similar sliding window principles to find the longest subarray of 1s after flipping at most k zeros.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "id": "network-delay-time",
+  "title": "Network Delay Time",
+  "pattern": "Dijkstra's shortest path",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 61,
+    "tier": "MASTERY-I",
+    "lessonOrderTag": "MASTERY-I-61",
+    "introduces": ["dijkstra-algorithm", "priority-queue", "weighted-graph", "shortest-path"],
+    "assumesAlreadyTaught": ["graph-concept", "BFS-concept", "heap-concept"],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["cheapest-flights-k-stops"]
+  },
+  "pseudocode": [
+    {"id": "ps1", "text": "Initialize distances to infinity, start node to 0"},
+    {"id": "ps2", "text": "Use min heap with (distance, node) pairs"},
+    {"id": "ps3", "text": "Pop minimum distance node from heap"},
+    {"id": "ps4", "text": "For each neighbor, if new path shorter, update and add to heap"},
+    {"id": "ps5", "text": "Return max distance, or -1 if any node unreachable"}
+  ],
+  "flow": [
+    {"stepId": "objectives", "mentorSays": "Hey! **Network Delay Time** - learning Dijkstra's algorithm!\n\nThis classic algorithm finds shortest paths in weighted graphs - used in GPS routing, network protocols, and more.\n\nYou'll learn:\n• Dijkstra's shortest path algorithm\n• Priority queue optimization\n• Weighted graph traversal\n\nLet's dive in!", "action": "continue", "next": "language-selection"},
+    {"stepId": "language-selection", "mentorSays": "Which language?", "choices": [{"label": "💛 JavaScript", "next": "prereq-check-js"}, {"label": "🐍 Python", "next": "prereq-check-python"}, {"label": "☕ Java", "next": "prereq-check-java"}, {"label": "⚡ C++", "next": "prereq-check-cpp"}, {"label": "💙 TypeScript", "next": "prereq-check-ts"}]},
+    {"stepId": "prereq-check-js", "mentorSays": "Prerequisites:\n- **Graph concept**\n- **BFS concept**\n- **Heap concept**\n\nReady?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-js"}, {"label": "Some", "next": "select-prereqs-js"}]},
+    {"stepId": "teach-prereqs-js", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-js", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-python", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-python"}, {"label": "Some", "next": "select-prereqs-python"}]},
+    {"stepId": "teach-prereqs-python", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-python", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-java", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-java"}, {"label": "Some", "next": "select-prereqs-java"}]},
+    {"stepId": "teach-prereqs-java", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-java", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-cpp", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-cpp"}, {"label": "Some", "next": "select-prereqs-cpp"}]},
+    {"stepId": "teach-prereqs-cpp", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-cpp", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-ts", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-ts"}, {"label": "Some", "next": "select-prereqs-ts"}]},
+    {"stepId": "teach-prereqs-ts", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-ts", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "problem-understanding", "mentorSays": "**Network signal propagation!** You send a signal from one node - how long until ALL nodes receive it?\n\nGiven:\n- `n` nodes (labeled 1 to n)\n- `times[i] = [u, v, w]`: signal travels from u to v in w time\n- `k`: starting node\n\nReturn minimum time for all nodes to receive signal, or -1 if impossible.\n\nExample:\n```\nn = 4, times = [[2,1,1],[2,3,1],[3,4,1]], k = 2\n```\nOutput: `2`\n\n2→1 (1), 2→3 (1), 3→4 (2). Max is 2.", "action": "continue", "next": "thinking-challenge"},
+    {"stepId": "thinking-challenge", "mentorSays": "How to find time to reach all nodes?", "choices": [{"label": "BFS from start node", "next": "wrong-choice"}, {"label": "Dijkstra's algorithm to find shortest paths to all nodes", "next": "core-idea"}]},
+    {"stepId": "wrong-choice", "mentorSays": "Regular BFS doesn't handle weights!\n\nDijkstra's algorithm always picks the shortest path first.", "action": "next", "next": "core-idea"},
+    {"stepId": "core-idea", "mentorSays": "The key: **Dijkstra's algorithm finds shortest paths from source to all nodes**.\n\n1. Track distances (initially ∞, start = 0)\n2. Use min heap: always process closest unvisited node\n3. For each neighbor, relax edge if shorter path found\n4. Return max distance (time for last node)\n\nGreedy approach: always expand closest node first!", "action": "next", "next": "walkthrough", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "walkthrough", "mentorSays": "From k=2 in example:\n\n**Init:** dist = [∞, ∞, 0, ∞] (node 2 = 0)\n**Process 2:** Update 1→1, 3→1\n**Process 1:** (no outgoing edges)\n**Process 3:** Update 4→2\n**Process 4:** Done\n\n**Max distance: 2**\n\nAll nodes reachable!", "action": "next", "next": "pseudocode-step", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "pseudocode-step", "mentorSays": "Pseudocode:", "action": "next", "next": "coding-intro", "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5"]},
+    {"stepId": "coding-intro", "mentorSays": "Build it!", "action": "next", "next": "code-01"},
+    {"stepId": "code-01", "mentorSays": "Build adjacency list and initialize distances.\n\n```javascript\nfunction networkDelayTime(times, n, k) {\n  const graph = Array.from({length: n + 1}, () => []);\n  for (const [u, v, w] of times) {\n    graph[u].push([v, w]);\n  }\n  \n  const dist = Array(n + 1).fill(Infinity);\n  dist[k] = 0;\n}\n```", "action": "next", "next": "code-02", "pseudocodeLineIds": ["ps1"], "example": "const graph = Array.from({length: n + 1}, () => []);\nfor (const [u, v, w] of times) graph[u].push([v, w]);\nconst dist = Array(n + 1).fill(Infinity);\ndist[k] = 0;"
+    },
+    {"stepId": "code-02", "mentorSays": "Implement Dijkstra with min heap (priority queue).\n\n```javascript\nfunction networkDelayTime(times, n, k) {\n  const graph = Array.from({length: n + 1}, () => []);\n  for (const [u, v, w] of times) {\n    graph[u].push([v, w]);\n  }\n  \n  const dist = Array(n + 1).fill(Infinity);\n  dist[k] = 0;\n  \n  const heap = [[0, k]];\n  \n  while (heap.length > 0) {\n    heap.sort((a, b) => a[0] - b[0]);\n    const [d, node] = heap.shift();\n    \n    if (d > dist[node]) continue;\n    \n    for (const [neighbor, weight] of graph[node]) {\n      const newDist = d + weight;\n      if (newDist < dist[neighbor]) {\n        dist[neighbor] = newDist;\n        heap.push([newDist, neighbor]);\n      }\n    }\n  }\n}\n```", "action": "next", "next": "code-03", "pseudocodeLineIds": ["ps2", "ps3", "ps4"], "example": "const heap = [[0, k]];\nwhile (heap.length > 0) {\n  heap.sort((a, b) => a[0] - b[0]);\n  const [d, node] = heap.shift();\n  if (d > dist[node]) continue;\n  for (const [neighbor, weight] of graph[node]) {\n    const newDist = d + weight;\n    if (newDist < dist[neighbor]) {\n      dist[neighbor] = newDist;\n      heap.push([newDist, neighbor]);"
+    },
+    {"stepId": "code-03", "mentorSays": "Return max distance or -1.\n\n```javascript\nfunction networkDelayTime(times, n, k) {\n  const graph = Array.from({length: n + 1}, () => []);\n  for (const [u, v, w] of times) {\n    graph[u].push([v, w]);\n  }\n  \n  const dist = Array(n + 1).fill(Infinity);\n  dist[k] = 0;\n  \n  const heap = [[0, k]];\n  \n  while (heap.length > 0) {\n    heap.sort((a, b) => a[0] - b[0]);\n    const [d, node] = heap.shift();\n    \n    if (d > dist[node]) continue;\n    \n    for (const [neighbor, weight] of graph[node]) {\n      const newDist = d + weight;\n      if (newDist < dist[neighbor]) {\n        dist[neighbor] = newDist;\n        heap.push([newDist, neighbor]);\n      }\n    }\n  }\n  \n  const maxDist = Math.max(...dist.slice(1));\n  return maxDist === Infinity ? -1 : maxDist;\n}\n```", "action": "next", "next": "wrap-up", "pseudocodeLineIds": ["ps5"], "example": "const maxDist = Math.max(...dist.slice(1));\nreturn maxDist === Infinity ? -1 : maxDist;"
+    },
+    {"stepId": "wrap-up", "mentorSays": "Brilliant! **Dijkstra's algorithm** mastered!\n\nUsed in:\n• GPS routing\n• Network protocols\n• Game pathfinding\n• Social networks\n\nNext: **Cheapest Flights K Stops** - Bellman-Ford!\n\nYou're crushing graph algorithms! 🚀", "action": "complete"}
+  ]
+}

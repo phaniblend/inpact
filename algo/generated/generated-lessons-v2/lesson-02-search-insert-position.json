@@ -1,0 +1,664 @@
+{
+  "id": "search-insert-position",
+  "title": "Search Insert Position",
+  "pattern": "binary search",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 2,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-2",
+    "introduces": [
+      "binary-search-concept",
+      "search-space-halving",
+      "midpoint-calculation",
+      "Math.floor"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "comparison-operators"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "binary-search"
+    ]
+  },
+  "problemStatement": {
+    "description": "Find the index where a target value should be inserted in a sorted array to maintain sorted order. If the target exists, return its index.",
+    "inputs": [
+      "nums: sorted array of distinct integers (length 1 to 10^4)",
+      "target: integer to find or insert"
+    ],
+    "outputs": [
+      "Integer index where target should be inserted (or where it exists)"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,3,5,6], target = 5",
+        "output": "2",
+        "explanation": "Target 5 exists at index 2. Binary search: mid=1 (value 3), 5>3 so search right half. Next mid=2 (value 5), found match at index 2."
+      },
+      {
+        "input": "nums = [1,3,5,6], target = 2",
+        "output": "1",
+        "explanation": "Target 2 doesn't exist. Binary search finds that 2 should be inserted at index 1 (between 1 and 3) to maintain sorted order."
+      },
+      {
+        "input": "nums = [1,3,5,6], target = 7",
+        "output": "4",
+        "explanation": "Target 7 is larger than all elements. Binary search determines it should be inserted at index 4 (end of array)."
+      },
+      {
+        "input": "nums = [1,3,5,6], target = 0",
+        "output": "0",
+        "explanation": "Target 0 is smaller than all elements. Binary search determines it should be inserted at index 0 (beginning of array)."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^4",
+      "-10^4 <= nums[i] <= 10^4",
+      "nums contains distinct values sorted in ascending order",
+      "-10^4 <= target <= 10^4"
+    ],
+    "realWorldUse": [
+      "Database index insertion (finding position to insert new record)",
+      "Maintaining sorted data structures (inserting into sorted list)",
+      "Search algorithms in sorted collections",
+      "Finding boundaries in sorted data"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "The array is sorted, which enables binary search. We need to find a boundary (insertion point), and binary search naturally converges to this position by eliminating half the search space each iteration.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Array is sorted → think binary search",
+      "SIGNAL 2: Need to find insertion position or boundary → binary search finds boundaries",
+      "SIGNAL 3: O(log n) requirement or sorted array → binary search is optimal"
+    ],
+    "patternRules": [
+      "If problem involves sorted array and searching → use binary search",
+      "When you see 'find position', 'insert', or 'boundary' in sorted data → binary search",
+      "If linear search would be O(n) but array is sorted → binary search gives O(log n)"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - there's no local optimal choice. We need to find the exact position using the sorted property.",
+      "bruteForce": "Linear search works but is O(n). Binary search leverages sorted property to achieve O(log n) by eliminating half the space each step.",
+      "alternative": "Using built-in methods like indexOf() is O(n) and doesn't show understanding. Binary search demonstrates algorithmic thinking and is optimal."
+    }
+  },
+  "coreInvariant": {
+    "statement": "The left pointer always points to the first position where target could be inserted, with all elements to the left being < target and all elements to the right being >= target.",
+    "explanation": "This invariant holds because binary search maintains boundaries: if target < nums[mid], we know target belongs in the left half, so we move right = mid - 1. If target >= nums[mid], target belongs at mid or right, so we move left = mid + 1. The left pointer converges to the insertion index.",
+    "whyItMatters": "This invariant guarantees that when the loop terminates, `left` contains the exact insertion index. If target exists, nums[left] == target. If not, left is where it should be inserted."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "left",
+        "meaning": "Left boundary of search range, converges to insertion index (0-indexed)",
+        "indexing": "0-indexed, starts at 0"
+      },
+      {
+        "name": "right",
+        "meaning": "Right boundary of search range (0-indexed)",
+        "indexing": "0-indexed, starts at nums.length - 1"
+      },
+      {
+        "name": "mid",
+        "meaning": "Middle index of current search range, calculated as Math.floor((left + right) / 2)",
+        "indexing": "0-indexed, calculated dynamically"
+      }
+    ],
+    "baseCases": [
+      "If target < nums[0]: return 0 (insert at beginning)",
+      "If target > nums[n-1]: return n (insert at end)",
+      "If array is empty: return 0"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "if target < nums[mid]",
+        "transition": "right = mid - 1 (target must be in left half or inserted before mid)",
+        "explanation": "Since array is sorted, if target is smaller than middle element, it must be in the left half. We eliminate right half including mid.",
+        "example": "nums=[1,3,5,6], target=2, mid=1 (value 3): 2<3, so right=0, search left half [1]"
+      },
+      {
+        "condition": "if target >= nums[mid]",
+        "transition": "left = mid + 1 (target is at mid or in right half)",
+        "explanation": "If target is greater than or equal to middle, it's in the right half (or at mid). We eliminate left half including mid.",
+        "example": "nums=[1,3,5,6], target=5, mid=1 (value 3): 5>=3, so left=2, search right half [5,6]"
+      }
+    ],
+    "decisionTree": {
+      "root": "At each iteration, compare target with nums[mid]",
+      "branches": [
+        "If target < nums[mid]: eliminate right half, set right = mid - 1",
+        "If target >= nums[mid]: eliminate left half, set left = mid + 1",
+        "Continue until left > right, then return left (insertion index)"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "nums = [1,3,5,6], target = 2",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Initialize: left = 0, right = 3",
+        "state": "left = 0, right = 3, search range is [0, 3] covering entire array [1,3,5,6]",
+        "logic": "Start with full array as search space",
+        "result": "Ready to begin binary search"
+      },
+      {
+        "step": 2,
+        "description": "Calculate mid = (0 + 3) / 2 = 1, compare target=2 with nums[1]=3",
+        "state": "mid = 1, nums[1] = 3, target = 2, 2 < 3",
+        "logic": "Target is smaller than middle element, so it must be in left half",
+        "result": "Eliminate right half [5,6], search left half [1,3]"
+      },
+      {
+        "step": 3,
+        "description": "Update right = mid - 1 = 0, new search range [0, 0]",
+        "state": "left = 0, right = 0, search range is [0, 0] covering [1]",
+        "logic": "Narrow search to left half since target < nums[mid]",
+        "result": "Search space reduced to single element"
+      },
+      {
+        "step": 4,
+        "description": "Calculate mid = (0 + 0) / 2 = 0, compare target=2 with nums[0]=1",
+        "state": "mid = 0, nums[0] = 1, target = 2, 2 >= 1",
+        "logic": "Target is greater than middle element, so it belongs after this position",
+        "result": "Target should be inserted after index 0"
+      },
+      {
+        "step": 5,
+        "description": "Update left = mid + 1 = 1, now left=1, right=0",
+        "state": "left = 1, right = 0, left > right",
+        "logic": "Move left pointer rightward since target >= nums[mid]",
+        "result": "Loop condition left <= right is now false"
+      },
+      {
+        "step": 6,
+        "description": "Terminate: left > right, return left = 1",
+        "state": "left = 1, right = 0, insertion index = 1",
+        "logic": "Left pointer points to insertion position. nums[0]=1 < 2, nums[1]=3 > 2, so insert at index 1.",
+        "result": "Return 1 (target 2 should be inserted at index 1)"
+      }
+    ],
+    "keyInsight": "Binary search naturally finds the insertion point. When the loop exits, `left` points to the first position where all elements to the left are smaller and all elements to the right are larger, which is exactly the insertion index."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Returning mid instead of left when target not found",
+      "symptom": "Wrong insertion index, especially when target is between two elements",
+      "fix": "Always return `left` after loop terminates, not `mid`. The left pointer converges to insertion index.",
+      "example": "For nums=[1,3,5,6], target=2: if you return mid=0, you get wrong answer. Correct answer is left=1."
+    },
+    {
+      "mistake": "Using left < right instead of left <= right in loop condition",
+      "symptom": "May miss the target or return wrong insertion index for edge cases",
+      "fix": "Use left <= right to ensure we check all possible positions, including when left == right",
+      "example": "For single element array [5] with target=5: left < right would skip the check and return wrong index"
+    },
+    {
+      "mistake": "Integer overflow when calculating mid = (left + right) / 2",
+      "symptom": "Overflow error for very large arrays (though rare with given constraints)",
+      "fix": "Use mid = left + Math.floor((right - left) / 2) to avoid overflow",
+      "example": "If left and right are very large, (left + right) might overflow, but (right - left) / 2 is safer"
+    },
+    {
+      "mistake": "Not handling edge case where target is smaller/larger than all elements",
+      "symptom": "Wrong answer when target should be inserted at beginning (0) or end (n)",
+      "fix": "Binary search naturally handles this - left will be 0 or n after loop terminates",
+      "example": "For nums=[1,3,5,6], target=0: left ends at 0 (correct). For target=7: left ends at 4 (correct)."
+    },
+    {
+      "mistake": "Forgetting that array is 0-indexed when thinking about insertion position",
+      "symptom": "Off-by-one errors in understanding where to insert",
+      "fix": "Remember arrays are 0-indexed. Insertion at index i means element goes before current nums[i]",
+      "example": "Inserting at index 1 means the new element becomes nums[1], and previous nums[1] shifts to nums[2]"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a binary search problem on a sorted array.",
+      "",
+      "I'll use binary search to find the insertion position:",
+      "- Initialize left = 0, right = nums.length - 1",
+      "- While left <= right:",
+      "  - Calculate mid = Math.floor((left + right) / 2)",
+      "  - If target < nums[mid]: right = mid - 1",
+      "  - Else: left = mid + 1",
+      "- Return left (which points to insertion index)",
+      "",
+      "Time complexity: O(log n) - we eliminate half the array each iteration",
+      "Space complexity: O(1) - only using a few variables",
+      "",
+      "Edge cases:",
+      "- Target smaller than all: left ends at 0",
+      "- Target larger than all: left ends at n",
+      "- Target exists: left points to its index",
+      "- Empty array: return 0"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Binary Search (find exact match only)",
+      "approachChange": "Return mid when target == nums[mid], return -1 if not found (no insertion logic needed)",
+      "solution": "Same binary search, but return -1 when loop exits without finding target"
+    },
+    "harder": {
+      "problem": "Find First and Last Position of Element in Sorted Array",
+      "approachChange": "Need to find both leftmost and rightmost positions, requiring two binary searches",
+      "solution": "First binary search finds left boundary (first occurrence), second finds right boundary (last occurrence). Modify comparison logic: for left boundary, if target == nums[mid], continue searching left half."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize left = 0 and right = nums.length - 1"
+    },
+    {
+      "id": "ps2",
+      "text": "While left <= right:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Calculate mid = Math.floor((left + right) / 2)"
+    },
+    {
+      "id": "ps4",
+      "text": "  If target < nums[mid]: set right = mid - 1"
+    },
+    {
+      "id": "ps5",
+      "text": "  Else: set left = mid + 1"
+    },
+    {
+      "id": "ps6",
+      "text": "Return left (insertion index)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great job conquering reverse-string! Now we're leveling up to \"Search Insert Position\" - a classic problem that introduces you to one of programming's most powerful patterns: **binary search**. \n\nInstead of checking every single element one by one (which can be slow!), binary search is like being a detective who eliminates half the possibilities with each guess. Think of it like finding a word in a dictionary - you don't start from page 1, you flip to the middle and decide which half to search next!\n\nHere's what you'll master in this lesson:\n• **Binary search technique** - the efficient way to find elements in sorted arrays\n• **Edge case handling** - dealing with insertion points when elements aren't found  \n• **Problem decomposition** - breaking down complex logic into manageable steps\n\nThis pattern will become your go-to tool for tons of coding challenges, and once you get it, you'll feel like you have a superpower for solving search problems efficiently!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Binary search** - Efficient algorithm to find target value in sorted array by repeatedly dividing search space in half\n- **Array indexing** - Accessing and manipulating array elements using zero-based index positions\n- **Conditional logic** - Using if-else statements to make decisions based on element comparisons and boundary conditions\n- **Sorted arrays** - Understanding properties and characteristics of arrays arranged in ascending or descending order\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Binary search** - Efficient algorithm to find target value in sorted array by repeatedly dividing search space in half\n- **Array indexing** - Accessing and manipulating array elements using zero-based index positions\n- **Conditional logic** - Using if-else statements to make decisions based on element comparisons and boundary conditions\n- **Sorted arrays** - Understanding properties and characteristics of arrays arranged in ascending or descending order\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Binary search** - Efficient algorithm to find target value in sorted array by repeatedly dividing search space in half\n- **Array indexing** - Accessing and manipulating array elements using zero-based index positions\n- **Conditional logic** - Using if-else statements to make decisions based on element comparisons and boundary conditions\n- **Sorted arrays** - Understanding properties and characteristics of arrays arranged in ascending or descending order\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Binary search** - Efficient algorithm to find target value in sorted array by repeatedly dividing search space in half\n- **Array indexing** - Accessing and manipulating array elements using zero-based index positions\n- **Conditional logic** - Using if-else statements to make decisions based on element comparisons and boundary conditions\n- **Sorted arrays** - Understanding properties and characteristics of arrays arranged in ascending or descending order\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Binary search** - Efficient algorithm to find target value in sorted array by repeatedly dividing search space in half\n- **Array indexing** - Accessing and manipulating array elements using zero-based index positions\n- **Conditional logic** - Using if-else statements to make decisions based on element comparisons and boundary conditions\n- **Sorted arrays** - Understanding properties and characteristics of arrays arranged in ascending or descending order\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Search Insert Position problem asks for.\n\nImagine you're organizing books on a shelf alphabetically, and you have a new book to insert. You scan from left to right until you find where your book's title would fit in the correct alphabetical order - if you find an exact match, that's where a duplicate would go, otherwise you've found the perfect insertion point to maintain the sorted sequence.\n\n# Search Insert Position - Problem Statement\n\n## What are we trying to do?\n\nYou're given a **sorted array** of distinct integers and a **target value**. Your job is to find where this target belongs in the array:\n\n- If the target **exists** in the array → return its index\n- If the target **doesn't exist** → return the index where it *should* be inserted to keep the array sorted\n\nThink of it like finding the perfect spot to slide a new book into an already organized bookshelf!\n\n## Let's walk through an example\n\n```\nnums = [1, 3, 5, 6]\ntarget = 5\n```\n\n**Step by step:**\n1. We scan through the array: `[1, 3, 5, 6]`\n2. At index 0: `1` ≠ `5` \n3. At index 1: `3` ≠ `5`\n4. At index 2: `5` = `5` ✅ **Found it!**\n5. Return index `2`\n\n**Why this works:** We found our target `5` sitting at position 2 in the array, so that's our answer.\n\n## What if the target wasn't there?\n\nLet's say `target = 4` with the same array `[1, 3, 5, 6]`:\n\n1. `4` isn't in the array\n2. But where *should* it go to keep things sorted?\n3. `4` is bigger than `3` but smaller than `5`\n4. So it belongs at index 2: `[1, 3, **4**, 5, 6]`\n5. Return index `2`\n\nThe key insight: we're always looking for the **first position** where our target fits in the sorted order!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to find the position where a target value should be inserted in a sorted array to maintain order. Given array [1,3,5,6] and target 5, which approach efficiently finds that 5 should be at index 2?",
+      "choices": [
+        {
+          "label": "Linear scan from left to right, checking each element until finding the correct position",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Binary search: compare target with middle element, then search only the relevant half",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works and gives the correct answer, it's inefficient with O(n) time complexity. You're examining every element unnecessarily when the sorted nature of the array allows you to eliminate half the search space with each comparison.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Binary Search for Insertion Point\n\n**This problem follows the \"binary search for boundary\" pattern:**\n- **Sorted array** - Array is already sorted, enabling binary search\n- **Boundary finding** - Find first position where target fits\n- **Insert position** - If target exists, return its index; else return insertion index\n- **Left pointer convergence** - Left pointer ends at insertion position\n\n**Similar problems:**\n- Binary Search (find exact match)\n- Find First and Last Position (find boundaries)\n- Sqrt(x) (find boundary using binary search)\n\n**Key insight:** Binary search naturally finds the insertion point. When search completes, the left pointer points to where the target should be inserted (or where it exists).",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Left Points to Insertion Position\n\n**Invariant maintained throughout:**\n- **Left boundary:** All elements at indices < left are < target\n- **Right boundary:** All elements at indices > right are > target\n- **Insert position:** Left pointer converges to insertion index\n- **Final position:** When loop ends, left = insertion index\n\n**Why this works:**\n- If target < nums[mid], target belongs in left half, so right = mid - 1\n- If target >= nums[mid], target belongs at mid or right, so left = mid + 1\n- Left always points to first position where target could be inserted\n- When search ends, left is the insertion index\n\n**Invariant guarantee:** After binary search completes, `left` contains the index where target should be inserted (or where it exists). If `nums[left] == target`, target exists; otherwise, it's the insertion point.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Binary Search State\n\n**State variables:**\n- **`left`** - Left boundary of search range (converges to insertion index)\n- **`right`** - Right boundary of search range\n- **`mid`** - Middle index of current range\n- **`target`** - Value to find or insert\n\n**State transitions:**\n1. **Initialize:** left = 0, right = nums.length - 1\n2. **Loop:** while left <= right\n3. **Calculate mid:** mid = Math.floor((left + right) / 2)\n4. **Compare:**\n   - If target < nums[mid]: right = mid - 1\n   - Else: left = mid + 1\n5. **Result:** Return left (insertion index)\n\n**State validity:** Left contains insertion index when loop terminates.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Linear Search**\n- **Why it fails:** O(n) time complexity\n- **Issue:** Doesn't leverage sorted property, checks every element\n- **Better:** Binary search is O(log n), eliminates half each iteration\n\n**Approach 2: Find Then Insert**\n- **Why it fails:** Two separate operations, less efficient\n- **Issue:** First search for existence, then find insertion point\n- **Better:** Binary search naturally finds insertion point in one pass\n\n**Approach 3: Use Built-in Methods**\n- **Why it doesn't fail:** Works, but not optimal\n- **Issue:** Methods like indexOf are O(n), doesn't show algorithm understanding\n- **Better:** Binary search demonstrates algorithmic thinking\n\n**Our approach wins because:** Binary search finds the insertion position in O(log n) time by leveraging the sorted property, which is optimal. The left pointer naturally converges to the insertion index.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **binary search** to repeatedly eliminate half the array by comparing the target with the **middle element**. This works because the array is sorted - if target < middle, we know it must be in the left half (or inserted at the current position), otherwise it's in the right half. For example, searching for target=5 in [1,3,5,6]: compare with middle element 3, since 5>3 we eliminate left half [1,3] and search right half [5,6]. This achieves **O(log n) time complexity** instead of O(n) linear search.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `nums=[1,3,5,6], target=5`:\n- Step 1: Initialize left=0, right=3 (length-1)\n- Step 2: mid=(0+3)/2=1, nums[1]=3, target=5 > 3, so left=mid+1=2\n- Step 3: mid=(2+3)/2=2, nums[2]=5, target=5 == 5, found target at index 2\n- Final: **2**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Define binary search function with array and target parameters\n\n```javascript\nfunction binarySearch(arr, target) {\n\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function binarySearch(arr, target) {"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize left and right pointers to define search boundaries\n\n```javascript\nfunction binarySearch(arr, target) {\n  let left = 0;\n  let right = arr.length - 1;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "  let left = 0;\n  let right = arr.length - 1;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Create while loop to continue searching while valid range exists\n\n```javascript\nfunction binarySearch(arr, target) {\n  let left = 0;\n  let right = arr.length - 1;\n  \n  while (left <= right) {\n    \n  }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "  while (left <= right) {"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Calculate middle index to divide array in half\n\n```javascript\nfunction binarySearch(arr, target) {\n  let left = 0;\n  let right = arr.length - 1;\n  \n  while (left <= right) {\n    let mid = Math.floor((left + right) / 2);\n    \n  }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    let mid = Math.floor((left + right) / 2);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Compare middle element with target and return index if found\n\n```javascript\nfunction binarySearch(arr, target) {\n  let left = 0;\n  let right = arr.length - 1;\n  \n  while (left <= right) {\n    let mid = Math.floor((left + right) / 2);\n    \n    if (arr[mid] === target) {\n      return mid;\n    }\n  }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "    if (arr[mid] === target) {\n      return mid;\n    }"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Eliminate left half by moving left pointer if target is greater than middle\n\n```javascript\nfunction binarySearch(arr, target) {\n  let left = 0;\n  let right = arr.length - 1;\n  \n  while (left <= right) {\n    let mid = Math.floor((left + right) / 2);\n    \n    if (arr[mid] === target) {\n      return mid;\n    } else if (arr[mid] < target) {\n      left = mid + 1;\n    }\n  }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "    } else if (arr[mid] < target) {\n      left = mid + 1;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Eliminate right half by moving right pointer if target is less than middle\n\n```javascript\nfunction binarySearch(arr, target) {\n  let left = 0;\n  let right = arr.length - 1;\n  \n  while (left <= right) {\n    let mid = Math.floor((left + right) / 2);\n    \n    if (arr[mid] === target) {\n      return mid;\n    } else if (arr[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "    } else {\n      right = mid - 1;\n    }"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return left pointer - it ends at the insertion index\n\n```javascript\nfunction searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n  \n  while (left <= right) {\n    let mid = Math.floor((left + right) / 2);\n    \n    if (nums[mid] === target) {\n      return mid;\n    } else if (nums[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n  \n  return left;\n}\n```",
+      "action": "next",
+      "next": "insert-logic-invariant"
+    },
+    {
+      "stepId": "insert-logic-invariant",
+      "mentorSays": "### Insert Logic Tied to Invariant\n\n**Key insight: `left` ends at the insertion index**\n\n**Why this works:**\n\nWhen the loop exits (`left > right`), the invariant tells us:\n- All elements to the left of `left` are < target\n- All elements to the right of `left` are > target\n- Therefore, `left` is exactly where target should be inserted!\n\n**Example:**\n```\nnums = [1, 3, 5, 6], target = 2\n\nAfter binary search:\n- left = 1, right = 0 (loop exits)\n- nums[0] = 1 < 2 ✓\n- nums[1] = 3 > 2 ✓\n- Insert at index 1 → [1, 2, 3, 5, 6]\n```\n\n**Another example:**\n```\nnums = [1, 3, 5, 6], target = 7\n\nAfter binary search:\n- left = 4, right = 3 (loop exits)\n- All elements < 7\n- Insert at index 4 (end) → [1, 3, 5, 6, 7]\n```\n\n**Explicitly say: \"l ends at insertion index\"** - this ties the insert logic directly to the binary search invariant.",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "  return -1;\n}"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the binary search pattern with Search Insert Position! You've demonstrated excellent understanding of how to efficiently find insertion points in sorted arrays using O(log n) time complexity. Next, we'll tackle more advanced binary search problems that will further strengthen your skills with this powerful algorithmic technique.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

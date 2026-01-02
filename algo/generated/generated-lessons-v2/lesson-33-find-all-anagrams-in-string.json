@@ -1,0 +1,359 @@
+{
+  "id": "find-all-anagrams-in-string",
+  "title": "Find All Anagrams in a String",
+  "pattern": "sliding window (fixed) + frequency map",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 33,
+    "tier": "INTERMEDIATE",
+    "lessonOrderTag": "INTERMEDIATE-33",
+    "introduces": [
+      "multiple-results-collection",
+      "frequency-comparison"
+    ],
+    "assumesAlreadyTaught": [
+      "sliding-window-concept",
+      "hash-map",
+      "arrays"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "longest-repeating-character-replacement"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Count character frequencies in p"
+    },
+    {
+      "id": "ps2",
+      "text": "Initialize result array for starting indices"
+    },
+    {
+      "id": "ps3",
+      "text": "Create first window of p.length in s"
+    },
+    {
+      "id": "ps4",
+      "text": "Check if first window matches p's frequencies"
+    },
+    {
+      "id": "ps5",
+      "text": "If match, add index 0 to results"
+    },
+    {
+      "id": "ps6",
+      "text": "Slide window: remove left char, add right char"
+    },
+    {
+      "id": "ps7",
+      "text": "Check each new window, collect all matching indices"
+    },
+    {
+      "id": "ps8",
+      "text": "Return array of all starting indices"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to level up with **Find All Anagrams in a String**?\n\nThis builds on the permutation pattern you just learned - but now instead of finding just ONE match, we'll collect **ALL matches**!\n\nYou'll learn:\n• How to collect multiple results while sliding\n• Efficiently updating frequency maps\n• Finding all anagram substrings in one pass\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Sliding window concept** - Maintaining a moving window through data\n- **Hash map** - Using objects to count frequencies\n- **Arrays** - Storing and returning multiple results\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Sliding window concept** - Maintaining a moving window through data\n- **Hash map** - Using dictionaries to count frequencies\n- **Arrays** - Using lists to store and return multiple results\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Sliding window concept** - Maintaining a moving window through data\n- **Hash map** - Using HashMap to count frequencies\n- **Arrays** - Using List to store and return multiple results\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Sliding window concept** - Maintaining a moving window through data\n- **Hash map** - Using unordered_map to count frequencies\n- **Arrays** - Using vector to store and return multiple results\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Sliding window concept** - Maintaining a moving window through data\n- **Hash map** - Using objects or Map to count frequencies\n- **Arrays** - Storing and returning multiple results\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "I'll teach you the prerequisites you need. [Full interactive teaching will be added in Phase 2]\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Which concepts would you like me to explain? [Individual selection will be added in Phase 2]\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what this problem asks for.\n\n**Imagine you're a teacher checking plagiarism - you want to find ALL locations where students copied a specific phrase.** The phrase might be scrambled (same letters, different order), and there could be multiple instances throughout the document.\n\nGiven two strings `s` and `p`, return an array of all the **start indices** of `p`'s anagrams in `s`.\n\nFor example:\n- Input: `s = \"cbaebabacd\"`, `p = \"abc\"`\n- Output: `[0, 6]`\n- Why? \n  - At index 0: \"cba\" is an anagram of \"abc\" ✓\n  - At index 6: \"bac\" is an anagram of \"abc\" ✓\n\nRemember: an anagram has the same characters in any order!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What's the most efficient way to find ALL anagram positions?\n\nThink about the sliding window pattern you just learned...",
+      "choices": [
+        {
+          "label": "Check every substring, sort and compare with sorted p",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Slide a fixed window, compare frequencies, collect all matches",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Sorting would work but is inefficient - that's O(n * m log m) where we sort each window!\n\nBetter approach: use **frequency comparison** like before, but this time **collect ALL indices** where frequencies match. No sorting needed!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is: this is the **same pattern as Permutation in String**, but instead of returning `true` on the first match, we **collect all matching indices**!\n\n1. Count `p`'s character frequencies\n2. Slide a fixed window of `p.length` through `s`\n3. At each position, compare window frequencies with `p`'s frequencies\n4. If they match, **add the starting index to our result array**\n5. Continue sliding to find ALL matches\n\nWe return the complete array of all starting indices where anagrams were found.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3"]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `s=\"cbaebabacd\"`, `p=\"abc\"`:\n\n- **p frequencies:** `{a:1, b:1, c:1}`\n- **Window at 0** (\"cba\"): `{c:1, b:1, a:1}` ✅ **Match! Add 0**\n- **Window at 1** (\"bae\"): `{b:1, a:1, e:1}` ❌ no match\n- **Window at 2** (\"aeb\"): `{a:1, e:1, b:1}` ❌ no match\n- **Window at 3** (\"eba\"): `{e:1, b:1, a:1}` ❌ no match\n- **Window at 4** (\"bab\"): `{b:2, a:1}` ❌ no match\n- **Window at 5** (\"aba\"): `{a:2, b:1}` ❌ no match\n- **Window at 6** (\"bac\"): `{b:1, a:1, c:1}` ✅ **Match! Add 6**\n- **Window at 7** (\"acd\"): `{a:1, c:1, d:1}` ❌ no match\n\nFinal: **[0, 6]** - found anagrams at indices 0 and 6",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3"]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7", "ps8"]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Start with edge case and initialize our result array.\n\n```javascript\nfunction findAnagrams(s, p) {\n  const result = [];\n  if (s.length < p.length) return result;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": ["ps2"],
+      "example": "const result = [];\nif (s.length < p.length) return result;"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Create helper to count character frequencies.\n\n```javascript\nfunction findAnagrams(s, p) {\n  const result = [];\n  if (s.length < p.length) return result;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": ["ps1"],
+      "example": "const getFreq = (str, start, end) => {\n  const freq = {};\n  for (let i = start; i < end; i++) freq[str[i]] = (freq[str[i]] || 0) + 1;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Helper to compare two frequency maps.\n\n```javascript\nfunction findAnagrams(s, p) {\n  const result = [];\n  if (s.length < p.length) return result;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": ["ps4"],
+      "example": "const isEqual = (freq1, freq2) => {\n  return JSON.stringify(freq1) === JSON.stringify(freq2);"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Count p's frequencies once.\n\n```javascript\nfunction findAnagrams(s, p) {\n  const result = [];\n  if (s.length < p.length) return result;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n  \n  const pFreq = getFreq(p, 0, p.length);\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": ["ps1"],
+      "example": "const pFreq = getFreq(p, 0, p.length);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Slide the window through s.\n\n```javascript\nfunction findAnagrams(s, p) {\n  const result = [];\n  if (s.length < p.length) return result;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n  \n  const pFreq = getFreq(p, 0, p.length);\n  \n  for (let i = 0; i <= s.length - p.length; i++) {\n  }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": ["ps6"],
+      "example": "for (let i = 0; i <= s.length - p.length; i++) {"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Check each window and collect matching indices.\n\n```javascript\nfunction findAnagrams(s, p) {\n  const result = [];\n  if (s.length < p.length) return result;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n  \n  const pFreq = getFreq(p, 0, p.length);\n  \n  for (let i = 0; i <= s.length - p.length; i++) {\n    const windowFreq = getFreq(s, i, i + p.length);\n    if (isEqual(pFreq, windowFreq)) {\n      result.push(i);\n    }\n  }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": ["ps3", "ps4", "ps5", "ps7"],
+      "example": "const windowFreq = getFreq(s, i, i + p.length);\nif (isEqual(pFreq, windowFreq)) result.push(i);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Return all the indices we found!\n\n```javascript\nfunction findAnagrams(s, p) {\n  const result = [];\n  if (s.length < p.length) return result;\n  \n  const getFreq = (str, start, end) => {\n    const freq = {};\n    for (let i = start; i < end; i++) {\n      freq[str[i]] = (freq[str[i]] || 0) + 1;\n    }\n    return freq;\n  };\n  \n  const isEqual = (freq1, freq2) => {\n    return JSON.stringify(freq1) === JSON.stringify(freq2);\n  };\n  \n  const pFreq = getFreq(p, 0, p.length);\n  \n  for (let i = 0; i <= s.length - p.length; i++) {\n    const windowFreq = getFreq(s, i, i + p.length);\n    if (isEqual(pFreq, windowFreq)) {\n      result.push(i);\n    }\n  }\n  \n  return result;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": ["ps8"],
+      "example": "return result;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Fantastic work! You've mastered **collecting multiple results** with the sliding window pattern!\n\nThe key difference from the previous lesson: instead of returning early on the first match, we **collect all matching indices** and return them at the end.\n\nNext up: **Longest Repeating Character Replacement** - we'll tackle a more advanced sliding window challenge!\n\nYou're building great momentum! 🚀",
+      "action": "complete"
+    }
+  ]
+}

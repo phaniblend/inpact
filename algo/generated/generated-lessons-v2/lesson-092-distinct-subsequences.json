@@ -1,0 +1,352 @@
+{
+  "id": "distinct-subsequences",
+  "title": "Distinct Subsequences",
+  "pattern": "DP (counting subsequences)",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 92,
+    "tier": "INTERVIEW-MASTERY",
+    "lessonOrderTag": "INTERVIEW-MASTERY-92",
+    "introduces": [
+      "subsequence-counting",
+      "2d-dp-counting"
+    ],
+    "assumesAlreadyTaught": [
+      "2D-DP",
+      "string-matching-DP"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "interleaving-string"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Solve Distinct Subsequences step 1"
+    },
+    {
+      "id": "ps2",
+      "text": "Solve Distinct Subsequences step 2"
+    },
+    {
+      "id": "ps3",
+      "text": "Solve Distinct Subsequences step 3"
+    },
+    {
+      "id": "ps4",
+      "text": "Return result"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! **Distinct Subsequences** - master DP (counting subsequences)!\n\nThis lesson teaches: subsequence-counting, 2d-dp-counting\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which language?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Prerequisites: 2D-DP, string-matching-DP\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Prerequisites: 2D-DP, string-matching-DP\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Prerequisites: 2D-DP, string-matching-DP\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Prerequisites: 2D-DP, string-matching-DP\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Prerequisites: 2D-DP, string-matching-DP\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "**Distinct Subsequences** problem description.\n\n[Full problem description to be added in Phase 2]\n\nThis uses DP (counting subsequences).",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "How to solve this efficiently?",
+      "choices": [
+        {
+          "label": "Brute force approach",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use DP (counting subsequences)",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Brute force won't be efficient!\n\nThe optimal approach is better.",
+      "action": "next",
+      "next": "core-insight"
+    },
+    {
+      "stepId": "core-insight",
+      "mentorSays": "### Core Insight: 2D DP for Subsequence Counting\n\nThe key insight is to use **2D dynamic programming** where `dp[i][j]` represents the number of distinct subsequences of `t[0..j-1]` in `s[0..i-1]`.\n\n**Recurrence relation:**\n- If `s[i-1] == t[j-1]`: We can either use this match or skip it\n  - `dp[i][j] = dp[i-1][j-1] + dp[i-1][j]`\n- If `s[i-1] != t[j-1]`: We must skip this character\n  - `dp[i][j] = dp[i-1][j]`\n\n**Base cases:**\n- `dp[i][0] = 1` (empty string t has one subsequence in any string s)\n- `dp[0][j] = 0` for j > 0 (non-empty t has no subsequence in empty s)\n\n**Why this works:** We count all ways to form t as a subsequence of s by considering whether to use each character match or skip it.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Subsequence Counting DP State\n\n**State variables:**\n- **`dp[i][j]`** - Number of distinct subsequences of `t[0..j-1]` in `s[0..i-1]`\n- **`s`** - Source string\n- **`t`** - Target subsequence string\n\n**State transitions:**\n1. **Initialize:** dp[i][0] = 1 for all i, dp[0][j] = 0 for j > 0\n2. **Fill DP table:** For i from 1 to m, j from 1 to n:\n   - If s[i-1] == t[j-1]: dp[i][j] = dp[i-1][j-1] + dp[i-1][j]\n   - Else: dp[i][j] = dp[i-1][j]\n3. **Result:** Return dp[m][n]\n\n**State validity:** After filling, dp[m][n] contains the number of distinct subsequences of t in s.",
+      "action": "next",
+      "next": "transition-logic"
+    },
+    {
+      "stepId": "transition-logic",
+      "mentorSays": "### Transition Logic: Match or Skip Decision\n\n**When s[i-1] == t[j-1] (characters match):**\n- **Option 1:** Use the match - count ways to form t[0..j-2] in s[0..i-2] → `dp[i-1][j-1]`\n- **Option 2:** Skip the match - count ways to form t[0..j-1] in s[0..i-2] → `dp[i-1][j]`\n- **Total:** `dp[i][j] = dp[i-1][j-1] + dp[i-1][j]`\n\n**When s[i-1] != t[j-1] (no match):**\n- **Only option:** Skip s[i-1] - count ways to form t[0..j-1] in s[0..i-2] → `dp[i-1][j]`\n- **Total:** `dp[i][j] = dp[i-1][j]`\n\n**Example:** s=\"rabbbit\", t=\"rabbit\"\n- At s[2]='b', t[2]='b': match → can use or skip\n- At s[3]='b', t[2]='b': match → can use or skip (creates multiple subsequences)\n\n**This transition logic captures all ways to form t as a subsequence of s.**",
+      "action": "next",
+      "next": "failure-modes"
+    },
+    {
+      "stepId": "failure-modes",
+      "mentorSays": "### Failure Modes: Why Alternative Approaches Fail\n\n**Approach 1: Brute Force (Try All Subsequences)**\n- **Why it fails:** Exponential time O(2^m) where m = |s|\n- **Issue:** Too many subsequences to enumerate\n- **Better:** DP reduces to O(m*n) time\n\n**Approach 2: Greedy Matching**\n- **Why it fails:** Doesn't count all distinct subsequences\n- **Issue:** May miss valid subsequences by matching too early\n- **Better:** DP considers all matching possibilities\n\n**Approach 3: Recursion Without Memoization**\n- **Why it fails:** Exponential time due to overlapping subproblems\n- **Issue:** Recalculates same subproblems many times\n- **Better:** DP stores results, avoiding recalculation\n\n**Our approach wins because:** 2D DP counts all distinct subsequences in O(m*n) time with O(m*n) space (can be optimized to O(n)). The recurrence relation correctly captures the \"match or skip\" decision at each position.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **2D dynamic programming** where `dp[i][j]` represents the number of distinct subsequences of `t[0..j-1]` in `s[0..i-1]`. When characters match, we can either use the match or skip it, giving us `dp[i][j] = dp[i-1][j-1] + dp[i-1][j]`. When they don't match, we must skip: `dp[i][j] = dp[i-1][j]`. This counts all ways to form t as a subsequence of s.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through s=\"rabbbit\", t=\"rabbit\":\n\n**DP table (rows = s, cols = t):**\n```\n        \"\"  r  a  b  b  i  t\n    \"\" [1, 0, 0, 0, 0, 0, 0]\n    r  [1, 1, 0, 0, 0, 0, 0]\n    a  [1, 1, 1, 0, 0, 0, 0]\n    b  [1, 1, 1, 1, 0, 0, 0]\n    b  [1, 1, 1, 2, 1, 0, 0]  ← second 'b' can match t[2] or t[3]\n    b  [1, 1, 1, 3, 3, 0, 0]  ← third 'b' creates more subsequences\n    i  [1, 1, 1, 3, 3, 3, 0]\n    t  [1, 1, 1, 3, 3, 3, 3]\n```\n\n**Key insight:** The multiple 'b's in s allow multiple ways to form \"rabbit\" as a subsequence. The answer is **3**.",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's the algorithm:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Let's code it step by step!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize data structures.\n\n```javascript\nfunction solve() {\n  // Setup\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "// Initialize"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Implement core logic.\n\n```javascript\nfunction solve() {\n  // Setup\n  // Main algorithm\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "// Core logic"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Complete solution.\n\n```javascript\nfunction solve() {\n  // Full implementation\n  return result;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4"
+      ],
+      "example": "return result;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Excellent! **Distinct Subsequences** complete!\n\nNext lesson continues your journey to mastery! 🚀",
+      "action": "complete"
+    }
+  ]
+}

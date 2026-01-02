@@ -1,0 +1,414 @@
+{
+  "id": "sqrt-x",
+  "title": "Sqrt(x)",
+  "pattern": "binary search on answer",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 28,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-28",
+    "introduces": [
+      "binary-search-on-answer",
+      "integer-square-root",
+      "search-for-condition"
+    ],
+    "assumesAlreadyTaught": [
+      "binary-search-concept",
+      "Math.floor"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "range-sum-query"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Set left boundary to 0 and right boundary to x"
+    },
+    {
+      "id": "ps2",
+      "text": "Initialize result variable to store the largest valid square root found"
+    },
+    {
+      "id": "ps3",
+      "text": "While left is less than or equal to right, continue searching"
+    },
+    {
+      "id": "ps4",
+      "text": "Calculate mid as the average of left and right boundaries"
+    },
+    {
+      "id": "ps5",
+      "text": "If mid squared is less than or equal to x, update result to mid and search right half by setting left to mid + 1"
+    },
+    {
+      "id": "ps6",
+      "text": "If mid squared is greater than x, search left half by setting right to mid - 1"
+    },
+    {
+      "id": "ps7",
+      "text": "Return the result as the integer square root of x"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle square roots? After working with plus-one problems, we're going to explore a powerful technique called binary search on the answer - and sqrt(x) is the perfect place to see it in action!\n\nHere's what you'll master today:\n\n🎯 **Pattern Recognition**: Spot when binary search on answer is the right approach (hint: when you can easily verify if a guess is correct, but finding the answer directly is tricky)\n\n🎯 **Implementation Skills**: Write clean binary search code that handles floating point precision and edge cases without getting stuck in infinite loops  \n\n🎯 **Boundary Mastery**: Set up your search space correctly and know when to return left vs right pointer for problems asking for floor/ceiling values\n\nThis technique will become one of your go-to tools for optimization problems where you're searching for the \"best possible value\" within a range. Let's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Binary-search-concept** - Algorithm for finding values in sorted ranges by repeatedly halving search space\n- **Math.floor** - Function that rounds numbers down to nearest integer\n- **Floating-point-precision** - Understanding of decimal number representation and rounding errors in computations\n- **Iterative-refinement** - Process of repeatedly improving an approximation until desired accuracy is achieved\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Binary-search-concept** - Algorithm for finding values in sorted ranges by repeatedly halving search space\n- **Math.floor** - Function that rounds numbers down to nearest integer\n- **Floating-point-precision** - Understanding of decimal number representation and rounding errors in computations\n- **Iterative-refinement** - Process of repeatedly improving an approximation until desired accuracy is achieved\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Binary-search-concept** - Algorithm for finding values in sorted ranges by repeatedly halving search space\n- **Math.floor** - Function that rounds numbers down to nearest integer\n- **Floating-point-precision** - Understanding of decimal number representation and rounding errors in computations\n- **Iterative-refinement** - Process of repeatedly improving an approximation until desired accuracy is achieved\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Binary-search-concept** - Algorithm for finding values in sorted ranges by repeatedly halving search space\n- **Math.floor** - Function that rounds numbers down to nearest integer\n- **Floating-point-precision** - Understanding of decimal number representation and rounding errors in computations\n- **Iterative-refinement** - Process of repeatedly improving an approximation until desired accuracy is achieved\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Binary-search-concept** - Algorithm for finding values in sorted ranges by repeatedly halving search space\n- **Math.floor** - Function that rounds numbers down to nearest integer\n- **Floating-point-precision** - Understanding of decimal number representation and rounding errors in computations\n- **Iterative-refinement** - Process of repeatedly improving an approximation until desired accuracy is achieved\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Sqrt(x) problem asks for.\n\nImagine you're organizing books on a shelf and want to arrange them in a perfect square formation. To find how many books should go on each side, you take the total number of books and find the square root - like having 16 books means you'll create a 4×4 square arrangement.\n\n## Problem: Calculate the Square Root\n\n**What we're asking for:**\nGiven a number x, find the square root of x. In other words, find the number that when multiplied by itself gives you x.\n\n**Example:**\nIf x = 8, then sqrt(8) = 2\n\n**Why this works:**\nLet's check: 2 × 2 = 4... wait, that's not right! \n\nActually, sqrt(8) ≈ 2.83, because 2.83 × 2.83 ≈ 8.\n\nI think you might have meant sqrt(4) = 2, since 2 × 2 = 4. Or perhaps you're looking for an integer approximation where we round down, so sqrt(8) rounds down to 2?\n\nCould you clarify what kind of square root calculation you're looking for? Are we:\n- Finding the exact square root (which might be a decimal)?\n- Rounding to the nearest integer?\n- Finding the largest integer whose square doesn't exceed x?",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to find the square root of x without using built-in sqrt functions. How would YOU approach this?",
+      "choices": [
+        {
+          "label": "Start from 1 and increment by 1 until i² > x, then return i-1",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Binary search from 0 to x: if mid² ≤ x, search right half; otherwise search left half",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This linear search works but is inefficient - it takes O(√x) time. For large numbers like x = 1,000,000, you'd need to check up to 1,000 numbers. There's a much faster way to narrow down the search space.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Binary Search on Answer Space\n\n**This problem follows the \"binary search on answer\" pattern:**\n- **Search space:** [0, x] (all possible square root values)\n- **Monotonic property:** If mid² ≤ x, then all values ≤ mid are valid\n- **Target:** Largest integer whose square ≤ x\n- **Predicate:** Check if mid² ≤ x to decide search direction\n\n**Similar problems:**\n- Search Insert Position (binary search variant)\n- Find Peak Element (binary search on answer)\n- Kth Smallest Element (binary search on value)\n\n**Key insight:** The square function is monotonically increasing, so we can use binary search to find the largest valid answer efficiently.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Answer is Always in [left, right]\n\n**Invariant maintained throughout:**\n- **Search space:** `[left, right]` always contains the answer\n- **Result tracking:** `result` stores the largest valid value found so far\n- **Monotonic property:** If `mid² ≤ x`, then all values ≤ mid are valid candidates\n\n**Why this works:**\n- If `mid² ≤ x`: mid is valid, so answer is in `[mid, right]` (could be larger)\n- If `mid² > x`: mid is too large, so answer is in `[left, mid-1]`\n- We update `result = mid` when we find a valid candidate\n- Continue until `left > right`\n\n**Invariant guarantee:** At each step, if the answer exists, it is guaranteed to be in the current search range `[left, right]`. When the loop ends, `result` contains the largest integer whose square ≤ x.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **binary search** on the range [0, x] to find the largest integer whose square is less than or equal to x. We check if **mid * mid ≤ x** at each step - if true, mid could be our answer so we search the right half for a potentially larger valid answer; if false, we search the left half. This works because the square function is **monotonically increasing**, meaning if mid² > x, then all larger values will also have squares greater than x, allowing us to efficiently eliminate half the search space at each step.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `8`:\n- Step 1: Initialize left = 0, right = 8, result = 0\n- Step 2: Calculate mid = (0 + 8) / 2 = 4\n- Step 3: Check if 4² = 16 ≤ 8? No, so right = 4 - 1 = 3\n- Step 4: Calculate mid = (0 + 3) / 2 = 1\n- Step 5: Check if 1² = 1 ≤ 8? Yes, so result = 1, left = 1 + 1 = 2\n- Step 6: Calculate mid = (2 + 3) / 2 = 2\n- Step 7: Check if 2² = 4 ≤ 8? Yes, so result = 2, left = 2 + 1 = 3\n- Step 8: Calculate mid = (3 + 3) / 2 = 3\n- Step 9: Check if 3² = 9 ≤ 8? No, so right = 3 - 1 = 2\n- Step 10: Left (3) > right (2), so exit loop\n- Final answer: **2**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function signature and initialize left boundary\n\n```javascript\nfunction mySqrt(x) {\n    let left = 0;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function mySqrt(x) {\n    let left = 0;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize right boundary for binary search\n\n```javascript\nfunction mySqrt(x) {\n    let left = 0;\n    let right = x;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "    let right = x;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Initialize result variable to track largest valid answer\n\n```javascript\nfunction mySqrt(x) {\n    let left = 0;\n    let right = x;\n    let result = 0;\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let result = 0;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Start binary search loop while left <= right\n\n```javascript\nfunction mySqrt(x) {\n    let left = 0;\n    let right = x;\n    let result = 0;\n    \n    while (left <= right) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    \n    while (left <= right) {\n    }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Calculate middle point for current search range\n\n```javascript\nfunction mySqrt(x) {\n    let left = 0;\n    let right = x;\n    let result = 0;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        let mid = Math.floor((left + right) / 2);"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Check if mid squared is valid answer, update result and search right\n\n```javascript\nfunction mySqrt(x) {\n    let left = 0;\n    let right = x;\n    let result = 0;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        if (mid * mid <= x) {\n            result = mid;\n            left = mid + 1;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        if (mid * mid <= x) {\n            result = mid;\n            left = mid + 1;\n        }"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Handle case when mid squared is too large, search left half\n\n```javascript\nfunction mySqrt(x) {\n    let left = 0;\n    let right = x;\n    let result = 0;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        if (mid * mid <= x) {\n            result = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        } else {\n            right = mid - 1;\n        }"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return the largest valid square root found\n\n```javascript\nfunction mySqrt(x) {\n    let left = 0;\n    let right = x;\n    let result = 0;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        if (mid * mid <= x) {\n            result = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return result;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "    \n    return result;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering binary search on answer with the square root problem! You've learned how to apply binary search to continuous domains by searching for the optimal answer within a range. Next, we'll tackle range-sum-query where you'll explore efficient data structures for handling multiple queries on arrays.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

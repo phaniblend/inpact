@@ -1,0 +1,374 @@
+{
+  "id": "edit-distance",
+  "title": "Edit Distance (Levenshtein)",
+  "pattern": "DP (2D - operations)",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 47,
+    "tier": "ADVANCED",
+    "lessonOrderTag": "ADVANCED-47",
+    "introduces": [
+      "edit-operations",
+      "Levenshtein-distance",
+      "min-operations"
+    ],
+    "assumesAlreadyTaught": [
+      "2D-DP",
+      "string-matching-DP",
+      "Math.min"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "coin-change"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Create DP table: dp[i][j] = min edits to convert word1[0..i] to word2[0..j]"
+    },
+    {
+      "id": "ps2",
+      "text": "Initialize: dp[i][0] = i deletions, dp[0][j] = j insertions"
+    },
+    {
+      "id": "ps3",
+      "text": "For each position (i,j):"
+    },
+    {
+      "id": "ps4",
+      "text": "  If characters match: dp[i][j] = dp[i-1][j-1] (no operation)"
+    },
+    {
+      "id": "ps5",
+      "text": "  Else: dp[i][j] = 1 + min(insert, delete, replace)"
+    },
+    {
+      "id": "ps6",
+      "text": "    insert = dp[i][j-1], delete = dp[i-1][j], replace = dp[i-1][j-1]"
+    },
+    {
+      "id": "ps7",
+      "text": "Return dp[m][n]"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready for **Edit Distance** - one of the most elegant DP problems!\n\nThis teaches you how to find the minimum number of operations (insert, delete, replace) to transform one string into another.\n\nYou'll learn:\n• Modeling edit operations as DP states\n• Levenshtein distance algorithm\n• Choosing minimum cost among multiple options\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **2D DP** - Building 2D tables for string problems\n- **String matching DP** - LCS-style patterns\n- **Math.min** - Finding minimum among options\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "I'll teach you the prerequisites you need. Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Which concepts would you like me to explain? Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **2D DP** - Building 2D tables for string problems\n- **String matching DP** - LCS-style patterns\n- **Math.min** - Finding minimum among options\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "I'll teach you the prerequisites you need. Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Which concepts would you like me to explain? Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **2D DP** - Building 2D tables for string problems\n- **String matching DP** - LCS-style patterns\n- **Math.min** - Finding minimum among options\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "I'll teach you the prerequisites you need. Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Which concepts would you like me to explain? Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **2D DP** - Building 2D tables for string problems\n- **String matching DP** - LCS-style patterns\n- **Math.min** - Finding minimum among options\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "I'll teach you the prerequisites you need. Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Which concepts would you like me to explain? Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **2D DP** - Building 2D tables for string problems\n- **String matching DP** - LCS-style patterns\n- **Math.min** - Finding minimum among options\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "I'll teach you the prerequisites you need. Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Which concepts would you like me to explain? Let's quickly recap the basics you'll need for this problem.\n\nFor now, let's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what this problem asks for.\n\n**Imagine you're building autocorrect** - you need to measure how different two words are. The fewer operations to transform one word into another, the more similar they are!\n\nGiven two strings `word1` and `word2`, return the **minimum number of operations** to convert word1 to word2.\n\nAllowed operations:\n• **Insert** a character\n• **Delete** a character\n• **Replace** a character\n\nExample:\n```\nword1 = \"horse\"\nword2 = \"ros\"\n```\nOutput: `3`\nOperations: horse → rorse (replace 'h' with 'r') → rose (remove 'r') → ros (remove 'e')",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "How can we find the minimum operations?\n\nThink about breaking the problem into subproblems...",
+      "choices": [
+        {
+          "label": "Try all possible sequences of operations",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use 2D DP: at each position, try insert/delete/replace and take minimum",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Trying all possible operation sequences is exponential!\n\nDP lets us build the solution by considering prefixes of both strings and remembering the minimum cost for each subproblem.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is: **dp[i][j] = minimum operations to convert word1[0..i] to word2[0..j]**\n\nAt each position:\n• If `word1[i] == word2[j]`: No operation needed\n  → `dp[i][j] = dp[i-1][j-1]`\n  \n• If different, try all 3 operations and take minimum:\n  → **Insert:** `dp[i][j-1] + 1` (matched word2[j], move j)\n  → **Delete:** `dp[i-1][j] + 1` (removed word1[i], move i)\n  → **Replace:** `dp[i-1][j-1] + 1` (both advance)\n  \nBase: `dp[i][0] = i` (delete all), `dp[0][j] = j` (insert all)\n\nAnswer: `dp[m][n]`",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's build DP table for \"horse\" → \"ros\":\n\n```\n      \"\" r  o  s\n\"\"     0  1  2  3\nh      1  1  2  3\no      2  2  1  2\nr      3  2  2  2\ns      4  3  3  2\ne      5  4  4  3\n```\n\n- **h → \"\":** 1 delete\n- **h → r:** 1 replace (h→r)\n- **ho → ro:** 1 (h→r, o matches)\n- **hor → ro:** 2 (h→r, delete r)\n- **hors → ros:** 2 (h→r, o matches, delete r, s matches)\n- **horse → ros:** 3\n\nFinal: **3 operations**",
+      "action": "next",
+      "next": "dp-grid-walkthrough"
+    },
+    {
+      "stepId": "dp-grid-walkthrough",
+      "mentorSays": "### DP Grid Walkthrough: \"cat\" → \"cut\"\n\n**Step-by-step DP table construction:**\n\n```\n      \"\"  c  u  t\n\"\"     0   1  2  3\nc      1   0  1  2\na      2   1  1  2\nt      3   2  2  1\n```\n\n**Detailed calculation:**\n\n1. **Base cases (first row/column):**\n   - `dp[0][0] = 0` (empty → empty)\n   - `dp[0][1] = 1` (insert 'c')\n   - `dp[0][2] = 2` (insert 'c', 'u')\n   - `dp[0][3] = 3` (insert 'c', 'u', 't')\n   - `dp[1][0] = 1` (delete 'c')\n   - `dp[2][0] = 2` (delete 'c', 'a')\n   - `dp[3][0] = 3` (delete 'c', 'a', 't')\n\n2. **dp[1][1]: 'c' → 'c'**\n   - Characters match! → `dp[1][1] = dp[0][0] = 0`\n\n3. **dp[1][2]: 'c' → 'cu'**\n   - Insert 'u': `dp[1][1] + 1 = 0 + 1 = 1`\n   - Delete 'c': `dp[0][2] + 1 = 2 + 1 = 3`\n   - Replace: N/A (already matched)\n   - **Min: 1**\n\n4. **dp[2][1]: 'ca' → 'c'**\n   - Insert: N/A\n   - Delete 'a': `dp[1][1] + 1 = 0 + 1 = 1`\n   - Replace 'a'→'c': `dp[1][0] + 1 = 1 + 1 = 2`\n   - **Min: 1**\n\n5. **dp[2][2]: 'ca' → 'cu'**\n   - Insert 'u': `dp[2][1] + 1 = 1 + 1 = 2`\n   - Delete 'a': `dp[1][2] + 1 = 1 + 1 = 2`\n   - Replace 'a'→'u': `dp[1][1] + 1 = 0 + 1 = 1`\n   - **Min: 1**\n\n6. **dp[3][3]: 'cat' → 'cut'**\n   - Characters match! → `dp[3][3] = dp[2][2] = 1`\n\n**Final answer: 1 operation** (replace 'a' with 'u')\n\n**This DP grid walkthrough shows how each cell builds on previous subproblems!**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create DP table with base cases.\n\n```javascript\nfunction minDistance(word1, word2) {\n  const m = word1.length, n = word2.length;\n  const dp = Array.from({length: m + 1}, () => Array(n + 1).fill(0));\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "const m = word1.length, n = word2.length;\nconst dp = Array.from({length: m + 1}, () => Array(n + 1).fill(0));"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize first row and column.\n\n```javascript\nfunction minDistance(word1, word2) {\n  const m = word1.length, n = word2.length;\n  const dp = Array.from({length: m + 1}, () => Array(n + 1).fill(0));\n  \n  for (let i = 0; i <= m; i++) dp[i][0] = i;\n  for (let j = 0; j <= n; j++) dp[0][j] = j;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "for (let i = 0; i <= m; i++) dp[i][0] = i;\nfor (let j = 0; j <= n; j++) dp[0][j] = j;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Fill DP table: check if characters match.\n\n```javascript\nfunction minDistance(word1, word2) {\n  const m = word1.length, n = word2.length;\n  const dp = Array.from({length: m + 1}, () => Array(n + 1).fill(0));\n  \n  for (let i = 0; i <= m; i++) dp[i][0] = i;\n  for (let j = 0; j <= n; j++) dp[0][j] = j;\n  \n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (word1[i - 1] === word2[j - 1]) {\n        dp[i][j] = dp[i - 1][j - 1];\n      }\n    }\n  }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4"
+      ],
+      "example": "for (let i = 1; i <= m; i++) {\n  for (let j = 1; j <= n; j++) {\n    if (word1[i - 1] === word2[j - 1]) dp[i][j] = dp[i - 1][j - 1];"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "When different, try all 3 operations and take minimum.\n\n```javascript\nfunction minDistance(word1, word2) {\n  const m = word1.length, n = word2.length;\n  const dp = Array.from({length: m + 1}, () => Array(n + 1).fill(0));\n  \n  for (let i = 0; i <= m; i++) dp[i][0] = i;\n  for (let j = 0; j <= n; j++) dp[0][j] = j;\n  \n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (word1[i - 1] === word2[j - 1]) {\n        dp[i][j] = dp[i - 1][j - 1];\n      } else {\n        dp[i][j] = 1 + Math.min(\n          dp[i][j - 1],\n          dp[i - 1][j],\n          dp[i - 1][j - 1]\n        );\n      }\n    }\n  }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps5",
+        "ps6"
+      ],
+      "example": "} else {\n  dp[i][j] = 1 + Math.min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1]);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Return the final answer!\n\n```javascript\nfunction minDistance(word1, word2) {\n  const m = word1.length, n = word2.length;\n  const dp = Array.from({length: m + 1}, () => Array(n + 1).fill(0));\n  \n  for (let i = 0; i <= m; i++) dp[i][0] = i;\n  for (let j = 0; j <= n; j++) dp[0][j] = j;\n  \n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (word1[i - 1] === word2[j - 1]) {\n        dp[i][j] = dp[i - 1][j - 1];\n      } else {\n        dp[i][j] = 1 + Math.min(\n          dp[i][j - 1],\n          dp[i - 1][j],\n          dp[i - 1][j - 1]\n        );\n      }\n    }\n  }\n  \n  return dp[m][n];\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "return dp[m][n];"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Amazing work! You've conquered **Edit Distance** - one of the most important DP problems!\n\nThis algorithm powers:\n• Spell checkers\n• DNA sequence alignment\n• Plagiarism detection\n• Fuzzy string matching\n\nNext: **Coin Change** - applying DP to unbounded knapsack problems!\n\nYou're on fire! 🔥",
+      "action": "complete"
+    }
+  ]
+}

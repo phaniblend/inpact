@@ -1,0 +1,635 @@
+{
+  "id": "maximum-subarray",
+  "title": "Maximum Subarray",
+  "pattern": "Kadane's algorithm",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 12,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-12",
+    "introduces": [
+      "kadanes-algorithm",
+      "running-sum",
+      "reset-decision",
+      "subarray-concept"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "tracking-minimum",
+      "tracking-maximum",
+      "Math.max"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "merge-sorted-array"
+    ]
+  },
+  "problemStatement": {
+    "description": "Find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.",
+    "inputs": [
+      "nums: array of integers (length 1 to 10^5)"
+    ],
+    "outputs": [
+      "Integer representing the maximum sum of any contiguous subarray"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+        "output": "6",
+        "explanation": "Subarray [4,-1,2,1] has the largest sum = 6. Kadane's: current_sum tracks running sum, resets when negative. At index 6, current_sum=6, max_sum=6."
+      },
+      {
+        "input": "nums = [1]",
+        "output": "1",
+        "explanation": "Single element subarray [1] has sum 1."
+      },
+      {
+        "input": "nums = [5,4,-1,7,8]",
+        "output": "23",
+        "explanation": "Entire array [5,4,-1,7,8] has maximum sum 23."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-10^4 <= nums[i] <= 10^4"
+    ],
+    "realWorldUse": [
+      "Financial analysis (maximum profit over time period)",
+      "Signal processing (finding maximum signal strength)",
+      "Data analysis (finding best contiguous segment)",
+      "Optimization problems with sequences"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "Kadane's algorithm uses dynamic programming with greedy choice: at each position, decide whether to extend current subarray or start fresh. This avoids checking all possible subarrays.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks for maximum sum of contiguous subarray → think Kadane's algorithm",
+      "SIGNAL 2: Need O(n) solution (better than O(n²)) → use running sum with reset",
+      "SIGNAL 3: Optimal substructure (max ending at i depends on max ending at i-1) → DP approach"
+    ],
+    "patternRules": [
+      "If problem involves maximum/minimum contiguous subarray → use Kadane's algorithm",
+      "When you see 'maximum subarray', 'contiguous sum', or 'subarray sum' → consider Kadane's",
+      "If negative values can reset sum → use max(current, current + previous) pattern"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Actually uses greedy choice - at each step, choose to extend or reset. This is the greedy DP solution.",
+      "bruteForce": "Checking all possible subarrays is O(n²). Kadane's algorithm is O(n) and optimal.",
+      "alternative": "Divide and conquer works but is O(n log n). Kadane's is simpler and faster."
+    }
+  },
+  "coreInvariant": {
+    "statement": "current_sum represents the maximum sum of a subarray ending at the current index i, and max_sum is the maximum sum found so far across all positions.",
+    "explanation": "This invariant holds because we update current_sum = max(nums[i], current_sum + nums[i]), meaning we either start fresh at index i or extend the previous subarray. The max_sum tracks the best sum seen across all positions.",
+    "whyItMatters": "This invariant guarantees correctness: after processing index i, current_sum is the maximum subarray sum ending at i, and max_sum is the overall maximum. The final max_sum is the answer."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "current_sum",
+        "meaning": "Maximum sum of subarray ending at current index",
+        "indexing": "Starts at nums[0], updated at each index"
+      },
+      {
+        "name": "max_sum",
+        "meaning": "Maximum sum found so far across all subarrays",
+        "indexing": "Starts at nums[0], updated when current_sum exceeds it"
+      },
+      {
+        "name": "nums",
+        "meaning": "Array of integers",
+        "indexing": "0-indexed array"
+      }
+    ],
+    "baseCases": [
+      "If nums.length == 1: return nums[0]",
+      "Initialize current_sum = nums[0], max_sum = nums[0]"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "For each index i from 1 to n-1:",
+        "transition": "current_sum = max(nums[i], current_sum + nums[i])",
+        "explanation": "Either start fresh with nums[i] (if previous sum was negative) or extend previous subarray. This is the greedy choice.",
+        "example": "nums=[-2,1,-3,4], i=3: current_sum=max(4, -2+4)=max(4,2)=4 (start fresh because previous sum was negative)"
+      },
+      {
+        "condition": "After updating current_sum:",
+        "transition": "max_sum = max(max_sum, current_sum)",
+        "explanation": "Update global maximum if current subarray sum is better.",
+        "example": "If current_sum=6 and max_sum=4, update max_sum=6"
+      }
+    ],
+    "decisionTree": {
+      "root": "At each index, decide whether to extend current subarray or start fresh",
+      "branches": [
+        "If current_sum + nums[i] > nums[i]: extend subarray (current_sum += nums[i])",
+        "Else: start fresh (current_sum = nums[i])",
+        "Update max_sum = max(max_sum, current_sum)",
+        "After all indices: return max_sum"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "nums = [-2,1,-3,4,-1,2,1,-5,4]",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Initialize: current_sum = -2, max_sum = -2",
+        "state": "current_sum = -2, max_sum = -2, i = 0",
+        "logic": "Start with first element",
+        "result": "Ready to process"
+      },
+      {
+        "step": 2,
+        "description": "i=1: current_sum = max(1, -2+1) = max(1, -1) = 1, max_sum = max(-2, 1) = 1",
+        "state": "current_sum = 1, max_sum = 1, i = 1",
+        "logic": "Previous sum was negative, start fresh with 1",
+        "result": "max_sum = 1"
+      },
+      {
+        "step": 3,
+        "description": "i=2: current_sum = max(-3, 1-3) = max(-3, -2) = -2, max_sum = max(1, -2) = 1",
+        "state": "current_sum = -2, max_sum = 1, i = 2",
+        "logic": "Both options negative, choose less negative. max_sum unchanged.",
+        "result": "max_sum = 1"
+      },
+      {
+        "step": 4,
+        "description": "i=3: current_sum = max(4, -2+4) = max(4, 2) = 4, max_sum = max(1, 4) = 4",
+        "state": "current_sum = 4, max_sum = 4, i = 3",
+        "logic": "Previous sum negative, start fresh. Better max found!",
+        "result": "max_sum = 4"
+      },
+      {
+        "step": 5,
+        "description": "i=4: current_sum = max(-1, 4-1) = max(-1, 3) = 3, max_sum = max(4, 3) = 4",
+        "state": "current_sum = 3, max_sum = 4, i = 4",
+        "logic": "Extend subarray (3 > -1). max_sum unchanged.",
+        "result": "max_sum = 4"
+      },
+      {
+        "step": 6,
+        "description": "i=5: current_sum = max(2, 3+2) = max(2, 5) = 5, max_sum = max(4, 5) = 5",
+        "state": "current_sum = 5, max_sum = 5, i = 5",
+        "logic": "Extend subarray. Better max found!",
+        "result": "max_sum = 5"
+      },
+      {
+        "step": 7,
+        "description": "i=6: current_sum = max(1, 5+1) = max(1, 6) = 6, max_sum = max(5, 6) = 6",
+        "state": "current_sum = 6, max_sum = 6, i = 6",
+        "logic": "Extend subarray. Best max found!",
+        "result": "max_sum = 6"
+      },
+      {
+        "step": 8,
+        "description": "i=7: current_sum = max(-5, 6-5) = max(-5, 1) = 1, max_sum = max(6, 1) = 6",
+        "state": "current_sum = 1, max_sum = 6, i = 7",
+        "logic": "Extend subarray (1 > -5). max_sum unchanged.",
+        "result": "max_sum = 6"
+      },
+      {
+        "step": 9,
+        "description": "i=8: current_sum = max(4, 1+4) = max(4, 5) = 5, max_sum = max(6, 5) = 6",
+        "state": "current_sum = 5, max_sum = 6, i = 8",
+        "logic": "Extend subarray. Processing complete.",
+        "result": "Return max_sum = 6"
+      }
+    ],
+    "keyInsight": "Kadane's algorithm makes a greedy choice at each step: extend current subarray if it helps, or start fresh if previous sum is negative. This avoids checking all O(n²) subarrays, achieving O(n) time."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Not resetting current_sum when it becomes negative",
+      "symptom": "Wrong answer - keeps negative sum that hurts future positive numbers",
+      "fix": "Use current_sum = max(nums[i], current_sum + nums[i]) to reset when negative",
+      "example": "If current_sum=-5 and nums[i]=3, should get 3 not -2"
+    },
+    {
+      "mistake": "Initializing max_sum to 0 instead of nums[0]",
+      "symptom": "Wrong answer when all numbers are negative (should return least negative, not 0)",
+      "fix": "Initialize max_sum = nums[0] to handle all-negative arrays correctly",
+      "example": "For nums=[-1,-2,-3], should return -1 not 0"
+    },
+    {
+      "mistake": "Using current_sum += nums[i] without checking if it should reset",
+      "symptom": "Wrong answer - doesn't reset when previous sum is negative",
+      "fix": "Always use current_sum = max(nums[i], current_sum + nums[i])",
+      "example": "If current_sum=-3 and nums[i]=4, should get 4 not 1"
+    },
+    {
+      "mistake": "Not updating max_sum correctly",
+      "symptom": "Returns wrong maximum sum",
+      "fix": "Update max_sum = max(max_sum, current_sum) after each current_sum update",
+      "example": "Must track global maximum across all positions"
+    },
+    {
+      "mistake": "Checking all possible subarrays (brute force)",
+      "symptom": "O(n²) or O(n³) time complexity instead of O(n)",
+      "fix": "Use Kadane's algorithm for O(n) time. Don't use nested loops.",
+      "example": "Nested loops checking all subarrays is inefficient"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is Kadane's algorithm for maximum subarray sum.",
+      "",
+      "I'll use dynamic programming with greedy choice:",
+      "- Initialize current_sum = nums[0], max_sum = nums[0]",
+      "- For each index i from 1 to n-1:",
+      "  - current_sum = max(nums[i], current_sum + nums[i])",
+      "  - max_sum = max(max_sum, current_sum)",
+      "- Return max_sum",
+      "",
+      "Time complexity: O(n) - single pass through array",
+      "Space complexity: O(1) - only using two variables",
+      "",
+      "Edge cases:",
+      "- All negative numbers: return least negative (not 0)",
+      "- Single element: return that element",
+      "- All positive: return sum of entire array"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Maximum Subarray (return indices)",
+      "approachChange": "Same algorithm but also track start and end indices of maximum subarray",
+      "solution": "Track start index when resetting current_sum, update end index when max_sum updates"
+    },
+    "harder": {
+      "problem": "Maximum Product Subarray",
+      "approachChange": "Similar but with multiplication. Need to track both max and min (because negative * negative = positive).",
+      "solution": "Track max_product and min_product. At each step: new_max = max(nums[i], max*nums[i], min*nums[i]), new_min = min(nums[i], max*nums[i], min*nums[i])."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize current_sum = nums[0] and max_sum = nums[0]"
+    },
+    {
+      "id": "ps2",
+      "text": "For each index i from 1 to nums.length - 1:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Update current_sum = max(nums[i], current_sum + nums[i])"
+    },
+    {
+      "id": "ps4",
+      "text": "  Update max_sum = max(max_sum, current_sum)"
+    },
+    {
+      "id": "ps5",
+      "text": "Return max_sum"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle one of the most elegant algorithms in computer science? After mastering the best-time-to-buy-sell-stock problem, you've actually already seen a glimpse of today's star pattern - Kadane's algorithm! This powerful technique helps us find the maximum sum of any contiguous subarray in linear time by making a clever choice at each step: either extend our current subarray or start fresh from the current element.\n\nThrough this lesson, you'll gain three essential skills:\n• **Pattern Recognition** - Spot when problems can be solved by tracking running sums and making optimal local decisions\n• **State Management** - Master the art of maintaining just the right amount of information as you traverse through data\n• **Optimization Thinking** - Transform brute force O(n²) solutions into elegant O(n) algorithms\n\nYou're building on solid foundations from our previous stock problem, and I'm confident you'll find Kadane's algorithm both intuitive and incredibly useful across many coding challenges. Let's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Arrays** - Understanding array data structure and indexing\n- **Loops** - Ability to iterate through array elements\n- **Tracking maximum** - Maintaining and updating maximum values during iteration\n- **Math max** - Using Math.max function to compare and select larger values\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Arrays** - Understanding array data structure and indexing\n- **Loops** - Ability to iterate through array elements\n- **Tracking maximum** - Maintaining and updating maximum values during iteration\n- **Math max** - Using Math.max function to compare and select larger values\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Arrays** - Understanding array data structure and indexing\n- **Loops** - Ability to iterate through array elements\n- **Tracking maximum** - Maintaining and updating maximum values during iteration\n- **Math max** - Using Math.max function to compare and select larger values\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Arrays** - Understanding array data structure and indexing\n- **Loops** - Ability to iterate through array elements\n- **Tracking maximum** - Maintaining and updating maximum values during iteration\n- **Math max** - Using Math.max function to compare and select larger values\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Arrays** - Understanding array data structure and indexing\n- **Loops** - Ability to iterate through array elements\n- **Tracking maximum** - Maintaining and updating maximum values during iteration\n- **Math max** - Using Math.max function to compare and select larger values\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Maximum Subarray problem asks for.\n\nImagine you're tracking your daily mood on a scale from -10 to +10, where some days are great (+8) and others are terrible (-5). The maximum subarray problem is like finding the consecutive stretch of days where your total mood score was the highest - you want to identify that golden period where, even if it included some bad days, the overall experience was the most positive possible.\n\nThis connects directly to Kadane's algorithm, which scans through your mood diary day by day, keeping track of the best streak ending at each day, and remembering the overall best streak found so far.\n\n# Maximum Subarray Problem\n\nHey! Let me break down the Maximum Subarray problem for you - it's one of those classic algorithms questions that seems tricky at first but has an elegant solution.\n\n## What it's asking\n\nGiven an array of numbers (which can be positive, negative, or zero), find the **contiguous subarray** that has the largest sum. The key word here is \"contiguous\" - the elements have to be next to each other in the original array.\n\nYou need to return the maximum sum value (not the actual subarray elements, though sometimes variations ask for that too).\n\n## Example walkthrough\n\nLet's use the array: `[-2, 1, -3, 4, -1, 2, 1, -5, 4]`\n\nIf we manually check some contiguous subarrays:\n- `[-2]` → sum = -2\n- `[1]` → sum = 1  \n- `[1, -3]` → sum = -2\n- `[4, -1, 2, 1]` → sum = 6\n- `[-1, 2, 1]` → sum = 2\n- `[4]` → sum = 4\n- And so on...\n\nThe answer is **6**, which comes from the subarray `[4, -1, 2, 1]`.\n\n## Why this works\n\nHere's the intuition: even though this subarray contains a negative number (-1), including it is still worth it because the positive numbers (4, 2, 1) more than make up for it. \n\nYou might wonder - why not just take `[4, 2, 1]` and skip the -1? Well, those numbers aren't contiguous in the original array! There's a -1 sitting between the 4 and the 2, so we can't just skip over it.\n\nThe beautiful thing about this problem is that it can be solved efficiently using **Kadane's Algorithm**, which runs in O(n) time. The algorithm keeps track of the maximum sum ending at each position and updates the global maximum as it goes.\n\nPretty neat how such a simple concept leads to an elegant algorithmic solution, right?",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Given array [-2, 1, -3, 4, -1, 2, 1, -5, 4], you're at index 3 (value = 4). Your current subarray sum is -4. What should you do next?",
+      "choices": [
+        {
+          "label": "Continue with current subarray: sum becomes -4 + 4 = 0",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Start fresh from current position: sum becomes 4",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This seems logical to 'keep going' since we're processing sequentially, but extending a negative sum (-4) with 4 only gives us 0. This misses the key insight that we should abandon unprofitable previous elements.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Kadane's Algorithm (Greedy DP)\n\n**This problem follows the \"maximum subarray ending at position i\" pattern:**\n- **Kadane's Algorithm** - Classic dynamic programming approach\n- **Greedy choice** - At each position, decide: extend current subarray or start fresh\n- **Optimal substructure** - Maximum subarray ending at `i` depends on maximum ending at `i-1`\n\n**Similar problems:**\n- Maximum Product Subarray (similar but with multiplication)\n- Longest Increasing Subsequence (different but uses similar DP thinking)\n- Best Time to Buy and Sell Stock (track minimum/maximum)\n\n**Key insight:** If the sum ending at `i-1` is negative, it will only hurt future sums, so we start fresh at position `i`.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Maximum Subarray Ending at Current Position\n\n**Invariant maintained throughout:**\n- **`currentSum`** = maximum sum of subarray ending at current index `i`\n- **`maxSum`** = maximum sum of any subarray seen so far (from 0 to `i`)\n\n**Recurrence relation:**\n```\ncurrentSum[i] = max(nums[i], currentSum[i-1] + nums[i])\n```\n\n**Why this works:**\n- If `currentSum[i-1]` is negative, starting fresh with `nums[i]` is better\n- If `currentSum[i-1]` is positive, extending gives us `currentSum[i-1] + nums[i]`\n- We always take the maximum of these two options\n\n**Invariant guarantee:** After processing index `i`, `maxSum` contains the maximum subarray sum in `nums[0..i]`.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that at each position, we only need to decide whether to **extend the current subarray** or **start a new subarray** from the current element - whichever gives us a larger sum. This works because if the current running sum becomes negative, it will only hurt any future positive numbers we encounter, so we're better off discarding it and starting fresh. For example, in array [-2, 1, -3, 4], when we reach index 3 (value 4), our running sum is -4, so we start fresh with just 4 rather than extending to get -4 + 4 = 0. This **greedy choice** at each step guarantees we find the optimal solution because we never keep a negative prefix that would reduce our maximum sum.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[-2,1,-3,4,-1,2,1,-5,4]`:\n- Step 1: current_sum = -2, max_sum = -2 (start with first element)\n- Step 2: current_sum = max(1, -2+1) = 1, max_sum = max(-2, 1) = 1\n- Step 3: current_sum = max(-3, 1-3) = -2, max_sum = max(1, -2) = 1\n- Step 4: current_sum = max(4, -2+4) = 4, max_sum = max(1, 4) = 4\n- Step 5: current_sum = max(-1, 4-1) = 3, max_sum = max(4, 3) = 4\n- Step 6: current_sum = max(2, 3+2) = 5, max_sum = max(4, 5) = 5\n- Step 7: current_sum = max(1, 5+1) = 6, max_sum = max(5, 6) = 6\n- Step 8: current_sum = max(-5, 6-5) = 1, max_sum = max(6, 1) = 6\n- Step 9: current_sum = max(4, 1+4) = 5, max_sum = max(6, 5) = 6\n- Final: **6 (subarray [4,-1,2,1])**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function to find maximum subarray sum\n\n```javascript\nfunction maxSubarraySum(nums) {\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function maxSubarraySum(nums) {\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize current sum and maximum sum with first element\n\n```javascript\nfunction maxSubarraySum(nums) {\n    let currentSum = nums[0];\n    let maxSum = nums[0];\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let currentSum = nums[0];\n    let maxSum = nums[0];"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start loop from second element to process each position\n\n```javascript\nfunction maxSubarraySum(nums) {\n    let currentSum = nums[0];\n    let maxSum = nums[0];\n    \n    for (let i = 1; i < nums.length; i++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    for (let i = 1; i < nums.length; i++) {\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "At each position: choose between extending current sum or starting fresh\n\n```javascript\nfunction maxSubarraySum(nums) {\n    let currentSum = nums[0];\n    let maxSum = nums[0];\n    \n    for (let i = 1; i < nums.length; i++) {\n        currentSum = Math.max(nums[i], currentSum + nums[i]);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        currentSum = Math.max(nums[i], currentSum + nums[i]);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Update maximum sum if current sum is larger\n\n```javascript\nfunction maxSubarraySum(nums) {\n    let currentSum = nums[0];\n    let maxSum = nums[0];\n    \n    for (let i = 1; i < nums.length; i++) {\n        currentSum = Math.max(nums[i], currentSum + nums[i]);\n        maxSum = Math.max(maxSum, currentSum);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        maxSum = Math.max(maxSum, currentSum);"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Return the maximum subarray sum found\n\n```javascript\nfunction maxSubarraySum(nums) {\n    let currentSum = nums[0];\n    let maxSum = nums[0];\n    \n    for (let i = 1; i < nums.length; i++) {\n        currentSum = Math.max(nums[i], currentSum + nums[i]);\n        maxSum = Math.max(maxSum, currentSum);\n    }\n    \n    return maxSum;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "    return maxSum;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering Kadane's algorithm with the Maximum Subarray problem! You've successfully learned one of the most elegant dynamic programming techniques that efficiently finds the largest sum of contiguous elements in just one pass. Next, we'll tackle the merge-sorted-array challenge, where you'll apply the two-pointer technique to combine sorted arrays seamlessly.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,432 @@
+{
+  "id": "coin-change",
+  "title": "Coin Change",
+  "pattern": "DP (unbounded knapsack)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 48,
+    "tier": "ADVANCED",
+    "lessonOrderTag": "ADVANCED-48",
+    "introduces": [
+      "unbounded-knapsack",
+      "min-coins-pattern",
+      "bottom-up-DP"
+    ],
+    "assumesAlreadyTaught": [
+      "dynamic-programming-concept",
+      "arrays",
+      "Math.min"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "combination-sum"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize dp array where dp[i] represents minimum coins needed for amount i, set dp[0] = 0 and all other values to infinity"
+    },
+    {
+      "id": "ps2",
+      "text": "For each amount from 1 to target amount, iterate through the outer loop"
+    },
+    {
+      "id": "ps3",
+      "text": "For each coin denomination in the given coins array, iterate through the inner loop"
+    },
+    {
+      "id": "ps4",
+      "text": "If current coin value is less than or equal to current amount, proceed with the calculation"
+    },
+    {
+      "id": "ps5",
+      "text": "Calculate dp[amount] = min(dp[amount], 1 + dp[amount - coin]) to find minimum coins needed"
+    },
+    {
+      "id": "ps6",
+      "text": "After processing all amounts and coins, check if dp[target] is still infinity"
+    },
+    {
+      "id": "ps7",
+      "text": "Return dp[target] if it's not infinity (solution exists), otherwise return -1 (no solution possible)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! \n\nWelcome back! After mastering edit distance and its dynamic programming techniques, you're ready to tackle another classic DP pattern - the **Coin Change** problem! This is actually a variation of the unbounded knapsack pattern, where you can use items (coins) multiple times to reach your target value. It's one of those beautiful problems that shows up everywhere in interviews and real-world scenarios.\n\nIn this lesson, you'll gain three powerful skills:\n\n🎯 **Master the unbounded knapsack DP pattern** - Learn when and how to apply this versatile technique to optimization problems\n\n💡 **Build intuition for \"minimum/maximum ways\" problems** - Develop your problem-solving instincts for counting and optimization challenges  \n\n🚀 **Recognize coin change variations** - Spot this pattern in disguise across different problem contexts\n\nYou're building an amazing foundation in dynamic programming, and this lesson will add another essential tool to your problem-solving toolkit. The concepts you learned with edit distance will help you see the similarities in how we break down these problems!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Dynamic programming concept** - Understanding of overlapping subproblems and optimal substructure\n- **Arrays** - Knowledge of array manipulation and indexing\n- **Recursion** - Understanding recursive problem decomposition and base cases\n- **Greedy vs optimal** - Distinction between greedy approach limitations and optimal solutions\n- **Mathematical optimization** - Concept of finding minimum values using Math.min function\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Dynamic programming concept** - Understanding of overlapping subproblems and optimal substructure\n- **Arrays** - Knowledge of array manipulation and indexing\n- **Recursion** - Understanding recursive problem decomposition and base cases\n- **Greedy vs optimal** - Distinction between greedy approach limitations and optimal solutions\n- **Mathematical optimization** - Concept of finding minimum values using Math.min function\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Dynamic programming concept** - Understanding of overlapping subproblems and optimal substructure\n- **Arrays** - Knowledge of array manipulation and indexing\n- **Recursion** - Understanding recursive problem decomposition and base cases\n- **Greedy vs optimal** - Distinction between greedy approach limitations and optimal solutions\n- **Mathematical optimization** - Concept of finding minimum values using Math.min function\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Dynamic programming concept** - Understanding of overlapping subproblems and optimal substructure\n- **Arrays** - Knowledge of array manipulation and indexing\n- **Recursion** - Understanding recursive problem decomposition and base cases\n- **Greedy vs optimal** - Distinction between greedy approach limitations and optimal solutions\n- **Mathematical optimization** - Concept of finding minimum values using Math.min function\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Dynamic programming concept** - Understanding of overlapping subproblems and optimal substructure\n- **Arrays** - Knowledge of array manipulation and indexing\n- **Recursion** - Understanding recursive problem decomposition and base cases\n- **Greedy vs optimal** - Distinction between greedy approach limitations and optimal solutions\n- **Mathematical optimization** - Concept of finding minimum values using Math.min function\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Coin Change problem asks for.\n\nImagine you're at a vending machine that only accepts exact change, and you need to make $0.87 using the fewest coins possible from quarters (25¢), dimes (10¢), nickels (5¢), and pennies (1¢). Just like the coin change algorithm, you'd greedily pick the largest denomination first - 3 quarters ($0.75), then 1 dime ($0.10), then 2 pennies ($0.02) - systematically working down until you reach exactly $0.87 with the minimum number of coins.\n\n# Coin Change Problem\n\nHey! Let me break down the **Coin Change** problem for you in simple terms.\n\n## What it's asking\n\nYou're given:\n- A set of coin denominations (like [1, 2, 5])\n- A target amount of money (like 11)\n\n**Your goal**: Find the **minimum number of coins** needed to make that exact amount.\n\nThink of it like you're a cashier trying to give change using the fewest coins possible!\n\n## Example walkthrough\n\nLet's say you have coins = [1, 2, 5] and you need to make amount = 11.\n\n**The optimal solution**: Use 3 coins → 5 + 5 + 1 = 11\n\n## Why this works\n\nYou might think \"wait, there are other ways to make 11!\" And you'd be right:\n- 11 ones: 1+1+1+1+1+1+1+1+1+1+1 = 11 coins ❌\n- Mix of 2s and 1s: 2+2+2+2+2+1 = 6 coins ❌  \n- Our solution: 5+5+1 = 3 coins ✅\n\nThe key insight is being **greedy with larger denominations** when possible. We use the 5-coin twice (that's 10), then one 1-coin to reach 11. This gives us the minimum count of 3 coins.\n\n## The challenge\n\nThe tricky part is that sometimes being greedy doesn't work! You need to consider all possibilities and find the truly optimal combination. That's where dynamic programming usually comes in handy.\n\nMake sense? It's essentially an optimization problem disguised as making change! 💰",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to make change for amount 11 using coins [1, 3, 4]. Which approach correctly finds the minimum number of coins needed?",
+      "choices": [
+        {
+          "label": "Use greedy approach: always pick the largest coin that fits, giving us 4+4+3=11 (3 coins)",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use DP: for each amount from 1 to 11, try each coin and take minimum: dp[amount] = min(dp[amount], 1 + dp[amount-coin])",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This greedy approach seems logical but fails for coin change. While it gives 3 coins (4+4+3), the optimal solution actually uses 3+4+4=11 or 1+1+3+3+3=11. Wait, that's wrong too - the optimal is actually 3+4+4=11 (3 coins) or better yet 1+1+1+4+4=11 (5 coins). Actually, 3+4+4=11 uses 3 coins, but 1+3+3+4=11 also uses 4 coins, and 1+1+3+3+3=11 uses 5 coins. The issue is greedy doesn't guarantee optimality - for amount 6 with coins [1,3,4], greedy gives 4+1+1=6 (3 coins) but optimal is 3+3=6 (2 coins).",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Unbounded Knapsack DP\n\n**This problem follows the \"unbounded knapsack\" pattern:**\n- **Unbounded items** - Each coin can be used unlimited times\n- **Minimization DP** - Find minimum coins (not maximum value)\n- **State:** `dp[i]` = minimum coins needed for amount `i`\n- **Transition:** For each coin, try using it: `dp[i] = min(dp[i], 1 + dp[i-coin])`\n\n**Similar problems:**\n- Coin Change II (count ways, not minimum)\n- Perfect Squares (similar minimization)\n- Word Break (different but uses similar DP structure)\n\n**Key insight:** This is an unbounded knapsack problem where we want to minimize the number of items (coins) used. We try each coin for each amount and take the minimum.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: dp[i] = Minimum Coins for Amount i\n\n**Invariant maintained throughout:**\n- **State definition:** `dp[i]` = minimum number of coins needed to make amount `i`\n- **Base case:** `dp[0] = 0` (0 coins needed for amount 0)\n- **Recurrence:** For each coin `c`, `dp[i] = min(dp[i], 1 + dp[i-c])` if `i >= c`\n\n**Why this works:**\n- For amount `i`, we try using each coin `c`\n- If we use coin `c`, we need `1 + dp[i-c]` coins total\n- We take the minimum over all coin choices\n- Since coins can be reused, we consider all possibilities\n\n**Invariant guarantee:** After processing all amounts up to `target`, `dp[i]` contains the minimum coins needed for amount `i`. If `dp[target]` is still infinity, no solution exists.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Coin Change DP State\n\n**State variables:**\n- **`dp`** - Array where `dp[i]` = minimum coins for amount `i`\n- **`amount`** - Current target amount being computed\n- **`coin`** - Current coin denomination being tried\n\n**State transitions:**\n1. **Initialize:** `dp[0] = 0`, `dp[i] = Infinity` for `i > 0`\n2. **For each amount from 1 to target:**\n   - For each coin in coins:\n     - If `amount >= coin`: `dp[amount] = min(dp[amount], 1 + dp[amount-coin])`\n3. **Result:** `dp[target]` if not Infinity, else -1\n\n**State validity:** DP array is valid when `dp[i]` contains the minimum coins for amount `i` for all `i <= target`.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Greedy (Always Pick Largest Coin)**\n- **Why it fails:** Doesn't guarantee optimal for all coin sets\n- **Issue:** For coins [1,3,4] and amount 6, greedy gives 4+1+1=6 (3 coins) but optimal is 3+3=6 (2 coins)\n- **Better:** DP considers all combinations and finds optimal\n\n**Approach 2: Try All Combinations**\n- **Why it fails:** Exponential time complexity\n- **Issue:** Too many combinations to try, especially for large amounts\n- **Better:** DP reduces to O(amount * coins.length) time\n\n**Approach 3: Recursion Without Memoization**\n- **Why it fails:** Exponential time due to overlapping subproblems\n- **Issue:** Recalculates same amounts many times\n- **Better:** Bottom-up DP avoids recalculation\n\n**Our approach wins because:** DP efficiently solves overlapping subproblems in O(amount * coins.length) time, guaranteeing the minimum number of coins by systematically trying all coin combinations.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that for each **target amount**, we can build the optimal solution by trying every **coin denomination** and taking the minimum of `1 + dp[amount - coin]`, where the `+1` represents using that coin. This works because we're breaking down the problem into **overlapping subproblems** - if we know the minimum coins needed for amount `X`, then for amount `X + coin_value`, we just need `1 + dp[X]` coins using that specific coin. For example, with coins [1,3,4] and target 6: `dp[6] = min(1+dp[5], 1+dp[3], 1+dp[2]) = min(1+4, 1+1, 1+2) = 2` (using coins 3+3). The **bottom-up approach** ensures we solve smaller amounts first, building up to our target amount optimally.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `coins=[1,2,5], amount=11`:\n\n- Step 1: Initialize dp array where dp[i] = minimum coins for amount i, dp[0]=0, others=infinity\n- Step 2: For amount 1: try coin 1 → dp[1] = min(∞, dp[0]+1) = 1\n- Step 3: For amount 2: try coins 1,2 → dp[2] = min(dp[1]+1, dp[0]+1) = min(2,1) = 1\n- Step 4: For amount 3: try coins 1,2 → dp[3] = min(dp[2]+1, dp[1]+1) = min(2,2) = 2\n- Step 5: For amount 4: try coins 1,2 → dp[4] = min(dp[3]+1, dp[2]+1) = min(3,2) = 2\n- Step 6: For amount 5: try coins 1,2,5 → dp[5] = min(dp[4]+1, dp[3]+1, dp[0]+1) = min(3,3,1) = 1\n- Step 7: For amount 6: try coins 1,2,5 → dp[6] = min(dp[5]+1, dp[4]+1, dp[1]+1) = min(2,3,2) = 2\n- Step 8: For amount 7: try coins 1,2,5 → dp[7] = min(dp[6]+1, dp[5]+1, dp[2]+1) = min(3,2,2) = 2\n- Step 9: For amount 8: try coins 1,2,5 → dp[8] = min(dp[7]+1, dp[6]+1, dp[3]+1) = min(3,3,3) = 3\n- Step 10: For amount 9: try coins 1,2,5 → dp[9] = min(dp[8]+1, dp[7]+1, dp[4]+1) = min(4,3,3) = 3\n- Step 11: For amount 10: try coins 1,2,5 → dp[10] = min(dp[9]+1, dp[8]+1, dp[5]+1) = min(4,4,2) = 2\n- Step 12: For amount 11: try coins 1,2,5 → dp[11] = min(dp[10]+1, dp[9]+1, dp[6]+1) = min(3,4,3) = 3\n- Final: **3 (5+5+1)**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function signature and handle edge case where amount is 0\n\n```javascript\nfunction coinChange(coins, amount) {\n    if (amount === 0) return 0;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function coinChange(coins, amount) {\n    if (amount === 0) return 0;"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Create dp array with size amount+1, initialize all values to Infinity except dp[0]=0\n\n```javascript\nfunction coinChange(coins, amount) {\n    if (amount === 0) return 0;\n    const dp = new Array(amount + 1).fill(Infinity);\n    dp[0] = 0;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "const dp = new Array(amount + 1).fill(Infinity);\ndp[0] = 0;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start outer loop to iterate through each amount from 1 to target amount\n\n```javascript\nfunction coinChange(coins, amount) {\n    if (amount === 0) return 0;\n    const dp = new Array(amount + 1).fill(Infinity);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= amount; i++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "for (let i = 1; i <= amount; i++) {"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Start inner loop to try each coin for current amount\n\n```javascript\nfunction coinChange(coins, amount) {\n    if (amount === 0) return 0;\n    const dp = new Array(amount + 1).fill(Infinity);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= amount; i++) {\n        for (let coin of coins) {\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "for (let coin of coins) {"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Check if current coin value is not greater than current amount (valid coin to use)\n\n```javascript\nfunction coinChange(coins, amount) {\n    if (amount === 0) return 0;\n    const dp = new Array(amount + 1).fill(Infinity);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= amount; i++) {\n        for (let coin of coins) {\n            if (coin <= i) {\n            }\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "if (coin <= i) {"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Apply DP transition: update dp[i] with minimum of current value or 1+dp[i-coin]\n\n```javascript\nfunction coinChange(coins, amount) {\n    if (amount === 0) return 0;\n    const dp = new Array(amount + 1).fill(Infinity);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= amount; i++) {\n        for (let coin of coins) {\n            if (coin <= i) {\n                dp[i] = Math.min(dp[i], 1 + dp[i - coin]);\n            }\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "dp[i] = Math.min(dp[i], 1 + dp[i - coin]);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Close both loops after processing all amounts and coins\n\n```javascript\nfunction coinChange(coins, amount) {\n    if (amount === 0) return 0;\n    const dp = new Array(amount + 1).fill(Infinity);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= amount; i++) {\n        for (let coin of coins) {\n            if (coin <= i) {\n                dp[i] = Math.min(dp[i], 1 + dp[i - coin]);\n            }\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "        }\n    }"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return final result: dp[amount] if possible (not Infinity), otherwise -1 for impossible\n\n```javascript\nfunction coinChange(coins, amount) {\n    if (amount === 0) return 0;\n    const dp = new Array(amount + 1).fill(Infinity);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= amount; i++) {\n        for (let coin of coins) {\n            if (coin <= i) {\n                dp[i] = Math.min(dp[i], 1 + dp[i - coin]);\n            }\n        }\n    }\n    \n    return dp[amount] === Infinity ? -1 : dp[amount];\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "return dp[amount] === Infinity ? -1 : dp[amount];"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the Coin Change problem and the unbounded knapsack DP pattern! You've successfully learned how to build up solutions by considering unlimited use of each item, which is a powerful technique for optimization problems. Next, we'll tackle Combination Sum, where you'll apply similar thinking to find all possible ways to reach a target using backtracking!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

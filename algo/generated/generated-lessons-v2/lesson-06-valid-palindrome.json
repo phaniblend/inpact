@@ -1,0 +1,666 @@
+{
+  "id": "valid-palindrome",
+  "title": "Valid Palindrome",
+  "pattern": "two pointers (toward each other) + string processing",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 6,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-6",
+    "introduces": [
+      "character-filtering",
+      "case-normalization",
+      "alphanumeric-check"
+    ],
+    "assumesAlreadyTaught": [
+      "strings",
+      "loops",
+      "two-pointers"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "remove-element"
+    ]
+  },
+  "problemStatement": {
+    "description": "Determine if a string is a palindrome, considering only alphanumeric characters and ignoring cases. A palindrome reads the same forward and backward.",
+    "inputs": [
+      "s: string containing printable ASCII characters (length 1 to 2*10^5)"
+    ],
+    "outputs": [
+      "Boolean: true if string is palindrome, false otherwise"
+    ],
+    "examples": [
+      {
+        "input": "s = \"A man, a plan, a canal: Panama\"",
+        "output": "true",
+        "explanation": "After filtering: \"amanaplanacanalpanama\". Two pointers compare: 'a'=='a', 'm'=='m', etc. All match, so it's a palindrome."
+      },
+      {
+        "input": "s = \"race a car\"",
+        "output": "false",
+        "explanation": "After filtering: \"raceacar\". Two pointers: 'r'=='r', 'a'=='a', 'c'=='c', 'e'!='a'. Mismatch found, not a palindrome."
+      },
+      {
+        "input": "s = \" \"",
+        "output": "true",
+        "explanation": "Empty string after filtering alphanumeric characters is considered a palindrome."
+      }
+    ],
+    "constraints": [
+      "1 <= s.length <= 2 * 10^5",
+      "s consists only of printable ASCII characters"
+    ],
+    "realWorldUse": [
+      "Text processing and validation (checking if text reads same both ways)",
+      "DNA sequence analysis (palindromic sequences)",
+      "String matching algorithms",
+      "Data cleaning and normalization"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "Palindrome checking requires comparing characters from both ends. Two pointers from opposite ends naturally converge toward the center, allowing us to check symmetry efficiently. The preprocessing step (filtering alphanumeric) is necessary before pointer comparison.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks to check if string reads same forward/backward → think two pointers from ends",
+      "SIGNAL 2: Need to ignore non-alphanumeric or case → preprocessing required before comparison",
+      "SIGNAL 3: Symmetric comparison needed → two pointers converging toward center"
+    ],
+    "patternRules": [
+      "If problem involves palindrome checking → use two pointers from opposite ends",
+      "When you see 'reads same both ways', 'symmetric', or 'mirror' → consider two-pointer approach",
+      "If preprocessing needed (filter, normalize) → do it first, then apply two pointers"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - we need to check all character pairs symmetrically, not make local choices.",
+      "bruteForce": "Reversing entire string and comparing works but uses O(n) extra space. Two pointers use O(1) space.",
+      "alternative": "Creating filtered string first then checking works, but two pointers can check in-place without creating new string (though filtering still needed)."
+    }
+  },
+  "coreInvariant": {
+    "statement": "Characters at positions < left and > right have been verified to match their mirror positions, while characters in [left, right] still need verification.",
+    "explanation": "This invariant holds because we only move pointers inward when characters match. If we find a mismatch, we return false immediately. If pointers meet or cross, all character pairs have been verified to match.",
+    "whyItMatters": "This invariant guarantees correctness: when left >= right, all character pairs have been checked and matched, so the string is a palindrome. If any mismatch is found, we return false immediately."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "left",
+        "meaning": "Pointer starting at beginning, moving rightward, points to next character to check (0-indexed)",
+        "indexing": "0-indexed, starts at 0"
+      },
+      {
+        "name": "right",
+        "meaning": "Pointer starting at end, moving leftward, points to mirror character to check (0-indexed)",
+        "indexing": "0-indexed, starts at s.length - 1"
+      },
+      {
+        "name": "s",
+        "meaning": "String being checked (may need preprocessing to filter alphanumeric)",
+        "indexing": "0-indexed string"
+      }
+    ],
+    "baseCases": [
+      "If string is empty after filtering: return true (empty string is palindrome)",
+      "If string has single character after filtering: return true",
+      "If left >= right: all pairs checked, return true"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "While left < right:",
+        "transition": "Skip non-alphanumeric characters by moving pointers until alphanumeric found",
+        "explanation": "We need to compare only alphanumeric characters, so skip spaces, punctuation, etc.",
+        "example": "s=\"a, b\": left at 'a', right at 'b', skip comma by moving pointers"
+      },
+      {
+        "condition": "If toLowerCase(s[left]) == toLowerCase(s[right]):",
+        "transition": "left++, right-- (characters match, continue checking)",
+        "explanation": "Characters match (case-insensitive), move pointers inward to check next pair",
+        "example": "s=\"Aa\": 'A'=='a' (case-insensitive), so left++, right--"
+      },
+      {
+        "condition": "If toLowerCase(s[left]) != toLowerCase(s[right]):",
+        "transition": "return false (mismatch found, not palindrome)",
+        "explanation": "Characters don't match, string cannot be palindrome",
+        "example": "s=\"ab\": 'a'!='b', return false"
+      }
+    ],
+    "decisionTree": {
+      "root": "While left < right, check if characters at left and right match",
+      "branches": [
+        "If non-alphanumeric: skip by moving pointer",
+        "If characters match (case-insensitive): move both pointers inward",
+        "If characters don't match: return false",
+        "If left >= right: return true (all pairs matched)"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "s = \"A man, a plan, a canal: Panama\"",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Preprocess: Filter to alphanumeric and lowercase → \"amanaplanacanalpanama\"",
+        "state": "Filtered string: \"amanaplanacanalpanama\", length = 21",
+        "logic": "Remove spaces, punctuation, convert to lowercase for comparison",
+        "result": "Ready for two-pointer comparison"
+      },
+      {
+        "step": 2,
+        "description": "Initialize: left = 0 ('a'), right = 20 ('a')",
+        "state": "left = 0, right = 20, s[0] = 'a', s[20] = 'a'",
+        "logic": "Start from both ends",
+        "result": "First pair: 'a' == 'a' ✓"
+      },
+      {
+        "step": 3,
+        "description": "Match found: left++, right--, now left=1 ('m'), right=19 ('m')",
+        "state": "left = 1, right = 19, s[1] = 'm', s[19] = 'm'",
+        "logic": "Characters match, continue checking",
+        "result": "Second pair: 'm' == 'm' ✓"
+      },
+      {
+        "step": 4,
+        "description": "Continue: left=2 ('a'), right=18 ('a'), match. Continue until left=10, right=10",
+        "state": "left = 10, right = 10, middle character 'c'",
+        "logic": "All pairs matched, pointers meet at center",
+        "result": "All character pairs verified"
+      },
+      {
+        "step": 5,
+        "description": "Terminate: left >= right, return true",
+        "state": "left = 10, right = 10, all pairs checked",
+        "logic": "No mismatches found, string is palindrome",
+        "result": "Return true"
+      }
+    ],
+    "keyInsight": "Two pointers from opposite ends check symmetry efficiently. By comparing characters at mirror positions and moving inward, we verify the palindrome property. Preprocessing (filtering alphanumeric, lowercasing) ensures we only compare relevant characters."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Not handling non-alphanumeric characters correctly",
+      "symptom": "Wrong answer when string contains spaces, punctuation (e.g., \"A man, a plan\" fails)",
+      "fix": "Skip non-alphanumeric characters by moving pointers until alphanumeric found, or preprocess string first",
+      "example": "s=\"a, b\": must skip comma, compare 'a' with 'b'"
+    },
+    {
+      "mistake": "Case-sensitive comparison instead of case-insensitive",
+      "symptom": "Wrong answer for strings like \"Aa\" (should be palindrome but returns false)",
+      "fix": "Convert both characters to lowercase before comparing: toLowerCase(s[left]) == toLowerCase(s[right])",
+      "example": "s=\"Aa\": 'A' and 'a' should match (case-insensitive)"
+    },
+    {
+      "mistake": "Not moving pointers when skipping non-alphanumeric",
+      "symptom": "Infinite loop if string has many non-alphanumeric characters",
+      "fix": "Always increment left or decrement right when skipping, ensure pointers eventually meet",
+      "example": "s=\"!!!\": must move pointers past all '!' characters"
+    },
+    {
+      "mistake": "Using left <= right instead of left < right",
+      "symptom": "May check middle character twice unnecessarily (though doesn't break correctness)",
+      "fix": "Use left < right to stop when pointers meet",
+      "example": "For odd-length string, when left == right, we're at middle character, no need to compare with itself"
+    },
+    {
+      "mistake": "Creating new filtered string instead of checking in-place",
+      "symptom": "Uses O(n) extra space unnecessarily",
+      "fix": "Use two pointers to skip non-alphanumeric in-place, or if preprocessing, note the space tradeoff",
+      "example": "Can check in-place by skipping non-alphanumeric, avoiding new string creation"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a two-pointer problem for palindrome checking.",
+      "",
+      "I'll use two pointers from opposite ends:",
+      "- Preprocess: filter to alphanumeric characters, convert to lowercase",
+      "- Initialize left = 0, right = n-1",
+      "- While left < right:",
+      "  - Skip non-alphanumeric characters by moving pointers",
+      "  - Compare s[left] and s[right] (case-insensitive)",
+      "  - If match: left++, right--",
+      "  - If mismatch: return false",
+      "- If loop completes: return true",
+      "",
+      "Time complexity: O(n) - single pass through string",
+      "Space complexity: O(1) if checking in-place, or O(n) if creating filtered string",
+      "",
+      "Edge cases:",
+      "- Empty string after filtering: return true",
+      "- Single character: return true",
+      "- All non-alphanumeric: return true (empty after filtering)"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Valid Palindrome (no preprocessing needed)",
+      "approachChange": "String already contains only lowercase alphanumeric characters, no filtering needed",
+      "solution": "Same two-pointer approach but skip preprocessing step"
+    },
+    "harder": {
+      "problem": "Longest Palindromic Substring",
+      "approachChange": "Need to find longest palindrome substring, not just check if entire string is palindrome. Use expand-around-center technique.",
+      "solution": "For each possible center, expand outward checking if characters match. Track longest palindrome found. O(n²) time."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize left = 0 and right = s.length - 1"
+    },
+    {
+      "id": "ps2",
+      "text": "While left < right:"
+    },
+    {
+      "id": "ps3",
+      "text": "  While left < right and s[left] is not alphanumeric: left++"
+    },
+    {
+      "id": "ps4",
+      "text": "  While left < right and s[right] is not alphanumeric: right--"
+    },
+    {
+      "id": "ps5",
+      "text": "  If toLowerCase(s[left]) != toLowerCase(s[right]): return false"
+    },
+    {
+      "id": "ps6",
+      "text": "  left++, right--"
+    },
+    {
+      "id": "ps7",
+      "text": "Return true (all pairs matched)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great job conquering remove-duplicates-sorted! Now we're leveling up with \"Valid Palindrome\" - a fantastic problem that combines the two pointers technique you've been practicing with some essential string processing skills.\n\nHere's the pattern we're exploring: **Two Pointers (Toward Each Other) + String Processing**. Instead of pointers moving in the same direction like before, we'll place one at the start and one at the end, then move them toward each other while cleaning and comparing characters along the way.\n\nBy mastering this problem, you'll gain three powerful skills:\n\n1. **Bidirectional Two Pointers** - Learn when and how to use pointers that converge from opposite ends\n2. **String Normalization** - Master techniques for cleaning text (handling case, spaces, and special characters)\n3. **Palindrome Detection Logic** - Build the core algorithmic thinking for symmetry-based problems\n\nThis pattern is incredibly versatile and appears in tons of real-world scenarios, from data validation to text processing algorithms. You're building skills that will serve you well beyond just this one problem!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **String manipulation** - Understanding string operations like indexing, length, and character access\n- **Two pointer technique** - Using two pointers moving towards each other to traverse data structures efficiently\n- **Character comparison** - Comparing characters for equality and handling case-insensitive comparisons\n- **Alphanumeric filtering** - Identifying and processing only alphanumeric characters while ignoring special characters\n- **Loop control** - Managing loop iterations with conditions and pointer movement\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **String manipulation** - Understanding string operations like indexing, length, and character access\n- **Two pointer technique** - Using two pointers moving towards each other to traverse data structures efficiently\n- **Character comparison** - Comparing characters for equality and handling case-insensitive comparisons\n- **Alphanumeric filtering** - Identifying and processing only alphanumeric characters while ignoring special characters\n- **Loop control** - Managing loop iterations with conditions and pointer movement\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **String manipulation** - Understanding string operations like indexing, length, and character access\n- **Two pointer technique** - Using two pointers moving towards each other to traverse data structures efficiently\n- **Character comparison** - Comparing characters for equality and handling case-insensitive comparisons\n- **Alphanumeric filtering** - Identifying and processing only alphanumeric characters while ignoring special characters\n- **Loop control** - Managing loop iterations with conditions and pointer movement\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **String manipulation** - Understanding string operations like indexing, length, and character access\n- **Two pointer technique** - Using two pointers moving towards each other to traverse data structures efficiently\n- **Character comparison** - Comparing characters for equality and handling case-insensitive comparisons\n- **Alphanumeric filtering** - Identifying and processing only alphanumeric characters while ignoring special characters\n- **Loop control** - Managing loop iterations with conditions and pointer movement\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **String manipulation** - Understanding string operations like indexing, length, and character access\n- **Two pointer technique** - Using two pointers moving towards each other to traverse data structures efficiently\n- **Character comparison** - Comparing characters for equality and handling case-insensitive comparisons\n- **Alphanumeric filtering** - Identifying and processing only alphanumeric characters while ignoring special characters\n- **Loop control** - Managing loop iterations with conditions and pointer movement\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Valid Palindrome problem asks for.\n\nImagine checking if a license plate reads the same forwards and backwards while driving - you mentally ignore the spaces, dashes, and focus only on the letters and numbers. Just like the algorithm, you'd compare the first character with the last, then move inward (second with second-to-last), continuing until you meet in the middle to confirm it's a palindrome like \"A-man-a-plan-a-canal-Panama\" becomes \"amanaplanacanalpanama\".\n\n# Valid Palindrome Problem\n\nHey! So this problem is asking you to figure out whether a given string is a **palindrome** - but with a twist.\n\n## What's the ask?\nYou need to check if a string reads the same forwards and backwards, BUT you should:\n- **Ignore case** (uppercase vs lowercase doesn't matter)\n- **Only consider alphanumeric characters** (letters and numbers only - skip spaces, punctuation, etc.)\n\n## Let's walk through the classic example:\n\n**Input:** `\"A man, a plan, a canal: Panama\"`  \n**Output:** `true`\n\n### Why does this work?\n\nLet's break it down step by step:\n\n1. **Original string:** \"A man, a plan, a canal: Panama\"\n\n2. **Remove non-alphanumeric characters:** \"AmanaplanacanalPanama\"\n\n3. **Convert to lowercase:** \"amanaplanacanalpanama\"\n\n4. **Check if it reads the same forwards and backwards:**\n   - Forward: `a-m-a-n-a-p-l-a-n-a-c-a-n-a-l-p-a-n-a-m-a`\n   - Backward: `a-m-a-n-a-p-l-a-n-a-c-a-n-a-l-p-a-n-a-m-a`\n\nThey match! So it's a valid palindrome.\n\nThe tricky part is remembering to filter out all the \"noise\" (spaces, punctuation, different cases) and focus only on the actual letters and numbers. Once you do that, checking for a palindrome becomes straightforward.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "When checking if 'A man, a plan, a canal: Panama' is a valid palindrome, what's the most efficient approach to handle the mixed case letters, spaces, and punctuation?",
+      "choices": [
+        {
+          "label": "Create a cleaned string by removing non-alphanumeric characters and converting to lowercase, then compare the string with its reverse using string slicing",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use two pointers starting from both ends, skip non-alphanumeric characters, convert to lowercase on-the-fly, and compare characters as you move pointers toward each other",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this approach works correctly, it's inefficient because it creates additional strings in memory (the cleaned string and its reverse). For a string of length n, this uses O(n) extra space and the string reversal operation adds unnecessary overhead.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "data-cleaning",
+      "mentorSays": "### Data Cleaning Step (Critical!)\n\n**Before using two pointers, we need to normalize the input:**\n\n1. **Convert to lowercase** - \"A\" and \"a\" should be treated the same\n2. **Remove non-alphanumeric characters** - Only keep letters and numbers\n\n**JavaScript example:**\n```javascript\ns = s.toLowerCase().replace(/[^a-z0-9]/g, '');\n```\n\n**What this does:**\n- `toLowerCase()` - Makes all characters lowercase\n- `replace(/[^a-z0-9]/g, '')` - Removes everything that's NOT a-z or 0-9\n\n**Example:**\n```\n\"A man, a plan, a canal: Panama\"\n→ \"amanaplanacanalpanama\"\n```\n\n**Why this matters:** Without cleaning, you'll get wrong answers on LeetCode! Punctuation and spaces must be removed. This prevents common LeetCode WA (Wrong Answer) errors.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Two Pointers with Character Filtering\n\n**This problem follows the \"two pointers with filtering\" pattern:**\n- **Two pointers** - One from start, one from end, moving toward each other\n- **Character filtering** - Skip non-alphanumeric characters\n- **Case normalization** - Convert to lowercase for comparison\n- **Symmetric comparison** - Compare characters at symmetric positions\n\n**Similar problems:**\n- Reverse String (two pointers)\n- Valid Palindrome II (similar with one deletion allowed)\n- Palindrome Linked List (similar concept on linked list)\n\n**Key insight:** Two pointers from opposite ends efficiently check palindrome property. By filtering and normalizing characters, we can compare symmetric positions without creating additional strings.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Characters at Symmetric Positions Must Match\n\n**Invariant maintained throughout:**\n- **Symmetric positions:** Characters at positions i and (n-1-i) must match after normalization\n- **Filtering:** Non-alphanumeric characters are skipped (not compared)\n- **Case normalization:** All characters compared in lowercase\n- **Pointer movement:** Pointers move toward center, skipping non-alphanumeric characters\n\n**Why this works:**\n- Initially, left = 0, right = n-1\n- While left < right:\n  - Skip non-alphanumeric characters on both sides\n  - Compare normalized characters (lowercase)\n  - If match, move both pointers inward\n  - If mismatch, return false\n- When left >= right, all pairs matched → return true\n\n**Invariant guarantee:** After processing, if function returns true, all symmetric character pairs match (after normalization). If any pair doesn't match, function returns false immediately.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Two Pointer Palindrome Check State\n\n**State variables:**\n- **`left`** - Left pointer (starts at 0)\n- **`right`** - Right pointer (starts at s.length-1)\n- **`s`** - Input string (may be cleaned or processed in-place)\n\n**State transitions:**\n1. **Initialize:** left = 0, right = s.length - 1\n2. **Loop:** While left < right:\n   - While left < right and !isAlphanumeric(s[left]): left++\n   - While left < right and !isAlphanumeric(s[right]): right--\n   - If toLowerCase(s[left]) != toLowerCase(s[right]): return false\n   - left++, right--\n3. **Result:** Return true (all pairs matched)\n\n**State validity:** After loop, if no mismatch found, string is palindrome.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Create Cleaned String and Reverse**\n- **Why it fails:** Uses O(n) extra space\n- **Issue:** Creates new string for cleaning and another for reversal\n- **Better:** Two pointers use O(1) space, process in-place\n\n**Approach 2: Compare Character by Character Without Filtering**\n- **Why it fails:** Wrong answer on LeetCode test cases\n- **Issue:** Spaces and punctuation cause mismatches\n- **Better:** Filter non-alphanumeric characters first\n\n**Approach 3: Case-Sensitive Comparison**\n- **Why it fails:** Wrong answer when cases differ\n- **Issue:** \"A\" != \"a\" in case-sensitive comparison\n- **Better:** Convert to lowercase before comparison\n\n**Our approach wins because:** Two pointers with filtering and normalization check palindrome in O(n) time with O(1) space. The approach avoids creating additional strings and correctly handles edge cases (spaces, punctuation, case differences).",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to **filter and normalize** the string first by keeping only alphanumeric characters and converting to lowercase, then use **two pointers** from opposite ends to compare characters moving inward. This works because palindromes read the same forwards and backwards, so if we eliminate irrelevant characters (spaces, punctuation) and case differences, we only need to verify that each character from the start matches its corresponding character from the end. For example, \"A man, a plan, a canal: Panama\" becomes \"amanaplanacanalpanama\" - then we compare `a[0]` with `a[20]`, `a[1]` with `a[19]`, etc., until pointers meet. This **O(n) time, O(1) space** approach avoids creating a reversed string copy.",
+      "action": "next",
+      "next": "pointer-movement-conditions"
+    },
+    {
+      "stepId": "pointer-movement-conditions",
+      "mentorSays": "### Pointer Movement Conditions\n\n**When to move pointers:**\n\n1. **Both characters are alphanumeric and equal:**\n   - Move both pointers inward: `left++`, `right--`\n   - Example: `'a' == 'a'` → move both\n\n2. **Left character is not alphanumeric:**\n   - Skip it: `left++` (don't move right)\n   - Example: `' '` or `','` → skip left\n\n3. **Right character is not alphanumeric:**\n   - Skip it: `right--` (don't move left)\n   - Example: `':'` or `'!'` → skip right\n\n4. **Characters don't match:**\n   - Return false immediately (not a palindrome)\n   - Example: `'a' != 'b'` → return false\n\n5. **Pointers meet or cross:**\n   - Stop: `left >= right` → return true (all matched)\n\n**Example:**\n```\n\"A man, a plan\"\nleft=0 ('A'), right=12 ('n')\n→ 'A' is alphanumeric, 'n' is alphanumeric\n→ Compare: 'a' == 'n'? No → return false\n```\n\n**This explains pointer movement conditions** - when to move, when to skip, when to stop.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `\"A man, a plan, a canal: Panama\"`:\n- Step 1: Initialize two pointers: left = 0, right = 32 (last index)\n- Step 2: left='A' (alphanumeric), right='a' (alphanumeric), compare 'a'=='a' ✓, move both pointers\n- Step 3: left=' ' (skip), move left to 'm'\n- Step 4: left='m', right='m', compare 'm'=='m' ✓, move both pointers\n- Step 5: left='a', right='a', compare 'a'=='a' ✓, move both pointers\n- Step 6: left='n', right='n', compare 'n'=='n' ✓, move both pointers\n- Step 7: left=',' (skip), move left to 'a'\n- Step 8: left='a', right='a', compare 'a'=='a' ✓, move both pointers\n- Step 9: Continue this process through middle: all character pairs match when normalized to lowercase\n- Step 10: Pointers meet/cross in the middle without finding any mismatches\n- Final: **true**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function that takes a string parameter\n\n```javascript\nfunction isPalindrome(s) {\n\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function isPalindrome(s) {"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Filter string to keep only alphanumeric characters using regex\n\n```javascript\nfunction isPalindrome(s) {\n    let filtered = s.replace(/[^a-zA-Z0-9]/g, '');\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "let filtered = s.replace(/[^a-zA-Z0-9]/g, '');"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Convert filtered string to lowercase for case-insensitive comparison\n\n```javascript\nfunction isPalindrome(s) {\n    let filtered = s.replace(/[^a-zA-Z0-9]/g, '');\n    let cleaned = filtered.toLowerCase();\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "let cleaned = filtered.toLowerCase();"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Initialize left pointer at start and right pointer at end\n\n```javascript\nfunction isPalindrome(s) {\n    let filtered = s.replace(/[^a-zA-Z0-9]/g, '');\n    let cleaned = filtered.toLowerCase();\n    let left = 0, right = cleaned.length - 1;\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "let left = 0, right = cleaned.length - 1;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Start while loop to compare characters from both ends\n\n```javascript\nfunction isPalindrome(s) {\n    let filtered = s.replace(/[^a-zA-Z0-9]/g, '');\n    let cleaned = filtered.toLowerCase();\n    let left = 0, right = cleaned.length - 1;\n    while (left < right) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "while (left < right) {"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Compare characters at left and right positions, return false if different\n\n```javascript\nfunction isPalindrome(s) {\n    let filtered = s.replace(/[^a-zA-Z0-9]/g, '');\n    let cleaned = filtered.toLowerCase();\n    let left = 0, right = cleaned.length - 1;\n    while (left < right) {\n        if (cleaned[left] !== cleaned[right]) return false;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "if (cleaned[left] !== cleaned[right]) return false;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Move pointers inward for next comparison\n\n```javascript\nfunction isPalindrome(s) {\n    let filtered = s.replace(/[^a-zA-Z0-9]/g, '');\n    let cleaned = filtered.toLowerCase();\n    let left = 0, right = cleaned.length - 1;\n    while (left < right) {\n        if (cleaned[left] !== cleaned[right]) return false;\n        left++; right--;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "left++; right--;"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return true if all character pairs matched (palindrome confirmed)\n\n```javascript\nfunction isPalindrome(s) {\n    let filtered = s.replace(/[^a-zA-Z0-9]/g, '');\n    let cleaned = filtered.toLowerCase();\n    let left = 0, right = cleaned.length - 1;\n    while (left < right) {\n        if (cleaned[left] !== cleaned[right]) return false;\n        left++; right--;\n    }\n    return true;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "return true;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the two-pointer technique with string processing in \"Valid Palindrome\"! You've demonstrated excellent problem-solving skills by efficiently comparing characters from both ends while handling case sensitivity and non-alphanumeric characters. Next, we'll tackle \"Remove Element\" where you'll apply similar two-pointer logic to modify arrays in-place—another fundamental skill that will serve you well in many coding challenges!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}
