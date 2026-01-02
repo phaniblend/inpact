@@ -1,0 +1,189 @@
+{
+  "id": "single-number",
+  "title": "Single Number",
+  "pattern": "bit manipulation (XOR)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 26,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-26",
+    "introduces": [
+      "xor-operator",
+      "bit-manipulation-basics",
+      "xor-self-cancellation"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "plus-one"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize result variable to 0"
+    },
+    {
+      "id": "ps2",
+      "text": "Iterate through each number in the input array"
+    },
+    {
+      "id": "ps3",
+      "text": "XOR the current number with the result variable"
+    },
+    {
+      "id": "ps4",
+      "text": "Store the XOR result back in the result variable"
+    },
+    {
+      "id": "ps5",
+      "text": "Continue until all numbers are processed"
+    },
+    {
+      "id": "ps6",
+      "text": "Return the final result (the single non-duplicate number)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work mastering array intersections using hash sets to track which elements we've seen before! Today we're going to explore a completely different but equally elegant approach to finding unique elements using bit manipulation and the XOR operation, which will give you a powerful new tool for solving problems where elements appear in pairs except for one special case.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given an array of integers where every element appears exactly twice except for one element that appears exactly once, find and return the single element that appears only once. You must implement a solution with linear time complexity and constant extra space.\n\n**Example:**\n```text\nInput: [2,2,1]\nOutput: 1\n```\nThe number 1 appears once while 2 appears twice, so we return 1.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) [4,1,2,1,2] → 4\n2) [7] → 7\n3) [3,5,3] → 5\n4) [9,6,9,6,8] → 8\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to find the single non-duplicate number in an array where every other number appears exactly twice?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Use a hash map to count frequencies, then iterate to find the number with count 1",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "XOR all numbers together, since identical pairs will cancel out (a^a=0) leaving only the single number",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works correctly, it requires O(n) extra space and two passes through the data, making it less efficient than the optimal solution.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that **XOR operation** has the perfect properties to eliminate duplicates: any number XORed with itself equals zero (`a ^ a = 0`), and zero XORed with any number equals that number (`0 ^ a = a`). When you **XOR all numbers** in the array, all the paired duplicates cancel each other out to zero, leaving only the **single number** that appears once. The mathematical property `(a ^ a ^ b) = (0 ^ b) = b` ensures the unpaired element survives the operation. This works in a single pass with O(1) space complexity.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[2,2,1]`:\n- Step 1: Initialize result = 0\n- Step 2: result = 0 ^ 2 = 2\n- Step 3: result = 2 ^ 2 = 0 (pair cancels out)\n- Step 4: result = 0 ^ 1 = 1 (single number remains)\n- Final answer: **1**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Set up the function signature and initialize a variable to store the XOR result.\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function singleNumber(nums) {\n    let result = 0;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Add a loop to iterate through all numbers in the array.\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n    for (let i = 0; i < nums.length; i++) {\n        // XOR operation will go here\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    for (let i = 0; i < nums.length; i++) {\n        // XOR operation will go here\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Apply XOR operation between result and current number, leveraging the property that identical numbers cancel out.\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n    for (let i = 0; i < nums.length; i++) {\n        result ^= nums[i];\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "        result ^= nums[i];"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Return the final result which contains the single number after all pairs have been cancelled out.\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n    for (let i = 0; i < nums.length; i++) {\n        result ^= nums[i];\n    }\n    return result;\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    return result;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Refactor to use a more concise for-of loop for cleaner, more readable code.\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n    for (const num of nums) {\n        result ^= num;\n    }\n    return result;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "function singleNumber(nums) {\n    let result = 0;\n    for (const num of nums) {\n        result ^= num;\n    }\n    return result;\n}"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the XOR bit manipulation technique! You've learned how the XOR operator's self-cancellation property (where any number XORed with itself equals zero) makes it perfect for finding unique elements among duplicates. Next, we'll tackle the \"Plus One\" problem, which will introduce you to array manipulation and handling carry operations - building on your growing algorithmic toolkit!",
+      "action": "complete"
+    }
+  ]
+}

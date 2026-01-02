@@ -1,0 +1,189 @@
+{
+  "id": "sqrt-x",
+  "title": "Sqrt(x)",
+  "pattern": "binary search on answer",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 28,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-28",
+    "introduces": [
+      "binary-search-on-answer",
+      "integer-square-root",
+      "search-for-condition"
+    ],
+    "assumesAlreadyTaught": [
+      "binary-search-concept",
+      "Math.floor"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "range-sum-query"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize left = 0, right = x, result = 0"
+    },
+    {
+      "id": "ps2",
+      "text": "While left <= right:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Calculate mid = (left + right) / 2"
+    },
+    {
+      "id": "ps4",
+      "text": "  If mid * mid <= x, update result = mid and search right half (left = mid + 1)"
+    },
+    {
+      "id": "ps5",
+      "text": "  Else search left half (right = mid - 1)"
+    },
+    {
+      "id": "ps6",
+      "text": "Return result as the largest integer whose square is <= x"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work mastering the plus-one pattern in our last lesson! Now we're ready to explore a powerful new technique called \"binary search on answer\" by tackling the square root problem, where instead of incrementing by one, we'll cleverly narrow down our search space by half each time to find our target value much more efficiently.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given a non-negative integer x, return the integer square root of x. Since the return type is an integer, the decimal digits are truncated, and only the integer part of the result is returned.\n\n**Example:**\n```text\nInput: 8\nOutput: 2\n```\nThe square root of 8 is 2.828..., so we return the integer part which is 2.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) Input: 1 → Output: 1\n2) Input: 4 → Output: 2\n3) Input: 9 → Output: 3\n4) Input: 15 → Output: 3\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to find the integer square root of a number x?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Start from 1 and increment until i*i > x, then return i-1",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use binary search from 0 to x, finding the largest mid where mid*mid ≤ x",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This brute force approach works but has O(√x) time complexity, which is inefficient for large numbers",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **binary search** to find the largest integer whose square is less than or equal to x. Instead of searching through a data structure, we **search on the answer space** from 0 to x. For each candidate `mid`, we check if `mid * mid <= x` - if true, `mid` could be our answer, so we search the right half for a potentially larger valid answer; otherwise, we search the left half. This approach finds the **floor of the square root** in O(log x) time.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `8`:\n- Step 1: Search range [0, 8], mid = 4. Since 4*4 = 16 > 8, search left half [0, 3]\n- Step 2: Search range [0, 3], mid = 1. Since 1*1 = 1 ≤ 8, potential answer = 1, search right half [2, 3]\n- Step 3: Search range [2, 3], mid = 2. Since 2*2 = 4 ≤ 8, potential answer = 2, search right half [3, 3]\n- Step 4: Search range [3, 3], mid = 3. Since 3*3 = 9 > 8, search left half (empty range)\n- Final answer: **2**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Set up the basic function structure and initialize binary search boundaries.\n\n```javascript\nfunction mySqrt(x) {\n    if (x < 2) return x;\n    \n    let left = 1;\n    let right = x;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function mySqrt(x) {\n    if (x < 2) return x;\n    \n    let left = 1;\n    let right = x;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Add the main binary search loop with mid calculation.\n\n```javascript\nfunction mySqrt(x) {\n    if (x < 2) return x;\n    \n    let left = 1;\n    let right = x;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Calculate mid squared and compare with target x to determine search direction.\n\n```javascript\nfunction mySqrt(x) {\n    if (x < 2) return x;\n    \n    let left = 1;\n    let right = x;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        let midSquared = mid * mid;\n        \n        if (midSquared === x) {\n            return mid;\n        } else if (midSquared < x) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "        let midSquared = mid * mid;\n        \n        if (midSquared === x) {\n            return mid;\n        } else if (midSquared < x) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Track the largest valid answer during search to handle non-perfect squares.\n\n```javascript\nfunction mySqrt(x) {\n    if (x < 2) return x;\n    \n    let left = 1;\n    let right = x;\n    let result = 0;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        let midSquared = mid * mid;\n        \n        if (midSquared === x) {\n            return mid;\n        } else if (midSquared < x) {\n            result = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    let result = 0;\n    \n    // Update the condition to track largest valid mid\n        if (midSquared === x) {\n            return mid;\n        } else if (midSquared < x) {\n            result = mid;  // Store potential answer\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Complete the solution by returning the largest valid result when loop ends.\n\n```javascript\nfunction mySqrt(x) {\n    if (x < 2) return x;\n    \n    let left = 1;\n    let right = x;\n    let result = 0;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        let midSquared = mid * mid;\n        \n        if (midSquared === x) {\n            return mid;\n        } else if (midSquared < x) {\n            result = mid;\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    \n    return result;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "    return result;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the binary search on answer pattern! You've learned how to transform the square root problem into a search problem by testing potential answers in a sorted space, and discovered how binary search can find conditions beyond just searching arrays. Next, we'll explore range sum queries, where you'll learn efficient techniques for quickly calculating sums over different portions of arrays—another powerful algorithmic building block that will expand your problem-solving toolkit!",
+      "action": "complete"
+    }
+  ]
+}

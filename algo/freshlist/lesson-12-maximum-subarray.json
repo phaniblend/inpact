@@ -1,0 +1,176 @@
+{
+  "id": "maximum-subarray",
+  "title": "Maximum Subarray",
+  "pattern": "Kadane's algorithm",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 12,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-12",
+    "introduces": [
+      "kadanes-algorithm",
+      "running-sum",
+      "reset-decision",
+      "subarray-concept",
+      "negative-numbers"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "loops",
+      "for-of-loop",
+      "functions",
+      "return-statement",
+      "comparison-operators",
+      "tracking-minimum",
+      "tracking-maximum",
+      "Math.max"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["merge-sorted-array"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Initialize currentSum to first element." },
+    { "id": "ps2", "text": "Initialize maxSum to first element." },
+    { "id": "ps3", "text": "For each element starting from the second:" },
+    { "id": "ps4", "text": "  Decide: extend current subarray OR start fresh." },
+    { "id": "ps5", "text": "  currentSum = max(element, currentSum + element)." },
+    { "id": "ps6", "text": "  Update maxSum if currentSum is larger." },
+    { "id": "ps7", "text": "Return maxSum." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Maximum Subarray**.\n\nThis lesson teaches **Kadane's algorithm** — a beautiful solution to finding the maximum sum of a contiguous subarray.\n\nThis builds directly on the tracking pattern from the previous lesson!",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nGiven an integer array `nums`, find the contiguous subarray with the largest sum, and return that sum.\n\nA **subarray** is a contiguous (connected) portion of the array.\n\n**Example:**\n```\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n\nOutput: 6\n\nThe subarray [4, -1, 2, 1] has the largest sum = 6\n```",
+      "action": "next",
+      "next": "what-is-subarray"
+    },
+    {
+      "stepId": "what-is-subarray",
+      "mentorSays": "### What is a Subarray?\n\nA **subarray** is a contiguous sequence of elements.\n\n```\narray = [1, 2, 3, 4]\n\nValid subarrays:\n[1], [2], [3], [4]\n[1, 2], [2, 3], [3, 4]\n[1, 2, 3], [2, 3, 4]\n[1, 2, 3, 4]\n\nNOT subarrays (not contiguous):\n[1, 3], [2, 4], [1, 4]\n```\n\nElements must be next to each other!",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) nums = [1, 2, 3] → 6 (entire array: 1+2+3)\n2) nums = [-1, 2, 3] → 5 (subarray [2, 3])\n3) nums = [-2, -1] → -1 (just [-1], best single element)\n4) nums = [5, -3, 4] → 6 (entire array: 5-3+4)\n5) nums = [1] → 1 (single element)\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you find the maximum subarray sum?",
+      "choices": [
+        { "label": "Check the sum of every possible subarray", "next": "why-not-brute-force" },
+        { "label": "Track the current subarray sum as you go", "next": "core-idea" },
+        { "label": "Just add all positive numbers", "next": "why-not-positive" }
+      ]
+    },
+    {
+      "stepId": "why-not-brute-force",
+      "mentorSays": "Checking every subarray works but is slow:\n\n```javascript\nfor (let start = 0; start < n; start++) {\n  for (let end = start; end < n; end++) {\n    // calculate sum from start to end\n  }\n}\n```\n\nWith 1000 elements, that's about 500,000 subarrays to check!\n\nKadane's algorithm does it in one pass.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "why-not-positive",
+      "mentorSays": "Just adding positive numbers doesn't work because subarrays must be **contiguous**.\n\n```\nnums = [5, -3, 4]\n\nAdding positives: 5 + 4 = 9\nBut [5, 4] is NOT a valid subarray!\n\nThe best contiguous subarray: [5, -3, 4] = 6\n```\n\nSometimes including a negative number is worth it to connect larger positives!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### Kadane's Key Insight\n\nAt each position, we have a choice:\n\n1. **Extend** the current subarray (add this element to it)\n2. **Start fresh** (begin a new subarray here)\n\n**When to start fresh?**\nWhen the current sum is negative! A negative sum only drags down future elements.\n\n```\ncurrentSum = -5, next element = 3\n\nExtend: -5 + 3 = -2\nStart fresh: 3\n\nStarting fresh is better!\n```",
+      "action": "next",
+      "next": "decision-formula"
+    },
+    {
+      "stepId": "decision-formula",
+      "mentorSays": "### The Decision Formula\n\n```javascript\ncurrentSum = Math.max(nums[i], currentSum + nums[i])\n```\n\n**What this does:**\n- `nums[i]` = start fresh with just this element\n- `currentSum + nums[i]` = extend the current subarray\n- `Math.max` picks the better option\n\n**Example:**\n```\ncurrentSum = 5, nums[i] = -2\nmax(-2, 5 + -2) = max(-2, 3) = 3  → extend\n\ncurrentSum = -5, nums[i] = 3\nmax(3, -5 + 3) = max(3, -2) = 3  → start fresh\n```",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nnums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]\n```\n\n**Start:** currentSum = -2, maxSum = -2\n\n**num = 1:**\n- max(1, -2 + 1) = max(1, -1) = 1 → start fresh\n- currentSum = 1, maxSum = 1\n\n**num = -3:**\n- max(-3, 1 + -3) = max(-3, -2) = -2 → extend\n- currentSum = -2, maxSum = 1\n\n**num = 4:**\n- max(4, -2 + 4) = max(4, 2) = 4 → start fresh\n- currentSum = 4, maxSum = 4\n\n**num = -1:**\n- max(-1, 4 + -1) = max(-1, 3) = 3 → extend\n- currentSum = 3, maxSum = 4\n\n**num = 2:**\n- max(2, 3 + 2) = 5 → extend\n- currentSum = 5, maxSum = 5\n\n**num = 1:**\n- max(1, 5 + 1) = 6 → extend\n- currentSum = 6, maxSum = **6**\n\n(Continue... maxSum stays at 6)\n\n**Return 6**",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nKadane's algorithm is surprisingly simple once you understand the idea!\n\nLet's build it step by step.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1", "ps2"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function and initialize with first element.\n\n```javascript\nfunction maxSubArray(nums) {\n  let currentSum = nums[0];\n  let maxSum = nums[0];\n\n}\n```\n\n**Explanation:**\n- Start both with the first element\n- This handles the case of a single-element array\n- We'll loop starting from the second element",
+      "example": "function maxSubArray(nums) {\n  let currentSum = nums[0];\n  let maxSum = nums[0];\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "**Step 2:** Loop from the second element.\n\n```javascript\nfunction maxSubArray(nums) {\n  let currentSum = nums[0];\n  let maxSum = nums[0];\n\n  for (let i = 1; i < nums.length; i++) {\n\n  }\n}\n```\n\n**Explanation:**\n- Start at `i = 1` (second element)\n- We already used `nums[0]` for initialization",
+      "example": "for (let i = 1; i < nums.length; i++) {\n\n}",
+      "action": "next",
+      "next": "code-03-decision",
+      "pseudocodeLineIds": ["ps4", "ps5"]
+    },
+    {
+      "stepId": "code-03-decision",
+      "mentorSays": "**Step 3:** Decide: extend or start fresh.\n\n```javascript\nfunction maxSubArray(nums) {\n  let currentSum = nums[0];\n  let maxSum = nums[0];\n\n  for (let i = 1; i < nums.length; i++) {\n    currentSum = Math.max(nums[i], currentSum + nums[i]);\n\n  }\n}\n```\n\n**Explanation:**\n- `nums[i]` = start a new subarray here\n- `currentSum + nums[i]` = extend the existing subarray\n- `Math.max` picks whichever is larger",
+      "example": "currentSum = Math.max(nums[i], currentSum + nums[i]);",
+      "action": "next",
+      "next": "code-04-update",
+      "pseudocodeLineIds": ["ps6"]
+    },
+    {
+      "stepId": "code-04-update",
+      "mentorSays": "**Step 4:** Update the maximum sum.\n\n```javascript\nfunction maxSubArray(nums) {\n  let currentSum = nums[0];\n  let maxSum = nums[0];\n\n  for (let i = 1; i < nums.length; i++) {\n    currentSum = Math.max(nums[i], currentSum + nums[i]);\n    maxSum = Math.max(maxSum, currentSum);\n  }\n}\n```\n\n**Explanation:**\n- After updating currentSum, check if it's the best we've seen\n- `Math.max(maxSum, currentSum)` keeps the larger value",
+      "example": "maxSum = Math.max(maxSum, currentSum);",
+      "action": "next",
+      "next": "code-05-return",
+      "pseudocodeLineIds": ["ps7"]
+    },
+    {
+      "stepId": "code-05-return",
+      "mentorSays": "**Step 5:** Return the maximum sum.\n\n```javascript\nfunction maxSubArray(nums) {\n  let currentSum = nums[0];\n  let maxSum = nums[0];\n\n  for (let i = 1; i < nums.length; i++) {\n    currentSum = Math.max(nums[i], currentSum + nums[i]);\n    maxSum = Math.max(maxSum, currentSum);\n  }\n\n  return maxSum;\n}\n```\n\n**Explanation:**\n- Return the best sum we found\n- This works even if all numbers are negative!",
+      "example": "return maxSum;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction maxSubArray(nums) {\n  let currentSum = nums[0];\n  let maxSum = nums[0];\n\n  for (let i = 1; i < nums.length; i++) {\n    currentSum = Math.max(nums[i], currentSum + nums[i]);\n    maxSum = Math.max(maxSum, currentSum);\n  }\n\n  return maxSum;\n}\n```\n\n**How it works:**\n1. Start with first element as both current and max\n2. For each element, decide: extend or start fresh\n3. Track the maximum sum seen\n4. Return the best sum found\n\nOne pass, constant extra space — elegant and efficient!",
+      "example": "function maxSubArray(nums) {\n  let currentSum = nums[0];\n  let maxSum = nums[0];\n\n  for (let i = 1; i < nums.length; i++) {\n    currentSum = Math.max(nums[i], currentSum + nums[i]);\n    maxSum = Math.max(maxSum, currentSum);\n  }\n\n  return maxSum;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Kadane's algorithm** — a classic dynamic programming approach\n- **Running sum** — tracking the current subarray sum\n- **Reset decision** — knowing when to start fresh\n- **Subarray concept** — contiguous sequence of elements\n- **Handling negatives** — sometimes including them is optimal\n\n**Why this matters:**\n\nKadane's algorithm is:\n- A classic interview question\n- The foundation for more complex DP problems\n- An example of \"local vs global\" optimization\n\nVariations include:\n- Maximum Product Subarray\n- Maximum Circular Subarray\n- Minimum Subarray Sum\n\nYou've now completed the first 12 Foundation lessons! You're building strong algorithmic intuition.\n\n**Next recommended lesson:** Merge Sorted Array",
+      "action": "complete"
+    }
+  ]
+}

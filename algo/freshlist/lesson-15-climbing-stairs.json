@@ -1,0 +1,171 @@
+{
+  "id": "climbing-stairs",
+  "title": "Climbing Stairs",
+  "pattern": "dynamic programming (basic)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 15,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-15",
+    "introduces": [
+      "recursion-concept",
+      "overlapping-subproblems",
+      "dynamic-programming-concept",
+      "fibonacci-pattern",
+      "iterative-dp",
+      "space-optimization"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "loops",
+      "for-loop",
+      "functions",
+      "return-statement",
+      "comparison-operators"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["house-robber"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If n <= 2, return n (base cases)." },
+    { "id": "ps2", "text": "Initialize prev1 = 1, prev2 = 2 (ways to reach step 1 and 2)." },
+    { "id": "ps3", "text": "For each step from 3 to n:" },
+    { "id": "ps4", "text": "  current = prev1 + prev2 (ways to reach this step)." },
+    { "id": "ps5", "text": "  Shift: prev1 = prev2, prev2 = current." },
+    { "id": "ps6", "text": "Return prev2 (ways to reach step n)." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Climbing Stairs**.\n\nThis lesson introduces **dynamic programming (DP)** — one of the most important algorithmic techniques!\n\nDP solves problems by breaking them into smaller subproblems. You'll see this pattern in many interview questions.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nYou're climbing a staircase with `n` steps.\n\nEach time you can climb either **1 step** or **2 steps**.\n\nHow many **distinct ways** can you reach the top?\n\n**Example:**\n```\nn = 3\n\nOutput: 3\n\nWays: (1+1+1), (1+2), (2+1)\n```",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\nn = 1 → 1 way  [1]\nn = 2 → 2 ways [1+1], [2]\nn = 3 → 3 ways [1+1+1], [1+2], [2+1]\nn = 4 → 5 ways [1+1+1+1], [1+1+2], [1+2+1], [2+1+1], [2+2]\n```\n\nDo you notice a pattern? 1, 2, 3, 5...",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you solve this problem?",
+      "choices": [
+        { "label": "List all possible paths", "next": "why-not-enumerate" },
+        { "label": "Build up from smaller steps", "next": "core-idea" },
+        { "label": "Use a mathematical formula", "next": "fibonacci-connection" }
+      ]
+    },
+    {
+      "stepId": "why-not-enumerate",
+      "mentorSays": "Listing all paths works for small n:\n\n```\nn = 3: (1,1,1), (1,2), (2,1) → 3 paths\n```\n\nBut the number of paths grows exponentially!\n\n```\nn = 20 → 10,946 paths\nn = 30 → 1,346,269 paths\n```\n\nListing them all is way too slow. Let's find a pattern instead!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "fibonacci-connection",
+      "mentorSays": "Great observation! The pattern 1, 2, 3, 5, 8... is the **Fibonacci sequence**!\n\nBut let's understand **why** this works, not just memorize the formula.\n\nThis understanding will help you solve many other DP problems.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Key Insight\n\nTo reach step `n`, you must have come from either:\n- Step `n-1` (took 1 step)\n- Step `n-2` (took 2 steps)\n\nSo: **ways(n) = ways(n-1) + ways(n-2)**\n\n```\nways(4) = ways(3) + ways(2)\n        = 3 + 2\n        = 5\n```\n\nThis is the essence of dynamic programming: solving a problem using solutions to smaller versions of the same problem!",
+      "action": "next",
+      "next": "why-dp-works"
+    },
+    {
+      "stepId": "why-dp-works",
+      "mentorSays": "### Why This Works\n\n**To reach step 4:**\n- All paths that reach step 3, plus one more step of 1\n- All paths that reach step 2, plus one more step of 2\n\n**No overlap** — these are distinct because:\n- Paths via step 3 end with a 1-step\n- Paths via step 2 end with a 2-step\n\n**No missing paths** — every path to step 4 MUST come from either step 3 or step 2.",
+      "action": "next",
+      "next": "base-cases"
+    },
+    {
+      "stepId": "base-cases",
+      "mentorSays": "### Base Cases\n\nWe need starting points for our formula:\n\n```\nways(1) = 1  (only way: take 1 step)\nways(2) = 2  (ways: 1+1, or 2)\n```\n\nFrom these, we can build up:\n```\nways(3) = ways(2) + ways(1) = 2 + 1 = 3\nways(4) = ways(3) + ways(2) = 3 + 2 = 5\nways(5) = ways(4) + ways(3) = 5 + 3 = 8\n```",
+      "action": "next",
+      "next": "iterative-approach"
+    },
+    {
+      "stepId": "iterative-approach",
+      "mentorSays": "### Building Up Iteratively\n\nInstead of recursion, we'll build from the bottom up:\n\n```\nStep 1: 1 way\nStep 2: 2 ways\nStep 3: 1 + 2 = 3 ways\nStep 4: 2 + 3 = 5 ways\nStep 5: 3 + 5 = 8 ways\n...\n```\n\nWe only need to remember the **last two values** to calculate the next one!\n\nThis is called **space optimization**.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nn = 5\nprev1 = 1 (ways to step 1)\nprev2 = 2 (ways to step 2)\n```\n\n**Step 3:**\n- current = 1 + 2 = 3\n- Shift: prev1 = 2, prev2 = 3\n\n**Step 4:**\n- current = 2 + 3 = 5\n- Shift: prev1 = 3, prev2 = 5\n\n**Step 5:**\n- current = 3 + 5 = 8\n- Shift: prev1 = 5, prev2 = 8\n\n**Return 8**",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis solution uses constant space — we only track two previous values!\n\nLet's build it step by step.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function and handle base cases.\n\n```javascript\nfunction climbStairs(n) {\n  if (n <= 2) {\n    return n;\n  }\n}\n```\n\n**Explanation:**\n- If n = 1, return 1 (one way)\n- If n = 2, return 2 (two ways)\n- These are our base cases",
+      "example": "function climbStairs(n) {\n  if (n <= 2) {\n    return n;\n  }\n}",
+      "action": "next",
+      "next": "code-02-init",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-init",
+      "mentorSays": "**Step 2:** Initialize the two previous values.\n\n```javascript\nfunction climbStairs(n) {\n  if (n <= 2) {\n    return n;\n  }\n\n  let prev1 = 1;\n  let prev2 = 2;\n}\n```\n\n**Explanation:**\n- `prev1 = 1` represents ways to reach step 1\n- `prev2 = 2` represents ways to reach step 2\n- We'll use these to build up to step n",
+      "example": "let prev1 = 1;\nlet prev2 = 2;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps3", "ps4", "ps5"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "**Step 3:** Loop from step 3 to n, building up.\n\n```javascript\nfunction climbStairs(n) {\n  if (n <= 2) {\n    return n;\n  }\n\n  let prev1 = 1;\n  let prev2 = 2;\n\n  for (let i = 3; i <= n; i++) {\n    const current = prev1 + prev2;\n    prev1 = prev2;\n    prev2 = current;\n  }\n}\n```\n\n**Explanation:**\n- `current = prev1 + prev2` — ways to reach current step\n- Then shift the window: prev1 becomes prev2, prev2 becomes current\n- We're always tracking just two values",
+      "example": "for (let i = 3; i <= n; i++) {\n  const current = prev1 + prev2;\n  prev1 = prev2;\n  prev2 = current;\n}",
+      "action": "next",
+      "next": "code-04-return",
+      "pseudocodeLineIds": ["ps6"]
+    },
+    {
+      "stepId": "code-04-return",
+      "mentorSays": "**Step 4:** Return the result.\n\n```javascript\nfunction climbStairs(n) {\n  if (n <= 2) {\n    return n;\n  }\n\n  let prev1 = 1;\n  let prev2 = 2;\n\n  for (let i = 3; i <= n; i++) {\n    const current = prev1 + prev2;\n    prev1 = prev2;\n    prev2 = current;\n  }\n\n  return prev2;\n}\n```\n\n**Explanation:**\n- After the loop, `prev2` holds the number of ways to reach step n\n- Return it as our answer",
+      "example": "return prev2;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction climbStairs(n) {\n  if (n <= 2) {\n    return n;\n  }\n\n  let prev1 = 1;\n  let prev2 = 2;\n\n  for (let i = 3; i <= n; i++) {\n    const current = prev1 + prev2;\n    prev1 = prev2;\n    prev2 = current;\n  }\n\n  return prev2;\n}\n```\n\n**How it works:**\n1. Handle small cases directly\n2. Start with ways for steps 1 and 2\n3. Build up each step using the formula: ways(n) = ways(n-1) + ways(n-2)\n4. Only keep track of the last two values\n5. Return the final count",
+      "example": "function climbStairs(n) {\n  if (n <= 2) {\n    return n;\n  }\n\n  let prev1 = 1;\n  let prev2 = 2;\n\n  for (let i = 3; i <= n; i++) {\n    const current = prev1 + prev2;\n    prev1 = prev2;\n    prev2 = current;\n  }\n\n  return prev2;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Dynamic Programming concept** — solving problems using smaller subproblems\n- **Overlapping subproblems** — the same subproblems appear multiple times\n- **Fibonacci pattern** — current = previous two combined\n- **Iterative DP** — building up from base cases\n- **Space optimization** — only keeping what we need\n\n**Why this matters:**\n\nThis pattern appears in MANY problems:\n- House Robber\n- Coin Change\n- Longest Increasing Subsequence\n- Unique Paths\n- And dozens more!\n\nThe key insight: \"How can I express this problem in terms of smaller versions of itself?\"\n\n**Next recommended lesson:** House Robber",
+      "action": "complete"
+    }
+  ]
+}

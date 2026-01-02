@@ -1,0 +1,179 @@
+{
+  "id": "first-unique-character",
+  "title": "First Unique Character in a String",
+  "pattern": "frequency map",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 24,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-24",
+    "introduces": [
+      "two-pass-technique",
+      "count-then-check"
+    ],
+    "assumesAlreadyTaught": [
+      "strings",
+      "objects",
+      "frequency-counting"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "intersection-of-two-arrays"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize empty frequency map to store character counts"
+    },
+    {
+      "id": "ps2",
+      "text": "First pass: iterate through string and count frequency of each character in map"
+    },
+    {
+      "id": "ps3",
+      "text": "Second pass: iterate through string from left to right"
+    },
+    {
+      "id": "ps4",
+      "text": "For each character, check if its frequency in map equals 1"
+    },
+    {
+      "id": "ps5",
+      "text": "If frequency is 1, return current character index"
+    },
+    {
+      "id": "ps6",
+      "text": "If no character with frequency 1 found, return -1"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work mastering the two-pointer technique in our squares of sorted array problem! Today we're shifting gears to explore a powerful new pattern called frequency mapping, where we'll learn to track and count elements efficiently as we solve the challenge of finding the first unique character in a string.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given a string, find the index of the first character that appears exactly once in the string. If no such character exists, return -1. The solution should return the index of the leftmost unique character.\n\n**Example:**\n```text\nInput: \"leetcode\"\nOutput: 0 (index of \"l\")\n```\n\nThe character \"l\" at index 0 is the first character that appears only once in the string.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) \"abc\" → 0 (first char 'a' is unique)\n2) \"aab\" → 2 (first unique char 'b' at index 2)\n3) \"aabb\" → -1 (no unique characters)\n4) \"abba\" → -1 (no unique characters)\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to find the first unique character in a string?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "For each character, scan the entire string to count its occurrences, then return the first one that appears exactly once",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Make two passes: first pass counts frequency of each character, second pass finds the first character with frequency 1",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This brute force approach has O(n²) time complexity because for each of the n characters, you're scanning the entire string again to count occurrences, resulting in redundant work.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use a **two-pass approach** with a **frequency map** to efficiently find the first unique character. In the **first pass**, count the frequency of each character in the string using a hash map. In the **second pass**, iterate through the string again and return the index of the first character that has a **count of 1** in the frequency map. This approach has O(n) time complexity since we avoid nested loops by preprocessing the character frequencies.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `\"leetcode\"`:\n- Step 1: First pass - count each character: l=1, e=3, t=1, c=1, o=1, d=1\n- Step 2: Second pass - check index 0: 'l' has count=1, so it's the first unique character\n- Step 3: Return index 0 since 'l' is the first character with count=1\n- Final answer: **0 (index of \"l\")**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create the function signature and initialize a frequency map to count character occurrences.\n\n```javascript\nfunction firstUniqChar(s) {\n    const charCount = new Map();\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function firstUniqChar(s) {\n    const charCount = new Map();\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "First pass through the string to count the frequency of each character.\n\n```javascript\nfunction firstUniqChar(s) {\n    const charCount = new Map();\n    \n    // First pass: count all characters\n    for (let i = 0; i < s.length; i++) {\n        const char = s[i];\n        charCount.set(char, (charCount.get(char) || 0) + 1);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    // First pass: count all characters\n    for (let i = 0; i < s.length; i++) {\n        const char = s[i];\n        charCount.set(char, (charCount.get(char) || 0) + 1);\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Second pass through the string to find the first character with count equal to 1.\n\n```javascript\nfunction firstUniqChar(s) {\n    const charCount = new Map();\n    \n    // First pass: count all characters\n    for (let i = 0; i < s.length; i++) {\n        const char = s[i];\n        charCount.set(char, (charCount.get(char) || 0) + 1);\n    }\n    \n    // Second pass: find first character with count = 1\n    for (let i = 0; i < s.length; i++) {\n        if (charCount.get(s[i]) === 1) {\n            return i;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    // Second pass: find first character with count = 1\n    for (let i = 0; i < s.length; i++) {\n        if (charCount.get(s[i]) === 1) {\n            return i;\n        }\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Add the return statement for when no unique character is found.\n\n```javascript\nfunction firstUniqChar(s) {\n    const charCount = new Map();\n    \n    // First pass: count all characters\n    for (let i = 0; i < s.length; i++) {\n        const char = s[i];\n        charCount.set(char, (charCount.get(char) || 0) + 1);\n    }\n    \n    // Second pass: find first character with count = 1\n    for (let i = 0; i < s.length; i++) {\n        if (charCount.get(s[i]) === 1) {\n            return i;\n        }\n    }\n    \n    // No unique character found\n    return -1;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    // No unique character found\n    return -1;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the frequency map pattern and the two-pass technique! You've learned how to efficiently solve problems by first counting occurrences in one pass, then checking those counts in a second pass to find your answer. Next, we'll tackle \"Intersection of Two Arrays\" where you'll apply similar counting strategies to find common elements between datasets - you're building a solid foundation in these essential algorithmic patterns!",
+      "action": "complete"
+    }
+  ]
+}

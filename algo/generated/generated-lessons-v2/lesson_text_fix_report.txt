@@ -1,0 +1,197 @@
+Lessons scanned: 120
+
+[SKIP] lesson-01-reverse-string.json — no inefficient blocks
+[SKIP] lesson-02-search-insert-position.json — no inefficient blocks
+[SKIP] lesson-03-binary-search.json — no inefficient blocks
+[SKIP] lesson-04-rotate-array.json — no inefficient blocks
+[SKIP] lesson-05-remove-duplicates-sorted.json — no inefficient blocks
+[SKIP] lesson-06-valid-palindrome.json — no inefficient blocks
+[SKIP] lesson-07-remove-element.json — no inefficient blocks
+[SKIP] lesson-08-valid-anagram.json — no inefficient blocks
+[SKIP] lesson-09-contains-duplicate.json — no inefficient blocks
+[FIX] lesson-092-distinct-subsequences.json — inefficient block
+  ❌ Anthropic failed for lesson-092-distinct-subsequences.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-092-distinct-subsequences.json — no inefficient blocks
+[FIX] lesson-093-interleaving-string.json — inefficient block
+  ❌ Anthropic failed for lesson-093-interleaving-string.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-093-interleaving-string.json — no inefficient blocks
+[SKIP] lesson-094-burst-balloons.json — no inefficient blocks
+[FIX] lesson-095-super-egg-drop.json — inefficient block
+  ❌ Anthropic failed for lesson-095-super-egg-drop.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-095-super-egg-drop.json — no inefficient blocks
+[FIX] lesson-096-cherry-pickup.json — inefficient block
+  ❌ Anthropic failed for lesson-096-cherry-pickup.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-096-cherry-pickup.json — no inefficient blocks
+[FIX] lesson-097-frog-jump.json — inefficient block
+  ❌ Anthropic failed for lesson-097-frog-jump.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-097-frog-jump.json — no inefficient blocks
+[FIX] lesson-098-split-array-largest-sum.json — inefficient block
+  ❌ Anthropic failed for lesson-098-split-array-largest-sum.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-098-split-array-largest-sum.json — no inefficient blocks
+[FIX] lesson-099-max-sum-rectangle.json — inefficient block
+  ❌ Anthropic failed for lesson-099-max-sum-rectangle.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-099-max-sum-rectangle.json — no inefficient blocks
+[SKIP] lesson-10-two-sum.json — no inefficient blocks
+[FIX] lesson-100-count-smaller-after-self.json — inefficient block
+  ❌ Anthropic failed for lesson-100-count-smaller-after-self.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-100-count-smaller-after-self.json — no inefficient blocks
+[FIX] lesson-101-reverse-pairs.json — inefficient block
+  ❌ Anthropic failed for lesson-101-reverse-pairs.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-101-reverse-pairs.json — no inefficient blocks
+[FIX] lesson-102-sliding-window-median.json — inefficient block
+  ❌ Anthropic failed for lesson-102-sliding-window-median.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-102-sliding-window-median.json — no inefficient blocks
+[FIX] lesson-103-count-range-sum.json — inefficient block
+  ❌ Anthropic failed for lesson-103-count-range-sum.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-103-count-range-sum.json — no inefficient blocks
+[FIX] lesson-104-shortest-palindrome.json — inefficient block
+  ❌ Anthropic failed for lesson-104-shortest-palindrome.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-104-shortest-palindrome.json — no inefficient blocks
+[FIX] lesson-105-max-chunks-sorted-ii.json — inefficient block
+  ❌ Anthropic failed for lesson-105-max-chunks-sorted-ii.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-105-max-chunks-sorted-ii.json — no inefficient blocks
+[FIX] lesson-106-contain-virus.json — inefficient block
+  ❌ Anthropic failed for lesson-106-contain-virus.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-106-contain-virus.json — no inefficient blocks
+[FIX] lesson-107-regions-cut-by-slashes.json — inefficient block
+  ❌ Anthropic failed for lesson-107-regions-cut-by-slashes.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-107-regions-cut-by-slashes.json — no inefficient blocks
+[FIX] lesson-108-number-of-atoms.json — inefficient block
+  ❌ Anthropic failed for lesson-108-number-of-atoms.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-108-number-of-atoms.json — no inefficient blocks
+[FIX] lesson-109-race-car.json — inefficient block
+  ❌ Anthropic failed for lesson-109-race-car.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-109-race-car.json — no inefficient blocks
+[FIX] lesson-11-best-time-buy-sell-stock.json — inefficient block
+  ❌ Anthropic failed for lesson-11-best-time-buy-sell-stock.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-11-best-time-buy-sell-stock.json — no inefficient blocks
+[FIX] lesson-110-longest-duplicate-substring.json — inefficient block
+  ❌ Anthropic failed for lesson-110-longest-duplicate-substring.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-110-longest-duplicate-substring.json — no inefficient blocks
+[FIX] lesson-111-min-refueling-stops.json — inefficient block
+  ❌ Anthropic failed for lesson-111-min-refueling-stops.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-111-min-refueling-stops.json — no inefficient blocks
+[FIX] lesson-112-max-frequency-stack.json — inefficient block
+  ❌ Anthropic failed for lesson-112-max-frequency-stack.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-112-max-frequency-stack.json — no inefficient blocks
+[FIX] lesson-113-shortest-path-all-nodes.json — inefficient block
+  ❌ Anthropic failed for lesson-113-shortest-path-all-nodes.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-113-shortest-path-all-nodes.json — no inefficient blocks
+[FIX] lesson-114-min-cost-hire-workers.json — inefficient block
+  ❌ Anthropic failed for lesson-114-min-cost-hire-workers.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-114-min-cost-hire-workers.json — no inefficient blocks
+[FIX] lesson-115-random-pick-blacklist.json — inefficient block
+  ❌ Anthropic failed for lesson-115-random-pick-blacklist.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-115-random-pick-blacklist.json — no inefficient blocks
+[FIX] lesson-116-rectangle-area-ii.json — inefficient block
+  ❌ Anthropic failed for lesson-116-rectangle-area-ii.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-116-rectangle-area-ii.json — no inefficient blocks
+[FIX] lesson-117-swim-rising-water.json — inefficient block
+  ❌ Anthropic failed for lesson-117-swim-rising-water.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-117-swim-rising-water.json — no inefficient blocks
+[SKIP] lesson-118-k-similar-strings.json — no inefficient blocks
+[FIX] lesson-119-smallest-range-k-lists.json — inefficient block
+  ❌ Anthropic failed for lesson-119-smallest-range-k-lists.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-119-smallest-range-k-lists.json — no inefficient blocks
+[SKIP] lesson-12-maximum-subarray.json — no inefficient blocks
+[FIX] lesson-120-beautiful-array.json — inefficient block
+  ❌ Anthropic failed for lesson-120-beautiful-array.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-120-beautiful-array.json — no inefficient blocks
+[SKIP] lesson-13-merge-sorted-array.json — no inefficient blocks
+[SKIP] lesson-14-valid-parentheses.json — no inefficient blocks
+[SKIP] lesson-15-climbing-stairs.json — no inefficient blocks
+[FIX] lesson-16-house-robber.json — inefficient block
+  ❌ Anthropic failed for lesson-16-house-robber.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-16-house-robber.json — no inefficient blocks
+[SKIP] lesson-17-linked-list-cycle.json — no inefficient blocks
+[SKIP] lesson-18-reverse-linked-list.json — no inefficient blocks
+[SKIP] lesson-19-merge-two-sorted-lists.json — no inefficient blocks
+[SKIP] lesson-20-palindrome-linked-list.json — no inefficient blocks
+[SKIP] lesson-21-middle-of-linked-list.json — no inefficient blocks
+[SKIP] lesson-22-move-zeroes.json — no inefficient blocks
+[SKIP] lesson-23-squares-of-sorted-array.json — no inefficient blocks
+[FIX] lesson-24-first-unique-character.json — inefficient block
+  ❌ Anthropic failed for lesson-24-first-unique-character.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-24-first-unique-character.json — no inefficient blocks
+[SKIP] lesson-25-intersection-of-two-arrays.json — no inefficient blocks
+[SKIP] lesson-26-single-number.json — no inefficient blocks
+[SKIP] lesson-27-plus-one.json — no inefficient blocks
+[SKIP] lesson-28-sqrt-x.json — no inefficient blocks
+[SKIP] lesson-29-range-sum-query.json — no inefficient blocks
+[SKIP] lesson-30-counting-bits.json — no inefficient blocks
+[SKIP] lesson-31-longest-substring-without-repeating.json — no inefficient blocks
+[SKIP] lesson-32-permutation-in-string.json — no inefficient blocks
+[SKIP] lesson-33-find-all-anagrams-in-string.json — no inefficient blocks
+[SKIP] lesson-34-longest-repeating-character-replacement.json — no inefficient blocks
+[SKIP] lesson-35-max-consecutive-ones-iii.json — no inefficient blocks
+[SKIP] lesson-36-binary-tree-inorder-traversal.json — no inefficient blocks
+[SKIP] lesson-37-binary-tree-preorder-traversal.json — no inefficient blocks
+[SKIP] lesson-38-binary-tree-postorder-traversal.json — no inefficient blocks
+[SKIP] lesson-39-binary-tree-level-order-traversal.json — no inefficient blocks
+[SKIP] lesson-40-validate-binary-search-tree.json — no inefficient blocks
+[SKIP] lesson-41-number-of-islands.json — no inefficient blocks
+[SKIP] lesson-42-clone-graph.json — no inefficient blocks
+[SKIP] lesson-43-course-schedule.json — no inefficient blocks
+[SKIP] lesson-44-course-schedule-ii.json — no inefficient blocks
+[SKIP] lesson-45-word-ladder.json — no inefficient blocks
+[SKIP] lesson-46-longest-common-subsequence.json — no inefficient blocks
+[SKIP] lesson-47-edit-distance.json — no inefficient blocks
+[SKIP] lesson-48-coin-change.json — no inefficient blocks
+[SKIP] lesson-49-combination-sum.json — no inefficient blocks
+[SKIP] lesson-50-permutations.json — no inefficient blocks
+[SKIP] lesson-51-implement-trie.json — no inefficient blocks
+[FIX] lesson-52-word-search-ii.json — inefficient block
+  ❌ Anthropic failed for lesson-52-word-search-ii.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-52-word-search-ii.json — no inefficient blocks
+[SKIP] lesson-53-largest-rectangle-histogram.json — no inefficient blocks
+[SKIP] lesson-54-trapping-rain-water.json — no inefficient blocks
+[SKIP] lesson-55-daily-temperatures.json — no inefficient blocks
+[SKIP] lesson-56-minimum-window-substring.json — no inefficient blocks
+[FIX] lesson-57-find-median-data-stream.json — inefficient block
+  ❌ Anthropic failed for lesson-57-find-median-data-stream.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-57-find-median-data-stream.json — no inefficient blocks
+[FIX] lesson-58-kth-largest-element.json — inefficient block
+  ❌ Anthropic failed for lesson-58-kth-largest-element.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-58-kth-largest-element.json — no inefficient blocks
+[SKIP] lesson-59-merge-k-sorted-lists.json — no inefficient blocks
+[FIX] lesson-60-alien-dictionary.json — inefficient block
+  ❌ Anthropic failed for lesson-60-alien-dictionary.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-60-alien-dictionary.json — no inefficient blocks
+[FIX] lesson-61-network-delay-time.json — inefficient block
+  ❌ Anthropic failed for lesson-61-network-delay-time.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-61-network-delay-time.json — no inefficient blocks
+[SKIP] lesson-62-cheapest-flights-k-stops.json — no inefficient blocks
+[SKIP] lesson-63-partition-equal-subset-sum.json — no inefficient blocks
+[FIX] lesson-64-target-sum.json — inefficient block
+  ❌ Anthropic failed for lesson-64-target-sum.json: 400 Client Error: Bad Request for url: https://api.anthropic.com/v1/messages
+[SKIP] lesson-64-target-sum.json — no inefficient blocks
+[SKIP] lesson-65-unique-paths-ii.json — no inefficient blocks
+[SKIP] lesson-66-minimum-path-sum.json — no inefficient blocks
+[SKIP] lesson-67-decode-ways.json — no inefficient blocks
+[SKIP] lesson-68-word-break.json — no inefficient blocks
+[SKIP] lesson-69-longest-increasing-subsequence.json — no inefficient blocks
+[SKIP] lesson-70-longest-palindromic-substring.json — no inefficient blocks
+[SKIP] lesson-71-palindromic-substrings.json — no inefficient blocks
+[SKIP] lesson-72-group-anagrams.json — no inefficient blocks
+[SKIP] lesson-73-top-k-frequent-elements.json — no inefficient blocks
+[SKIP] lesson-74-product-of-array-except-self.json — no inefficient blocks
+[SKIP] lesson-75-increasing-triplet-subsequence.json — no inefficient blocks
+[SKIP] lesson-76-set-matrix-zeroes.json — no inefficient blocks
+[SKIP] lesson-77-spiral-matrix.json — no inefficient blocks
+[SKIP] lesson-78-rotate-image.json — no inefficient blocks
+[SKIP] lesson-79-search-2d-matrix-ii.json — no inefficient blocks
+[SKIP] lesson-80-kth-smallest-bst.json — no inefficient blocks
+[SKIP] lesson-81-serialize-deserialize-binary-tree.json — no inefficient blocks
+[SKIP] lesson-82-binary-tree-maximum-path-sum.json — no inefficient blocks
+[SKIP] lesson-83-lru-cache.json — no inefficient blocks
+[SKIP] lesson-84-add-and-search-word.json — no inefficient blocks
+[SKIP] lesson-85-sliding-window-maximum.json — no inefficient blocks
+[SKIP] lesson-86-jump-game-ii.json — no inefficient blocks
+[SKIP] lesson-87-gas-station.json — no inefficient blocks
+[SKIP] lesson-88-candy.json — no inefficient blocks
+[SKIP] lesson-89-maximal-square.json — no inefficient blocks
+[SKIP] lesson-90-regular-expression-matching.json — no inefficient blocks
+[SKIP] lesson-91-wildcard-matching.json — no inefficient blocks
+
+========== SUMMARY ==========
+Total blocks fixed: 0

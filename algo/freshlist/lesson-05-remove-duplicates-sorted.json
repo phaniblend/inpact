@@ -1,0 +1,184 @@
+{
+  "id": "remove-duplicates-sorted",
+  "title": "Remove Duplicates from Sorted Array",
+  "pattern": "slow-fast pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 5,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-05",
+    "introduces": [
+      "slow-fast-pointers",
+      "write-pointer",
+      "read-pointer",
+      "in-place-count-return",
+      "array-compaction"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "array-indexing",
+      "array-length",
+      "loops",
+      "for-loop",
+      "while-loop",
+      "functions",
+      "function-parameters",
+      "return-statement",
+      "comparison-operators",
+      "two-pointers"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["valid-palindrome"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If array is empty, return 0." },
+    { "id": "ps2", "text": "Set slow pointer to 0 (write position)." },
+    { "id": "ps3", "text": "Loop fast pointer from 1 to end of array." },
+    { "id": "ps4", "text": "  If nums[fast] is different from nums[slow]:" },
+    { "id": "ps5", "text": "    Move slow forward by 1." },
+    { "id": "ps6", "text": "    Copy nums[fast] to nums[slow]." },
+    { "id": "ps7", "text": "Return slow + 1 as the count of unique elements." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Remove Duplicates from Sorted Array**.\n\nThis lesson introduces the **slow-fast pointer technique** — a powerful pattern for modifying arrays in place.\n\nYou already know two pointers that move toward each other. Now we'll learn about two pointers that move in the **same direction** at different speeds.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nYou are given a **sorted** array of numbers that may contain duplicates.\n\nYour task is to:\n1. Remove duplicates **in place** (don't create a new array)\n2. Return the count of unique elements\n\n**Example:**\n```\nnums = [1, 1, 2, 2, 3]\n\nAfter running: nums becomes [1, 2, 3, ...]\nReturn: 3 (three unique elements)\n```\n\nThe first 3 positions now hold the unique values. What's beyond doesn't matter.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) nums = [1, 1, 2] → Return 2, array becomes [1, 2, ...]\n2) nums = [0, 0, 0, 1, 1, 2] → Return 3, array becomes [0, 1, 2, ...]\n3) nums = [1, 2, 3] → Return 3, array unchanged (no duplicates)\n4) nums = [] → Return 0 (empty array)\n```",
+      "action": "next",
+      "next": "key-observation"
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "### Key Observation\n\nThe array is **sorted**. This is crucial!\n\nIn a sorted array, **duplicates are always next to each other**:\n```\n[1, 1, 2, 2, 3]  ← duplicates are adjacent\n```\n\nIf the array weren't sorted, duplicates could be anywhere:\n```\n[1, 2, 1, 3, 2]  ← duplicates are scattered\n```\n\nBecause duplicates are adjacent, we can find them by comparing **neighboring elements**.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you approach this problem?",
+      "choices": [
+        { "label": "Create a new array with only unique elements", "next": "why-not-new-array" },
+        { "label": "Use two pointers: one to read, one to write", "next": "core-idea" },
+        { "label": "Check each element and remove duplicates", "next": "why-not-remove" }
+      ]
+    },
+    {
+      "stepId": "why-not-new-array",
+      "mentorSays": "Creating a new array would work, but the problem asks us to modify **in place**.\n\n\"In place\" means we must change the original array without using extra space for a new one.\n\nLet's think about using two pointers instead.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "why-not-remove",
+      "mentorSays": "Removing elements from an array is tricky because:\n\n1. Removing shifts all elements after it\n2. Each removal takes time proportional to array length\n3. Many removals means very slow performance\n\nInstead, we'll **overwrite** duplicates with unique values. Much faster!\n\nLet's see how.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Slow-Fast Pointer Technique\n\nWe use two pointers moving in the **same direction**:\n\n**Slow pointer (write position):**\n- Marks where the next unique value should go\n- Only moves when we find a new unique value\n\n**Fast pointer (read position):**\n- Scans through every element\n- Moves forward on each step\n\nWhen `fast` finds a new unique value, we copy it to `slow`'s position, then advance `slow`.",
+      "action": "next",
+      "next": "visual-explanation"
+    },
+    {
+      "stepId": "visual-explanation",
+      "mentorSays": "### Visual Explanation\n\nThink of it like organizing a messy bookshelf:\n\n- **Fast** scans each book\n- **Slow** marks where the next unique book goes\n- When fast finds a new book, it gets placed at slow's position\n\n```\nOriginal: [1, 1, 2, 2, 3]\n             ↑\n           slow\n\nWe're building the unique section from the left.\n```",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nnums = [1, 1, 2, 2, 3]\n```\n\n**Start:**\n- slow = 0, fast = 1\n- nums[slow] = 1, nums[fast] = 1\n- Same value, so only fast moves\n\n**fast = 2:**\n- nums[slow] = 1, nums[fast] = 2\n- Different! Move slow to 1, copy 2 there\n- Array: [1, 2, 2, 2, 3]\n\n**fast = 3:**\n- nums[slow] = 2, nums[fast] = 2\n- Same value, only fast moves\n\n**fast = 4:**\n- nums[slow] = 2, nums[fast] = 3\n- Different! Move slow to 2, copy 3 there\n- Array: [1, 2, 3, 2, 3]\n\n**Done!** Return slow + 1 = 3",
+      "action": "next",
+      "next": "why-slow-plus-one"
+    },
+    {
+      "stepId": "why-slow-plus-one",
+      "mentorSays": "### Why Return slow + 1?\n\nThe `slow` pointer ends at the **index** of the last unique element.\n\nIndex 2 means the last unique is at position 2.\n\nBut **count** = index + 1:\n```\nIndex:  0  1  2\nValue:  1  2  3\nCount = 3 elements\n```\n\nSo we return `slow + 1` to get the count.",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nWe'll build it step by step, connecting each line to our pseudocode.\n\nLet's start.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function and handle the empty case.\n\n```javascript\nfunction removeDuplicates(nums) {\n  if (nums.length === 0) {\n    return 0;\n  }\n}\n```\n\n**Explanation:**\n- `removeDuplicates` — function name\n- `nums` — the sorted array with possible duplicates\n- If the array is empty, there are 0 unique elements",
+      "example": "function removeDuplicates(nums) {\n  if (nums.length === 0) {\n    return 0;\n  }\n}",
+      "action": "next",
+      "next": "code-02-slow",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-slow",
+      "mentorSays": "**Step 2:** Initialize the slow pointer.\n\n```javascript\nfunction removeDuplicates(nums) {\n  if (nums.length === 0) {\n    return 0;\n  }\n\n  let slow = 0;\n}\n```\n\n**Explanation:**\n- `slow` starts at 0 (first element)\n- It marks where the next unique value should be written\n- We use `let` because slow will change",
+      "example": "let slow = 0;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "**Step 3:** Loop with the fast pointer.\n\n```javascript\nfunction removeDuplicates(nums) {\n  if (nums.length === 0) {\n    return 0;\n  }\n\n  let slow = 0;\n\n  for (let fast = 1; fast < nums.length; fast++) {\n\n  }\n}\n```\n\n**Explanation:**\n- `fast` starts at 1 (second element)\n- We compare fast to slow, so fast starts one ahead\n- `fast` scans every element from 1 to the end",
+      "example": "for (let fast = 1; fast < nums.length; fast++) {\n\n}",
+      "action": "next",
+      "next": "code-04-compare",
+      "pseudocodeLineIds": ["ps4", "ps5", "ps6"]
+    },
+    {
+      "stepId": "code-04-compare",
+      "mentorSays": "**Step 4:** Compare and copy unique values.\n\n```javascript\nfunction removeDuplicates(nums) {\n  if (nums.length === 0) {\n    return 0;\n  }\n\n  let slow = 0;\n\n  for (let fast = 1; fast < nums.length; fast++) {\n    if (nums[fast] !== nums[slow]) {\n      slow++;\n      nums[slow] = nums[fast];\n    }\n  }\n}\n```\n\n**Explanation:**\n- `!==` means \"not equal to\"\n- If `nums[fast]` is different from `nums[slow]`, it's a new unique value\n- Move slow forward, then copy the new value there\n- If they're equal, fast just moves on (duplicate skipped)",
+      "example": "if (nums[fast] !== nums[slow]) {\n  slow++;\n  nums[slow] = nums[fast];\n}",
+      "action": "next",
+      "next": "code-05-return",
+      "pseudocodeLineIds": ["ps7"]
+    },
+    {
+      "stepId": "code-05-return",
+      "mentorSays": "**Step 5:** Return the count of unique elements.\n\n```javascript\nfunction removeDuplicates(nums) {\n  if (nums.length === 0) {\n    return 0;\n  }\n\n  let slow = 0;\n\n  for (let fast = 1; fast < nums.length; fast++) {\n    if (nums[fast] !== nums[slow]) {\n      slow++;\n      nums[slow] = nums[fast];\n    }\n  }\n\n  return slow + 1;\n}\n```\n\n**Explanation:**\n- `slow` is the index of the last unique element\n- Index + 1 = count\n- So `slow + 1` gives us the number of unique elements",
+      "example": "return slow + 1;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction removeDuplicates(nums) {\n  if (nums.length === 0) {\n    return 0;\n  }\n\n  let slow = 0;\n\n  for (let fast = 1; fast < nums.length; fast++) {\n    if (nums[fast] !== nums[slow]) {\n      slow++;\n      nums[slow] = nums[fast];\n    }\n  }\n\n  return slow + 1;\n}\n```\n\n**How it works:**\n1. Handle empty array case\n2. Slow pointer marks the \"unique zone\" boundary\n3. Fast pointer scans every element\n4. When fast finds a new unique value, copy it to slow's position\n5. Return slow + 1 as the count",
+      "example": "function removeDuplicates(nums) {\n  if (nums.length === 0) {\n    return 0;\n  }\n\n  let slow = 0;\n\n  for (let fast = 1; fast < nums.length; fast++) {\n    if (nums[fast] !== nums[slow]) {\n      slow++;\n      nums[slow] = nums[fast];\n    }\n  }\n\n  return slow + 1;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Slow-fast pointer technique** — two pointers moving in the same direction\n- **Write pointer (slow)** — marks where to place the next valid element\n- **Read pointer (fast)** — scans through all elements\n- **In-place modification** — changing the array without extra space\n- **Count vs index** — returning slow + 1 to convert index to count\n\n**Why this matters:**\n\nThe slow-fast pattern appears in many problems:\n- Removing elements by value\n- Moving zeros to the end\n- Linked list cycle detection\n- Finding the middle of a list\n\nThis is different from two pointers moving toward each other (like in Reverse String). Now you know both patterns!\n\n**Next recommended lesson:** Valid Palindrome",
+      "action": "complete"
+    }
+  ]
+}

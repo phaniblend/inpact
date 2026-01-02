@@ -1,0 +1,180 @@
+{
+  "id": "search-insert-position",
+  "title": "Search Insert Position",
+  "pattern": "binary-search (introduction)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 2,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-02",
+    "introduces": [
+      "comparison-operators",
+      "less-than",
+      "greater-than",
+      "equality",
+      "midpoint-calculation",
+      "Math.floor",
+      "binary-search-concept",
+      "while-loop",
+      "search-space-halving"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "array-indexing",
+      "array-length",
+      "loops",
+      "functions",
+      "function-parameters",
+      "return-statement"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["binary-search"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left = 0 and right = last index." },
+    { "id": "ps2", "text": "While left <= right:" },
+    { "id": "ps3", "text": "  Find mid = middle index between left and right." },
+    { "id": "ps4", "text": "  If nums[mid] equals target, return mid." },
+    { "id": "ps5", "text": "  If nums[mid] < target, move left to mid + 1." },
+    { "id": "ps6", "text": "  Else move right to mid - 1." },
+    { "id": "ps7", "text": "When loop ends, return left as insert position." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Search Insert Position**.\n\nThis lesson introduces a **faster way to search** in sorted arrays and shows you where to insert a number if it's missing.\n\nWe'll learn the **binary search** technique — one of the most important algorithmic patterns.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nYou are given a **sorted** array of numbers and a target number.\n\n**Your task:**\n- If the target exists, return its index\n- If it does not exist, return the index where it should be inserted to keep the array sorted\n\n**Example:**\n```\nnums = [1, 3, 5, 6]\ntarget = 5\n\nOutput: 2 (because 5 is at index 2)\n```\n\n**Example 2:**\n```\nnums = [1, 3, 5, 6]\ntarget = 2\n\nOutput: 1 (2 should go between 1 and 3)\n```",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**More tiny examples:**\n\n```\n1) nums = [1, 3, 5, 6], target = 5 → 2\n2) nums = [1, 3, 5, 6], target = 2 → 1  \n3) nums = [1, 3, 5, 6], target = 7 → 4\n4) nums = [1, 3, 5, 6], target = 0 → 0\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Let's think about strategy.\n\n**The array is sorted. If you had 1,000,000 elements, which approach would be better?**",
+      "choices": [
+        { "label": "Check every element one by one from the start", "next": "why-not-linear" },
+        { "label": "Repeatedly eliminate half of the remaining elements", "next": "core-idea" },
+        { "label": "Start from the middle and work outward", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "why-not-linear",
+      "mentorSays": "Checking every element would work, but it's slow.\n\nIf the array has 1,000,000 elements and your target is near the end, you'd need nearly 1,000,000 checks.\n\nBecause the array is **sorted**, we can do much better by eliminating large chunks at once.\n\nLet's learn the faster approach.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Excellent thinking!\n\nWe use the **binary search** technique:\n\n1. Look at the **middle** element\n2. If it's our target, we're done\n3. If it's too small, ignore the left half\n4. If it's too big, ignore the right half\n5. Repeat on the remaining half\n\nThis **halves the search space** each time.\n\nWith 1,000,000 elements, we only need about 20 checks instead of 1,000,000!",
+      "action": "next",
+      "next": "midpoint-explained"
+    },
+    {
+      "stepId": "midpoint-explained",
+      "mentorSays": "### Finding the Midpoint\n\nTo find the middle element between `left` and `right`:\n\n```javascript\nconst mid = Math.floor((left + right) / 2);\n```\n\n**Example:**\n- If left = 0 and right = 4\n- mid = Math.floor((0 + 4) / 2) = Math.floor(2) = 2\n\n**`Math.floor` rounds down** to the nearest whole number.\n\nSo the middle index between 0 and 4 is 2.",
+      "action": "next",
+      "next": "insert-position-insight"
+    },
+    {
+      "stepId": "insert-position-insight",
+      "mentorSays": "### Key Insight for Insert Position\n\nIf the target is **not found**, the `left` pointer will end up at the exact position where the target should be inserted.\n\nThis happens naturally — no extra logic needed!\n\nLet's see why in the walkthrough.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nnums = [1, 3, 5, 6]\ntarget = 2\n```\n\n**Start:**\n- left = 0, right = 3\n- mid = Math.floor((0 + 3) / 2) = 1\n- nums[1] = 3\n- 3 > 2, so move right to mid - 1 = 0\n\n**Next:**\n- left = 0, right = 0  \n- mid = Math.floor((0 + 0) / 2) = 0\n- nums[0] = 1\n- 1 < 2, so move left to mid + 1 = 1\n\n**Now:**\n- left = 1, right = 0\n- left > right, so **stop**\n\n**Return left = 1** → this is where 2 should go!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)\n\nEach step will become JavaScript code.",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript code.\n\nRemember: type it yourself for best learning!\n\nLet's start.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function.\n\n```javascript\nfunction searchInsert(nums, target) {\n\n}\n```\n\n**Explanation:**\n- `searchInsert` — function name\n- `nums` — the sorted array\n- `target` — the number we're searching for",
+      "example": "function searchInsert(nums, target) {\n\n}",
+      "action": "next",
+      "next": "code-02-pointers",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-pointers",
+      "mentorSays": "**Step 2:** Set up left and right pointers.\n\n```javascript\nfunction searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n}\n```\n\n**Explanation:**\n- `left = 0` — starts at first index\n- `right = nums.length - 1` — starts at last index\n- These define our search range",
+      "example": "let left = 0;\nlet right = nums.length - 1;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "**Step 3:** Loop while left hasn't passed right.\n\n```javascript\nfunction searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n\n  }\n}\n```\n\n**Explanation:**\n- `while (left <= right)` — keep searching while there's a valid range\n- `<=` (not just `<`) because we need to check when they're equal too",
+      "example": "while (left <= right) {\n\n}",
+      "action": "next",
+      "next": "code-04-mid",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-04-mid",
+      "mentorSays": "**Step 4:** Calculate the midpoint.\n\n```javascript\nfunction searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n  }\n}\n```\n\n**Explanation:**\n- `(left + right) / 2` — finds the average\n- `Math.floor()` — rounds down to get a valid index\n- We use `const` because mid doesn't change within each loop iteration",
+      "example": "const mid = Math.floor((left + right) / 2);",
+      "action": "next",
+      "next": "code-05-compare",
+      "pseudocodeLineIds": ["ps4", "ps5", "ps6"]
+    },
+    {
+      "stepId": "code-05-compare",
+      "mentorSays": "**Step 5:** Compare and adjust the search range.\n\n```javascript\nfunction searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) {\n      return mid;\n    }\n    if (nums[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n}\n```\n\n**Explanation:**\n- `===` checks if values are exactly equal\n- `<` means \"less than\"\n- If mid value is too small, search the right half (move left)\n- Otherwise, search the left half (move right)",
+      "example": "if (nums[mid] === target) {\n  return mid;\n}\nif (nums[mid] < target) {\n  left = mid + 1;\n} else {\n  right = mid - 1;\n}",
+      "action": "next",
+      "next": "code-06-return",
+      "pseudocodeLineIds": ["ps7"]
+    },
+    {
+      "stepId": "code-06-return",
+      "mentorSays": "**Step 6:** If target not found, return left.\n\n```javascript\nfunction searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) {\n      return mid;\n    }\n    if (nums[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n\n  return left;\n}\n```\n\n**Explanation:**\n- When the loop ends, `left` points to where target should be inserted\n- This works automatically because of how binary search moves the pointers",
+      "example": "return left;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) {\n      return mid;\n    }\n    if (nums[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n\n  return left;\n}\n```\n\n**How it works:**\n1. We start with the full array\n2. We check the middle element\n3. We eliminate half the array based on comparison\n4. We repeat until we find the target or determine where it should go\n5. The final `left` position is always the correct insert position",
+      "example": "function searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) {\n      return mid;\n    }\n    if (nums[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n\n  return left;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Binary search** — halving the search space repeatedly\n- **Comparison operators** (`<`, `>`, `===`)\n- **Math.floor()** — rounding down to get valid indices\n- **While loops** — repeating until a condition is false\n- How sorted arrays enable faster searching\n\n**Why this matters:**\n\nBinary search is one of the most fundamental algorithms. It appears in:\n- Finding elements in sorted data\n- Optimizing search problems\n- Many advanced algorithms\n\nMastering this pattern is essential for algorithm problem-solving.\n\n**Next recommended lesson:** Binary Search",
+      "action": "complete"
+    }
+  ]
+}

@@ -64,7 +64,7 @@ def get_all_text_files(directory: Path) -> List[Path]:
 
 def read_file_content(filepath: Path) -> str:
     """
-    Read file content safely.
+    Read file content safely with UTF-8 encoding.
     
     Args:
         filepath: Path to file
@@ -168,19 +168,19 @@ def main():
     
     # Get current directory
     current_dir = Path.cwd()
-    print(f"📂 Scanning directory: {current_dir}")
-    print(f"🔢 Target parts: {num_parts}")
+    print(f"Scanning directory: {current_dir}")
+    print(f"Target parts: {num_parts}")
     print()
     
     # Find all text files
-    print("🔍 Finding text-based files...")
+    print("Finding text-based files...")
     text_files = get_all_text_files(current_dir)
     
     if not text_files:
-        print("❌ No text-based files found!")
+        print("No text-based files found!")
         sys.exit(1)
     
-    print(f"✅ Found {len(text_files)} text-based files")
+    print(f"Found {len(text_files)} text-based files")
     print()
     
     # Show file types breakdown
@@ -189,23 +189,23 @@ def main():
         ext = f.suffix.lower() or '(no extension)'
         extensions[ext] = extensions.get(ext, 0) + 1
     
-    print("📊 File types:")
+    print("File types:")
     for ext, count in sorted(extensions.items(), key=lambda x: -x[1]):
         print(f"   {ext}: {count} files")
     print()
     
     # Split into parts
-    print(f"✂️  Splitting into {num_parts} parts...")
+    print(f"Splitting into {num_parts} parts...")
     parts = split_into_parts(text_files, num_parts)
     
     # Show distribution
-    print("📦 Distribution:")
+    print("Distribution:")
     for i, part in enumerate(parts, 1):
         print(f"   Part {i}: {len(part)} files")
     print()
     
     # Consolidate each part
-    print("💾 Consolidating files...")
+    print("Consolidating files...")
     for i, part in enumerate(parts, 1):
         output_filename = f"{i}.txt"
         print(f"   Creating {output_filename}... ", end='', flush=True)
@@ -222,16 +222,16 @@ def main():
         else:
             size_str = f"{size_kb:.2f} KB"
         
-        print(f"✅ ({len(part)} files, {size_str})")
+        print(f"Done ({len(part)} files, {size_str})")
     
     print()
-    print("🎉 Consolidation complete!")
+    print("Consolidation complete!")
     print()
-    print("📄 Output files:")
+    print("Output files:")
     for i in range(1, len(parts) + 1):
         print(f"   {i}.txt")
     print()
-    print("💡 Tip: You can now upload these files to Claude or other LLMs!")
+    print("Tip: You can now upload these files to Claude or other LLMs!")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,182 @@
+{
+  "id": "house-robber",
+  "title": "House Robber",
+  "pattern": "dynamic programming (linear)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 16,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-16",
+    "introduces": [
+      "dp-with-constraints",
+      "skip-or-take-decision",
+      "optimal-substructure"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "basic-dp-concepts"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "linked-list-cycle"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Handle edge cases: empty array returns 0, single house returns its value."
+    },
+    {
+      "id": "ps2",
+      "text": "Initialize dp[0] = first house value."
+    },
+    {
+      "id": "ps3",
+      "text": "Initialize dp[1] = max(first house, second house)."
+    },
+    {
+      "id": "ps4",
+      "text": "For each house i from index 2 onward:"
+    },
+    {
+      "id": "ps5",
+      "text": "  dp[i] = max(dp[i-1], dp[i-2] + nums[i]) - skip or take decision."
+    },
+    {
+      "id": "ps6",
+      "text": "Return dp[last index] as the maximum amount."
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "In **Climbing Stairs**, you learned how to build solutions using previous results. Now we add a twist: **you can't pick adjacent items**. This constraint transforms a simple loop into dynamic programming with decision-making at each step.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are a robber planning to rob houses along a street. Each house has some money stashed. **You cannot rob two adjacent houses** — if you rob one, you must skip the next.\n\nReturn the **maximum amount** you can rob.\n\n**Example:**\n```text\nInput: [2,1,1,2]\nOutput: 4\n```\nRob house 0 (value 2) and house 3 (value 2). Skipping houses 1 and 2 gives us 2+2=4.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) [1,2,3,1] → 4 (rob house 0 and 2: 1+3=4)\n2) [2,7,9,3,1] → 12 (rob house 0,2,4: 2+9+1=12)\n3) [2,1,1,2] → 4 (rob house 0 and 3)\n4) [5] → 5 (only one house)\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "At each house, what decision do we need to make?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Always rob the house with more money (greedy)",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Choose between skipping this house or robbing it (and skipping the previous)",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Greedy doesn't work here! Taking a large house now might block an even better combination later. For example, in [2,10,3,10], greedy would take 10 first, but the optimal is 2+3+10=... wait, that's not right either. The optimal is actually 10+10=20 (houses 1 and 3). We need to **compare both paths** at each step.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "At each house `i`, we face a **skip-or-take decision**:\n\n- **Skip it** → Keep the best we had from house `i-1`: `dp[i-1]`\n- **Take it** → Add this house's value to what we had at house `i-2`: `dp[i-2] + nums[i]`\n\nWe always pick the **maximum** of these two options:\n```\ndp[i] = max(dp[i-1], dp[i-2] + nums[i])\n```",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[2,1,1,2]`:\n\n- **House 0:** dp[0] = 2 (only option)\n- **House 1:** dp[1] = max(2, 1) = 2 (better to keep house 0's value)\n- **House 2:** dp[2] = max(dp[1], dp[0]+1) = max(2, 2+1) = 3\n- **House 3:** dp[3] = max(dp[2], dp[1]+2) = max(3, 2+2) = 4\n\nFinal answer: **4**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "First, handle edge cases for empty arrays and single-element arrays.\n\n```javascript\nfunction rob(nums) {\n  if (nums.length === 0) return 0;\n  if (nums.length === 1) return nums[0];\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "if (nums.length === 0) return 0;\nif (nums.length === 1) return nums[0];"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize our DP array with the base cases for the first two houses.\n\n```javascript\nfunction rob(nums) {\n  if (nums.length === 0) return 0;\n  if (nums.length === 1) return nums[0];\n  \n  const dp = [];\n  dp[0] = nums[0];\n  dp[1] = Math.max(nums[0], nums[1]);\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2",
+        "ps3"
+      ],
+      "example": "dp[0] = nums[0];\ndp[1] = Math.max(nums[0], nums[1]);"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Now apply the skip-or-take decision for each remaining house.\n\n```javascript\nfunction rob(nums) {\n  if (nums.length === 0) return 0;\n  if (nums.length === 1) return nums[0];\n  \n  const dp = [];\n  dp[0] = nums[0];\n  dp[1] = Math.max(nums[0], nums[1]);\n  \n  for (let i = 2; i < nums.length; i++) {\n    dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i]);\n  }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps4",
+        "ps5"
+      ],
+      "example": "dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i]);"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Finally, return the last value which contains our answer.\n\n```javascript\nfunction rob(nums) {\n  if (nums.length === 0) return 0;\n  if (nums.length === 1) return nums[0];\n  \n  const dp = [];\n  dp[0] = nums[0];\n  dp[1] = Math.max(nums[0], nums[1]);\n  \n  for (let i = 2; i < nums.length; i++) {\n    dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i]);\n  }\n  \n  return dp[nums.length - 1];\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "return dp[nums.length - 1];"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Excellent work! You've learned how **constraints transform simple iteration into dynamic programming**. The skip-or-take pattern appears in many problems:\n\n- House Robber II (circular street)\n- Delete and Earn\n- Paint House\n\nNext, we'll switch gears and explore **linked lists** — starting with how to detect if one contains a cycle!",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "id": "counting-bits",
+  "title": "Counting Bits",
+  "pattern": "bit manipulation + DP",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 30,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-30",
+    "introduces": [
+      "bit-count",
+      "dp-with-bits",
+      "least-significant-bit"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "bit-manipulation-basics",
+      "dynamic-programming-concept"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "max-consecutive-ones-iii"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize dp array of size (n+1) with dp[0] = 0"
+    },
+    {
+      "id": "ps2",
+      "text": "For each number i from 1 to n:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Calculate dp[i] = dp[i >> 1] + (i & 1)"
+    },
+    {
+      "id": "ps4",
+      "text": "  This uses the bit count of i/2 plus 1 if i is odd"
+    },
+    {
+      "id": "ps5",
+      "text": "Return the dp array containing bit counts for 0 to n"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "In our previous lesson on range sum queries, we explored how to efficiently precompute and store information to answer multiple queries quickly—and today we'll apply that same principle of building upon previous results, but this time we'll dive into the fascinating world of bit manipulation combined with dynamic programming. You'll discover how counting the number of 1-bits in binary representations can be solved elegantly by recognizing patterns and reusing computations, making what seems like a complex problem surprisingly manageable!",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given a non-negative integer n, return an array containing the number of 1's in the binary representation of every number from 0 to n (inclusive). The array should be ordered from index 0 to n, where each index corresponds to that number's count of set bits.\n\n**Example:**\n```text\nInput: 5\nOutput: [0,1,1,2,1,2]\n```\nThis represents: 0→0 ones, 1→1 one, 2→1 one, 3→2 ones, 4→1 one, 5→2 ones in their binary forms.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) Input: 0 → Output: [0]\n2) Input: 2 → Output: [0,1,1]\n3) Input: 3 → Output: [0,1,1,2]\n4) Input: 4 → Output: [0,1,1,2,1]\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to count the number of 1-bits for all integers from 0 to n?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "For each number i, use bit manipulation to count all 1-bits by repeatedly checking i & (i-1) until i becomes 0",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use dynamic programming where dp[i] = dp[i >> 1] + (i & 1), reusing the bit count of i/2 and adding 1 if the last bit is set",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This brute force approach works but has O(n * log n) time complexity since each number requires multiple bit operations to count all its 1-bits",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The **key insight** is that the number of 1-bits in any integer can be computed using previously calculated results through **bit manipulation**. Specifically, `dp[i] = dp[i >> 1] + (i & 1)` works because **right-shifting** `i` by 1 position removes the least significant bit, and we already know the bit count for `i >> 1` from our DP table. We then add `(i & 1)` to account for whether the **last bit** of `i` is 1 or 0. This **recurrence relation** allows us to build up the solution incrementally in O(n) time instead of counting bits for each number separately.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `5`:\n- Step 1: Initialize dp[0] = 0 (zero has 0 bits)\n- Step 2: dp[1] = dp[1>>1] + (1&1) = dp[0] + 1 = 0 + 1 = 1\n- Step 3: dp[2] = dp[2>>1] + (2&1) = dp[1] + 0 = 1 + 0 = 1\n- Step 4: dp[3] = dp[3>>1] + (3&1) = dp[1] + 1 = 1 + 1 = 2\n- Step 5: dp[4] = dp[4>>1] + (4&1) = dp[2] + 0 = 1 + 0 = 1\n- Step 6: dp[5] = dp[5>>1] + (5&1) = dp[2] + 1 = 1 + 1 = 2\n- Final answer: **[0,1,1,2,1,2]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize the function and create a DP array to store bit counts for each number from 0 to n.\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Add the main loop to iterate through numbers 1 to n and fill the DP array.\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= n; i++) {\n        // DP logic will go here\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    for (let i = 1; i <= n; i++) {\n        // DP logic will go here\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Implement the key DP recurrence relation: dp[i] = dp[i >> 1] + (i & 1) to count bits using previous results.\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= n; i++) {\n        dp[i] = dp[i >> 1] + (i & 1);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "        dp[i] = dp[i >> 1] + (i & 1);"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Add the return statement to output the completed DP array containing bit counts for all numbers from 0 to n.\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= n; i++) {\n        dp[i] = dp[i >> 1] + (i & 1);\n    }\n    \n    return dp;\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    return dp;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Add example usage and comments to demonstrate how the algorithm works with the bit manipulation DP approach.\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= n; i++) {\n        // dp[i >> 1] gives us the bit count after removing the last bit\n        // (i & 1) adds 1 if the last bit is 1, 0 otherwise\n        dp[i] = dp[i >> 1] + (i & 1);\n    }\n    \n    return dp;\n}\n\n// Example usage:\n// countBits(5) returns [0, 1, 1, 2, 1, 2]\n// Explanation: \n// 0: 0000 -> 0 bits\n// 1: 0001 -> 1 bit  \n// 2: 0010 -> 1 bit\n// 3: 0011 -> 2 bits\n// 4: 0100 -> 1 bit\n// 5: 0101 -> 2 bits\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "// Example usage:\n// countBits(5) returns [0, 1, 1, 2, 1, 2]\n// Explanation: \n// 0: 0000 -> 0 bits\n// 1: 0001 -> 1 bit  \n// 2: 0010 -> 1 bit\n// 3: 0011 -> 2 bits\n// 4: 0100 -> 1 bit\n// 5: 0101 -> 2 bits"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering bit manipulation with dynamic programming! You've learned how to efficiently count set bits using the least significant bit technique and build upon previously computed results. Next, we'll tackle \"Max Consecutive Ones III\" to explore sliding window techniques with bit arrays. Congratulations on completing the entire Foundation tier - you've built a solid algorithmic foundation and are ready to take on more advanced challenges!",
+      "action": "complete"
+    }
+  ]
+}

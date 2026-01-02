@@ -7,160 +7,231 @@
   "status": "draft",
   "flow": [
     {
-      "stepId": "title",
-      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what Combination Sum II asks for\n2. Use backtracking to find unique combinations\n3. Handle duplicates correctly (each number used once)\n4. Skip duplicate elements during generation\n5. Implement the solution step by step in your chosen language",
-      "action": "continue",
-      "next": "problem-illustration"
-    },
-    {
-      "stepId": "problem-illustration",
-      "mentorSays": "Perfect! Now let's understand what Combination Sum II is asking.\n\n**Problem Definition:**\nGiven a collection of candidate numbers `candidates` and a target number `target`, find all unique combinations in candidates where the candidate numbers sum to `target`.\n\nEach number in candidates may only be used once in the combination.\n\n**Example 1:** candidates = [10,1,2,7,6,1,5], target = 8\nUnique combinations: [1,1,6], [1,2,5], [1,7], [2,6]\nAnswer: [[1,1,6],[1,2,5],[1,7],[2,6]]\n\n**Key Insight:** Similar to Combination Sum, but each number used once. Sort first, skip duplicates at same level.",
-      "example": "Example: candidates=[10,1,2,7,6,1,5], target=8 → [[1,1,6],[1,2,5],[1,7],[2,6]]",
-      "action": "continue",
-      "next": "thinking-challenge"
-    },
-    {
-      "stepId": "thinking-challenge",
-      "mentorSays": "How would YOU find unique combinations with each number used once?",
-      "choices": [
-        {
-          "label": "Use backtracking with duplicate skipping",
-          "next": "explore-backtracking"
-        },
-        {
-          "label": "Use hash set to track used",
-          "next": "explore-set"
-        },
-        {
-          "label": "Generate all then filter",
-          "next": "explore-filter"
-        }
-      ]
-    },
-    {
-      "stepId": "explore-set",
-      "mentorSays": "Set works but backtracking with sorting is more efficient.",
-      "action": "continue",
-      "next": "explore-backtracking"
-    },
-    {
-      "stepId": "explore-filter",
-      "mentorSays": "That works but is inefficient. Better to skip duplicates during generation.",
-      "action": "continue",
-      "next": "explore-backtracking"
-    },
-    {
-      "stepId": "explore-backtracking",
-      "mentorSays": "Backtracking with sorting and duplicate skipping is optimal. Sort first, skip duplicates at same level, use each number once.",
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Combination Sum II lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Combination Sum II problem\n- Recognize the backtracking pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
       "action": "continue",
       "next": "language-selection"
     },
     {
       "stepId": "language-selection",
-      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
       "choices": [
         {
           "label": "JavaScript",
-          "next": "variable-check-js"
+          "next": "prereq-check-js"
         },
         {
           "label": "Python",
-          "next": "variable-check-python"
+          "next": "prereq-check-python"
         },
         {
           "label": "Java",
-          "next": "variable-check-java"
+          "next": "prereq-check-java"
         },
         {
           "label": "C++",
-          "next": "variable-check-cpp"
+          "next": "prereq-check-cpp"
         },
         {
           "label": "TypeScript",
-          "next": "variable-check-ts"
+          "next": "prereq-check-ts"
         }
       ]
     },
     {
-      "stepId": "variable-check-js",
-      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in JavaScript?",
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
       "choices": [
         {
-          "label": "Yes, I know variables",
-          "next": "function-check-js"
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
         },
         {
-          "label": "No, explain variables",
-          "next": "variable-explanation-js"
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
         }
       ]
     },
     {
-      "stepId": "variable-explanation-js",
-      "mentorSays": "A variable is like a labeled box where you can store a value.",
-      "example": "let result = [];",
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
       "action": "continue",
       "next": "function-check-js"
     },
     {
       "stepId": "function-check-js",
       "mentorSays": "Do you know what a function is in JavaScript?",
-      "choices": [
-        {
-          "label": "Yes, I know functions",
-          "next": "parameter-check-js"
-        },
-        {
-          "label": "No, explain functions",
-          "next": "function-explanation-js"
-        }
-      ]
+      "example": "",
+      "action": "continue",
+      "next": "completion"
     },
     {
       "stepId": "function-explanation-js",
       "mentorSays": "A function is a reusable block of code.",
       "example": "function combinationSum2() {}",
       "action": "continue",
-      "next": "parameter-check-js"
+      "next": "completion"
     },
     {
-      "stepId": "parameter-check-js",
-      "mentorSays": "Do you know what parameters are?",
-      "choices": [
-        {
-          "label": "Yes, I know parameters",
-          "next": "backtracking-check-js"
-        },
-        {
-          "label": "No, explain parameters",
-          "next": "parameter-explanation-js"
-        }
-      ]
-    },
-    {
-      "stepId": "parameter-explanation-js",
-      "mentorSays": "Parameters are inputs to a function.",
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
       "action": "continue",
-      "next": "backtracking-check-js"
+      "next": "problem-understanding"
     },
     {
-      "stepId": "backtracking-check-js",
-      "mentorSays": "Do you know what backtracking is?",
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what Combination Sum II asks for\n2. Use backtracking to find unique combinations\n3. Handle duplicates correctly (each number used once)\n4. Skip duplicate elements during generation\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
       "choices": [
         {
-          "label": "Yes, I know",
-          "next": "coding-start-js"
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
         },
         {
-          "label": "No, explain",
-          "next": "backtracking-explanation-js"
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
         }
       ]
     },
     {
-      "stepId": "backtracking-explanation-js",
-      "mentorSays": "Backtracking tries choices, explores recursively, backtracks. Skip duplicates at same level.",
-      "example": "function backtrack(index, current, remaining) { /* skip duplicates */ }",
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
       "action": "continue",
       "next": "coding-start-js"
     },
@@ -174,638 +245,66 @@
     {
       "stepId": "coding-sort-js",
       "mentorSays": "Sort candidates first.",
+      "example": "",
       "action": "continue",
       "next": "coding-init-js"
     },
     {
       "stepId": "coding-init-js",
       "mentorSays": "Initialize result array.",
+      "example": "",
       "action": "continue",
       "next": "coding-helper-js"
     },
     {
       "stepId": "coding-helper-js",
       "mentorSays": "Create backtrack helper with index, current, remaining.",
+      "example": "",
       "action": "continue",
       "next": "coding-base-js"
     },
     {
       "stepId": "coding-base-js",
       "mentorSays": "Add base cases: remaining==0 (add to result), remaining<0 (return).",
+      "example": "",
       "action": "continue",
       "next": "coding-loop-js"
     },
     {
       "stepId": "coding-loop-js",
       "mentorSays": "Loop from index to end.",
+      "example": "",
       "action": "continue",
       "next": "coding-skip-js"
     },
     {
       "stepId": "coding-skip-js",
       "mentorSays": "Skip if same element was used at this level (duplicate check).",
+      "example": "",
       "action": "continue",
       "next": "coding-recurse-js"
     },
     {
       "stepId": "coding-recurse-js",
       "mentorSays": "Add candidate, recurse with index+1 (use once), remove (backtrack).",
+      "example": "",
       "action": "continue",
       "next": "coding-return-js"
     },
     {
       "stepId": "coding-return-js",
       "mentorSays": "Call backtrack(0, [], target) and return result.",
-      "action": "continue",
-      "next": "test-code-js"
-    },
-    {
-      "stepId": "test-code-js",
-      "mentorSays": "Test cases:\n1. candidates=[10,1,2,7,6,1,5], target=8 → [[1,1,6],[1,2,5],[1,7],[2,6]]\n2. candidates=[2,5,2,1,2], target=5 → [[1,2,2],[5]]\n3. candidates=[2], target=1 → []\n4. Verify all combinations are unique\n5. Verify each number used at most once\n6. Check edge cases",
       "example": "",
       "action": "continue",
-      "next": "final"
+      "next": "completion"
     },
     {
-      "stepId": "variable-check-python",
-      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Python?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know variables",
-          "next": "function-check-python"
-        },
-        {
-          "label": "No, explain variables",
-          "next": "variable-explanation-python"
-        }
-      ]
-    },
-    {
-      "stepId": "variable-explanation-python",
-      "mentorSays": "A variable is like a labeled box where you can store a value.",
-      "example": "result = []",
-      "next": "function-check-python"
-    },
-    {
-      "stepId": "function-check-python",
-      "mentorSays": "Do you know what a function is in Python?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know functions",
-          "next": "parameter-check-python"
-        },
-        {
-          "label": "No, explain functions",
-          "next": "function-explanation-python"
-        }
-      ]
-    },
-    {
-      "stepId": "function-explanation-python",
-      "mentorSays": "A function is a reusable block of code.",
-      "example": "def combinationSum2(candidates, target):",
-      "next": "parameter-check-python"
-    },
-    {
-      "stepId": "parameter-check-python",
-      "mentorSays": "Do you know what parameters are?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know parameters",
-          "next": "backtracking-check-python"
-        },
-        {
-          "label": "No, explain parameters",
-          "next": "parameter-explanation-python"
-        }
-      ]
-    },
-    {
-      "stepId": "parameter-explanation-python",
-      "mentorSays": "Parameters are inputs to a function.",
-      "example": "",
-      "next": "backtracking-check-python"
-    },
-    {
-      "stepId": "backtracking-check-python",
-      "mentorSays": "Do you know what backtracking is?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know",
-          "next": "coding-start-python"
-        },
-        {
-          "label": "No, explain",
-          "next": "backtracking-explanation-python"
-        }
-      ]
-    },
-    {
-      "stepId": "backtracking-explanation-python",
-      "mentorSays": "Backtracking tries choices, explores recursively, backtracks. Skip duplicates at same level.",
-      "example": "def backtrack(index, current, remaining): /* skip duplicates */",
-      "next": "coding-start-python"
-    },
-    {
-      "stepId": "coding-start-python",
-      "mentorSays": "Implement combination sum II in PYTHON.",
-      "example": "def combinationSum2(candidates, target):",
-      "next": "coding-sort-python"
-    },
-    {
-      "stepId": "coding-sort-python",
-      "mentorSays": "Sort candidates first.",
-      "example": "",
-      "next": "coding-init-python"
-    },
-    {
-      "stepId": "coding-init-python",
-      "mentorSays": "Initialize result array.",
-      "example": "",
-      "next": "coding-helper-python"
-    },
-    {
-      "stepId": "coding-helper-python",
-      "mentorSays": "Create backtrack helper with index, current, remaining.",
-      "example": "",
-      "next": "coding-base-python"
-    },
-    {
-      "stepId": "coding-base-python",
-      "mentorSays": "Add base cases: remaining==0 (add to result), remaining<0 (return).",
-      "example": "",
-      "next": "coding-loop-python"
-    },
-    {
-      "stepId": "coding-loop-python",
-      "mentorSays": "Loop from index to end.",
-      "example": "",
-      "next": "coding-skip-python"
-    },
-    {
-      "stepId": "coding-skip-python",
-      "mentorSays": "Skip if same element was used at this level (duplicate check).",
-      "example": "",
-      "next": "coding-recurse-python"
-    },
-    {
-      "stepId": "coding-recurse-python",
-      "mentorSays": "Add candidate, recurse with index+1 (use once), remove (backtrack).",
-      "example": "",
-      "next": "coding-return-python"
-    },
-    {
-      "stepId": "coding-return-python",
-      "mentorSays": "Call backtrack(0, [], target) and return result.",
-      "example": "",
-      "next": "test-code-python"
-    },
-    {
-      "stepId": "test-code-python",
-      "mentorSays": "Test cases:\n1. candidates=[10,1,2,7,6,1,5], target=8 → [[1,1,6],[1,2,5],[1,7],[2,6]]\n2. candidates=[2,5,2,1,2], target=5 → [[1,2,2],[5]]\n3. candidates=[2], target=1 → []\n4. Verify all combinations are unique\n5. Verify each number used at most once\n6. Check edge cases",
-      "example": "",
-      "next": "final"
-    },
-    {
-      "stepId": "variable-check-java",
-      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Java?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know variables",
-          "next": "function-check-java"
-        },
-        {
-          "label": "No, explain variables",
-          "next": "variable-explanation-java"
-        }
-      ]
-    },
-    {
-      "stepId": "variable-explanation-java",
-      "mentorSays": "A variable is like a labeled box where you can store a value.",
-      "example": "List<Integer> result = new ArrayList<>();",
-      "next": "function-check-java"
-    },
-    {
-      "stepId": "function-check-java",
-      "mentorSays": "Do you know what a function is in Java?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know functions",
-          "next": "parameter-check-java"
-        },
-        {
-          "label": "No, explain functions",
-          "next": "function-explanation-java"
-        }
-      ]
-    },
-    {
-      "stepId": "function-explanation-java",
-      "mentorSays": "A function is a reusable block of code.",
-      "example": "public int combinationSum2(String s) {}",
-      "next": "parameter-check-java"
-    },
-    {
-      "stepId": "parameter-check-java",
-      "mentorSays": "Do you know what parameters are?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know parameters",
-          "next": "backtracking-check-java"
-        },
-        {
-          "label": "No, explain parameters",
-          "next": "parameter-explanation-java"
-        }
-      ]
-    },
-    {
-      "stepId": "parameter-explanation-java",
-      "mentorSays": "Parameters are inputs to a function.",
-      "example": "",
-      "next": "backtracking-check-java"
-    },
-    {
-      "stepId": "backtracking-check-java",
-      "mentorSays": "Do you know what backtracking is?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know",
-          "next": "coding-start-java"
-        },
-        {
-          "label": "No, explain",
-          "next": "backtracking-explanation-java"
-        }
-      ]
-    },
-    {
-      "stepId": "backtracking-explanation-java",
-      "mentorSays": "Backtracking tries choices, explores recursively, backtracks. Skip duplicates at same level.",
-      "example": "public int backtrack(String index, current, remaining) { /* skip duplicates */ }",
-      "next": "coding-start-java"
-    },
-    {
-      "stepId": "coding-start-java",
-      "mentorSays": "Implement combination sum II in JAVA.",
-      "example": "public int combinationSum2(String candidates, target) {}",
-      "next": "coding-sort-java"
-    },
-    {
-      "stepId": "coding-sort-java",
-      "mentorSays": "Sort candidates first.",
-      "example": "",
-      "next": "coding-init-java"
-    },
-    {
-      "stepId": "coding-init-java",
-      "mentorSays": "Initialize result array.",
-      "example": "",
-      "next": "coding-helper-java"
-    },
-    {
-      "stepId": "coding-helper-java",
-      "mentorSays": "Create backtrack helper with index, current, remaining.",
-      "example": "",
-      "next": "coding-base-java"
-    },
-    {
-      "stepId": "coding-base-java",
-      "mentorSays": "Add base cases: remaining==0 (add to result), remaining<0 (return).",
-      "example": "",
-      "next": "coding-loop-java"
-    },
-    {
-      "stepId": "coding-loop-java",
-      "mentorSays": "Loop from index to end.",
-      "example": "",
-      "next": "coding-skip-java"
-    },
-    {
-      "stepId": "coding-skip-java",
-      "mentorSays": "Skip if same element was used at this level (duplicate check).",
-      "example": "",
-      "next": "coding-recurse-java"
-    },
-    {
-      "stepId": "coding-recurse-java",
-      "mentorSays": "Add candidate, recurse with index+1 (use once), remove (backtrack).",
-      "example": "",
-      "next": "coding-return-java"
-    },
-    {
-      "stepId": "coding-return-java",
-      "mentorSays": "Call backtrack(0, [], target) and return result.",
-      "example": "",
-      "next": "test-code-java"
-    },
-    {
-      "stepId": "test-code-java",
-      "mentorSays": "Test cases:\n1. candidates=[10,1,2,7,6,1,5], target=8 → [[1,1,6],[1,2,5],[1,7],[2,6]]\n2. candidates=[2,5,2,1,2], target=5 → [[1,2,2],[5]]\n3. candidates=[2], target=1 → []\n4. Verify all combinations are unique\n5. Verify each number used at most once\n6. Check edge cases",
-      "example": "",
-      "next": "final"
-    },
-    {
-      "stepId": "variable-check-cpp",
-      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in C++?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know variables",
-          "next": "function-check-cpp"
-        },
-        {
-          "label": "No, explain variables",
-          "next": "variable-explanation-cpp"
-        }
-      ]
-    },
-    {
-      "stepId": "variable-explanation-cpp",
-      "mentorSays": "A variable is like a labeled box where you can store a value.",
-      "example": "vector<int> result;",
-      "next": "function-check-cpp"
-    },
-    {
-      "stepId": "function-check-cpp",
-      "mentorSays": "Do you know what a function is in C++?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know functions",
-          "next": "parameter-check-cpp"
-        },
-        {
-          "label": "No, explain functions",
-          "next": "function-explanation-cpp"
-        }
-      ]
-    },
-    {
-      "stepId": "function-explanation-cpp",
-      "mentorSays": "A function is a reusable block of code.",
-      "example": "int combinationSum2(string s) {}",
-      "next": "parameter-check-cpp"
-    },
-    {
-      "stepId": "parameter-check-cpp",
-      "mentorSays": "Do you know what parameters are?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know parameters",
-          "next": "backtracking-check-cpp"
-        },
-        {
-          "label": "No, explain parameters",
-          "next": "parameter-explanation-cpp"
-        }
-      ]
-    },
-    {
-      "stepId": "parameter-explanation-cpp",
-      "mentorSays": "Parameters are inputs to a function.",
-      "example": "",
-      "next": "backtracking-check-cpp"
-    },
-    {
-      "stepId": "backtracking-check-cpp",
-      "mentorSays": "Do you know what backtracking is?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know",
-          "next": "coding-start-cpp"
-        },
-        {
-          "label": "No, explain",
-          "next": "backtracking-explanation-cpp"
-        }
-      ]
-    },
-    {
-      "stepId": "backtracking-explanation-cpp",
-      "mentorSays": "Backtracking tries choices, explores recursively, backtracks. Skip duplicates at same level.",
-      "example": "int backtrack(string index, current, remaining) { /* skip duplicates */ }",
-      "next": "coding-start-cpp"
-    },
-    {
-      "stepId": "coding-start-cpp",
-      "mentorSays": "Implement combination sum II in CPP.",
-      "example": "int combinationSum2(string candidates, target) {}",
-      "next": "coding-sort-cpp"
-    },
-    {
-      "stepId": "coding-sort-cpp",
-      "mentorSays": "Sort candidates first.",
-      "example": "",
-      "next": "coding-init-cpp"
-    },
-    {
-      "stepId": "coding-init-cpp",
-      "mentorSays": "Initialize result array.",
-      "example": "",
-      "next": "coding-helper-cpp"
-    },
-    {
-      "stepId": "coding-helper-cpp",
-      "mentorSays": "Create backtrack helper with index, current, remaining.",
-      "example": "",
-      "next": "coding-base-cpp"
-    },
-    {
-      "stepId": "coding-base-cpp",
-      "mentorSays": "Add base cases: remaining==0 (add to result), remaining<0 (return).",
-      "example": "",
-      "next": "coding-loop-cpp"
-    },
-    {
-      "stepId": "coding-loop-cpp",
-      "mentorSays": "Loop from index to end.",
-      "example": "",
-      "next": "coding-skip-cpp"
-    },
-    {
-      "stepId": "coding-skip-cpp",
-      "mentorSays": "Skip if same element was used at this level (duplicate check).",
-      "example": "",
-      "next": "coding-recurse-cpp"
-    },
-    {
-      "stepId": "coding-recurse-cpp",
-      "mentorSays": "Add candidate, recurse with index+1 (use once), remove (backtrack).",
-      "example": "",
-      "next": "coding-return-cpp"
-    },
-    {
-      "stepId": "coding-return-cpp",
-      "mentorSays": "Call backtrack(0, [], target) and return result.",
-      "example": "",
-      "next": "test-code-cpp"
-    },
-    {
-      "stepId": "test-code-cpp",
-      "mentorSays": "Test cases:\n1. candidates=[10,1,2,7,6,1,5], target=8 → [[1,1,6],[1,2,5],[1,7],[2,6]]\n2. candidates=[2,5,2,1,2], target=5 → [[1,2,2],[5]]\n3. candidates=[2], target=1 → []\n4. Verify all combinations are unique\n5. Verify each number used at most once\n6. Check edge cases",
-      "example": "",
-      "next": "final"
-    },
-    {
-      "stepId": "variable-check-ts",
-      "mentorSays": "Before we start coding, let me ask: Do you know what a variable is in Ts?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know variables",
-          "next": "function-check-ts"
-        },
-        {
-          "label": "No, explain variables",
-          "next": "variable-explanation-ts"
-        }
-      ]
-    },
-    {
-      "stepId": "variable-explanation-ts",
-      "mentorSays": "A variable is like a labeled box where you can store a value.",
-      "example": "let result: number[] = [];",
-      "next": "function-check-ts"
-    },
-    {
-      "stepId": "function-check-ts",
-      "mentorSays": "Do you know what a function is in Ts?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know functions",
-          "next": "parameter-check-ts"
-        },
-        {
-          "label": "No, explain functions",
-          "next": "function-explanation-ts"
-        }
-      ]
-    },
-    {
-      "stepId": "function-explanation-ts",
-      "mentorSays": "A function is a reusable block of code.",
-      "example": "function combinationSum2(s: string): number {}",
-      "next": "parameter-check-ts"
-    },
-    {
-      "stepId": "parameter-check-ts",
-      "mentorSays": "Do you know what parameters are?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know parameters",
-          "next": "backtracking-check-ts"
-        },
-        {
-          "label": "No, explain parameters",
-          "next": "parameter-explanation-ts"
-        }
-      ]
-    },
-    {
-      "stepId": "parameter-explanation-ts",
-      "mentorSays": "Parameters are inputs to a function.",
-      "example": "",
-      "next": "backtracking-check-ts"
-    },
-    {
-      "stepId": "backtracking-check-ts",
-      "mentorSays": "Do you know what backtracking is?",
-      "example": "",
-      "choices": [
-        {
-          "label": "Yes, I know",
-          "next": "coding-start-ts"
-        },
-        {
-          "label": "No, explain",
-          "next": "backtracking-explanation-ts"
-        }
-      ]
-    },
-    {
-      "stepId": "backtracking-explanation-ts",
-      "mentorSays": "Backtracking tries choices, explores recursively, backtracks. Skip duplicates at same level.",
-      "example": "function backtrack(index, current, remaining: string): number { /* skip duplicates */ }",
-      "next": "coding-start-ts"
-    },
-    {
-      "stepId": "coding-start-ts",
-      "mentorSays": "Implement combination sum II in TS.",
-      "example": "function combinationSum2(candidates, target: string): number {}",
-      "next": "coding-sort-ts"
-    },
-    {
-      "stepId": "coding-sort-ts",
-      "mentorSays": "Sort candidates first.",
-      "example": "",
-      "next": "coding-init-ts"
-    },
-    {
-      "stepId": "coding-init-ts",
-      "mentorSays": "Initialize result array.",
-      "example": "",
-      "next": "coding-helper-ts"
-    },
-    {
-      "stepId": "coding-helper-ts",
-      "mentorSays": "Create backtrack helper with index, current, remaining.",
-      "example": "",
-      "next": "coding-base-ts"
-    },
-    {
-      "stepId": "coding-base-ts",
-      "mentorSays": "Add base cases: remaining==0 (add to result), remaining<0 (return).",
-      "example": "",
-      "next": "coding-loop-ts"
-    },
-    {
-      "stepId": "coding-loop-ts",
-      "mentorSays": "Loop from index to end.",
-      "example": "",
-      "next": "coding-skip-ts"
-    },
-    {
-      "stepId": "coding-skip-ts",
-      "mentorSays": "Skip if same element was used at this level (duplicate check).",
-      "example": "",
-      "next": "coding-recurse-ts"
-    },
-    {
-      "stepId": "coding-recurse-ts",
-      "mentorSays": "Add candidate, recurse with index+1 (use once), remove (backtrack).",
-      "example": "",
-      "next": "coding-return-ts"
-    },
-    {
-      "stepId": "coding-return-ts",
-      "mentorSays": "Call backtrack(0, [], target) and return result.",
-      "example": "",
-      "next": "test-code-ts"
-    },
-    {
-      "stepId": "test-code-ts",
-      "mentorSays": "Test cases:\n1. candidates=[10,1,2,7,6,1,5], target=8 → [[1,1,6],[1,2,5],[1,7],[2,6]]\n2. candidates=[2,5,2,1,2], target=5 → [[1,2,2],[5]]\n3. candidates=[2], target=1 → []\n4. Verify all combinations are unique\n5. Verify each number used at most once\n6. Check edge cases",
-      "example": "",
-      "next": "final"
-    },
-    {
-      "stepId": "final",
-      "mentorSays": "Time: O(2^n), Space: O(target). Sort first, skip duplicates at same level, use each number once.",
-      "action": "continue"
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Combination Sum II!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
     }
-  ]
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
 }

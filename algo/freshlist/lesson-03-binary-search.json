@@ -1,0 +1,172 @@
+{
+  "id": "binary-search",
+  "title": "Binary Search",
+  "pattern": "binary-search (core)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 3,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-03",
+    "introduces": [
+      "search-space-halving",
+      "systematic-pointer-movement",
+      "not-found-condition"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "array-indexing",
+      "array-length",
+      "loops",
+      "functions",
+      "function-parameters",
+      "return-statement",
+      "comparison-operators",
+      "midpoint-calculation",
+      "Math.floor",
+      "binary-search-concept",
+      "while-loop"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["rotate-array"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left = 0 and right = last index." },
+    { "id": "ps2", "text": "While left <= right:" },
+    { "id": "ps3", "text": "  Compute mid index." },
+    { "id": "ps4", "text": "  If nums[mid] equals target, return mid." },
+    { "id": "ps5", "text": "  If nums[mid] < target, move left to mid + 1." },
+    { "id": "ps6", "text": "  Else move right to mid - 1." },
+    { "id": "ps7", "text": "If loop ends, target is not present; return -1." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Binary Search**.\n\nThis lesson solidifies the **binary search pattern** — one of the most fundamental algorithms in computer science.\n\nYou've already learned binary search in the previous lesson. Now we'll master it with a slightly different goal: returning `-1` when the target doesn't exist.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nYou are given a **sorted** array of numbers and a target value.\n\n**Your task:**\n- Return the **index** of the target if it exists\n- Return **-1** if it does not exist\n\n**Example:**\n```\nnums = [1, 3, 5, 7, 9]\ntarget = 5\n\nOutput: 2 (because 5 is at index 2)\n```\n\n**Example 2:**\n```\nnums = [1, 3, 5, 7, 9]\ntarget = 6\n\nOutput: -1 (6 does not exist)\n```",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) nums = [1, 3, 5, 7, 9], target = 5 → 2\n2) nums = [1, 3, 5, 7, 9], target = 6 → -1\n3) nums = [2, 5], target = 5 → 1\n4) nums = [2, 5], target = 0 → -1\n```",
+      "action": "next",
+      "next": "why-not-linear"
+    },
+    {
+      "stepId": "why-not-linear",
+      "mentorSays": "### Why Not Check Every Element?\n\nA simple loop could check every element one by one:\n\n```javascript\nfor (let i = 0; i < nums.length; i++) {\n  if (nums[i] === target) return i;\n}\nreturn -1;\n```\n\nThis works, but it's **slow**.\n\nWith 1,000,000 elements, you might check nearly all of them.\n\nBecause the array is **sorted**, we can do much better.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Quick review:**\n\nHow does binary search reduce the number of checks?",
+      "choices": [
+        { "label": "It eliminates half the remaining elements each time", "next": "core-idea" },
+        { "label": "It checks elements in random order", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct!\n\nBinary search works by **halving the search space** repeatedly:\n\n1. Check the middle element\n2. If it matches, return the index\n3. If middle is too small, search the right half\n4. If middle is too large, search the left half\n5. Repeat until found or search space is empty\n\nWith 1,000,000 elements, we need only about **20 checks** instead of up to 1,000,000!",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nnums = [1, 3, 5, 7, 9]\ntarget = 7\n```\n\n**Start:**\n- left = 0, right = 4\n- mid = Math.floor((0 + 4) / 2) = 2\n- nums[2] = 5\n- 5 < 7, so search right half\n- Move left to mid + 1 = 3\n\n**Next:**\n- left = 3, right = 4\n- mid = Math.floor((3 + 4) / 2) = 3\n- nums[3] = 7\n- **Found!** Return 3",
+      "action": "next",
+      "next": "walkthrough-not-found"
+    },
+    {
+      "stepId": "walkthrough-not-found",
+      "mentorSays": "### Walkthrough: Target Not Found\n\n```\nnums = [1, 3, 5, 7, 9]\ntarget = 6\n```\n\n**Start:**\n- left = 0, right = 4\n- mid = 2, nums[2] = 5\n- 5 < 6, move left to 3\n\n**Next:**\n- left = 3, right = 4\n- mid = 3, nums[3] = 7\n- 7 > 6, move right to 2\n\n**Now:**\n- left = 3, right = 2\n- left > right, **stop**\n- Return -1 (not found)",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis is very similar to Search Insert Position, but with a different return value when not found.\n\nLet's code it step by step.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function.\n\n```javascript\nfunction binarySearch(nums, target) {\n\n}\n```\n\n**Explanation:**\n- `binarySearch` — function name\n- `nums` — sorted array\n- `target` — value we're searching for",
+      "example": "function binarySearch(nums, target) {\n\n}",
+      "action": "next",
+      "next": "code-02-pointers",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-pointers",
+      "mentorSays": "**Step 2:** Initialize left and right pointers.\n\n```javascript\nfunction binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n}\n```\n\n**Explanation:**\n- These define our search range\n- We'll shrink this range until we find the target or run out of space",
+      "example": "let left = 0;\nlet right = nums.length - 1;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "**Step 3:** Loop while there's a valid search range.\n\n```javascript\nfunction binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n\n  }\n}\n```\n\n**Explanation:**\n- `left <= right` means there's still space to search\n- When left > right, we've exhausted all possibilities",
+      "example": "while (left <= right) {\n\n}",
+      "action": "next",
+      "next": "code-04-mid",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-04-mid",
+      "mentorSays": "**Step 4:** Calculate the middle index.\n\n```javascript\nfunction binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n  }\n}\n```\n\n**Explanation:**\n- This finds the middle point between left and right\n- Math.floor ensures we get a valid integer index",
+      "example": "const mid = Math.floor((left + right) / 2);",
+      "action": "next",
+      "next": "code-05-compare",
+      "pseudocodeLineIds": ["ps4", "ps5", "ps6"]
+    },
+    {
+      "stepId": "code-05-compare",
+      "mentorSays": "**Step 5:** Compare and move pointers.\n\n```javascript\nfunction binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) {\n      return mid;\n    }\n    if (nums[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n}\n```\n\n**Explanation:**\n- If we found it, return immediately\n- If mid value is too small, search right (move left pointer)\n- Otherwise, search left (move right pointer)",
+      "example": "if (nums[mid] === target) {\n  return mid;\n}\nif (nums[mid] < target) {\n  left = mid + 1;\n} else {\n  right = mid - 1;\n}",
+      "action": "next",
+      "next": "code-06-not-found",
+      "pseudocodeLineIds": ["ps7"]
+    },
+    {
+      "stepId": "code-06-not-found",
+      "mentorSays": "**Step 6:** Return -1 if not found.\n\n```javascript\nfunction binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) {\n      return mid;\n    }\n    if (nums[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n\n  return -1;\n}\n```\n\n**Explanation:**\n- If the loop ends without returning, the target doesn't exist\n- We return -1 as a signal for \"not found\"",
+      "example": "return -1;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) {\n      return mid;\n    }\n    if (nums[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n\n  return -1;\n}\n```\n\n**How it works:**\n1. Start with full array range\n2. Check middle element\n3. Eliminate half based on comparison\n4. Repeat until found or range is empty\n5. Return index if found, -1 if not",
+      "example": "function binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) {\n      return mid;\n    }\n    if (nums[mid] < target) {\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n\n  return -1;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Binary search mastery** — you now understand the core pattern deeply\n- **Search space halving** — the key principle behind efficiency\n- **Not found handling** — returning -1 as a signal\n- **Systematic pointer movement** — always shrinking the search range\n\n**Why this matters:**\n\nBinary search is the foundation for:\n- Searching in sorted data structures\n- Finding boundaries in ranges\n- Optimizing many other algorithms\n- Advanced search problems\n\nYou'll reuse this exact pattern in many future lessons.\n\n**Next recommended lesson:** Rotate Array",
+      "action": "complete"
+    }
+  ]
+}

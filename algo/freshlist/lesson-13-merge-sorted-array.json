@@ -1,0 +1,157 @@
+{
+  "id": "merge-sorted-array",
+  "title": "Merge Sorted Array",
+  "pattern": "two pointers (backward)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 13,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-13",
+    "introduces": [
+      "backward-traversal",
+      "merge-pattern",
+      "space-at-end",
+      "three-pointers"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "arrays",
+      "array-indexing",
+      "loops",
+      "while-loop",
+      "functions",
+      "return-statement",
+      "comparison-operators",
+      "two-pointers"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["valid-parentheses"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set pointer p1 to last element of nums1's data (m - 1)." },
+    { "id": "ps2", "text": "Set pointer p2 to last element of nums2 (n - 1)." },
+    { "id": "ps3", "text": "Set write pointer p to last position of nums1 (m + n - 1)." },
+    { "id": "ps4", "text": "While p2 >= 0:" },
+    { "id": "ps5", "text": "  If p1 >= 0 AND nums1[p1] > nums2[p2], copy nums1[p1] to nums1[p], decrement p1." },
+    { "id": "ps6", "text": "  Else copy nums2[p2] to nums1[p], decrement p2." },
+    { "id": "ps7", "text": "  Decrement p." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Merge Sorted Array**.\n\nThis lesson teaches a clever trick: merging **from the back**. Instead of shifting elements forward, we fill in from the end where there's empty space.\n\nThis is a twist on the two-pointer pattern you already know!",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nYou are given two sorted arrays `nums1` and `nums2`, and their lengths `m` and `n`.\n\nMerge `nums2` into `nums1` so that `nums1` contains all elements in sorted order.\n\n**Key detail:** `nums1` has extra space at the end to hold all elements.\n\n**Example:**\n```\nnums1 = [1, 2, 3, 0, 0, 0], m = 3\nnums2 = [2, 5, 6], n = 3\n\nOutput: nums1 = [1, 2, 2, 3, 5, 6]\n```\n\nThe zeros are placeholders for nums2's elements.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) nums1 = [1, 2, 3, 0, 0, 0], m=3\n   nums2 = [2, 5, 6], n=3\n   Result: [1, 2, 2, 3, 5, 6]\n\n2) nums1 = [1, 0], m=1\n   nums2 = [2], n=1\n   Result: [1, 2]\n\n3) nums1 = [0], m=0\n   nums2 = [1], n=1\n   Result: [1]\n\n4) nums1 = [2, 0], m=1\n   nums2 = [1], n=1\n   Result: [1, 2]\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you merge the two arrays?",
+      "choices": [
+        { "label": "Start from the front, insert and shift", "next": "why-not-front" },
+        { "label": "Create a new array, then copy back", "next": "why-not-new" },
+        { "label": "Start from the back, fill empty space", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "why-not-front",
+      "mentorSays": "Starting from the front requires shifting elements:\n\n```\nnums1 = [1, 2, 3, 0, 0, 0]\nnums2 = [2, 5, 6]\n\nTo insert 2 at position 1, shift 2, 3 right...\n```\n\nEach insert might shift many elements — slow!\n\nStarting from the back avoids all shifting because we fill empty space.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "why-not-new",
+      "mentorSays": "Creating a new array works:\n\n```javascript\nconst result = [];\n// merge into result\n// copy back to nums1\n```\n\nBut the problem asks us to modify `nums1` in place.\n\nWe can do it without extra space by working backward!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Key Insight: Start from the Back\n\nThe end of `nums1` has empty space (the zeros).\n\nIf we fill from the back:\n- We never overwrite data we haven't processed yet\n- We always have room to place the next element\n\n**Strategy:**\n1. Compare largest remaining elements from both arrays\n2. Put the larger one at the end of nums1\n3. Move pointers and repeat",
+      "action": "next",
+      "next": "three-pointers"
+    },
+    {
+      "stepId": "three-pointers",
+      "mentorSays": "### Three Pointers\n\nWe need three pointers:\n\n```\nnums1 = [1, 2, 3, 0, 0, 0], m = 3\nnums2 = [2, 5, 6], n = 3\n\np1 = 2 (points to 3, last real element in nums1)\np2 = 2 (points to 6, last element in nums2)\np  = 5 (points to position where we'll write)\n```\n\nWe compare `nums1[p1]` and `nums2[p2]`, put the larger at `nums1[p]`.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nnums1 = [1, 2, 3, 0, 0, 0], m=3\nnums2 = [2, 5, 6], n=3\np1=2, p2=2, p=5\n```\n\n**Step 1:**\n- nums1[2]=3, nums2[2]=6\n- 6 > 3, put 6 at position 5\n- nums1 = [1, 2, 3, 0, 0, **6**]\n- p2=1, p=4\n\n**Step 2:**\n- nums1[2]=3, nums2[1]=5\n- 5 > 3, put 5 at position 4\n- nums1 = [1, 2, 3, 0, **5**, 6]\n- p2=0, p=3\n\n**Step 3:**\n- nums1[2]=3, nums2[0]=2\n- 3 > 2, put 3 at position 3\n- nums1 = [1, 2, 3, **3**, 5, 6]\n- p1=1, p=2\n\n**Step 4:**\n- nums1[1]=2, nums2[0]=2\n- Equal, pick nums2: put 2 at position 2\n- nums1 = [1, 2, **2**, 3, 5, 6]\n- p2=-1, p=1\n\n**Done!** p2 < 0, all nums2 elements placed.",
+      "action": "next",
+      "next": "why-stop-at-p2"
+    },
+    {
+      "stepId": "why-stop-at-p2",
+      "mentorSays": "### Why Stop When p2 < 0?\n\nOnce all elements from `nums2` are placed, we're done!\n\nAny remaining elements in `nums1` are already in their correct positions.\n\n```\nAfter merge: [1, 2, 2, 3, 5, 6]\n              ↑  ↑\n          These were already in place\n```\n\nNo need to touch them!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nWe'll use a while loop that continues until all nums2 elements are merged.\n\nLet's build it step by step.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function and initialize pointers.\n\n```javascript\nfunction merge(nums1, m, nums2, n) {\n  let p1 = m - 1;\n  let p2 = n - 1;\n  let p = m + n - 1;\n\n}\n```\n\n**Explanation:**\n- `p1` points to last real element in nums1\n- `p2` points to last element in nums2\n- `p` points to where we'll write (end of nums1)",
+      "example": "function merge(nums1, m, nums2, n) {\n  let p1 = m - 1;\n  let p2 = n - 1;\n  let p = m + n - 1;\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "**Step 2:** Loop while there are elements in nums2.\n\n```javascript\nfunction merge(nums1, m, nums2, n) {\n  let p1 = m - 1;\n  let p2 = n - 1;\n  let p = m + n - 1;\n\n  while (p2 >= 0) {\n\n  }\n}\n```\n\n**Explanation:**\n- Continue until all nums2 elements are placed\n- `p2 >= 0` means there are still elements in nums2 to process",
+      "example": "while (p2 >= 0) {\n\n}",
+      "action": "next",
+      "next": "code-03-compare",
+      "pseudocodeLineIds": ["ps5", "ps6"]
+    },
+    {
+      "stepId": "code-03-compare",
+      "mentorSays": "**Step 3:** Compare and place the larger element.\n\n```javascript\nfunction merge(nums1, m, nums2, n) {\n  let p1 = m - 1;\n  let p2 = n - 1;\n  let p = m + n - 1;\n\n  while (p2 >= 0) {\n    if (p1 >= 0 && nums1[p1] > nums2[p2]) {\n      nums1[p] = nums1[p1];\n      p1--;\n    } else {\n      nums1[p] = nums2[p2];\n      p2--;\n    }\n    p--;\n  }\n}\n```\n\n**Explanation:**\n- Check `p1 >= 0` to make sure nums1 still has elements\n- If nums1's element is larger, place it and move p1\n- Otherwise (nums2's is larger OR nums1 is exhausted), place nums2's element\n- Always decrement p (write position)",
+      "example": "if (p1 >= 0 && nums1[p1] > nums2[p2]) {\n  nums1[p] = nums1[p1];\n  p1--;\n} else {\n  nums1[p] = nums2[p2];\n  p2--;\n}\np--;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction merge(nums1, m, nums2, n) {\n  let p1 = m - 1;\n  let p2 = n - 1;\n  let p = m + n - 1;\n\n  while (p2 >= 0) {\n    if (p1 >= 0 && nums1[p1] > nums2[p2]) {\n      nums1[p] = nums1[p1];\n      p1--;\n    } else {\n      nums1[p] = nums2[p2];\n      p2--;\n    }\n    p--;\n  }\n}\n```\n\n**How it works:**\n1. Start all pointers at the end\n2. Compare largest remaining elements\n3. Place larger one at write position\n4. Move relevant pointers\n5. Stop when all nums2 elements are placed",
+      "example": "function merge(nums1, m, nums2, n) {\n  let p1 = m - 1;\n  let p2 = n - 1;\n  let p = m + n - 1;\n\n  while (p2 >= 0) {\n    if (p1 >= 0 && nums1[p1] > nums2[p2]) {\n      nums1[p] = nums1[p1];\n      p1--;\n    } else {\n      nums1[p] = nums2[p2];\n      p2--;\n    }\n    p--;\n  }\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Backward traversal** — sometimes working from the end is smarter\n- **Merge pattern** — combining two sorted sequences\n- **Space at end** — using placeholder space effectively\n- **Three pointers** — tracking read positions and write position separately\n\n**Why this matters:**\n\nThis backward merge technique appears in:\n- Merge sort implementation\n- Interval merging\n- In-place modifications\n\nThe key insight: when you need to modify in place, think about whether working backward avoids the need to shift elements!\n\n**Next recommended lesson:** Valid Parentheses",
+      "action": "complete"
+    }
+  ]
+}

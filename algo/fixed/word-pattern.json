@@ -1,0 +1,324 @@
+{
+  "id": "word-pattern",
+  "title": "Word pattern",
+  "pattern": "hash-map",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Word pattern lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Word pattern problem\n- Recognize the hash-map pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each index in a sequence.\n\nFor example, 'for (let i = 0; i < pattern.length; i++)' means: run the code for each index from 0 to pattern.length-1.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Word Pattern problem asks for\n2. Use hash maps to track pattern-to-word mappings\n3. Check bidirectional mappings to ensure pattern matches\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the word pattern solution in JavaScript. We'll create a function that takes a pattern and a string, and returns true if the string follows the pattern, false otherwise.",
+      "example": "function wordPattern(pattern, s) {\n  \n}",
+      "action": "continue",
+      "next": "coding-split-js"
+    },
+    {
+      "stepId": "coding-split-js",
+      "mentorSays": "First, let's split the string into an array of words.",
+      "example": "function wordPattern(pattern, s) {\n  // Split string into words\n  const words = s.split(' ');\n  // For \"dog cat cat dog\": words = [\"dog\", \"cat\", \"cat\", \"dog\"]\n}",
+      "action": "continue",
+      "next": "coding-check-length-js"
+    },
+    {
+      "stepId": "coding-check-length-js",
+      "mentorSays": "Check if the pattern length matches the number of words. If they don't match, return false.",
+      "example": "function wordPattern(pattern, s) {\n  const words = s.split(' ');\n  \n  // If lengths don't match, pattern can't match\n  if (pattern.length !== words.length) {\n    return false;\n  }\n}",
+      "action": "continue",
+      "next": "coding-init-maps-js"
+    },
+    {
+      "stepId": "coding-init-maps-js",
+      "mentorSays": "Now, let's create two hash maps: one for pattern→word mapping and one for word→pattern mapping.",
+      "example": "function wordPattern(pattern, s) {\n  const words = s.split(' ');\n  \n  if (pattern.length !== words.length) {\n    return false;\n  }\n  \n  // Create two hash maps for bidirectional mapping\n  let patternMap = {};  // Maps pattern characters to words\n  let wordMap = {};     // Maps words to pattern characters\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, let's iterate through both the pattern and words simultaneously.",
+      "example": "function wordPattern(pattern, s) {\n  const words = s.split(' ');\n  \n  if (pattern.length !== words.length) {\n    return false;\n  }\n  \n  let patternMap = {};\n  let wordMap = {};\n  \n  // Iterate through pattern and words\n  for (let i = 0; i < pattern.length; i++) {\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-check-pattern-mapping-js"
+    },
+    {
+      "stepId": "coding-check-pattern-mapping-js",
+      "mentorSays": "For each position, check if pattern[i] is already mapped to something different than words[i]. If so, return false.",
+      "example": "function wordPattern(pattern, s) {\n  const words = s.split(' ');\n  \n  if (pattern.length !== words.length) {\n    return false;\n  }\n  \n  let patternMap = {};\n  let wordMap = {};\n  \n  for (let i = 0; i < pattern.length; i++) {\n    // Check if pattern[i] is already mapped to something different\n    if (patternMap[pattern[i]] && patternMap[pattern[i]] !== words[i]) {\n      return false;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-check-word-mapping-js"
+    },
+    {
+      "stepId": "coding-check-word-mapping-js",
+      "mentorSays": "Also check if words[i] is already mapped to something different than pattern[i]. If so, return false.",
+      "example": "function wordPattern(pattern, s) {\n  const words = s.split(' ');\n  \n  if (pattern.length !== words.length) {\n    return false;\n  }\n  \n  let patternMap = {};\n  let wordMap = {};\n  \n  for (let i = 0; i < pattern.length; i++) {\n    if (patternMap[pattern[i]] && patternMap[pattern[i]] !== words[i]) {\n      return false;\n    }\n    // Check if words[i] is already mapped to something different\n    if (wordMap[words[i]] && wordMap[words[i]] !== pattern[i]) {\n      return false;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-create-mappings-js"
+    },
+    {
+      "stepId": "coding-create-mappings-js",
+      "mentorSays": "If both checks pass, create the mappings: pattern[i] → words[i] and words[i] → pattern[i].",
+      "example": "function wordPattern(pattern, s) {\n  const words = s.split(' ');\n  \n  if (pattern.length !== words.length) {\n    return false;\n  }\n  \n  let patternMap = {};\n  let wordMap = {};\n  \n  for (let i = 0; i < pattern.length; i++) {\n    if (patternMap[pattern[i]] && patternMap[pattern[i]] !== words[i]) {\n      return false;\n    }\n    if (wordMap[words[i]] && wordMap[words[i]] !== pattern[i]) {\n      return false;\n    }\n    // Create mappings\n    patternMap[pattern[i]] = words[i];\n    wordMap[words[i]] = pattern[i];\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-true-js"
+    },
+    {
+      "stepId": "coding-return-true-js",
+      "mentorSays": "If we finish the loop without finding any conflicts, return true - the string follows the pattern!",
+      "example": "function wordPattern(pattern, s) {\n  const words = s.split(' ');\n  \n  if (pattern.length !== words.length) {\n    return false;\n  }\n  \n  let patternMap = {};\n  let wordMap = {};\n  \n  for (let i = 0; i < pattern.length; i++) {\n    if (patternMap[pattern[i]] && patternMap[pattern[i]] !== words[i]) {\n      return false;\n    }\n    if (wordMap[words[i]] && wordMap[words[i]] !== pattern[i]) {\n      return false;\n    }\n    patternMap[pattern[i]] = words[i];\n    wordMap[words[i]] = pattern[i];\n  }\n  \n  // All mappings are consistent\n  return true;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Word pattern!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

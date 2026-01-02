@@ -1,0 +1,162 @@
+{
+  "id": "remove-element",
+  "title": "Remove Element",
+  "pattern": "slow-fast pointers (variant)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 7,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-07",
+    "introduces": [
+      "conditional-copy",
+      "value-based-removal",
+      "element-segregation"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "array-indexing",
+      "array-length",
+      "loops",
+      "for-loop",
+      "functions",
+      "function-parameters",
+      "return-statement",
+      "comparison-operators",
+      "slow-fast-pointers",
+      "write-pointer",
+      "read-pointer",
+      "in-place-count-return"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["valid-anagram"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set slow pointer to 0 (write position)." },
+    { "id": "ps2", "text": "Loop fast pointer from 0 to end of array." },
+    { "id": "ps3", "text": "  If nums[fast] is NOT equal to val:" },
+    { "id": "ps4", "text": "    Copy nums[fast] to nums[slow]." },
+    { "id": "ps5", "text": "    Move slow forward by 1." },
+    { "id": "ps6", "text": "Return slow as the count of remaining elements." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Remove Element**.\n\nThis lesson uses the **slow-fast pointer technique** you learned in Lesson 5, but with a twist.\n\nInstead of removing duplicates, we'll remove all occurrences of a specific value.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nYou are given an array and a value `val`.\n\nYour task is to:\n1. Remove all occurrences of `val` **in place**\n2. Return the count of remaining elements\n\n**Example:**\n```\nnums = [3, 2, 2, 3], val = 3\n\nAfter running: nums becomes [2, 2, ...]\nReturn: 2 (two elements remain)\n```\n\nThe first 2 positions hold the non-removed values. What's beyond doesn't matter.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) nums = [3, 2, 2, 3], val = 3 → Return 2, array becomes [2, 2, ...]\n2) nums = [0, 1, 2, 2, 3], val = 2 → Return 3, array becomes [0, 1, 3, ...]\n3) nums = [1, 1, 1], val = 1 → Return 0, all removed\n4) nums = [4, 5], val = 6 → Return 2, nothing removed\n```",
+      "action": "next",
+      "next": "compare-to-lesson-5"
+    },
+    {
+      "stepId": "compare-to-lesson-5",
+      "mentorSays": "### How This Differs from Remove Duplicates\n\n**Lesson 5 (Remove Duplicates):**\n- Array must be sorted\n- Compare nums[fast] with nums[slow]\n- Keep first occurrence of each value\n\n**This problem (Remove Element):**\n- Array does NOT need to be sorted\n- Compare nums[fast] with `val`\n- Keep all elements that are NOT equal to val\n\nThe pattern is the same, but the **condition** is different!",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Quick check:**\n\nWhich pointer approach would you use?",
+      "choices": [
+        { "label": "Two pointers moving toward each other", "next": "why-same-direction" },
+        { "label": "Slow-fast pointers moving the same direction", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "why-same-direction",
+      "mentorSays": "Two pointers moving toward each other works well for:\n- Reversing arrays\n- Finding pairs with a sum\n- Checking palindromes\n\nBut for **removing elements**, we need to:\n1. Scan each element (fast pointer)\n2. Build a result from the left (slow pointer)\n\nSo slow-fast moving in the **same direction** is the right choice!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Strategy\n\n**Slow pointer (write position):**\n- Marks where the next \"kept\" value should go\n- Only moves when we keep a value\n\n**Fast pointer (read position):**\n- Scans every element\n- Always moves forward\n\n**The condition:**\n```\nIf nums[fast] ≠ val → keep it (copy to slow, advance slow)\nIf nums[fast] = val → skip it (just advance fast)\n```",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nnums = [3, 2, 2, 3], val = 3\n```\n\n**Start:** slow = 0, fast = 0\n- nums[0] = 3 = val → skip\n\n**fast = 1:**\n- nums[1] = 2 ≠ val → keep!\n- Copy 2 to nums[0]\n- Array: [2, 2, 2, 3]\n- slow = 1\n\n**fast = 2:**\n- nums[2] = 2 ≠ val → keep!\n- Copy 2 to nums[1]\n- Array: [2, 2, 2, 3]\n- slow = 2\n\n**fast = 3:**\n- nums[3] = 3 = val → skip\n\n**Done!** Return slow = 2",
+      "action": "next",
+      "next": "key-difference"
+    },
+    {
+      "stepId": "key-difference",
+      "mentorSays": "### Key Difference from Lesson 5\n\n**Remove Duplicates:**\n- Fast starts at 1 (compare to previous)\n- Move slow first, then copy\n- Return slow + 1\n\n**Remove Element:**\n- Fast starts at 0 (check every element)\n- Copy first, then move slow\n- Return slow directly\n\nSmall differences in logic lead to different implementations!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis will be simpler than Remove Duplicates — no empty array check needed.\n\nLet's start.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function and initialize slow pointer.\n\n```javascript\nfunction removeElement(nums, val) {\n  let slow = 0;\n\n}\n```\n\n**Explanation:**\n- `removeElement` — function name\n- `nums` — the array to modify\n- `val` — the value to remove\n- `slow` starts at 0 — where the next kept element will go",
+      "example": "function removeElement(nums, val) {\n  let slow = 0;\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "**Step 2:** Loop with the fast pointer.\n\n```javascript\nfunction removeElement(nums, val) {\n  let slow = 0;\n\n  for (let fast = 0; fast < nums.length; fast++) {\n\n  }\n}\n```\n\n**Explanation:**\n- `fast` starts at 0 (unlike Remove Duplicates where it started at 1)\n- We need to check **every** element, including the first\n- Fast scans the entire array",
+      "example": "for (let fast = 0; fast < nums.length; fast++) {\n\n}",
+      "action": "next",
+      "next": "code-03-condition",
+      "pseudocodeLineIds": ["ps3", "ps4", "ps5"]
+    },
+    {
+      "stepId": "code-03-condition",
+      "mentorSays": "**Step 3:** Keep elements that don't match val.\n\n```javascript\nfunction removeElement(nums, val) {\n  let slow = 0;\n\n  for (let fast = 0; fast < nums.length; fast++) {\n    if (nums[fast] !== val) {\n      nums[slow] = nums[fast];\n      slow++;\n    }\n  }\n}\n```\n\n**Explanation:**\n- `nums[fast] !== val` means \"if this is NOT the value to remove\"\n- Copy it to the slow position\n- Then advance slow\n- If it equals val, we skip it (fast advances, slow doesn't)",
+      "example": "if (nums[fast] !== val) {\n  nums[slow] = nums[fast];\n  slow++;\n}",
+      "action": "next",
+      "next": "code-04-return",
+      "pseudocodeLineIds": ["ps6"]
+    },
+    {
+      "stepId": "code-04-return",
+      "mentorSays": "**Step 4:** Return the count of remaining elements.\n\n```javascript\nfunction removeElement(nums, val) {\n  let slow = 0;\n\n  for (let fast = 0; fast < nums.length; fast++) {\n    if (nums[fast] !== val) {\n      nums[slow] = nums[fast];\n      slow++;\n    }\n  }\n\n  return slow;\n}\n```\n\n**Explanation:**\n- `slow` now equals the count of kept elements\n- No need for slow + 1 here (we advance slow after each copy)",
+      "example": "return slow;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction removeElement(nums, val) {\n  let slow = 0;\n\n  for (let fast = 0; fast < nums.length; fast++) {\n    if (nums[fast] !== val) {\n      nums[slow] = nums[fast];\n      slow++;\n    }\n  }\n\n  return slow;\n}\n```\n\n**How it works:**\n1. Slow marks the \"kept\" zone boundary\n2. Fast scans every element\n3. If element ≠ val, copy it to slow's position and advance slow\n4. If element = val, skip it\n5. Return slow as the count of remaining elements",
+      "example": "function removeElement(nums, val) {\n  let slow = 0;\n\n  for (let fast = 0; fast < nums.length; fast++) {\n    if (nums[fast] !== val) {\n      nums[slow] = nums[fast];\n      slow++;\n    }\n  }\n\n  return slow;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Conditional copy** — only copy elements that pass a condition\n- **Value-based removal** — deciding what to keep based on a specific value\n- **Element segregation** — separating wanted from unwanted elements\n\n**Comparison to Remove Duplicates:**\n\n| Aspect | Remove Duplicates | Remove Element |\n|--------|-------------------|----------------|\n| Sorted? | Yes | No |\n| Compare to | nums[slow] | val |\n| Fast starts at | 1 | 0 |\n| Return | slow + 1 | slow |\n\n**Why this matters:**\n\nThis pattern of \"keep or skip\" based on a condition appears in:\n- Filtering arrays\n- Moving zeros to the end\n- Partitioning arrays\n- Quick sort's partition step\n\n**Next recommended lesson:** Valid Anagram",
+      "action": "complete"
+    }
+  ]
+}

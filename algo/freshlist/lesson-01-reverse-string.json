@@ -1,0 +1,203 @@
+{
+  "id": "reverse-string",
+  "title": "Reverse String",
+  "pattern": "two-pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 1,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-01",
+    "introduces": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "array-indexing",
+      "array-length",
+      "loops",
+      "for-loop",
+      "functions",
+      "function-parameters",
+      "return-statement",
+      "two-pointers",
+      "in-place-swap",
+      "temporary-variable"
+    ],
+    "assumesAlreadyTaught": [],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["search-insert-position"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left = 0 and right = last index of array." },
+    { "id": "ps2", "text": "While left < right:" },
+    { "id": "ps3", "text": "  Swap characters at left and right using a temporary variable." },
+    { "id": "ps4", "text": "  Move left forward by 1." },
+    { "id": "ps5", "text": "  Move right backward by 1." },
+    { "id": "ps6", "text": "Stop when pointers meet or cross." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Reverse String** in **JavaScript**.\n\nJavaScript is an excellent choice for learning algorithms — it has clean syntax and runs everywhere.\n\nThis is your **first algorithm lesson**. We'll start from the very beginning and build up step by step.",
+      "action": "next",
+      "next": "prerequisite-check"
+    },
+    {
+      "stepId": "prerequisite-check",
+      "mentorSays": "To solve this algorithm, we'll be using these **JavaScript concepts**:\n\n- **Variables** (`let` and `const`)\n- **Arrays** and array indexing\n- **Loops** (`for` loop)\n- **Functions** (defining functions and function parameters)\n- **Return statements**\n\n**Are you comfortable with all of these concepts?**",
+      "choices": [
+        { "label": "Yes, I'm comfortable", "next": "problem-statement" },
+        { "label": "No, please explain", "next": "explain-variables" }
+      ]
+    },
+    {
+      "stepId": "explain-variables",
+      "mentorSays": "### Variables in JavaScript\n\nA **variable** is a container that stores a value.\n\nIn JavaScript, we use two keywords:\n\n**`let`** — for values that can change:\n```javascript\nlet count = 5;\ncount = 10;  // can be changed\n```\n\n**`const`** — for values that stay the same:\n```javascript\nconst pi = 3.14;\n// pi = 4;  // ERROR: cannot change\n```\n\n**Rule:** Use `const` by default. Only use `let` when you know the value will change.",
+      "action": "next",
+      "next": "explain-arrays"
+    },
+    {
+      "stepId": "explain-arrays",
+      "mentorSays": "### Arrays in JavaScript\n\nAn **array** is a list of values stored together.\n\n```javascript\nconst fruits = ['apple', 'banana', 'cherry'];\n```\n\n**Accessing elements** (indexing starts at 0):\n```javascript\nfruits[0]  // 'apple' (first element)\nfruits[1]  // 'banana' (second element)\nfruits[2]  // 'cherry' (third element)\n```\n\n**Array length:**\n```javascript\nfruits.length  // 3 (number of elements)\n```\n\n**Last element:**\n```javascript\nfruits[fruits.length - 1]  // 'cherry'\n```",
+      "action": "next",
+      "next": "explain-loops"
+    },
+    {
+      "stepId": "explain-loops",
+      "mentorSays": "### Loops in JavaScript\n\nA **loop** repeats code multiple times.\n\nThe **`for` loop** has three parts:\n\n```javascript\nfor (let i = 0; i < 5; i++) {\n  console.log(i);  // prints 0, 1, 2, 3, 4\n}\n```\n\n**Breaking it down:**\n- `let i = 0` — start with i = 0\n- `i < 5` — keep going while i is less than 5\n- `i++` — increase i by 1 after each loop\n\n**`while` loop** (simpler form):\n```javascript\nlet i = 0;\nwhile (i < 5) {\n  console.log(i);\n  i++;\n}\n```",
+      "action": "next",
+      "next": "explain-functions"
+    },
+    {
+      "stepId": "explain-functions",
+      "mentorSays": "### Functions in JavaScript\n\nA **function** is a reusable block of code.\n\n**Defining a function:**\n```javascript\nfunction greet(name) {\n  return 'Hello, ' + name;\n}\n```\n\n**Calling the function:**\n```javascript\nconst message = greet('Alice');  // 'Hello, Alice'\n```\n\n**Parts:**\n- `function` — keyword to define a function\n- `greet` — function name\n- `(name)` — **parameter** (input to the function)\n- `return` — sends a value back to the caller",
+      "action": "next",
+      "next": "explain-return"
+    },
+    {
+      "stepId": "explain-return",
+      "mentorSays": "### Return Statements\n\nThe **`return`** keyword sends a value back from a function.\n\n```javascript\nfunction add(a, b) {\n  return a + b;\n}\n\nconst result = add(3, 5);  // result is 8\n```\n\n**Important:**\n- A function stops running when it hits `return`\n- Without `return`, the function returns `undefined`\n\nNow you know all the basics! Let's solve the problem.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nYou are given an array of characters.\n\nYour task is to reverse the array **in place**.\n\n**\"In place\" means:**\n- Do not create a new array\n- Modify the original array directly\n\n**Example:**\n```\nInput: ['h', 'e', 'l', 'l', 'o']\nOutput: ['o', 'l', 'l', 'e', 'h']\n```\n\nThe array itself changes — we don't return a new one.",
+      "action": "next",
+      "next": "tiny-example"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "**Tiny example:**\n\n```\nInput:  ['a', 'b', 'c']\nOutput: ['c', 'b', 'a']\n```\n\nThe first and last swap, middle stays in place.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now let's think about strategy.\n\n**If you wanted to reverse an array, which approach would you take?**",
+      "choices": [
+        { "label": "Swap first and last elements, then work inward", "next": "core-idea" },
+        { "label": "Create a new array and fill it backward", "next": "why-not-new-array" },
+        { "label": "Use a built-in reverse method", "next": "why-not-builtin" }
+      ]
+    },
+    {
+      "stepId": "why-not-new-array",
+      "mentorSays": "Creating a new array would work, but the problem asks us to reverse **in place**.\n\nThat means we must modify the original array without creating a new one.\n\nLet's think about swapping instead.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "why-not-builtin",
+      "mentorSays": "JavaScript does have a built-in `reverse()` method, but this lesson is about **learning the algorithmic pattern**.\n\nUnderstanding how reversal works will help you solve many other problems.\n\nLet's build it ourselves using the two-pointer technique.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Excellent thinking!\n\nWe'll use the **two-pointer technique**:\n\n1. Place one pointer at the **start** of the array\n2. Place another pointer at the **end** of the array\n3. Swap the elements they point to\n4. Move both pointers **toward the middle**\n5. Repeat until they meet\n\nThis reverses the array in place without extra space.",
+      "action": "next",
+      "next": "two-pointers-explained"
+    },
+    {
+      "stepId": "two-pointers-explained",
+      "mentorSays": "### Two Pointers Explained\n\n**Pointer** = a variable that holds an index (position) in the array.\n\n- **`left`** pointer starts at index 0 (first element)\n- **`right`** pointer starts at last index (last element)\n\n**After each swap:**\n- Move `left` forward (increase by 1)\n- Move `right` backward (decrease by 1)\n\n**Stop when:** `left` and `right` meet or cross.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nchars = ['h', 'e', 'l', 'l', 'o']\n```\n\n**Start:**\n- left = 0 (points to 'h')\n- right = 4 (points to 'o')\n- Swap 'h' and 'o'\n- Array becomes: ['o', 'e', 'l', 'l', 'h']\n\n**Move pointers:**\n- left = 1 (points to 'e')\n- right = 3 (points to 'l')\n- Swap 'e' and 'l'\n- Array becomes: ['o', 'l', 'l', 'e', 'h']\n\n**Move pointers:**\n- left = 2, right = 2 (they meet at middle 'l')\n- **Stop** — array is reversed!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)\n\nBefore writing code, let's write the logic in plain language.\n\nEach step here will become actual JavaScript code.",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript code.\n\n**Important:** Type the code yourself as we go. This builds muscle memory and helps you learn faster.\n\nLet's start!",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function.\n\nThe function takes one parameter: the array to reverse.\n\n```javascript\nfunction reverseString(chars) {\n\n}\n```\n\n**Explanation:**\n- `function` — keyword to define a function\n- `reverseString` — function name\n- `chars` — parameter (the array we'll reverse)",
+      "example": "function reverseString(chars) {\n\n}",
+      "action": "next",
+      "next": "code-02-pointers",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-pointers",
+      "mentorSays": "**Step 2:** Initialize the two pointers.\n\n```javascript\nfunction reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n}\n```\n\n**Explanation:**\n- `let left = 0` — starts at first index\n- `let right = chars.length - 1` — starts at last index\n- We use `let` because these values will change in the loop",
+      "example": "function reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n}",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "**Step 3:** Create a loop that runs while pointers haven't crossed.\n\n```javascript\nfunction reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n  while (left < right) {\n\n  }\n}\n```\n\n**Explanation:**\n- `while (left < right)` — keep looping as long as left is less than right\n- When they meet or cross, we're done",
+      "example": "function reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n  while (left < right) {\n\n  }\n}",
+      "action": "next",
+      "next": "code-04-swap",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-04-swap",
+      "mentorSays": "**Step 4:** Swap the characters at left and right.\n\nTo swap two values, we need a **temporary variable** to hold one value while we swap.\n\n```javascript\nfunction reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n  while (left < right) {\n    const temp = chars[left];\n    chars[left] = chars[right];\n    chars[right] = temp;\n\n  }\n}\n```\n\n**Explanation:**\n- `const temp = chars[left]` — save left value temporarily\n- `chars[left] = chars[right]` — put right value in left position\n- `chars[right] = temp` — put saved value in right position",
+      "example": "const temp = chars[left];\nchars[left] = chars[right];\nchars[right] = temp;",
+      "action": "next",
+      "next": "code-05-move",
+      "pseudocodeLineIds": ["ps4", "ps5"]
+    },
+    {
+      "stepId": "code-05-move",
+      "mentorSays": "**Step 5:** Move both pointers toward the middle.\n\n```javascript\nfunction reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n  while (left < right) {\n    const temp = chars[left];\n    chars[left] = chars[right];\n    chars[right] = temp;\n\n    left++;\n    right--;\n  }\n}\n```\n\n**Explanation:**\n- `left++` — increase left by 1 (move forward)\n- `right--` — decrease right by 1 (move backward)\n- `++` and `--` are shortcuts for `+= 1` and `-= 1`",
+      "example": "left++;\nright--;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\nHere's the complete solution:\n\n```javascript\nfunction reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n  while (left < right) {\n    const temp = chars[left];\n    chars[left] = chars[right];\n    chars[right] = temp;\n\n    left++;\n    right--;\n  }\n}\n```\n\n**How it works:**\n1. We start with pointers at both ends\n2. We swap elements and move pointers inward\n3. We stop when pointers meet\n4. The array is now reversed in place",
+      "example": "function reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n  while (left < right) {\n    const temp = chars[left];\n    chars[left] = chars[right];\n    chars[right] = temp;\n\n    left++;\n    right--;\n  }\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- The **two-pointer technique** — a fundamental algorithmic pattern\n- How to **swap values** using a temporary variable\n- How to modify an array **in place** without creating a new one\n- How pointers can move toward each other to process data efficiently\n\n**Why this matters:**\n\nThe two-pointer technique appears in **many** algorithm problems. You'll see it again when we:\n- Remove duplicates from arrays\n- Find pairs that sum to a target\n- Check for palindromes\n- And many more!\n\nMastering this pattern now will make future problems much easier.\n\n**Next recommended lesson:** Search Insert Position",
+      "action": "complete"
+    }
+  ]
+}

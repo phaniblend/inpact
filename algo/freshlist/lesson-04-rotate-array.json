@@ -1,0 +1,155 @@
+{
+  "id": "rotate-array",
+  "title": "Rotate Array",
+  "pattern": "array-rotation + reversal",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 4,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-04",
+    "introduces": [
+      "modulo-operator",
+      "percent-symbol",
+      "helper-functions",
+      "nested-functions",
+      "multi-step-transformations",
+      "rotation-concept"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "loops",
+      "functions",
+      "two-pointers",
+      "in-place-swap",
+      "while-loop"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["remove-duplicates-sorted"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Normalize k using k = k % array length." },
+    { "id": "ps2", "text": "Reverse the entire array." },
+    { "id": "ps3", "text": "Reverse the first k elements." },
+    { "id": "ps4", "text": "Reverse the remaining elements after k." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Rotate Array**.\n\nThis lesson introduces **array rotation** and shows you how to use **reversals** (which you already know!) to solve it elegantly.\n\nWe'll also learn about the **modulo operator** — a tool for handling wrap-around situations.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nYou are given an array and a number `k`.\n\nRotate the array to the **right** by `k` steps.\n\n**What does \"rotate right\" mean?**\n- Elements move forward\n- Elements at the end wrap around to the front\n\n**Example:**\n```\nnums = [1, 2, 3, 4, 5, 6, 7]\nk = 3\n\nOutput: [5, 6, 7, 1, 2, 3, 4]\n```\n\nThe last 3 elements (5, 6, 7) moved to the front.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) nums = [1, 2, 3, 4, 5], k = 1\n   Output: [5, 1, 2, 3, 4]\n   \n2) nums = [1, 2, 3, 4, 5], k = 2\n   Output: [4, 5, 1, 2, 3]\n   \n3) nums = [1, 2, 3], k = 0\n   Output: [1, 2, 3] (no rotation)\n```",
+      "action": "next",
+      "next": "wrap-around-idea"
+    },
+    {
+      "stepId": "wrap-around-idea",
+      "mentorSays": "### Wrap-Around Concept\n\nWhen elements move past the end of the array, they **wrap around** to the front.\n\nThink of it like a circular track:\n```\n[1, 2, 3, 4, 5] with k=2\n\nStep 1: 5 moves to front → [5, 1, 2, 3, 4]\nStep 2: 4 moves to front → [4, 5, 1, 2, 3]\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nIf the array has 5 elements and k = 12, how many actual rotations do we need?",
+      "choices": [
+        { "label": "12 rotations", "next": "modulo-explained" },
+        { "label": "2 rotations (12 % 5)", "next": "modulo-explained" },
+        { "label": "7 rotations (12 - 5)", "next": "modulo-explained" }
+      ]
+    },
+    {
+      "stepId": "modulo-explained",
+      "mentorSays": "### The Modulo Operator (%)\n\nThe answer is **2 rotations** (12 % 5).\n\n**The modulo operator (`%`) gives the remainder after division:**\n\n```javascript\n12 % 5 = 2  // 12 ÷ 5 = 2 remainder 2\n7 % 3 = 1   // 7 ÷ 3 = 2 remainder 1\n10 % 5 = 0  // 10 ÷ 5 = 2 remainder 0\n```\n\n**Why this matters:**\n\nRotating 5 times returns the array to its original state.\n\nSo rotating 12 times = rotating 5 + 5 + 2 times = rotating 2 times.\n\n**Formula:** `k = k % array.length`",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Reversal Strategy\n\nWe'll use a clever trick with **three reversals**:\n\n1. **Reverse the entire array**\n2. **Reverse the first k elements**\n3. **Reverse the remaining elements**\n\nThis rotates the array without needing extra space!\n\nLet's see why this works.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nnums = [1, 2, 3, 4, 5, 6, 7]\nk = 3\n```\n\n**Step 1: Reverse entire array**\n```\n[7, 6, 5, 4, 3, 2, 1]\n```\n\n**Step 2: Reverse first k (3) elements**\n```\n[5, 6, 7, 4, 3, 2, 1]\n```\n\n**Step 3: Reverse remaining elements**\n```\n[5, 6, 7, 1, 2, 3, 4]\n```\n\n**Result:** Rotated by 3! ✓",
+      "action": "next",
+      "next": "why-it-works"
+    },
+    {
+      "stepId": "why-it-works",
+      "mentorSays": "### Why This Works\n\n**Original:** `[1, 2, 3, 4, 5, 6, 7]` with k=3\n\nWe want the last 3 elements at the front.\n\n**After reversing all:**\nLast elements are now at the front, but in reverse order: `[7, 6, 5, ...]`\n\n**Reverse first k:**\nFixes the order of those elements: `[5, 6, 7, ...]`\n\n**Reverse rest:**\nFixes the order of the remaining elements: `[..., 1, 2, 3, 4]`\n\nThis pattern works for any k!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nWe'll reuse the **two-pointer reversal** pattern from Lesson 1.\n\nLet's build it step by step.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function.\n\n```javascript\nfunction rotate(nums, k) {\n\n}\n```\n\n**Explanation:**\n- `rotate` — function name\n- `nums` — array to rotate\n- `k` — number of steps to rotate right",
+      "example": "function rotate(nums, k) {\n\n}",
+      "action": "next",
+      "next": "code-02-normalize",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-normalize",
+      "mentorSays": "**Step 2:** Normalize k using modulo.\n\n```javascript\nfunction rotate(nums, k) {\n  k = k % nums.length;\n\n}\n```\n\n**Explanation:**\n- `k % nums.length` gives the effective rotation amount\n- This handles cases where k is larger than the array length\n- Example: rotating [1,2,3,4,5] by 12 is the same as rotating by 2",
+      "example": "k = k % nums.length;",
+      "action": "next",
+      "next": "code-03-helper",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-helper",
+      "mentorSays": "**Step 3:** Create a helper function to reverse a portion of the array.\n\n```javascript\nfunction rotate(nums, k) {\n  k = k % nums.length;\n\n  function reverse(start, end) {\n    while (start < end) {\n      const temp = nums[start];\n      nums[start] = nums[end];\n      nums[end] = temp;\n      start++;\n      end--;\n    }\n  }\n}\n```\n\n**Explanation:**\n- `reverse` is a **nested function** (function inside a function)\n- It reverses elements from index `start` to index `end`\n- This is the same two-pointer swap from Lesson 1\n- We can call this function multiple times",
+      "example": "function reverse(start, end) {\n  while (start < end) {\n    const temp = nums[start];\n    nums[start] = nums[end];\n    nums[end] = temp;\n    start++;\n    end--;\n  }\n}",
+      "action": "next",
+      "next": "code-04-reversals",
+      "pseudocodeLineIds": ["ps2", "ps3", "ps4"]
+    },
+    {
+      "stepId": "code-04-reversals",
+      "mentorSays": "**Step 4:** Apply the three reversals.\n\n```javascript\nfunction rotate(nums, k) {\n  k = k % nums.length;\n\n  function reverse(start, end) {\n    while (start < end) {\n      const temp = nums[start];\n      nums[start] = nums[end];\n      nums[end] = temp;\n      start++;\n      end--;\n    }\n  }\n\n  reverse(0, nums.length - 1);\n  reverse(0, k - 1);\n  reverse(k, nums.length - 1);\n}\n```\n\n**Explanation:**\n- `reverse(0, nums.length - 1)` — reverse entire array\n- `reverse(0, k - 1)` — reverse first k elements\n- `reverse(k, nums.length - 1)` — reverse remaining elements\n- These three steps complete the rotation!",
+      "example": "reverse(0, nums.length - 1);\nreverse(0, k - 1);\nreverse(k, nums.length - 1);",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction rotate(nums, k) {\n  k = k % nums.length;\n\n  function reverse(start, end) {\n    while (start < end) {\n      const temp = nums[start];\n      nums[start] = nums[end];\n      nums[end] = temp;\n      start++;\n      end--;\n    }\n  }\n\n  reverse(0, nums.length - 1);\n  reverse(0, k - 1);\n  reverse(k, nums.length - 1);\n}\n```\n\n**How it works:**\n1. Normalize k to handle large values\n2. Reverse the entire array\n3. Reverse the first k elements\n4. Reverse the remaining elements\n5. Array is now rotated!",
+      "example": "function rotate(nums, k) {\n  k = k % nums.length;\n\n  function reverse(start, end) {\n    while (start < end) {\n      const temp = nums[start];\n      nums[start] = nums[end];\n      nums[end] = temp;\n      start++;\n      end--;\n    }\n  }\n\n  reverse(0, nums.length - 1);\n  reverse(0, k - 1);\n  reverse(k, nums.length - 1);\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Modulo operator (%)** — handling wrap-around with remainders\n- **Helper functions** — breaking problems into reusable pieces\n- **Multi-step transformations** — combining simple operations for complex results\n- **Rotation concept** — a pattern that appears in many problems\n\n**Why this matters:**\n\nYou reused the reversal technique from Lesson 1 in a completely different context!\n\nThis shows how mastering basic patterns lets you solve harder problems by combining them.\n\nRotation appears in:\n- String problems\n- Circular array problems\n- Data structure implementations\n\n**Next recommended lesson:** Remove Duplicates from Sorted Array",
+      "action": "complete"
+    }
+  ]
+}

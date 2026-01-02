@@ -1,0 +1,282 @@
+{
+  "id": "selection-sort",
+  "title": "Selection sort",
+  "pattern": "sorting",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Selection sort lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Selection sort problem\n- Recognize the sorting pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Let me explain the JavaScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand how selection sort works\n2. Find the minimum element in the unsorted portion\n3. Swap it with the first element of the unsorted portion\n4. Implement selection sort step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "explore-nested-loops",
+      "mentorSays": "Excellent choice! The nested loops approach is the standard way to implement selection sort. Here's the core idea:\n\n1. **Outer loop**: Runs n-1 times (where n is array length). Each iteration represents placing one element in its correct position.\n2. **Find minimum**: In the inner loop, find the index of the minimum element in the unsorted portion (from index i to n-1).\n3. **Swap**: Swap the minimum element with the element at index i.\n\nLet's trace this with [5, 2, 8, 1, 9]:\n\n- **Iteration 1** (i=0, find min in [0-4]):\n  - Compare all elements, find min = 1 at index 3\n  - Swap arr[0] and arr[3] → [1, 2, 8, 5, 9]\n\n- **Iteration 2** (i=1, find min in [1-4]):\n  - Compare elements at indices 1-4, find min = 2 at index 1\n  - Already in place, no swap → [1, 2, 8, 5, 9]\n\n- **Iteration 3** (i=2, find min in [2-4]):\n  - Compare elements at indices 2-4, find min = 5 at index 3\n  - Swap arr[2] and arr[3] → [1, 2, 5, 8, 9]\n\n- **Iteration 4** (i=3, find min in [3-4]):\n  - Compare elements at indices 3-4, find min = 8 at index 3\n  - Already in place, no swap → [1, 2, 5, 8, 9]\n\nThis is O(n²) time complexity. Now let's code it step by step.",
+      "example": "",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement selection sort in JavaScript. We'll create a function that takes an array and sorts it in-place by finding the minimum element in the unsorted portion.",
+      "example": "function selectionSort(arr) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-js"
+    },
+    {
+      "stepId": "coding-outer-loop-js",
+      "mentorSays": "First, let's create the outer loop. This loop runs n-1 times, where n is the array length. Each iteration represents placing one element in its correct position.",
+      "example": "function selectionSort(arr) {\n  const n = arr.length;\n  \n  // Outer loop: n-1 iterations\n  for (let i = 0; i < n - 1; i++) {\n    // Each iteration places the next smallest element at index i\n  }\n}",
+      "action": "continue",
+      "next": "coding-find-min-js"
+    },
+    {
+      "stepId": "coding-find-min-js",
+      "mentorSays": "Now, let's find the minimum element in the unsorted portion (from index i to n-1). We'll track the index of the minimum element.",
+      "example": "function selectionSort(arr) {\n  const n = arr.length;\n  \n  for (let i = 0; i < n - 1; i++) {\n    // Find the index of minimum element in unsorted portion\n    let minIdx = i;\n    for (let j = i + 1; j < n; j++) {\n      if (arr[j] < arr[minIdx]) {\n        minIdx = j;\n      }\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-find-minimum-js"
+    },
+    {
+      "stepId": "coding-find-minimum-js",
+      "mentorSays": "First, we need to find the minimum element in the unsorted portion.\n\nWe'll scan from current position to end:\n- Track the index of smallest element found\n- Compare each element with current minimum\n- Update minIndex when we find something smaller",
+      "example": "let minIndex = i;\nfor (let j = i + 1; j < arr.length; j++) {\n  if (arr[j] < arr[minIndex]) {\n    minIndex = j;\n  }\n}",
+      "action": "continue",
+      "next": "coding-swap-js"
+    },
+    {
+      "stepId": "coding-swap-js",
+      "mentorSays": "Finally, swap the minimum element with the element at index i. This places the smallest unsorted element in its correct position.",
+      "example": "function selectionSort(arr) {\n  const n = arr.length;\n  \n  for (let i = 0; i < n - 1; i++) {\n    let minIdx = i;\n    for (let j = i + 1; j < n; j++) {\n      if (arr[j] < arr[minIdx]) {\n        minIdx = j;\n      }\n    }\n    // Swap if minimum is not already at position i\n    if (minIdx !== i) {\n      const temp = arr[i];\n      arr[i] = arr[minIdx];\n      arr[minIdx] = temp;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-find-minimum-js"
+    },
+    {
+      "stepId": "coding-swap-elements-js",
+      "mentorSays": "Now swap the minimum element with the first unsorted element.\n\nThis moves the minimum to its final sorted position.\nThe sorted portion grows by one element!",
+      "example": "if (minIndex !== i) {\n  let temp = arr[i];\n  arr[i] = arr[minIndex];\n  arr[minIndex] = temp;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Selection sort!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

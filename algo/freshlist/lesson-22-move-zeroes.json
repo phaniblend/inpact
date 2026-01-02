@@ -1,0 +1,195 @@
+{
+  "id": "move-zeroes",
+  "title": "Move Zeroes",
+  "pattern": "slow-fast pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 22,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-22",
+    "introduces": [
+      "partition-like-operation",
+      "relative-order-preservation"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "slow-fast-pointers",
+      "swap-technique"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "squares-of-sorted-array"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize slow pointer to 0 (marks next position for non-zero element)"
+    },
+    {
+      "id": "ps2",
+      "text": "Initialize fast pointer to 0 (searches for non-zero elements)"
+    },
+    {
+      "id": "ps3",
+      "text": "While fast pointer is within array bounds:"
+    },
+    {
+      "id": "ps4",
+      "text": "  If element at fast pointer is non-zero:"
+    },
+    {
+      "id": "ps5",
+      "text": "    Swap elements at slow and fast positions"
+    },
+    {
+      "id": "ps6",
+      "text": "    Increment slow pointer by 1"
+    },
+    {
+      "id": "ps7",
+      "text": "  Increment fast pointer by 1"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work mastering the slow-fast pointer technique to find the middle of a linked list! Today we'll apply that same two-pointer concept in a new way—using slow and fast pointers to efficiently rearrange elements in an array by moving all zeros to the end while maintaining the relative order of non-zero elements.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given an integer array, move all zeros to the end while maintaining the relative order of non-zero elements. You must modify the array in-place without making a copy of the array.\n\n**Example:**\n```text\nInput: [0,1,0,3,12]\nOutput: [1,3,12,0,0]\n```\nAll non-zero elements (1, 3, 12) maintain their original relative order and are moved to the front, while zeros are moved to the end.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) [0,0,1] → [1,0,0]\n2) [1,2,3] → [1,2,3]\n3) [0,0,0,0] → [0,0,0,0]\n4) [5,0,2,0] → [5,2,0,0]\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to move all zeros to the end of an array while maintaining the relative order of non-zero elements?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Create a new array, copy all non-zero elements first, then fill remaining positions with zeros",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use two pointers: one slow pointer tracking the next position for non-zero elements, and one fast pointer finding non-zero elements to swap",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works, it uses O(n) extra space and requires copying elements twice, making it less efficient than an in-place solution.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **two pointers** where the **slow pointer** tracks the next position where a non-zero element should be placed, while the **fast pointer** scans through the array to find non-zero elements. When the fast pointer encounters a non-zero element, we **swap** it with the element at the slow pointer position and increment the slow pointer. This approach ensures all non-zero elements are moved to the front in their original order, while zeros naturally accumulate at the end. The algorithm maintains the relative order of non-zero elements with **O(1) extra space** complexity.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[0,1,0,3,12]`:\n- Step 1: slow=0, fast=0 → arr[0]=0 (zero), fast moves to 1, no swap\n- Step 2: slow=0, fast=1 → arr[1]=1 (non-zero), swap positions 0&1 → [1,0,0,3,12], slow=1\n- Step 3: slow=1, fast=2 → arr[2]=0 (zero), fast moves to 3, no swap\n- Step 4: slow=1, fast=3 → arr[3]=3 (non-zero), swap positions 1&3 → [1,3,0,0,12], slow=2\n- Step 5: slow=2, fast=4 → arr[4]=12 (non-zero), swap positions 2&4 → [1,3,12,0,0], slow=3\n- Final answer: **[1,3,12,0,0]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize two pointers - slow pointer to track the next position for non-zero elements, and fast pointer to scan through the array.\n\n```javascript\nfunction moveZeroes(nums) {\n    let slow = 0;\n    let fast = 0;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function moveZeroes(nums) {\n    let slow = 0;\n    let fast = 0;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Add the main loop where the fast pointer iterates through all elements in the array.\n\n```javascript\nfunction moveZeroes(nums) {\n    let slow = 0;\n    let fast = 0;\n    \n    while (fast < nums.length) {\n        // Process each element\n        fast++;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    while (fast < nums.length) {\n        // Process each element\n        fast++;\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Check if the current element at fast pointer is non-zero, and if so, perform the swap operation with the slow pointer position.\n\n```javascript\nfunction moveZeroes(nums) {\n    let slow = 0;\n    let fast = 0;\n    \n    while (fast < nums.length) {\n        if (nums[fast] !== 0) {\n            // Swap elements at slow and fast positions\n            [nums[slow], nums[fast]] = [nums[fast], nums[slow]];\n            slow++;\n        }\n        fast++;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "        if (nums[fast] !== 0) {\n            // Swap elements at slow and fast positions\n            [nums[slow], nums[fast]] = [nums[fast], nums[slow]];\n            slow++;\n        }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Optimize the solution by avoiding unnecessary swaps when slow and fast pointers are at the same position.\n\n```javascript\nfunction moveZeroes(nums) {\n    let slow = 0;\n    let fast = 0;\n    \n    while (fast < nums.length) {\n        if (nums[fast] !== 0) {\n            if (slow !== fast) {\n                [nums[slow], nums[fast]] = [nums[fast], nums[slow]];\n            }\n            slow++;\n        }\n        fast++;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        if (nums[fast] !== 0) {\n            if (slow !== fast) {\n                [nums[slow], nums[fast]] = [nums[fast], nums[slow]];\n            }\n            slow++;\n        }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Complete the solution by adding proper documentation and ensuring the function modifies the array in-place as required.\n\n```javascript\n/**\n * Moves all zeros to the end while maintaining relative order of non-zero elements\n * Time: O(n), Space: O(1)\n * @param {number[]} nums - array to modify in-place\n */\nfunction moveZeroes(nums) {\n    let slow = 0;\n    let fast = 0;\n    \n    while (fast < nums.length) {\n        if (nums[fast] !== 0) {\n            if (slow !== fast) {\n                [nums[slow], nums[fast]] = [nums[fast], nums[slow]];\n            }\n            slow++;\n        }\n        fast++;\n    }\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "/**\n * Moves all zeros to the end while maintaining relative order of non-zero elements\n * Time: O(n), Space: O(1)\n * @param {number[]} nums - array to modify in-place\n */"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the slow-fast pointer technique for the Move Zeroes problem! You've learned how to use two pointers to perform a partition-like operation while preserving the relative order of non-zero elements—a powerful skill that applies to many array manipulation challenges. Next up, we'll tackle the Squares of Sorted Array problem, where you'll build on your pointer expertise to handle sorted arrays with negative numbers efficiently.",
+      "action": "complete"
+    }
+  ]
+}

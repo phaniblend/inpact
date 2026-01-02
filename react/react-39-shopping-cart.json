@@ -57,21 +57,9 @@
     },
     {
       "stepId": "language-selection",
-      "mentorSays": "Great! Now let's code this solution. Which programming language would you like to use?",
-      "choices": [
-        {
-          "label": "JavaScript",
-          "next": "variable-check-js"
-        },
-        {
-          "label": "TypeScript",
-          "next": "variable-check-ts"
-        },
-        {
-          "label": "Python",
-          "next": "variable-check-python"
-        }
-      ]
+      "mentorSays": "Great! Now let's code this solution in React with JavaScript/JSX.",
+      "action": "continue",
+      "next": "explore-optimal"
     },
     {
       "stepId": "coding-start-ts",

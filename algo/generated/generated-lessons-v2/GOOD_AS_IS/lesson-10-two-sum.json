@@ -257,7 +257,7 @@
   "flow": [
     {
       "stepId": "objectives",
-      "mentorSays": "Hey! Ready to level up your problem-solving skills? We just conquered Contains Duplicate, and now we're tackling the classic Two Sum problem! This is where things get really exciting because we're introducing a super powerful pattern: the **hash map complement lookup**. Instead of checking every pair of numbers (which is slow), we'll use a hash map to instantly find the \"complement\" - the missing piece that adds up to our target. It's like having a perfect memory that remembers exactly what we need!\n\nHere are the 3 key skills you'll master:\n• **Complement thinking** - quickly identify what value you need to complete a pair\n• **Hash map optimization** - transform slow nested loops into lightning-fast lookups\n• **One-pass efficiency** - solve problems while scanning through data just once\n\nThis pattern is absolutely fundamental and shows up everywhere in coding interviews and real-world applications. You're building some serious algorithmic muscle here! Let's dive in!",
+      "mentorSays": "Hey! Welcome to your first algorithm lesson - Two Sum! This is a classic problem that introduces a super powerful pattern: the **hash map complement lookup**. Instead of checking every pair of numbers (which is slow), we'll use a hash map to instantly find the \"complement\" - the missing piece that adds up to our target. It's like having a perfect memory that remembers exactly what we need!\n\nHere are the 3 key skills you'll master:\n• **Complement thinking** - quickly identify what value you need to complete a pair\n• **Hash map optimization** - transform slow nested loops into lightning-fast lookups\n• **One-pass efficiency** - solve problems while scanning through data just once\n\nThis pattern is absolutely fundamental and shows up everywhere in coding interviews and real-world applications. Let's dive in!",
       "action": "continue",
       "next": "language-selection"
     },
@@ -289,159 +289,152 @@
     },
     {
       "stepId": "prereq-check-js",
-      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Array indexing** - Accessing elements in an array using their position/index\n- **Hash map lookup** - Storing and retrieving key-value pairs in constant time\n- **Nested loops** - Understanding how to iterate through array elements multiple times\n- **Target decomposition** - Breaking down a target value into component parts to search for\n\nDo you feel confident with these JavaScript concepts?",
+      "mentorSays": "Excellent choice selecting JavaScript for this problem. JavaScript's built-in object and Map data structures make it particularly well-suited for implementing the hash map pattern we'll use in Two Sum.\n\nTo successfully solve this problem, you'll need familiarity with the following JavaScript concepts:\n\n• **Variables** - Declaring and assigning values using `let`, `const`, or `var`\n• **Arrays** - Creating arrays, accessing elements by index, and using array properties like `length`\n• **For loops** - Iterating through array elements using traditional `for` loops or array methods\n• **Hash maps (Objects/Map)** - Using JavaScript objects `{}` or the `Map` class to store and retrieve key-value pairs with O(1) lookup time\n• **Objects** - Creating object literals and accessing properties using dot notation or bracket notation\n• **Functions** - Defining functions using function declarations or arrow functions\n• **Function parameters** - Passing arguments to functions and understanding parameter scope\n\nDo you have a solid understanding of these JavaScript fundamentals?",
       "choices": [
         {
-          "label": "Yes, I know all of them",
+          "label": "Yes, I'm confident with these concepts",
           "next": "problem-understanding"
         },
         {
-          "label": "No, please explain them",
-          "next": "teach-prereqs-js"
-        },
-        {
-          "label": "I know some, not all",
-          "next": "select-prereqs-js"
+          "label": "I'd like to review these concepts first",
+          "next": "teach-language-constructs-js"
         }
       ]
     },
     {
-      "stepId": "teach-prereqs-js",
-      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Array indexing:** Access elements using `nums[i]` where `i` is the position (0-based).\n\n**Hash map lookup:** Use `Map` or objects `{}` to store key-value pairs. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence - all in O(1) time.\n\n**Nested loops:** Two loops inside each other check every pair, but it's slow (O(n²)).\n\n**Target decomposition:** If `a + b = target`, then `b = target - a`. We call `b` the complement of `a`.\n\nLet's continue with the lesson!",
+      "stepId": "teach-language-constructs-js",
+      "mentorSays": "No worries! Let me teach you these JavaScript concepts step by step:\n\n**1. Variables** - Store values using `let`, `const`, or `var`:\n```javascript\nlet num = 5;\nconst name = \"John\";\n```\n\n**2. Arrays** - Lists of values, accessed by index (0-based):\n```javascript\nlet nums = [2, 7, 11, 15];\nnums[0] // gets 2 (first element)\nnums.length // gets 4\n```\n\n**3. For Loops** - Iterate through arrays:\n```javascript\nfor (let i = 0; i < nums.length; i++) {\n  console.log(nums[i]);\n}\n```\n\n**4. Hash Maps (Objects)** - Store key-value pairs:\n```javascript\nlet map = {}; // or new Map()\nmap[2] = 0; // store: key=2, value=0\nif (2 in map) { // check if key exists\n  console.log(map[2]); // get value: 0\n}\n```\n\n**5. Objects** - Similar to maps, access properties:\n```javascript\nlet obj = { name: \"John\", age: 25 };\nobj.name // \"John\"\nobj[\"age\"] // 25\n```\n\n**6. Functions** - Reusable code blocks:\n```javascript\nfunction twoSum(nums, target) {\n  // your code here\n  return result;\n}\n```\n\n**7. Function Parameters** - Values passed to functions:\n```javascript\ntwoSum([2, 7, 11, 15], 9); // nums and target are parameters\n```\n\nNow that you understand these concepts, let's check if you're ready!",
       "action": "continue",
-      "next": "problem-understanding"
-    },
-    {
-      "stepId": "select-prereqs-js",
-      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Array indexing:** `nums[0]` gets first element, `nums[i]` gets element at position i.\n\n**Hash map:** `const map = new Map()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks if key exists.\n\n**Loops:** `for (let i = 0; i < nums.length; i++)` iterates through array.\n\n**Complement:** If target is 9 and current number is 2, complement is 9 - 2 = 7.\n\nLet's continue!",
-      "action": "continue",
-      "next": "problem-understanding"
+      "next": "prereq-check-js"
     },
     {
       "stepId": "prereq-check-python",
-      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Array indexing** - Accessing elements in an array using their position/index\n- **Hash map lookup** - Storing and retrieving key-value pairs in constant time\n- **Nested loops** - Understanding how to iterate through array elements multiple times\n- **Target decomposition** - Breaking down a target value into component parts to search for\n\nDo you feel confident with these Python concepts?",
+      "mentorSays": "Python is an excellent choice for this problem. Python's dictionary data structure provides native hash map functionality, making the Two Sum solution particularly elegant and readable.\n\nTo effectively solve this problem, you should be comfortable with these Python concepts:\n\n• **Variables** - Variable assignment and Python's dynamic typing system\n• **Lists** - Creating lists, indexing elements, and using list methods like `len()`\n• **For loops** - Iterating through lists using `for...in` loops or `range()` with indexing\n• **Dictionaries** - Creating dictionaries `{}`, accessing values by key, and using dictionary methods like `get()` and `in` operator for membership testing\n• **Dictionary operations** - Understanding how dictionaries provide O(1) average-case lookup time\n• **Functions** - Defining functions using `def` and understanding function scope\n• **Function parameters** - Passing arguments to functions and understanding parameter passing in Python\n\nAre you confident in your understanding of these Python fundamentals?",
       "choices": [
         {
-          "label": "Yes, I know all of them",
+          "label": "Yes, I am good with these concepts",
           "next": "problem-understanding"
         },
         {
-          "label": "No, please explain them",
-          "next": "teach-prereqs-python"
-        },
-        {
-          "label": "I know some, not all",
-          "next": "select-prereqs-python"
+          "label": "No, please explain",
+          "next": "teach-language-constructs-python"
         }
       ]
     },
     {
-      "stepId": "teach-prereqs-python",
-      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Array indexing:** Access elements using `nums[i]` where `i` is the position (0-based).\n\n**Hash map lookup:** Use dictionaries `{}` to store key-value pairs. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence - all in O(1) time.\n\n**Nested loops:** Two loops inside each other check every pair, but it's slow (O(n²)).\n\n**Target decomposition:** If `a + b = target`, then `b = target - a`. We call `b` the complement of `a`.\n\nLet's continue with the lesson!",
+      "stepId": "teach-language-constructs-python",
+      "mentorSays": "No worries! Let me teach you these Python concepts step by step:\n\n**1. Variables** - Store values using assignment:\n```python\nnum = 5\nname = \"John\"\n```\n\n**2. Arrays (Lists)** - Lists of values, accessed by index (0-based):\n```python\nnums = [2, 7, 11, 15]\nnums[0]  # gets 2 (first element)\nlen(nums)  # gets 4\n```\n\n**3. For Loops** - Iterate through lists:\n```python\nfor i in range(len(nums)):\n    print(nums[i])\n```\n\n**4. Hash Maps (Dictionaries)** - Store key-value pairs:\n```python\nmap = {}  # create dictionary\nmap[2] = 0  # store: key=2, value=0\nif 2 in map:  # check if key exists\n    print(map[2])  # get value: 0\n```\n\n**5. Objects** - Dictionaries are objects in Python:\n```python\nobj = {\"name\": \"John\", \"age\": 25}\nobj[\"name\"]  # \"John\"\nobj.get(\"age\")  # 25\n```\n\n**6. Functions** - Reusable code blocks:\n```python\ndef two_sum(nums, target):\n    # your code here\n    return result\n```\n\n**7. Function Parameters** - Values passed to functions:\n```python\ntwo_sum([2, 7, 11, 15], 9)  # nums and target are parameters\n```\n\nNow that you understand these concepts, let's check if you're ready!",
       "action": "continue",
-      "next": "problem-understanding"
-    },
-    {
-      "stepId": "select-prereqs-python",
-      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Array indexing:** `nums[0]` gets first element, `nums[i]` gets element at position i.\n\n**Hash map:** `seen = {}` creates a dict. `seen[key] = value` stores, `seen[key]` retrieves, `key in seen` checks if key exists.\n\n**Loops:** `for i in range(len(nums))` iterates through array.\n\n**Complement:** If target is 9 and current number is 2, complement is 9 - 2 = 7.\n\nLet's continue!",
-      "action": "continue",
-      "next": "problem-understanding"
+      "next": "prereq-check-python"
     },
     {
       "stepId": "prereq-check-java",
-      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Array indexing** - Accessing elements in an array using their position/index\n- **Hash map lookup** - Storing and retrieving key-value pairs in constant time\n- **Nested loops** - Understanding how to iterate through array elements multiple times\n- **Target decomposition** - Breaking down a target value into component parts to search for\n\nDo you feel confident with these Java concepts?",
+      "mentorSays": "Java is a strong choice for this problem. Java's `HashMap` class from the Collections framework provides efficient key-value storage with O(1) average-case time complexity for lookups, making it ideal for the Two Sum solution.\n\nTo successfully implement this solution, you'll need proficiency with these Java concepts:\n\n• **Variables** - Declaring variables with explicit types (e.g., `int`, `String`) and understanding Java's type system\n• **Arrays** - Creating and initializing arrays, accessing elements by index, and using the `length` property\n• **For loops** - Traditional `for` loops with initialization, condition, and increment expressions\n• **HashMap** - Using `java.util.HashMap` to store key-value pairs, understanding `put()`, `get()`, and `containsKey()` methods\n• **Collections framework** - Understanding how HashMap fits into Java's Collections hierarchy\n• **Methods** - Defining methods with return types and access modifiers\n• **Method parameters** - Passing arguments to methods and understanding parameter types\n\nDo you have a solid grasp of these Java fundamentals?",
       "choices": [
         {
-          "label": "Yes, I know all of them",
+          "label": "Yes, I am good with these concepts",
           "next": "problem-understanding"
         },
         {
-          "label": "No, please explain them",
-          "next": "teach-prereqs-java"
-        },
-        {
-          "label": "I know some, not all",
-          "next": "select-prereqs-java"
+          "label": "No, please explain",
+          "next": "teach-language-constructs-java"
         }
       ]
     },
     {
-      "stepId": "teach-prereqs-java",
-      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Array indexing:** Access elements using `nums[i]` where `i` is the position (0-based).\n\n**Hash map lookup:** Use `HashMap<Integer, Integer>` to store key-value pairs. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence - all in O(1) time.\n\n**Nested loops:** Two loops inside each other check every pair, but it's slow (O(n²)).\n\n**Target decomposition:** If `a + b = target`, then `b = target - a`. We call `b` the complement of `a`.\n\nLet's continue with the lesson!",
+      "stepId": "teach-language-constructs-java",
+      "mentorSays": "No worries! Let me teach you these Java concepts step by step:\n\n**1. Variables** - Store values with type declaration:\n```java\nint num = 5;\nString name = \"John\";\n```\n\n**2. Arrays** - Arrays of values, accessed by index (0-based):\n```java\nint[] nums = {2, 7, 11, 15};\nnums[0]  // gets 2 (first element)\nnums.length  // gets 4\n```\n\n**3. For Loops** - Iterate through arrays:\n```java\nfor (int i = 0; i < nums.length; i++) {\n    System.out.println(nums[i]);\n}\n```\n\n**4. Hash Maps (HashMap)** - Store key-value pairs:\n```java\nMap<Integer, Integer> map = new HashMap<>();\nmap.put(2, 0);  // store: key=2, value=0\nif (map.containsKey(2)) {  // check if key exists\n    System.out.println(map.get(2));  // get value: 0\n}\n```\n\n**5. Objects** - HashMap is an object:\n```java\nHashMap<Integer, Integer> map = new HashMap<>();\nmap.put(key, value);\nmap.get(key);\n```\n\n**6. Functions (Methods)** - Reusable code blocks:\n```java\npublic int[] twoSum(int[] nums, int target) {\n    // your code here\n    return result;\n}\n```\n\n**7. Function Parameters** - Values passed to methods:\n```java\ntwoSum(new int[]{2, 7, 11, 15}, 9);  // nums and target are parameters\n```\n\nNow that you understand these concepts, let's check if you're ready!",
       "action": "continue",
-      "next": "problem-understanding"
-    },
-    {
-      "stepId": "select-prereqs-java",
-      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Array indexing:** `nums[0]` gets first element, `nums[i]` gets element at position i.\n\n**Hash map:** `Map<Integer, Integer> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks if key exists.\n\n**Loops:** `for (int i = 0; i < nums.length; i++)` iterates through array.\n\n**Complement:** If target is 9 and current number is 2, complement is 9 - 2 = 7.\n\nLet's continue!",
-      "action": "continue",
-      "next": "problem-understanding"
+      "next": "prereq-check-java"
     },
     {
       "stepId": "prereq-check-cpp",
-      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Array indexing** - Accessing elements in an array using their position/index\n- **Hash map lookup** - Storing and retrieving key-value pairs in constant time\n- **Nested loops** - Understanding how to iterate through array elements multiple times\n- **Target decomposition** - Breaking down a target value into component parts to search for\n\nDo you feel confident with these C++ concepts?",
+      "mentorSays": "C++ is an excellent choice for this problem. C++'s `std::unordered_map` from the Standard Template Library provides hash map functionality with optimal performance characteristics, making it well-suited for the Two Sum algorithm.\n\nTo implement this solution effectively, you should be familiar with these C++ concepts:\n\n• **Variables** - Declaring variables with explicit types and understanding C++'s type system\n• **Arrays and Vectors** - Working with C-style arrays or `std::vector` for dynamic arrays, understanding indexing and the `size()` method\n• **For loops** - Traditional `for` loops and range-based `for` loops introduced in C++11\n• **unordered_map** - Using `std::unordered_map` from `<unordered_map>` header, understanding `operator[]`, `count()`, and `find()` methods\n• **STL containers** - Understanding how unordered_map provides average O(1) lookup time complexity\n• **Functions** - Defining functions with return types and understanding function overloading\n• **Function parameters** - Passing arguments by value, reference, or const reference, and understanding parameter types\n\nAre you confident in your understanding of these C++ fundamentals?",
       "choices": [
         {
-          "label": "Yes, I know all of them",
+          "label": "Yes, I am good with these concepts",
           "next": "problem-understanding"
         },
         {
-          "label": "No, please explain them",
-          "next": "teach-prereqs-cpp"
-        },
-        {
-          "label": "I know some, not all",
-          "next": "select-prereqs-cpp"
+          "label": "No, please explain",
+          "next": "teach-language-constructs-cpp"
         }
       ]
     },
     {
-      "stepId": "teach-prereqs-cpp",
-      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Array indexing:** Access elements using `nums[i]` where `i` is the position (0-based).\n\n**Hash map lookup:** Use `unordered_map<int, int>` to store key-value pairs. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence - all in O(1) time.\n\n**Nested loops:** Two loops inside each other check every pair, but it's slow (O(n²)).\n\n**Target decomposition:** If `a + b = target`, then `b = target - a`. We call `b` the complement of `a`.\n\nLet's continue with the lesson!",
+      "stepId": "teach-language-constructs-cpp",
+      "mentorSays": "No worries! Let me teach you these C++ concepts step by step:\n\n**1. Variables** - Store values with type declaration:\n```cpp\nint num = 5;\nstring name = \"John\";\n```\n\n**2. Arrays/Vectors** - Vectors or arrays, accessed by index (0-based):\n```cpp\nvector<int> nums = {2, 7, 11, 15};\nnums[0]  // gets 2 (first element)\nnums.size()  // gets 4\n```\n\n**3. For Loops** - Iterate through vectors:\n```cpp\nfor (int i = 0; i < nums.size(); i++) {\n    cout << nums[i] << endl;\n}\n```\n\n**4. Hash Maps (unordered_map)** - Store key-value pairs:\n```cpp\n#include <unordered_map>\nunordered_map<int, int> map;\nmap[2] = 0;  // store: key=2, value=0\nif (map.count(2)) {  // check if key exists\n    cout << map[2] << endl;  // get value: 0\n}\n```\n\n**5. Objects** - unordered_map is an object:\n```cpp\nunordered_map<int, int> map;\nmap[key] = value;\nmap[key];\n```\n\n**6. Functions** - Reusable code blocks:\n```cpp\nvector<int> twoSum(vector<int>& nums, int target) {\n    // your code here\n    return result;\n}\n```\n\n**7. Function Parameters** - Values passed to functions:\n```cpp\ntwoSum({2, 7, 11, 15}, 9);  // nums and target are parameters\n```\n\nNow that you understand these concepts, let's check if you're ready!",
       "action": "continue",
-      "next": "problem-understanding"
-    },
-    {
-      "stepId": "select-prereqs-cpp",
-      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Array indexing:** `nums[0]` gets first element, `nums[i]` gets element at position i.\n\n**Hash map:** `unordered_map<int, int> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks if key exists.\n\n**Loops:** `for (int i = 0; i < nums.size(); i++)` iterates through array.\n\n**Complement:** If target is 9 and current number is 2, complement is 9 - 2 = 7.\n\nLet's continue!",
-      "action": "continue",
-      "next": "problem-understanding"
+      "next": "prereq-check-cpp"
     },
     {
       "stepId": "prereq-check-ts",
-      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Array indexing** - Accessing elements in an array using their position/index\n- **Hash map lookup** - Storing and retrieving key-value pairs in constant time\n- **Nested loops** - Understanding how to iterate through array elements multiple times\n- **Target decomposition** - Breaking down a target value into component parts to search for\n\nDo you feel confident with these TypeScript concepts?",
+      "mentorSays": "TypeScript is an excellent choice for this problem. TypeScript combines JavaScript's flexibility with static type checking, and its `Map` class provides type-safe hash map operations that are ideal for the Two Sum solution.\n\nTo successfully solve this problem, you should be comfortable with these TypeScript concepts:\n\n• **Variables** - Declaring variables with type annotations (e.g., `let x: number`) and understanding TypeScript's type inference\n• **Arrays** - Creating typed arrays (e.g., `number[]`), accessing elements by index, and using array properties\n• **For loops** - Iterating through arrays using traditional `for` loops or array iteration methods\n• **Map** - Using the `Map<K, V>` generic class to store key-value pairs with type safety, understanding `set()`, `get()`, and `has()` methods\n• **Type annotations** - Understanding how TypeScript's type system enhances JavaScript objects and provides compile-time safety\n• **Functions** - Defining functions with type annotations for parameters and return types\n• **Function parameters** - Passing typed arguments to functions and understanding how TypeScript enforces type safety at compile time\n\nDo you have a solid understanding of these TypeScript fundamentals?",
       "choices": [
         {
-          "label": "Yes, I know all of them",
+          "label": "Yes, I am good with these concepts",
           "next": "problem-understanding"
         },
         {
-          "label": "No, please explain them",
-          "next": "teach-prereqs-ts"
-        },
-        {
-          "label": "I know some, not all",
-          "next": "select-prereqs-ts"
+          "label": "No, please explain",
+          "next": "teach-language-constructs-ts"
         }
       ]
     },
     {
-      "stepId": "teach-prereqs-ts",
-      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Array indexing:** Access elements using `nums[i]` where `i` is the position (0-based).\n\n**Hash map lookup:** Use `Map<number, number>` to store key-value pairs. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence - all in O(1) time.\n\n**Nested loops:** Two loops inside each other check every pair, but it's slow (O(n²)).\n\n**Target decomposition:** If `a + b = target`, then `b = target - a`. We call `b` the complement of `a`.\n\nLet's continue with the lesson!",
+      "stepId": "teach-language-constructs-ts",
+      "mentorSays": "No worries! Let me teach you these TypeScript concepts step by step:\n\n**1. Variables** - Store values with type annotations:\n```typescript\nlet num: number = 5;\nconst name: string = \"John\";\n```\n\n**2. Arrays** - Arrays of values, accessed by index (0-based):\n```typescript\nlet nums: number[] = [2, 7, 11, 15];\nnums[0]  // gets 2 (first element)\nnums.length  // gets 4\n```\n\n**3. For Loops** - Iterate through arrays:\n```typescript\nfor (let i = 0; i < nums.length; i++) {\n    console.log(nums[i]);\n}\n```\n\n**4. Hash Maps (Map)** - Store key-value pairs:\n```typescript\nlet map = new Map<number, number>();\nmap.set(2, 0);  // store: key=2, value=0\nif (map.has(2)) {  // check if key exists\n    console.log(map.get(2));  // get value: 0\n}\n```\n\n**5. Objects** - Creating and accessing objects:\n```typescript\nlet obj: {name: string, age: number} = {name: \"John\", age: 25};\nobj.name  // \"John\"\nobj[\"age\"]  // 25\n```\n\n**6. Functions** - Reusable code blocks with types:\n```typescript\nfunction twoSum(nums: number[], target: number): number[] {\n    // your code here\n    return result;\n}\n```\n\n**7. Function Parameters** - Values passed to functions:\n```typescript\ntwoSum([2, 7, 11, 15], 9);  // nums and target are parameters\n```\n\nNow that you understand these concepts, let's check if you're ready!",
       "action": "continue",
-      "next": "problem-understanding"
-    },
-    {
-      "stepId": "select-prereqs-ts",
-      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Array indexing:** `nums[0]` gets first element, `nums[i]` gets element at position i.\n\n**Hash map:** `const map = new Map<number, number>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks if key exists.\n\n**Loops:** `for (let i = 0; i < nums.length; i++)` iterates through array.\n\n**Complement:** If target is 9 and current number is 2, complement is 9 - 2 = 7.\n\nLet's continue!",
-      "action": "continue",
-      "next": "problem-understanding"
+      "next": "prereq-check-ts"
     },
     {
       "stepId": "problem-understanding",
-      "mentorSays": "Perfect! Now let's understand what the Two Sum problem asks for.\n\nImagine you're at a grocery store with exactly $10, and you need to buy two items that add up to your budget. You walk down the aisles, and for each item you see (like a $3 bread), you mentally check if there's a $7 item you remember seeing earlier that would complete your $10 total. This is exactly how the Two Sum algorithm works - it remembers previous values in a hash map and checks if the \"complement\" needed to reach the target sum exists.\n\n# The Two Sum Problem\n\nHey! So the **Two Sum** problem is one of those classic coding challenges that's actually pretty straightforward once you get it.\n\n## What it's asking\n\nYou're given an array of numbers and a target number. Your job is to find **two numbers in the array that add up to the target**, and return their **indices** (positions in the array).\n\nThe key things to remember:\n- You need to return the **positions** of the numbers, not the numbers themselves\n- There's guaranteed to be exactly one solution\n- You can't use the same element twice\n\n## Let's walk through an example\n\nSay you have:\n- `nums = [2, 7, 11, 15]` \n- `target = 9`\n\nYou'd return `[0, 1]`.\n\n## Why does this work?\n\nLet's trace through it:\n- The number at index 0 is `2`\n- The number at index 1 is `7` \n- And `2 + 7 = 9`, which matches our target!\n\nSo we return `[0, 1]` - the indices where we found our two numbers.\n\nIf we had tried other combinations:\n- `2 + 11 = 13` (too big)\n- `2 + 15 = 17` (too big)  \n- `7 + 11 = 18` (too big)\n- `7 + 15 = 22` (way too big)\n\nOnly `2 + 7` gives us exactly `9`, so `[0, 1]` is our answer.\n\nPretty neat, right? The tricky part is usually figuring out how to do this efficiently, but that's the core idea!",
-      "action": "continue",
-      "next": "thinking-challenge"
+      "mentorSays": "# The Two Sum Problem\n\nYou are given a list of numbers and a target number. There's at least one pair of numbers in the list that will add up to the target number.\n\n**Your task:** Find those two numbers and return their **indices** (positions in the array).\n\n## Example\n\nLet's say you have:\n- `nums = [2, 7, 11, 15]`\n- `target = 9`\n\nYou need to find two numbers that add up to 9. Looking at the array:\n- `2 + 7 = 9` ✓ (found at indices 0 and 1)\n- `2 + 11 = 13` (too big)\n- `2 + 15 = 17` (too big)\n- `7 + 11 = 18` (too big)\n\nSo the answer is `[0, 1]` - the indices where we found 2 and 7.\n\n## Key Requirements\n\n- Return the **indices** (positions), not the numbers themselves\n- There's guaranteed to be exactly one solution\n- You can't use the same element twice\n\n## How will you solve this?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Option 1: Brute Force - Check every pair",
+          "next": "brute-force-explanation"
+        },
+        {
+          "label": "Option 2: Sort first, then use two pointers",
+          "next": "sort-brute-force-explanation"
+        },
+        {
+          "label": "I have some other idea",
+          "next": "other-idea-discussion"
+        }
+      ]
+    },
+    {
+      "stepId": "brute-force-explanation",
+      "mentorSays": "# Option 1: Brute Force Approach\n\nGreat thinking! Let's explore the brute force method in detail.\n\n## The Idea\n\nCheck every possible pair of numbers in the array to see if they add up to the target.\n\n## Pseudocode\n\n```\nFor each index i from 0 to length-1:\n    For each index j from i+1 to length-1:\n        If nums[i] + nums[j] == target:\n            Return [i, j]\n```\n\n## Step-by-Step Example\n\nLet's trace through `nums = [3, 2, 4, 8], target = 6`:\n\n**i=0, nums[0]=3:**\n- j=1: nums[0] + nums[1] = 3 + 2 = 5 ≠ 6\n- j=2: nums[0] + nums[2] = 3 + 4 = 7 ≠ 6\n- j=3: nums[0] + nums[3] = 3 + 8 = 11 ≠ 6\n\n**i=1, nums[1]=2:**\n- j=2: nums[1] + nums[2] = 2 + 4 = 6 ✓ **Found it!**\n- Return [1, 2]\n\n## How It Works\n\n- Outer loop: Pick the first number (index i)\n- Inner loop: Check it against all remaining numbers (index j)\n- If sum equals target, return both indices\n- This guarantees we'll find the pair if it exists",
+      "action": "next",
+      "next": "brute-force-failure"
+    },
+    {
+      "stepId": "brute-force-failure",
+      "mentorSays": "# Why Brute Force Fails at Scale\n\nWhile brute force works correctly, it becomes **extremely slow** for larger inputs.\n\n## Time Complexity Analysis\n\n**Time Complexity: O(n²)**\n- For an array of size n, we check approximately n × (n-1) / 2 pairs\n- With n=100: ~5,000 pair checks\n- With n=1,000: ~500,000 pair checks\n- With n=10,000: ~50,000,000 pair checks\n- With n=100,000: ~5,000,000,000 pair checks!\n\n## Real-World Impact\n\nImagine processing user data:\n- **Small dataset (100 users):** Brute force works fine (~5ms)\n- **Medium dataset (10,000 users):** Brute force takes ~500ms (noticeable delay)\n- **Large dataset (1,000,000 users):** Brute force takes ~50 seconds (unacceptable!)\n\n## The Problem\n\nFor each element, we're checking it against **all remaining elements**. This creates a nested loop structure that grows quadratically.\n\n**We need a better solution that scales linearly!**",
+      "action": "next",
+      "next": "better-solution-intro"
+    },
+    {
+      "stepId": "better-solution-intro",
+      "mentorSays": "# A Better Solution: Hash Map\n\nInstead of checking every pair, we can use a **hash map** to remember numbers we've already seen.\n\n## The Key Insight\n\nAs we iterate through the array:\n1. For each number, calculate what we need: `complement = target - current_number`\n2. Check if we've **already seen** that complement in our hash map\n3. If yes, we found our pair!\n4. If no, store the current number in the map for future lookups\n\n## Why This Works\n\n- **Hash maps provide O(1) lookups** - instant checking instead of scanning\n- **Single pass through array** - O(n) time instead of O(n²)\n- **Trade space for time** - Use O(n) extra space to get O(n) time\n\n## Example Preview\n\nWith `nums = [2, 7, 11, 15], target = 9`:\n- At index 0 (num=2): Need 9-2=7, not in map yet, store map[2]=0\n- At index 1 (num=7): Need 9-7=2, **2 is in map!** Return [map[2], 1] = [0, 1]\n\nLet's dive deeper into this optimal solution!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "sort-brute-force-explanation",
+      "mentorSays": "# Option 2: Sort Then Two Pointers\n\nInteresting approach! Let's explore this method.\n\n## The Idea\n\n1. Sort the array first\n2. Use two pointers (one at start, one at end)\n3. Move pointers based on whether sum is too small or too large\n\n## Pseudocode\n\n```\nSort the array (but remember original indices!)\nleft = 0, right = length - 1\nWhile left < right:\n    sum = sorted[left] + sorted[right]\n    If sum == target:\n        Return [original_index[left], original_index[right]]\n    Else if sum < target:\n        left++  (need larger sum)\n    Else:\n        right--  (need smaller sum)\n```\n\n## Example\n\nWith `nums = [3, 2, 4], target = 6`:\n- After sorting: [2, 3, 4] (original indices: [1, 0, 2])\n- left=0 (value=2), right=2 (value=4): 2+4=6 ✓ Found!\n- Return [1, 2]\n\n## Challenges\n\n- **Need to track original indices** - Sorting changes positions\n- **Time complexity: O(n log n)** - Sorting takes time\n- **More complex implementation** - Extra bookkeeping needed\n\n**There's an even better O(n) solution using hash maps!** Let's explore that instead.",
+      "action": "next",
+      "next": "better-solution-intro"
+    },
+    {
+      "stepId": "other-idea-discussion",
+      "mentorSays": "# Exploring Your Idea\n\nThat's great that you're thinking creatively! Let's think about what makes a good solution:\n\n## What We Need\n\n- **Fast lookups** - Check if a number exists quickly\n- **Preserve indices** - Remember original positions\n- **Single pass** - Process array efficiently\n- **Linear time** - O(n) instead of O(n²)\n\n## Common Approaches\n\n1. **Brute Force** - Check every pair (O(n²) - too slow)\n2. **Sort + Two Pointers** - Sort first, then use pointers (O(n log n) - good, but sorting takes time)\n3. **Hash Map** - Remember seen numbers (O(n) - optimal!)\n\n## The Optimal Solution\n\nThe hash map approach gives us:\n- **O(n) time** - Single pass through array\n- **O(n) space** - Store numbers we've seen\n- **O(1) lookups** - Instant checking if complement exists\n- **Preserves indices** - Naturally tracks original positions\n\nLet's learn this optimal hash map solution!",
+      "action": "next",
+      "next": "core-idea"
     },
     {
       "stepId": "thinking-challenge",

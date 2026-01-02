@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
+import LanguageConstructModal from '../components/modals/LanguageConstructModal';
 
 export default function PracticeTutorial() {
   const { slug } = useParams();
@@ -12,6 +13,9 @@ export default function PracticeTutorial() {
   const [output, setOutput] = useState('');
   const [selectedLanguage, setSelectedLanguage] = useState(null);
   const [visitedSteps, setVisitedSteps] = useState([]);
+  const [showConstructModal, setShowConstructModal] = useState(false);
+  const [currentConstruct, setCurrentConstruct] = useState(null);
+  const [explainedConcepts, setExplainedConcepts] = useState(new Set());
 
   const languages = [
     { id: 'javascript', name: 'JavaScript', emoji: '💛' },
@@ -21,27 +25,58 @@ export default function PracticeTutorial() {
     { id: 'typescript', name: 'TypeScript', emoji: '💙' },
   ];
 
-  // Load lesson data from JSON
+  // Load lesson data from API
   useEffect(() => {
     const loadLesson = async () => {
       try {
-        // Import the lesson JSON
-        const lessonData = await import(`../data/lessons/${slug}.json`);
-        const loadedLesson = lessonData.default;
+        // Fetch lesson from API
+        const response = await fetch(`http://localhost:3001/api/lessons/algorithms/${slug}`);
+        if (!response.ok) {
+          throw new Error('Lesson not found');
+        }
+        const result = await response.json();
+        const loadedLesson = result.data;
         
         setLesson(loadedLesson);
-        
-        // Set initial step (first step in flow)
-        if (loadedLesson.flow && loadedLesson.flow.length > 0) {
-          const firstStepId = loadedLesson.flow[0].stepId;
-          setCurrentStepId(firstStepId);
-          setVisitedSteps([firstStepId]);
-        }
         
         // Set language from URL if present
         const langParam = searchParams.get('language');
         if (langParam) {
           setSelectedLanguage(langParam);
+          // Navigate directly to prereq-check step for selected language
+          const langMap = {
+            'javascript': 'prereq-check-js',
+            'python': 'prereq-check-python',
+            'java': 'prereq-check-java',
+            'cpp': 'prereq-check-cpp',
+            'typescript': 'prereq-check-ts'
+          };
+          const prereqStepId = langMap[langParam];
+          if (prereqStepId && loadedLesson.flow.find(s => s.stepId === prereqStepId)) {
+            // Find the language-selection step to build proper path
+            const langSelectionStep = loadedLesson.flow.find(s => s.stepId === 'language-selection');
+            if (langSelectionStep) {
+              setCurrentStepId(prereqStepId);
+              setVisitedSteps(['objectives', 'language-selection', prereqStepId]);
+            } else {
+              // Fallback to first step if structure is different
+              const firstStepId = loadedLesson.flow[0].stepId;
+              setCurrentStepId(firstStepId);
+              setVisitedSteps([firstStepId]);
+            }
+          } else {
+            // Fallback to first step
+            const firstStepId = loadedLesson.flow[0].stepId;
+            setCurrentStepId(firstStepId);
+            setVisitedSteps([firstStepId]);
+          }
+        } else {
+          // Set initial step (first step in flow)
+          if (loadedLesson.flow && loadedLesson.flow.length > 0) {
+            const firstStepId = loadedLesson.flow[0].stepId;
+            setCurrentStepId(firstStepId);
+            setVisitedSteps([firstStepId]);
+          }
         }
       } catch (error) {
         console.error('Error loading lesson:', error);
@@ -70,6 +105,15 @@ export default function PracticeTutorial() {
     if (nextStepId.includes('-cpp')) setSelectedLanguage('cpp');
     if (nextStepId.includes('-ts')) setSelectedLanguage('typescript');
     
+    // Check if this is a "teach language constructs" step
+    if (nextStepId.includes('teach-language-constructs-')) {
+      // Show modal with first construct
+      setCurrentConstruct('variables');
+      setShowConstructModal(true);
+      // Don't navigate yet - wait for user to go through constructs
+      return;
+    }
+    
     setCurrentStepId(nextStepId);
     setVisitedSteps([...visitedSteps, nextStepId]);
     
@@ -77,6 +121,33 @@ export default function PracticeTutorial() {
     const nextStep = lesson.flow.find(s => s.stepId === nextStepId);
     if (nextStep?.example) {
       setCode(nextStep.example);
+    }
+  };
+
+  // Handle construct modal navigation
+  const handleConstructNext = () => {
+    const constructs = ['variables', 'arrays', 'forLoops', 'hashMaps', 'objects', 'functions', 'functionParameters'];
+    const currentIndex = constructs.indexOf(currentConstruct);
+    
+    if (currentIndex < constructs.length - 1) {
+      // Show next construct - scroll will be handled by useEffect in modal
+      setCurrentConstruct(constructs[currentIndex + 1]);
+    } else {
+      // All constructs shown, close modal and continue to prereq check
+      setShowConstructModal(false);
+      const lang = selectedLanguage || 'javascript';
+      const langMap = {
+        'javascript': 'prereq-check-js',
+        'python': 'prereq-check-python',
+        'java': 'prereq-check-java',
+        'cpp': 'prereq-check-cpp',
+        'typescript': 'prereq-check-ts'
+      };
+      const prereqStepId = langMap[lang];
+      if (prereqStepId && lesson) {
+        setCurrentStepId(prereqStepId);
+        setVisitedSteps([...visitedSteps, prereqStepId]);
+      }
     }
   };
 
@@ -313,6 +384,18 @@ export default function PracticeTutorial() {
 
         </div>
       </div>
+
+      {/* Language Construct Modal */}
+      <LanguageConstructModal
+        isOpen={showConstructModal}
+        onClose={handleConstructNext}
+        construct={currentConstruct}
+        language={selectedLanguage || 'javascript'}
+        explainedConcepts={explainedConcepts}
+        onConceptExplained={(concept) => {
+          setExplainedConcepts(prev => new Set([...prev, concept]));
+        }}
+      />
 
     </div>
   );

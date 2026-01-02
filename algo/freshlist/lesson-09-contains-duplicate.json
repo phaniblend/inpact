@@ -1,0 +1,194 @@
+{
+  "id": "contains-duplicate",
+  "title": "Contains Duplicate",
+  "pattern": "hash set",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 9,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-09",
+    "introduces": [
+      "Set-constructor",
+      "set-add-method",
+      "set-has-method",
+      "set-vs-object",
+      "early-termination",
+      "existence-check"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "loops",
+      "for-loop",
+      "for-of-loop",
+      "functions",
+      "function-parameters",
+      "return-statement",
+      "comparison-operators",
+      "objects",
+      "hash-map-concept"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["two-sum"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Create an empty Set to track seen values." },
+    { "id": "ps2", "text": "For each number in the array:" },
+    { "id": "ps3", "text": "  If the number is already in the Set, return true." },
+    { "id": "ps4", "text": "  Otherwise, add the number to the Set." },
+    { "id": "ps5", "text": "If loop completes without finding duplicate, return false." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Contains Duplicate**.\n\nThis lesson introduces the **Set** data structure — a collection that stores only unique values.\n\nSets are perfect for checking \"have I seen this before?\" questions!",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nGiven an array of integers, return `true` if any value appears at least twice.\n\nReturn `false` if every element is distinct (unique).\n\n**Example:**\n```\nnums = [1, 2, 3, 1]\nOutput: true\n\n1 appears twice!\n```\n\n**Example 2:**\n```\nnums = [1, 2, 3, 4]\nOutput: false\n\nAll elements are unique.\n```",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) nums = [1, 2, 3, 1] → true (1 appears twice)\n2) nums = [1, 2, 3, 4] → false (all unique)\n3) nums = [1, 1] → true\n4) nums = [1] → false (only one element)\n5) nums = [] → false (no elements)\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you check for duplicates?",
+      "choices": [
+        { "label": "Compare every pair of elements", "next": "why-not-brute-force" },
+        { "label": "Sort and check adjacent elements", "next": "why-not-sort" },
+        { "label": "Track seen elements in a Set", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "why-not-brute-force",
+      "mentorSays": "Comparing every pair works but is slow.\n\nWith 1000 elements, you'd need about 500,000 comparisons!\n\nWe can do better by remembering what we've seen.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "why-not-sort",
+      "mentorSays": "Sorting and checking neighbors works:\n\n```javascript\nnums.sort();\nfor (let i = 0; i < nums.length - 1; i++) {\n  if (nums[i] === nums[i + 1]) return true;\n}\n```\n\nBut sorting takes time, and it modifies the array.\n\nUsing a Set is faster and doesn't change the input!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Strategy\n\nAs we scan the array:\n1. Check if we've seen this number before\n2. If yes, we found a duplicate — return true\n3. If no, remember this number for later\n4. If we finish without finding duplicates, return false\n\nTo \"remember\" numbers, we use a **Set**.",
+      "action": "next",
+      "next": "set-explained"
+    },
+    {
+      "stepId": "set-explained",
+      "mentorSays": "### What is a Set?\n\nA **Set** is a collection of unique values. No duplicates allowed!\n\n```javascript\nconst mySet = new Set();\n\nmySet.add(1);  // Set: {1}\nmySet.add(2);  // Set: {1, 2}\nmySet.add(1);  // Set: {1, 2} (1 already exists, ignored)\n```\n\n**Key methods:**\n- `add(value)` — adds a value to the set\n- `has(value)` — returns true if value exists, false otherwise\n\nBoth operations are instant (O(1) time)!",
+      "action": "next",
+      "next": "set-vs-object"
+    },
+    {
+      "stepId": "set-vs-object",
+      "mentorSays": "### Set vs Object\n\n**When to use an Object:**\n- Store key-value pairs (e.g., letter: count)\n- Need to associate data with each key\n\n**When to use a Set:**\n- Only need to track existence (seen or not)\n- Don't need associated values\n- Cleaner syntax for membership checks\n\nFor this problem, we only care if we've seen a number — not how many times. So a Set is perfect!",
+      "action": "next",
+      "next": "early-termination"
+    },
+    {
+      "stepId": "early-termination",
+      "mentorSays": "### Early Termination\n\nOnce we find a duplicate, we can stop immediately.\n\nNo need to check the rest of the array!\n\n```\nnums = [1, 2, 3, 1, 5, 6, 7, 8, ...]\n              ↑\n        Found duplicate! Return true.\n        Don't process 5, 6, 7, 8...\n```\n\nThis makes our solution faster in many cases.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nnums = [1, 2, 3, 1]\n```\n\n**Start:** seen = {} (empty set)\n\n**num = 1:**\n- Is 1 in seen? No\n- Add 1 to seen: {1}\n\n**num = 2:**\n- Is 2 in seen? No\n- Add 2 to seen: {1, 2}\n\n**num = 3:**\n- Is 3 in seen? No\n- Add 3 to seen: {1, 2, 3}\n\n**num = 1:**\n- Is 1 in seen? **Yes!**\n- Return **true** immediately!",
+      "action": "next",
+      "next": "walkthrough-no-duplicate"
+    },
+    {
+      "stepId": "walkthrough-no-duplicate",
+      "mentorSays": "### Walkthrough: No Duplicate\n\n```\nnums = [1, 2, 3]\n```\n\n**num = 1:** Add to seen: {1}\n**num = 2:** Add to seen: {1, 2}\n**num = 3:** Add to seen: {1, 2, 3}\n\n**Loop ends.** No duplicates found.\n\nReturn **false**.",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis is one of the shortest solutions you'll write — Sets make it simple!\n\nLet's start.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function and initialize the Set.\n\n```javascript\nfunction containsDuplicate(nums) {\n  const seen = new Set();\n\n}\n```\n\n**Explanation:**\n- `containsDuplicate` — returns true or false\n- `nums` — the array to check\n- `new Set()` creates an empty Set\n- `seen` will track numbers we've encountered",
+      "example": "function containsDuplicate(nums) {\n  const seen = new Set();\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "**Step 2:** Loop through each number.\n\n```javascript\nfunction containsDuplicate(nums) {\n  const seen = new Set();\n\n  for (const num of nums) {\n\n  }\n}\n```\n\n**Explanation:**\n- `for (const num of nums)` iterates through each element\n- `num` is the current number being checked",
+      "example": "for (const num of nums) {\n\n}",
+      "action": "next",
+      "next": "code-03-check",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-03-check",
+      "mentorSays": "**Step 3:** Check if we've seen this number before.\n\n```javascript\nfunction containsDuplicate(nums) {\n  const seen = new Set();\n\n  for (const num of nums) {\n    if (seen.has(num)) {\n      return true;\n    }\n  }\n}\n```\n\n**Explanation:**\n- `seen.has(num)` returns true if num is in the Set\n- If we find a duplicate, return true immediately (early termination)",
+      "example": "if (seen.has(num)) {\n  return true;\n}",
+      "action": "next",
+      "next": "code-04-add",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-04-add",
+      "mentorSays": "**Step 4:** Add the number to the Set.\n\n```javascript\nfunction containsDuplicate(nums) {\n  const seen = new Set();\n\n  for (const num of nums) {\n    if (seen.has(num)) {\n      return true;\n    }\n    seen.add(num);\n  }\n}\n```\n\n**Explanation:**\n- `seen.add(num)` adds the number to the Set\n- Now if we see this number again, `has()` will return true",
+      "example": "seen.add(num);",
+      "action": "next",
+      "next": "code-05-return",
+      "pseudocodeLineIds": ["ps5"]
+    },
+    {
+      "stepId": "code-05-return",
+      "mentorSays": "**Step 5:** Return false if no duplicate found.\n\n```javascript\nfunction containsDuplicate(nums) {\n  const seen = new Set();\n\n  for (const num of nums) {\n    if (seen.has(num)) {\n      return true;\n    }\n    seen.add(num);\n  }\n\n  return false;\n}\n```\n\n**Explanation:**\n- If the loop completes, every element was unique\n- Return false (no duplicates)",
+      "example": "return false;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction containsDuplicate(nums) {\n  const seen = new Set();\n\n  for (const num of nums) {\n    if (seen.has(num)) {\n      return true;\n    }\n    seen.add(num);\n  }\n\n  return false;\n}\n```\n\n**How it works:**\n1. Create empty Set to track seen numbers\n2. For each number, check if it's already in the Set\n3. If yes, return true (found duplicate)\n4. If no, add it to the Set\n5. If loop ends without finding duplicate, return false",
+      "example": "function containsDuplicate(nums) {\n  const seen = new Set();\n\n  for (const num of nums) {\n    if (seen.has(num)) {\n      return true;\n    }\n    seen.add(num);\n  }\n\n  return false;\n}",
+      "action": "next",
+      "next": "alternative-solution"
+    },
+    {
+      "stepId": "alternative-solution",
+      "mentorSays": "### One-Liner Alternative\n\nHere's a clever one-liner:\n\n```javascript\nfunction containsDuplicate(nums) {\n  return new Set(nums).size !== nums.length;\n}\n```\n\n**How it works:**\n- `new Set(nums)` creates a Set from the array (removes duplicates)\n- If the Set size is smaller than the array length, there were duplicates!\n\nBoth solutions are correct. The first is more explicit; the second is more concise.",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Set data structure** — stores unique values only\n- **`new Set()`** — creates an empty Set\n- **`.add(value)`** — adds a value to the Set\n- **`.has(value)`** — checks if value exists in the Set\n- **Early termination** — returning as soon as you find the answer\n- **Set vs Object** — use Sets for existence checks, Objects for key-value pairs\n\n**Why this matters:**\n\nSets are perfect for:\n- Finding duplicates\n- Checking membership\n- Removing duplicates from arrays\n- Tracking visited nodes in graphs\n\nCombined with Objects (from Lesson 8), you now have two powerful tools for instant lookups!\n\n**Next recommended lesson:** Two Sum",
+      "action": "complete"
+    }
+  ]
+}

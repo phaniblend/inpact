@@ -1,0 +1,201 @@
+{
+  "id": "squares-of-sorted-array",
+  "title": "Squares of a Sorted Array",
+  "pattern": "two pointers (from ends)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 23,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-23",
+    "introduces": [
+      "absolute-value-comparison",
+      "building-result-backward",
+      "Math.abs"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "two-pointers"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "first-unique-character"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize left pointer at start (0) and right pointer at end (n-1) of array"
+    },
+    {
+      "id": "ps2",
+      "text": "Create result array of same size and set fill position to last index (n-1)"
+    },
+    {
+      "id": "ps3",
+      "text": "While left pointer <= right pointer, repeat steps 4-6"
+    },
+    {
+      "id": "ps4",
+      "text": "Compare absolute values: if |nums[left]| > |nums[right]|, square nums[left] and move left pointer right"
+    },
+    {
+      "id": "ps5",
+      "text": "Otherwise, square nums[right] and move right pointer left"
+    },
+    {
+      "id": "ps6",
+      "text": "Place the squared value at current fill position and decrement fill position"
+    },
+    {
+      "id": "ps7",
+      "text": "Return the result array filled with squares in sorted order"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work mastering the move-zeroes problem with our two-pointer technique! Now we're ready to explore an exciting variation where we'll use pointers starting from opposite ends of the array, working our way inward to solve the \"squares of a sorted array\" challenge.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given an integer array sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order. The challenge is that negative numbers, when squared, can become larger than positive numbers, so the resulting squares may not maintain the original sorted order.\n\n**Example:**\n```text\nInput: [-4,-1,0,3,10]\nOutput: [0,1,9,16,100]\n```\nThe squares are [16,1,0,9,100], but we need to return them sorted as [0,1,9,16,100].",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) [-3, -1, 2] → [1, 4, 9]\n2) [1, 2, 3, 4] → [1, 4, 9, 16]\n3) [-5, -2, 0, 1] → [0, 1, 4, 25]\n4) [-1, 0, 1] → [0, 1, 1]\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Given a sorted array that may contain negative numbers, what's the most efficient approach to return the squares of all elements in sorted order?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Square all elements first, then sort the resulting array using a comparison-based sorting algorithm",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use two pointers at both ends, compare absolute values, and fill the result array from back to front with the larger square",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach works but requires O(n log n) time for sorting, missing the key insight that we can leverage the original sorted property and the fact that largest squares must come from the extremes of the array.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that in a sorted array containing negative numbers, the **largest squares** will always be at the **ends** of the array, not in the middle. Since squaring makes negative numbers positive, we need to compare the **absolute values** of elements at both ends using two pointers. We fill the result array **from back to front**, always taking the element with the larger absolute value and moving the corresponding pointer inward. This approach works because `max(left², right²) = max(|left|, |right|)²`, allowing us to build the sorted squares array in reverse order.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[-4,-1,0,3,10]`:\n- Step 1: Two pointers at ends (left=0, right=4). Compare |-4|=4 vs |10|=10. 10² is larger, so result[4]=100, move right pointer left.\n- Step 2: Compare |-4|=4 vs |3|=3. 4² is larger, so result[3]=16, move left pointer right.\n- Step 3: Compare |-1|=1 vs |3|=3. 3² is larger, so result[2]=9, move right pointer left.\n- Step 4: Compare |-1|=1 vs |0|=0. 1² is larger, so result[1]=1, move left pointer right.\n- Step 5: Only element 0 remains, so result[0]=0.\n- Final answer: **[0,1,9,16,100]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize the result array and two pointers at the start and end of the input array.\n\n```javascript\nfunction sortedSquares(nums) {\n    const n = nums.length;\n    const result = new Array(n);\n    let left = 0;\n    let right = n - 1;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function sortedSquares(nums) {\n    const n = nums.length;\n    const result = new Array(n);\n    let left = 0;\n    let right = n - 1;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Add a position pointer to fill the result array from the back (largest squares first).\n\n```javascript\nfunction sortedSquares(nums) {\n    const n = nums.length;\n    const result = new Array(n);\n    let left = 0;\n    let right = n - 1;\n    let pos = n - 1;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "    let pos = n - 1;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Add the main loop that continues while left pointer hasn't crossed right pointer.\n\n```javascript\nfunction sortedSquares(nums) {\n    const n = nums.length;\n    const result = new Array(n);\n    let left = 0;\n    let right = n - 1;\n    let pos = n - 1;\n    \n    while (left <= right) {\n        // Compare and fill logic will go here\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2"
+      ],
+      "example": "    while (left <= right) {\n        // Compare and fill logic will go here\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Compare absolute values of elements at both ends and place the larger square at the current position.\n\n```javascript\nfunction sortedSquares(nums) {\n    const n = nums.length;\n    const result = new Array(n);\n    let left = 0;\n    let right = n - 1;\n    let pos = n - 1;\n    \n    while (left <= right) {\n        if (Math.abs(nums[left]) > Math.abs(nums[right])) {\n            result[pos] = nums[left] * nums[left];\n            left++;\n        } else {\n            result[pos] = nums[right] * nums[right];\n            right--;\n        }\n        pos--;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ],
+      "example": "        if (Math.abs(nums[left]) > Math.abs(nums[right])) {\n            result[pos] = nums[left] * nums[left];\n            left++;\n        } else {\n            result[pos] = nums[right] * nums[right];\n            right--;\n        }\n        pos--;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Return the result array containing all squares in sorted order.\n\n```javascript\nfunction sortedSquares(nums) {\n    const n = nums.length;\n    const result = new Array(n);\n    let left = 0;\n    let right = n - 1;\n    let pos = n - 1;\n    \n    while (left <= right) {\n        if (Math.abs(nums[left]) > Math.abs(nums[right])) {\n            result[pos] = nums[left] * nums[left];\n            left++;\n        } else {\n            result[pos] = nums[right] * nums[right];\n            right--;\n        }\n        pos--;\n    }\n    \n    return result;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4"
+      ],
+      "example": "    return result;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the two pointers technique with the \"Squares of a Sorted Array\" problem! You've learned how to efficiently compare absolute values and build results backward using pointers from both ends of an array. Next up, we'll tackle \"First Unique Character\" which will introduce you to new ways of tracking character frequencies - keep up the momentum, you're building a solid foundation in algorithmic problem-solving!",
+      "action": "complete"
+    }
+  ]
+}

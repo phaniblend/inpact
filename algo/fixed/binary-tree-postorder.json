@@ -1,0 +1,284 @@
+{
+  "id": "binary-tree-postorder",
+  "title": "Binary Tree Postorder Traversal",
+  "pattern": "tree",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Binary Tree Postorder Traversal lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews: **tree**.\n\nAfter this, you'll be able to:\n- Understand the Binary Tree Postorder Traversal problem\n- Recognize when to use the tree pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "choices": null,
+      "next": "function-explanation-js"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function binarytreepostorder(root) {\n  // Returns Postorder traversal\n  return [];\n}",
+      "action": "continue",
+      "choices": null,
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Binary Tree Postorder Traversal problem asks for.\n\n[Detailed explanation will be added in Phase 2]",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement Postorder traversal in JavaScript.",
+      "example": "function binarytreepostorder(root) {\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Initialize a result array.",
+      "example": "function binarytreepostorder(root) {\n  const result = [];\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-helper-js"
+    },
+    {
+      "stepId": "coding-helper-js",
+      "mentorSays": "Create a helper function.",
+      "example": "function binarytreepostorder(root) {\n  const result = [];\n  \n  function traverse(node) {\n    // Traversal logic\n  }\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-base-case-js"
+    },
+    {
+      "stepId": "coding-base-case-js",
+      "mentorSays": "Handle base case (null node).",
+      "example": "function binarytreepostorder(root) {\n  const result = [];\n  \n  function traverse(node) {\n    if (node === null) return;\n    \n  }\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-visit-left-js"
+    },
+    {
+      "stepId": "coding-visit-left-js",
+      "mentorSays": "Recursively visit left subtree first.",
+      "example": "function binarytreepostorder(root) {\n  const result = [];\n  \n  function traverse(node) {\n    if (node === null) return;\n    \n    traverse(node.left);  // Visit left first\n    \n  }\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-visit-right-js"
+    },
+    {
+      "stepId": "coding-visit-right-js",
+      "mentorSays": "Recursively visit right subtree second.",
+      "example": "function binarytreepostorder(root) {\n  const result = [];\n  \n  function traverse(node) {\n    if (node === null) return;\n    \n    traverse(node.left);\n    traverse(node.right);  // Visit right\n    \n  }\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-visit-root-js"
+    },
+    {
+      "stepId": "coding-visit-root-js",
+      "mentorSays": "Visit current node LAST (postorder: left -> right -> root), then call helper and return.",
+      "example": "function postorderTraversal(root) {\n  const result = [];\n  \n  function traverse(node) {\n    if (node === null) return;\n    \n    traverse(node.left);   // Left first\n    traverse(node.right);  // Right second\n    result.push(node.val); // Root LAST (postorder)\n  }\n  \n  traverse(root);\n  return result;\n}",
+      "action": "continue",
+      "choices": null,
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "Congratulations! You just solved Binary Tree Postorder Traversal!\n\nWhat you've mastered:\n- Understanding the problem requirements\n- Choosing an efficient approach\n- Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going!",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.1-fixed",
+  "migration_date": "2025-12-30"
+}
