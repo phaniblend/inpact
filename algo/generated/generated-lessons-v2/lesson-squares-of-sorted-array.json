@@ -1,0 +1,142 @@
+{
+  "id": "squares-of-sorted-array",
+  "title": "Squares of a Sorted Array",
+  "pattern": "two-pointers (from ends)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-12",
+    "introduces": ["absolute-value-comparison", "fill-from-end"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "two-pointers",
+      "comparison"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Create a result array of the same length." },
+    { "id": "ps2", "text": "Set left at start and right at end of the input array." },
+    { "id": "ps3", "text": "Set write index at the end of the result array." },
+    { "id": "ps4", "text": "While left <= right:" },
+    { "id": "ps5", "text": "  Compare absolute values at left and right." },
+    { "id": "ps6", "text": "  Place the larger square at write index and move pointers." },
+    { "id": "ps7", "text": "Return the result array." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Squares of a Sorted Array**.\n\nThis lesson shows how **two pointers from both ends** can keep results sorted without extra sorting.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a sorted array of integers (can include negatives).\n\nReturn a new array of the **squares** of each number, also sorted in non-decreasing order.",
+      "example": "nums = [-4, -1, 0, 3, 10]",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [-3, -1, 2] → [1, 4, 9]\n2) [-2, 0, 1] → [0, 1, 4]",
+      "action": "next",
+      "next": "why-not-square-then-sort"
+    },
+    {
+      "stepId": "why-not-square-then-sort",
+      "mentorSays": "A simple idea is to square everything and sort again.\n\nBut sorting costs extra time.\n\nBecause the input is already sorted, we can do better.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nWhere do the **largest squares** come from in a sorted array with negatives?",
+      "choices": [
+        { "label": "From the ends of the array", "next": "core-idea" },
+        { "label": "Always from the middle", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nLarge squares come from **large absolute values**, which live at the **ends**.\n\nSo we compare both ends and place the larger square at the back of the result.",
+      "action": "next",
+      "next": "two-pointers-explained"
+    },
+    {
+      "stepId": "two-pointers-explained",
+      "mentorSays": "### Two pointers from ends\n\n- left starts at index 0\n- right starts at last index\n- write index starts at the end of result array\n\nWe fill the result **from right to left**.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums = [-4, -1, 0, 3]\n\nCompare |-4| vs |3| → 4 is bigger\nPlace 16 at the end\n\nThen compare |-1| vs |3| → 3 is bigger\nPlace 9 next\n\nContinue until pointers meet",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself to reinforce learning.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function sortedSquares(nums) {\n\n}",
+      "action": "next",
+      "next": "code-02-setup",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3"]
+    },
+    {
+      "stepId": "code-02-setup",
+      "mentorSays": "Step 2: Initialize result array and pointers.",
+      "example": "const result = new Array(nums.length);\nlet left = 0;\nlet right = nums.length - 1;\nlet write = nums.length - 1;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Loop while left <= right.",
+      "example": "while (left <= right) {\n\n}",
+      "action": "next",
+      "next": "code-04-compare",
+      "pseudocodeLineIds": ["ps5", "ps6"]
+    },
+    {
+      "stepId": "code-04-compare",
+      "mentorSays": "Step 4: Compare absolute values and place the larger square.",
+      "example": "const leftVal = nums[left] * nums[left];\nconst rightVal = nums[right] * nums[right];\n\nif (leftVal > rightVal) {\n  result[write] = leftVal;\n  left++;\n} else {\n  result[write] = rightVal;\n  right--;\n}\nwrite--;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function sortedSquares(nums) {\n  const result = new Array(nums.length);\n  let left = 0;\n  let right = nums.length - 1;\n  let write = nums.length - 1;\n\n  while (left <= right) {\n    const leftVal = nums[left] * nums[left];\n    const rightVal = nums[right] * nums[right];\n\n    if (leftVal > rightVal) {\n      result[write] = leftVal;\n      left++;\n    } else {\n      result[write] = rightVal;\n      right--;\n    }\n    write--;\n  }\n\n  return result;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how absolute values affect ordering\n- how to fill results from the end\n- another powerful two-pointer variation\n\nThis technique generalizes to many problems.",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>APT Learn — Choose an Algorithm</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <style>
+    .level-section {
+      margin-bottom: 48px;
+    }
+    .level-header {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #334155;
+    }
+    .level-1 { color: #22c55e; }
+    .level-2 { color: #22c55e; }
+    .level-3 { color: #eab308; }
+    .level-4 { color: #eab308; }
+    .level-5 { color: #eab308; }
+    .level-6 { color: #f97316; }
+    .level-7 { color: #f97316; }
+    .level-8 { color: #f97316; }
+    .level-9 { color: #3b82f6; }
+    .level-10 { color: #3b82f6; }
+    .level-11 { color: #ef4444; }
+    .level-12 { color: #ef4444; }
+    .free-badge {
+      display: inline-block;
+      background: #22c55e;
+      color: #020617;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+    }
+    .algo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 16px;
+    }
+    @media (max-width: 768px) {
+      .algo-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-brand" onclick="navigate('/'); return false;">APT LEARN</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link" onclick="navigate('/'); return false;">HOME</a>
+        <a href="/algos" class="nav-link active" onclick="navigate('/algos'); return false;">ALGORITHMS</a>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <h1 style="text-align: center; margin-bottom: 20px;">Choose an Algorithm</h1>
+    
+    <!-- Filter Section -->
+    <div class="filter-section" style="max-width: 1200px; margin: 0 auto 40px auto; padding: 20px; background: #1e293b; border-radius: 8px;">
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; align-items: center;">
+        <!-- Search Box -->
+        <div style="flex: 1; min-width: 250px;">
+          <input type="text" id="searchInput" placeholder="Search algorithms..." style="width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0; font-size: 14px;" oninput="filterAlgorithms()">
+        </div>
+        
+        <!-- Level Filter -->
+        <div style="min-width: 150px;">
+          <select id="levelFilter" onchange="filterAlgorithms()" style="width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0; font-size: 14px; cursor: pointer;">
+            <option value="">All Levels</option>
+            <option value="1">Level 1 - Foundations</option>
+            <option value="2">Level 2 - Two Sum & Pairs</option>
+            <option value="3">Level 3 - Sliding Window</option>
+            <option value="4">Level 4 - Two Pointers</option>
+            <option value="5">Level 5 - Searching</option>
+            <option value="6">Level 6 - Sorting</option>
+            <option value="7">Level 7 - Hashing</option>
+            <option value="8">Level 8 - Stack</option>
+            <option value="9">Level 9 - Queue</option>
+            <option value="10">Level 10 - Recursion</option>
+            <option value="11">Level 11 - Backtracking</option>
+            <option value="12">Level 12 - Dynamic Programming</option>
+          </select>
+        </div>
+        
+        <!-- Difficulty Filter -->
+        <div style="min-width: 120px;">
+          <select id="difficultyFilter" onchange="filterAlgorithms()" style="width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0; font-size: 14px; cursor: pointer;">
+            <option value="">All Difficulties</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+        </div>
+        
+        <!-- Pattern Filter -->
+        <div style="min-width: 150px;">
+          <select id="patternFilter" onchange="filterAlgorithms()" style="width: 100%; padding: 12px 16px; background: #0f172a; border: 1px solid #334155; border-radius: 6px; color: #e2e8f0; font-size: 14px; cursor: pointer;">
+            <option value="">All Patterns</option>
+            <option value="iteration">Iteration</option>
+            <option value="hash map">Hash Map</option>
+            <option value="two pointers">Two Pointers</option>
+            <option value="sliding window">Sliding Window</option>
+            <option value="sorting">Sorting</option>
+            <option value="stack">Stack</option>
+            <option value="queue">Queue</option>
+            <option value="recursion">Recursion</option>
+            <option value="backtracking">Backtracking</option>
+            <option value="dynamic programming">Dynamic Programming</option>
+            <option value="binary search">Binary Search</option>
+            <option value="linear search">Linear Search</option>
+          </select>
+        </div>
+        
+        <!-- Clear Filters Button -->
+        <button onclick="clearFilters()" style="padding: 12px 20px; background: #334155; border: none; border-radius: 6px; color: #e2e8f0; font-size: 14px; cursor: pointer; white-space: nowrap;">Clear Filters</button>
+      </div>
+      
+      <!-- Results Count -->
+      <div id="resultsCount" style="margin-top: 16px; color: #94a3b8; font-size: 14px;">
+        Showing all 125 algorithms
+      </div>
+    </div>
+
+    <!-- LEVEL 1 -->
+    <div class="level-section" data-level-section="1">
+      <div class="level-header level-1">🟢 LEVEL 1 — Foundations (Arrays, Indexing, Loops)</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/check-sorted-array')" data-level="1" data-difficulty="easy" data-pattern="iteration" data-title="check if array is sorted" data-number="1">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#1.</span>Check if array is sorted<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn check if array is sorted algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Iteration</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/count-occurrences')" data-level="1" data-difficulty="easy" data-pattern="iteration" data-title="count occurrences of a number" data-number="2">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#2.</span>Count occurrences of a number<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn to solve count occurrences of a number problem.</div>
+          <div class="card-meta"><span>Pattern: Iteration</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/find-index-of-element')" data-level="1" data-difficulty="easy" data-pattern="linear search" data-title="find index of an element" data-number="3">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#3.</span>Find index of an element<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn to solve find index of an element problem.</div>
+          <div class="card-meta"><span>Pattern: Linear Search</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/find-max-element')" data-level="1" data-difficulty="easy" data-pattern="iteration" data-title="find max element in an array" data-number="4">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#4.</span>Find max element in an array<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn to solve find max element in an array problem.</div>
+          <div class="card-meta"><span>Pattern: Iteration</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/find-min-element')" data-level="1" data-difficulty="easy" data-pattern="iteration" data-title="find min element in an array" data-number="5">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#5.</span>Find min element in an array<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn to solve find min element in an array problem.</div>
+          <div class="card-meta"><span>Pattern: Iteration</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/merge-two-arrays')" data-level="1" data-difficulty="easy" data-pattern="two pointers" data-title="merge two arrays" data-number="6">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#6.</span>Merge two arrays<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn to solve merge two arrays problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/print-array-elements')" data-level="1" data-difficulty="easy" data-pattern="iteration" data-title="print all elements of an array" data-number="7">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#7.</span>Print all elements of an array<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn to solve print all elements of an array problem.</div>
+          <div class="card-meta"><span>Pattern: Iteration</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/remove-duplicates-sorted')" data-level="1" data-difficulty="easy" data-pattern="two pointers" data-title="remove duplicates from sorted array" data-number="8">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#8.</span>Remove duplicates from sorted array<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn remove duplicates from sorted array algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/reverse-array')" data-level="1" data-difficulty="easy" data-pattern="two pointers" data-title="reverse an array" data-number="9">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#9.</span>Reverse an array<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn to solve reverse an array problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/sum-array-elements')" data-level="1" data-difficulty="easy" data-pattern="iteration" data-title="sum of array elements" data-number="10">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#10.</span>Sum of array elements<span class="free-badge">FREE</span></div>
+          <div class="card-desc">Learn to solve sum of array elements problem.</div>
+          <div class="card-meta"><span>Pattern: Iteration</span><span>Difficulty: Easy</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 2 -->
+    <div class="level-section" data-level-section="2">
+      <div class="level-header level-2">🟢 LEVEL 2 — Two Sum & Pair Logic (Indices Awareness)</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/contains-duplicate')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="contains duplicate" data-number="11">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#11.</span>Contains duplicate</div>
+          <div class="card-desc">Learn to solve contains duplicate problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/count-pairs-with-sum-k')" data-level="2" data-difficulty="medium" data-pattern="hash map" data-title="count pairs with sum k" data-number="12">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#12.</span>Count pairs with sum K</div>
+          <div class="card-desc">Learn to solve count pairs with sum k problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/encode-decode-strings')" data-level="2" data-difficulty="medium" data-pattern="hash map" data-title="encode and decode strings" data-number="13">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#13.</span>Encode and decode strings</div>
+          <div class="card-desc">Learn to solve encode and decode strings problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/first-non-repeating-element')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="find first non-repeating element" data-number="14">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#14.</span>Find first non-repeating element</div>
+          <div class="card-desc">Learn to solve find first non-repeating element problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/first-repeating-element')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="find first repeating element" data-number="15">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#15.</span>Find first repeating element</div>
+          <div class="card-desc">Learn to solve find first repeating element problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/intersection-of-arrays')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="intersection of two arrays" data-number="16">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#16.</span>Intersection of two arrays</div>
+          <div class="card-desc">Learn to solve intersection of two arrays problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/isomorphic-strings')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="isomorphic strings" data-number="17">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#17.</span>Isomorphic strings</div>
+          <div class="card-desc">Learn to solve isomorphic strings problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/longest-consecutive-sequence')" data-level="2" data-difficulty="medium" data-pattern="hash map" data-title="longest consecutive sequence" data-number="18">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#18.</span>Longest consecutive sequence</div>
+          <div class="card-desc">Learn to solve longest consecutive sequence problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/majority-element')" data-level="2" data-difficulty="medium" data-pattern="hash map" data-title="majority element (basic)" data-number="19">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#19.</span>Majority element (basic)</div>
+          <div class="card-desc">Learn to solve majority element (basic) problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/minimum-window-substring')" data-level="2" data-difficulty="hard" data-pattern="hash map" data-title="minimum window substring" data-number="20">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#20.</span>Minimum window substring</div>
+          <div class="card-desc">Learn to solve minimum window substring problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/pair-with-difference')" data-level="2" data-difficulty="medium" data-pattern="hash map" data-title="pair with given difference" data-number="21">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#21.</span>Pair with given difference</div>
+          <div class="card-desc">Learn to solve pair with given difference problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/pair-with-sum-sorted')" data-level="2" data-difficulty="easy" data-pattern="two pointers" data-title="pair with given sum (sorted)" data-number="22">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#22.</span>Pair with given sum (sorted)</div>
+          <div class="card-desc">Learn pair with given sum (sorted) algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/pair-with-sum-unsorted')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="pair with given sum (unsorted)" data-number="23">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#23.</span>Pair with given sum (unsorted)</div>
+          <div class="card-desc">Learn pair with given sum (unsorted) algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/product-of-array-except-self')" data-level="2" data-difficulty="medium" data-pattern="hash map" data-title="product of array except self" data-number="24">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#24.</span>Product of array except self</div>
+          <div class="card-desc">Learn to solve product of array except self problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/subarray-sum-equals-k')" data-level="2" data-difficulty="medium" data-pattern="hash map" data-title="subarray sum equals k" data-number="25">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#25.</span>Subarray sum equals K</div>
+          <div class="card-desc">Learn to solve subarray sum equals k problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/three-sum')" data-level="2" data-difficulty="medium" data-pattern="two pointers" data-title="three sum (basic idea)" data-number="26">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#26.</span>Three Sum (basic idea)</div>
+          <div class="card-desc">Learn to solve three sum (basic idea) problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/two-sum')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="two sum" data-number="27">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#27.</span>Two Sum</div>
+          <div class="card-desc">Learn to solve two sum problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/two-sum-hashmap')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="two sum (hash map)" data-number="28">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#28.</span>Two Sum (hash map)</div>
+          <div class="card-desc">Learn to solve two sum (hash map) problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/two-sum-optimized')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="two sum (optimized)" data-number="29">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#29.</span>Two Sum (optimized)</div>
+          <div class="card-desc">Learn to solve two sum (optimized) problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/word-pattern')" data-level="2" data-difficulty="easy" data-pattern="hash map" data-title="word pattern" data-number="30">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#30.</span>Word pattern</div>
+          <div class="card-desc">Learn to solve word pattern problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 3 -->
+    <div class="level-section" data-level-section="3">
+      <div class="level-header level-3">🟡 LEVEL 3 — Sliding Window Pattern</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/count-subarrays-size-k')" data-level="3" data-difficulty="easy" data-pattern="sliding window" data-title="count subarrays of size k" data-number="31">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#31.</span>Count subarrays of size K</div>
+          <div class="card-desc">Learn to solve count subarrays of size k problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/fruits-into-baskets')" data-level="3" data-difficulty="medium" data-pattern="sliding window" data-title="fruits into baskets" data-number="32">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#32.</span>Fruits into baskets</div>
+          <div class="card-desc">Learn to solve fruits into baskets problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/longest-subarray-sum-k')" data-level="3" data-difficulty="medium" data-pattern="sliding window" data-title="longest subarray with sum k (positive nums)" data-number="33">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#33.</span>Longest subarray with sum K (positive nums)</div>
+          <div class="card-desc">Learn to solve longest subarray with sum k (positive nums) problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/longest-substring-k-distinct')" data-level="3" data-difficulty="medium" data-pattern="sliding window" data-title="longest substring with k distinct chars" data-number="34">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#34.</span>Longest substring with K distinct chars</div>
+          <div class="card-desc">Learn to solve longest substring with k distinct chars problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/longest-substring-no-repeat')" data-level="3" data-difficulty="medium" data-pattern="sliding window" data-title="longest substring without repeating chars" data-number="35">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#35.</span>Longest substring without repeating chars</div>
+          <div class="card-desc">Learn to solve longest substring without repeating chars problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/max-average-subarray')" data-level="3" data-difficulty="easy" data-pattern="sliding window" data-title="max average subarray" data-number="36">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#36.</span>Max average subarray</div>
+          <div class="card-desc">Learn to solve max average subarray problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/max-sum-subarray-k')" data-level="3" data-difficulty="easy" data-pattern="sliding window" data-title="max sum subarray of size k" data-number="37">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#37.</span>Max sum subarray of size K</div>
+          <div class="card-desc">Learn to solve max sum subarray of size k problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/min-sum-subarray-k')" data-level="3" data-difficulty="easy" data-pattern="sliding window" data-title="min sum subarray of size k" data-number="38">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#38.</span>Min sum subarray of size K</div>
+          <div class="card-desc">Learn to solve min sum subarray of size k problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/sliding-window-template')" data-level="3" data-difficulty="medium" data-pattern="sliding window" data-title="sliding window template mastery" data-number="39">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#39.</span>Sliding window template mastery</div>
+          <div class="card-desc">Learn to solve sliding window template mastery problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/smallest-subarray-sum-s')" data-level="3" data-difficulty="medium" data-pattern="sliding window" data-title="smallest subarray with sum ≥ s" data-number="40">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#40.</span>Smallest subarray with sum ≥ S</div>
+          <div class="card-desc">Learn to solve smallest subarray with sum ≥ s problem.</div>
+          <div class="card-meta"><span>Pattern: Sliding Window</span><span>Difficulty: Medium</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 4 -->
+    <div class="level-section" data-level-section="4">
+      <div class="level-header level-4">🟡 LEVEL 4 — Two Pointers Pattern</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/check-palindrome')" data-level="4" data-difficulty="easy" data-pattern="two pointers" data-title="check palindrome" data-number="41">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#41.</span>Check palindrome</div>
+          <div class="card-desc">Learn to solve check palindrome problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/container-with-most-water')" data-level="4" data-difficulty="medium" data-pattern="two pointers" data-title="container with most water" data-number="42">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#42.</span>Container with most water</div>
+          <div class="card-desc">Learn to solve container with most water problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/dutch-national-flag')" data-level="4" data-difficulty="medium" data-pattern="two pointers" data-title="dutch national flag" data-number="43">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#43.</span>Dutch National Flag</div>
+          <div class="card-desc">Learn to solve dutch national flag problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/four-sum')" data-level="4" data-difficulty="medium" data-pattern="two pointers" data-title="four sum" data-number="44">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#44.</span>Four Sum</div>
+          <div class="card-desc">Learn to solve four sum problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/move-zeros-to-end')" data-level="4" data-difficulty="easy" data-pattern="two pointers" data-title="move zeros to end" data-number="45">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#45.</span>Move zeros to end</div>
+          <div class="card-desc">Learn to solve move zeros to end problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/remove-duplicates-unsorted')" data-level="4" data-difficulty="easy" data-pattern="hash map" data-title="remove duplicates (unsorted)" data-number="46">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#46.</span>Remove duplicates (unsorted)</div>
+          <div class="card-desc">Learn remove duplicates (unsorted) algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/remove-element-inplace')" data-level="4" data-difficulty="easy" data-pattern="two pointers" data-title="remove element in-place" data-number="47">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#47.</span>Remove element in-place</div>
+          <div class="card-desc">Learn to solve remove element in-place problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/reverse-string')" data-level="4" data-difficulty="easy" data-pattern="two pointers" data-title="reverse string" data-number="48">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#48.</span>Reverse string</div>
+          <div class="card-desc">Learn to solve reverse string problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/squares-of-sorted-array')" data-level="4" data-difficulty="easy" data-pattern="two pointers" data-title="squares of sorted array" data-number="49">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#49.</span>Squares of sorted array</div>
+          <div class="card-desc">Learn squares of sorted array algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/trapping-rain-water')" data-level="4" data-difficulty="hard" data-pattern="two pointers" data-title="trapping rain water" data-number="50">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#50.</span>Trapping rain water</div>
+          <div class="card-desc">Learn to solve trapping rain water problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/valid-palindrome-deletions')" data-level="4" data-difficulty="medium" data-pattern="two pointers" data-title="valid palindrome with deletions" data-number="51">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#51.</span>Valid palindrome with deletions</div>
+          <div class="card-desc">Learn to solve valid palindrome with deletions problem.</div>
+          <div class="card-meta"><span>Pattern: Two Pointers</span><span>Difficulty: Medium</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 5 -->
+    <div class="level-section" data-level-section="5">
+      <div class="level-header level-5">🟡 LEVEL 5 — Searching (Linear to Binary)</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/binary-search')" data-level="5" data-difficulty="easy" data-pattern="binary search" data-title="binary search" data-number="52">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#52.</span>Binary search</div>
+          <div class="card-desc">Master binary search technique.</div>
+          <div class="card-meta"><span>Pattern: Binary Search</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/binary-search-recursive')" data-level="5" data-difficulty="easy" data-pattern="binary search" data-title="binary search (recursive)" data-number="53">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#53.</span>Binary search (recursive)</div>
+          <div class="card-desc">Master binary search (recursive) technique.</div>
+          <div class="card-meta"><span>Pattern: Binary Search</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/count-occurrences-binary')" data-level="5" data-difficulty="medium" data-pattern="binary search" data-title="count occurrences using binary search" data-number="54">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#54.</span>Count occurrences using binary search</div>
+          <div class="card-desc">Master count occurrences using binary search technique.</div>
+          <div class="card-meta"><span>Pattern: Binary Search</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/find-min-rotated')" data-level="5" data-difficulty="medium" data-pattern="binary search" data-title="find minimum in rotated array" data-number="55">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#55.</span>Find minimum in rotated array</div>
+          <div class="card-desc">Learn to solve find minimum in rotated array problem.</div>
+          <div class="card-meta"><span>Pattern: Binary Search</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/first-occurrence')" data-level="5" data-difficulty="medium" data-pattern="binary search" data-title="first occurrence" data-number="56">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#56.</span>First occurrence</div>
+          <div class="card-desc">Learn to solve first occurrence problem.</div>
+          <div class="card-meta"><span>Pattern: Binary Search</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/last-occurrence')" data-level="5" data-difficulty="medium" data-pattern="binary search" data-title="last occurrence" data-number="57">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#57.</span>Last occurrence</div>
+          <div class="card-desc">Learn to solve last occurrence problem.</div>
+          <div class="card-meta"><span>Pattern: Binary Search</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/linear-search')" data-level="5" data-difficulty="easy" data-pattern="linear search" data-title="linear search" data-number="58">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#58.</span>Linear search</div>
+          <div class="card-desc">Master linear search technique.</div>
+          <div class="card-meta"><span>Pattern: Linear Search</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/peak-element')" data-level="5" data-difficulty="medium" data-pattern="binary search" data-title="peak element" data-number="59">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#59.</span>Peak element</div>
+          <div class="card-desc">Learn to solve peak element problem.</div>
+          <div class="card-meta"><span>Pattern: Binary Search</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/search-rotated-sorted')" data-level="5" data-difficulty="medium" data-pattern="binary search" data-title="search in rotated sorted array" data-number="60">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#60.</span>Search in rotated sorted array</div>
+          <div class="card-desc">Learn search in rotated sorted array algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Binary Search</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/square-root-binary')" data-level="5" data-difficulty="medium" data-pattern="binary search" data-title="square root using binary search" data-number="61">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#61.</span>Square root using binary search</div>
+          <div class="card-desc">Master square root using binary search technique.</div>
+          <div class="card-meta"><span>Pattern: Binary Search</span><span>Difficulty: Medium</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 6 -->
+    <div class="level-section" data-level-section="6">
+      <div class="level-header level-6">🟠 LEVEL 6 — Sorting Fundamentals</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/bubble-sort')" data-level="6" data-difficulty="easy" data-pattern="sorting" data-title="bubble sort" data-number="62">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#62.</span>Bubble sort</div>
+          <div class="card-desc">Learn bubble sort algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/counting-sort')" data-level="6" data-difficulty="medium" data-pattern="sorting" data-title="counting sort" data-number="63">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#63.</span>Counting sort</div>
+          <div class="card-desc">Learn counting sort algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/heap-sort')" data-level="6" data-difficulty="hard" data-pattern="sorting" data-title="heap sort" data-number="64">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#64.</span>Heap sort</div>
+          <div class="card-desc">Learn heap sort algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/insertion-sort')" data-level="6" data-difficulty="easy" data-pattern="sorting" data-title="insertion sort" data-number="65">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#65.</span>Insertion sort</div>
+          <div class="card-desc">Learn insertion sort algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/kth-largest-element')" data-level="6" data-difficulty="medium" data-pattern="sorting" data-title="kth largest element" data-number="66">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#66.</span>Kth largest element</div>
+          <div class="card-desc">Learn to solve kth largest element problem.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/merge-sort')" data-level="6" data-difficulty="medium" data-pattern="sorting" data-title="merge sort" data-number="67">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#67.</span>Merge sort</div>
+          <div class="card-desc">Learn merge sort algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/quick-sort')" data-level="6" data-difficulty="medium" data-pattern="sorting" data-title="quick sort" data-number="68">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#68.</span>Quick sort</div>
+          <div class="card-desc">Learn quick sort algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/radix-sort')" data-level="6" data-difficulty="hard" data-pattern="sorting" data-title="radix sort" data-number="69">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#69.</span>Radix sort</div>
+          <div class="card-desc">Learn radix sort algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/selection-sort')" data-level="6" data-difficulty="easy" data-pattern="sorting" data-title="selection sort" data-number="70">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#70.</span>Selection sort</div>
+          <div class="card-desc">Learn selection sort algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/sort-colors')" data-level="6" data-difficulty="medium" data-pattern="sorting" data-title="sort colors (dutch flag variant)" data-number="71">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#71.</span>Sort colors (Dutch flag variant)</div>
+          <div class="card-desc">Learn sort colors (dutch flag variant) algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Sorting</span><span>Difficulty: Medium</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 7 -->
+    <div class="level-section" data-level-section="7">
+      <div class="level-header level-7">🟠 LEVEL 7 — Hashing & Frequency Maps</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/find-all-anagrams')" data-level="7" data-difficulty="medium" data-pattern="hash map" data-title="find all anagrams in string" data-number="72">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#72.</span>Find all anagrams in string</div>
+          <div class="card-desc">Learn to solve find all anagrams in string problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/group-anagrams')" data-level="7" data-difficulty="medium" data-pattern="hash map" data-title="group anagrams" data-number="73">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#73.</span>Group anagrams</div>
+          <div class="card-desc">Learn to solve group anagrams problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/top-k-frequent-elements')" data-level="7" data-difficulty="medium" data-pattern="hash map" data-title="top k frequent elements" data-number="74">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#74.</span>Top K frequent elements</div>
+          <div class="card-desc">Learn to solve top k frequent elements problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/valid-anagram')" data-level="7" data-difficulty="easy" data-pattern="hash map" data-title="valid anagram" data-number="75">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#75.</span>Valid anagram</div>
+          <div class="card-desc">Learn to solve valid anagram problem.</div>
+          <div class="card-meta"><span>Pattern: Hash Map</span><span>Difficulty: Easy</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 8 -->
+    <div class="level-section" data-level-section="8">
+      <div class="level-header level-8">🟠 LEVEL 8 — Stack Fundamentals</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/basic-calculator')" data-level="8" data-difficulty="hard" data-pattern="stack" data-title="basic calculator" data-number="76">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#76.</span>Basic calculator</div>
+          <div class="card-desc">Learn to solve basic calculator problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/daily-temperatures')" data-level="8" data-difficulty="medium" data-pattern="stack" data-title="daily temperatures" data-number="77">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#77.</span>Daily temperatures</div>
+          <div class="card-desc">Learn to solve daily temperatures problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/decode-string')" data-level="8" data-difficulty="medium" data-pattern="stack" data-title="decode string" data-number="78">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#78.</span>Decode string</div>
+          <div class="card-desc">Learn to solve decode string problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/evaluate-reverse-polish')" data-level="8" data-difficulty="medium" data-pattern="stack" data-title="evaluate reverse polish notation" data-number="79">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#79.</span>Evaluate reverse Polish notation</div>
+          <div class="card-desc">Learn to solve evaluate reverse polish notation problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/largest-rectangle-histogram')" data-level="8" data-difficulty="hard" data-pattern="stack" data-title="largest rectangle in histogram" data-number="80">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#80.</span>Largest rectangle in histogram</div>
+          <div class="card-desc">Learn to solve largest rectangle in histogram problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/min-stack')" data-level="8" data-difficulty="medium" data-pattern="stack" data-title="min stack" data-number="81">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#81.</span>Min stack</div>
+          <div class="card-desc">Learn to solve min stack problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/next-greater-element')" data-level="8" data-difficulty="medium" data-pattern="stack" data-title="next greater element" data-number="82">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#82.</span>Next greater element</div>
+          <div class="card-desc">Learn to solve next greater element problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/remove-k-digits')" data-level="8" data-difficulty="medium" data-pattern="stack" data-title="remove k digits" data-number="83">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#83.</span>Remove K digits</div>
+          <div class="card-desc">Learn to solve remove k digits problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/trapping-rain-water-stack')" data-level="8" data-difficulty="hard" data-pattern="stack" data-title="trapping rain water (stack approach)" data-number="84">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#84.</span>Trapping rain water (stack approach)</div>
+          <div class="card-desc">Learn to solve trapping rain water (stack approach) problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/valid-parentheses')" data-level="8" data-difficulty="easy" data-pattern="stack" data-title="valid parentheses" data-number="85">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#85.</span>Valid parentheses</div>
+          <div class="card-desc">Learn to solve valid parentheses problem.</div>
+          <div class="card-meta"><span>Pattern: Stack</span><span>Difficulty: Easy</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 9 -->
+    <div class="level-section" data-level-section="9">
+      <div class="level-header level-9">🔵 LEVEL 9 — Queue & Deque</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/design-circular-queue')" data-level="9" data-difficulty="medium" data-pattern="queue" data-title="design circular queue" data-number="86">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#86.</span>Design circular queue</div>
+          <div class="card-desc">Learn to solve design circular queue problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/design-hit-counter')" data-level="9" data-difficulty="medium" data-pattern="queue" data-title="design hit counter" data-number="87">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#87.</span>Design hit counter</div>
+          <div class="card-desc">Learn to solve design hit counter problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/design-phone-directory')" data-level="9" data-difficulty="medium" data-pattern="queue" data-title="design phone directory" data-number="88">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#88.</span>Design phone directory</div>
+          <div class="card-desc">Learn to solve design phone directory problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/first-unique-character')" data-level="9" data-difficulty="medium" data-pattern="queue" data-title="first unique character in stream" data-number="89">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#89.</span>First unique character in stream</div>
+          <div class="card-desc">Learn to solve first unique character in stream problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/implement-queue')" data-level="9" data-difficulty="easy" data-pattern="queue" data-title="implement queue using stacks" data-number="90">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#90.</span>Implement queue using stacks</div>
+          <div class="card-desc">Learn to solve implement queue using stacks problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/max-value-in-sliding-window')" data-level="9" data-difficulty="hard" data-pattern="queue" data-title="max value in sliding window" data-number="91">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#91.</span>Max value in sliding window</div>
+          <div class="card-desc">Learn to solve max value in sliding window problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/moving-average')" data-level="9" data-difficulty="easy" data-pattern="queue" data-title="moving average from data stream" data-number="92">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#92.</span>Moving average from data stream</div>
+          <div class="card-desc">Learn to solve moving average from data stream problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/rearrange-string-k-distance')" data-level="9" data-difficulty="hard" data-pattern="queue" data-title="rearrange string k distance apart" data-number="93">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#93.</span>Rearrange string K distance apart</div>
+          <div class="card-desc">Learn to solve rearrange string k distance apart problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/sliding-window-maximum')" data-level="9" data-difficulty="hard" data-pattern="queue" data-title="sliding window maximum" data-number="94">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#94.</span>Sliding window maximum</div>
+          <div class="card-desc">Learn to solve sliding window maximum problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/task-scheduler')" data-level="9" data-difficulty="medium" data-pattern="queue" data-title="task scheduler" data-number="95">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#95.</span>Task scheduler</div>
+          <div class="card-desc">Learn to solve task scheduler problem.</div>
+          <div class="card-meta"><span>Pattern: Queue</span><span>Difficulty: Medium</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 10 -->
+    <div class="level-section" data-level-section="10">
+      <div class="level-header level-10">🔵 LEVEL 10 — Recursion Basics</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/climbing-stairs')" data-level="10" data-difficulty="easy" data-pattern="recursion" data-title="climbing stairs" data-number="96">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#96.</span>Climbing stairs</div>
+          <div class="card-desc">Learn to solve climbing stairs problem.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/factorial-recursive')" data-level="10" data-difficulty="easy" data-pattern="recursion" data-title="factorial (recursive)" data-number="97">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#97.</span>Factorial (recursive)</div>
+          <div class="card-desc">Learn to solve factorial (recursive) problem.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/fibonacci-recursive')" data-level="10" data-difficulty="easy" data-pattern="recursion" data-title="fibonacci (recursive)" data-number="98">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#98.</span>Fibonacci (recursive)</div>
+          <div class="card-desc">Learn to solve fibonacci (recursive) problem.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/merge-sorted-lists')" data-level="10" data-difficulty="easy" data-pattern="recursion" data-title="merge two sorted lists (recursive)" data-number="99">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#99.</span>Merge two sorted lists (recursive)</div>
+          <div class="card-desc">Learn merge two sorted lists (recursive) algorithm step by step.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/palindrome-check-recursive')" data-level="10" data-difficulty="easy" data-pattern="recursion" data-title="palindrome check (recursive)" data-number="100">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#100.</span>Palindrome check (recursive)</div>
+          <div class="card-desc">Learn to solve palindrome check (recursive) problem.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/pow-x-n')" data-level="10" data-difficulty="medium" data-pattern="recursion" data-title="pow(x, n)" data-number="101">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#101.</span>Pow(x, n)</div>
+          <div class="card-desc">Learn to solve pow(x, n) problem.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/power-of-two')" data-level="10" data-difficulty="easy" data-pattern="recursion" data-title="power of two" data-number="102">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#102.</span>Power of two</div>
+          <div class="card-desc">Learn to solve power of two problem.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/reverse-linked-list-recursive')" data-level="10" data-difficulty="medium" data-pattern="recursion" data-title="reverse linked list (recursive)" data-number="103">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#103.</span>Reverse linked list (recursive)</div>
+          <div class="card-desc">Learn to solve reverse linked list (recursive) problem.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/reverse-string-recursive')" data-level="10" data-difficulty="easy" data-pattern="recursion" data-title="reverse string (recursive)" data-number="104">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#104.</span>Reverse string (recursive)</div>
+          <div class="card-desc">Learn to solve reverse string (recursive) problem.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/tree-traversal-recursive')" data-level="10" data-difficulty="easy" data-pattern="recursion" data-title="tree traversal (recursive)" data-number="105">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#105.</span>Tree traversal (recursive)</div>
+          <div class="card-desc">Learn to solve tree traversal (recursive) problem.</div>
+          <div class="card-meta"><span>Pattern: Recursion</span><span>Difficulty: Easy</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 11 -->
+    <div class="level-section" data-level-section="11">
+      <div class="level-header level-11">🔴 LEVEL 11 — Backtracking (Intro)</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/combination-sum')" data-level="11" data-difficulty="medium" data-pattern="backtracking" data-title="combination sum" data-number="106">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#106.</span>Combination sum</div>
+          <div class="card-desc">Learn to solve combination sum problem.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/combination-sum-ii')" data-level="11" data-difficulty="medium" data-pattern="backtracking" data-title="combination sum ii" data-number="107">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#107.</span>Combination sum II</div>
+          <div class="card-desc">Learn to solve combination sum ii problem.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/generate-parentheses')" data-level="11" data-difficulty="medium" data-pattern="backtracking" data-title="generate parentheses" data-number="108">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#108.</span>Generate parentheses</div>
+          <div class="card-desc">Learn to solve generate parentheses problem.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/letter-combinations-phone')" data-level="11" data-difficulty="medium" data-pattern="backtracking" data-title="letter combinations of phone number" data-number="109">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#109.</span>Letter combinations of phone number</div>
+          <div class="card-desc">Learn to solve letter combinations of phone number problem.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/n-queens')" data-level="11" data-difficulty="hard" data-pattern="backtracking" data-title="n-queens" data-number="110">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#110.</span>N-Queens</div>
+          <div class="card-desc">Learn to solve n-queens problem.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/permutations')" data-level="11" data-difficulty="medium" data-pattern="backtracking" data-title="permutations" data-number="111">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#111.</span>Permutations</div>
+          <div class="card-desc">Learn to solve permutations problem.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/permutations-ii')" data-level="11" data-difficulty="medium" data-pattern="backtracking" data-title="permutations ii (with duplicates)" data-number="112">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#112.</span>Permutations II (with duplicates)</div>
+          <div class="card-desc">Learn to solve permutations ii (with duplicates) problem.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/subsets')" data-level="11" data-difficulty="medium" data-pattern="backtracking" data-title="subsets" data-number="113">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#113.</span>Subsets</div>
+          <div class="card-desc">Learn to solve subsets problem.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/subsets-ii')" data-level="11" data-difficulty="medium" data-pattern="backtracking" data-title="subsets ii (with duplicates)" data-number="114">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#114.</span>Subsets II (with duplicates)</div>
+          <div class="card-desc">Learn to solve subsets ii (with duplicates) problem.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/word-search')" data-level="11" data-difficulty="medium" data-pattern="backtracking" data-title="word search" data-number="115">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#115.</span>Word search</div>
+          <div class="card-desc">Master word search technique.</div>
+          <div class="card-meta"><span>Pattern: Backtracking</span><span>Difficulty: Medium</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LEVEL 12 -->
+    <div class="level-section" data-level-section="12">
+      <div class="level-header level-12">🔴 LEVEL 12 — Dynamic Programming (Beginner-Friendly)</div>
+      <div class="algo-grid">
+
+        <div class="card algo-card" onclick="navigate('/learn/climbing-stairs-dp')" data-level="12" data-difficulty="easy" data-pattern="dynamic programming" data-title="climbing stairs (dp)" data-number="116">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#116.</span>Climbing stairs (DP)</div>
+          <div class="card-desc">Learn to solve climbing stairs (dp) problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/coin-change')" data-level="12" data-difficulty="medium" data-pattern="dynamic programming" data-title="coin change" data-number="117">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#117.</span>Coin change</div>
+          <div class="card-desc">Learn to solve coin change problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/edit-distance')" data-level="12" data-difficulty="hard" data-pattern="dynamic programming" data-title="edit distance" data-number="118">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#118.</span>Edit distance</div>
+          <div class="card-desc">Learn to solve edit distance problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Hard</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/fibonacci-dp')" data-level="12" data-difficulty="easy" data-pattern="dynamic programming" data-title="fibonacci with dp" data-number="119">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#119.</span>Fibonacci with DP</div>
+          <div class="card-desc">Learn to solve fibonacci with dp problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/house-robber')" data-level="12" data-difficulty="medium" data-pattern="dynamic programming" data-title="house robber" data-number="120">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#120.</span>House robber</div>
+          <div class="card-desc">Learn to solve house robber problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/longest-common-subsequence')" data-level="12" data-difficulty="medium" data-pattern="dynamic programming" data-title="longest common subsequence" data-number="121">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#121.</span>Longest common subsequence</div>
+          <div class="card-desc">Learn to solve longest common subsequence problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/longest-increasing-subsequence')" data-level="12" data-difficulty="medium" data-pattern="dynamic programming" data-title="longest increasing subsequence" data-number="122">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#122.</span>Longest increasing subsequence</div>
+          <div class="card-desc">Learn to solve longest increasing subsequence problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Medium</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/maximum-subarray')" data-level="12" data-difficulty="easy" data-pattern="dynamic programming" data-title="maximum subarray (kadane's)" data-number="123">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#123.</span>Maximum subarray (Kadane's)</div>
+          <div class="card-desc">Learn to solve maximum subarray (kadane's) problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/min-cost-climbing-stairs')" data-level="12" data-difficulty="easy" data-pattern="dynamic programming" data-title="min cost climbing stairs" data-number="124">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#124.</span>Min cost climbing stairs</div>
+          <div class="card-desc">Learn to solve min cost climbing stairs problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Easy</span></div>
+        </div>
+        <div class="card algo-card" onclick="navigate('/learn/unique-paths')" data-level="12" data-difficulty="medium" data-pattern="dynamic programming" data-title="unique paths" data-number="125">
+          <div class="card-title"><span style="color: #64748b; font-weight: 600; margin-right: 8px;">#125.</span>Unique paths</div>
+          <div class="card-desc">Learn to solve unique paths problem.</div>
+          <div class="card-meta"><span>Pattern: Dynamic Programming</span><span>Difficulty: Medium</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>aptlearn.live — First 5 algorithms are FREE!</p>
+  </div>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    function filterAlgorithms() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const levelFilter = document.getElementById('levelFilter').value;
+      const difficultyFilter = document.getElementById('difficultyFilter').value;
+      const patternFilter = document.getElementById('patternFilter').value;
+      
+      const cards = document.querySelectorAll('.algo-card');
+      let visibleCount = 0;
+      let hiddenLevels = new Set();
+      
+      cards.forEach(card => {
+        const title = card.getAttribute('data-title') || '';
+        const level = card.getAttribute('data-level') || '';
+        const difficulty = card.getAttribute('data-difficulty') || '';
+        const pattern = card.getAttribute('data-pattern') || '';
+        
+        // Check if card matches filters
+        const matchesSearch = !searchTerm || title.includes(searchTerm);
+        const matchesLevel = !levelFilter || level === levelFilter;
+        const matchesDifficulty = !difficultyFilter || difficulty === difficultyFilter;
+        const matchesPattern = !patternFilter || pattern.includes(patternFilter);
+        
+        if (matchesSearch && matchesLevel && matchesDifficulty && matchesPattern) {
+          card.style.display = '';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+          // Track which levels have hidden cards
+          const levelSection = card.closest('.level-section');
+          if (levelSection) {
+            hiddenLevels.add(levelSection);
+          }
+        }
+      });
+      
+      // Hide/show level sections based on visible cards
+      document.querySelectorAll('.level-section').forEach(section => {
+        const visibleCards = section.querySelectorAll('.algo-card:not([style*="display: none"])');
+        if (visibleCards.length === 0) {
+          section.style.display = 'none';
+        } else {
+          section.style.display = '';
+        }
+      });
+      
+      // Update results count
+      const resultsCountEl = document.getElementById('resultsCount');
+      if (visibleCount === 125) {
+        resultsCountEl.textContent = 'Showing all 125 algorithms';
+      } else {
+        resultsCountEl.textContent = `Showing ${visibleCount} of 125 algorithms`;
+      }
+    }
+    
+    function clearFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('levelFilter').value = '';
+      document.getElementById('difficultyFilter').value = '';
+      document.getElementById('patternFilter').value = '';
+      filterAlgorithms();
+    }
+    
+    // Allow Enter key to trigger search
+    document.addEventListener('DOMContentLoaded', function() {
+      const searchInput = document.getElementById('searchInput');
+      if (searchInput) {
+        searchInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            filterAlgorithms();
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

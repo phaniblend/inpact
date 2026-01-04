@@ -16,6 +16,37 @@ export default function PracticeTutorial() {
   const [showConstructModal, setShowConstructModal] = useState(false);
   const [currentConstruct, setCurrentConstruct] = useState(null);
   const [explainedConcepts, setExplainedConcepts] = useState(new Set());
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [showLanguageDropdownEditor, setShowLanguageDropdownEditor] = useState(false);
+
+  // Handle language change
+  const handleLanguageChange = (newLangId) => {
+    if (!lesson) return;
+    
+    setSelectedLanguage(newLangId);
+    setShowLanguageDropdown(false);
+    setShowLanguageDropdownEditor(false);
+    
+    // Update URL
+    navigate(`/learn/algorithm/${slug}?language=${newLangId}`, { replace: true });
+    
+    // Navigate to the prereq-check step for the new language
+    const langMap = {
+      'javascript': 'prereq-check-js',
+      'python': 'prereq-check-python',
+      'java': 'prereq-check-java',
+      'cpp': 'prereq-check-cpp',
+      'typescript': 'prereq-check-ts'
+    };
+    
+    const prereqStepId = langMap[newLangId];
+    if (prereqStepId && lesson.flow.find(s => s.stepId === prereqStepId)) {
+      setCurrentStepId(prereqStepId);
+      setVisitedSteps(['objectives', 'language-selection', prereqStepId]);
+      setCode(''); // Clear code when switching languages
+      setOutput(''); // Clear output
+    }
+  };
 
   const languages = [
     { id: 'javascript', name: 'JavaScript', emoji: '💛' },
@@ -194,6 +225,21 @@ export default function PracticeTutorial() {
     );
   }
 
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.target.closest('.language-dropdown-container')) {
+        setShowLanguageDropdown(false);
+        setShowLanguageDropdownEditor(false);
+      }
+    };
+    
+    if (showLanguageDropdown || showLanguageDropdownEditor) {
+      document.addEventListener('mousedown', handleClickOutside);
+      return () => document.removeEventListener('mousedown', handleClickOutside);
+    }
+  }, [showLanguageDropdown, showLanguageDropdownEditor]);
+
   return (
     <div className="h-screen flex flex-col bg-inpact-dark">
       
@@ -208,9 +254,37 @@ export default function PracticeTutorial() {
           </button>
           <div>
             <h1 className="text-white text-lg font-bold">{lesson.title}</h1>
-            <p className="text-gray-400 text-xs">
-              {selectedLanguage ? languages.find(l => l.id === selectedLanguage)?.name : 'Interactive Lesson'}
-            </p>
+            <div className="relative language-dropdown-container">
+              {selectedLanguage ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                    className="text-gray-400 text-xs hover:text-white transition flex items-center gap-1"
+                  >
+                    {languages.find(l => l.id === selectedLanguage)?.emoji} {languages.find(l => l.id === selectedLanguage)?.name}
+                    <span className="text-xs">▼</span>
+                  </button>
+                  {showLanguageDropdown && (
+                    <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-50 min-w-[150px]">
+                      {languages.map(lang => (
+                        <button
+                          key={lang.id}
+                          onClick={() => handleLanguageChange(lang.id)}
+                          className={`w-full px-4 py-2 text-left hover:bg-gray-100 transition flex items-center gap-2 ${
+                            selectedLanguage === lang.id ? 'bg-inpact-green text-black font-semibold' : 'text-gray-700'
+                          }`}
+                        >
+                          <span>{lang.emoji}</span>
+                          <span>{lang.name}</span>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <p className="text-gray-400 text-xs">Interactive Lesson</p>
+              )}
+            </div>
           </div>
         </div>
         
@@ -318,12 +392,33 @@ export default function PracticeTutorial() {
           <div className="h-[70%] border-b border-gray-700">
             <div className="px-4 py-2 bg-gray-800 flex items-center justify-between border-b border-gray-700">
               <div className="flex items-center gap-3">
-                {selectedLanguage && (
-                  <span className="text-white font-mono text-sm">
-                    {languages.find(l => l.id === selectedLanguage)?.emoji} {languages.find(l => l.id === selectedLanguage)?.name}
-                  </span>
-                )}
-                {!selectedLanguage && (
+                {selectedLanguage ? (
+                  <div className="relative language-dropdown-container">
+                    <button
+                      onClick={() => setShowLanguageDropdownEditor(!showLanguageDropdownEditor)}
+                      className="text-white font-mono text-sm hover:text-inpact-green transition flex items-center gap-1"
+                    >
+                      {languages.find(l => l.id === selectedLanguage)?.emoji} {languages.find(l => l.id === selectedLanguage)?.name}
+                      <span className="text-xs">▼</span>
+                    </button>
+                    {showLanguageDropdownEditor && (
+                      <div className="absolute top-full left-0 mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-50 min-w-[150px]">
+                        {languages.map(lang => (
+                          <button
+                            key={lang.id}
+                            onClick={() => handleLanguageChange(lang.id)}
+                            className={`w-full px-4 py-2 text-left hover:bg-gray-100 transition flex items-center gap-2 ${
+                              selectedLanguage === lang.id ? 'bg-inpact-green text-black font-semibold' : 'text-gray-700'
+                            }`}
+                          >
+                            <span>{lang.emoji}</span>
+                            <span>{lang.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : (
                   <span className="text-gray-400 text-sm">Code will appear as you progress...</span>
                 )}
               </div>

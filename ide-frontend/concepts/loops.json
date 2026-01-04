@@ -1,0 +1,52 @@
+{
+  "id": "loops",
+  "title": "Loops Explained",
+  "screens": [
+    {
+      "type": "intro",
+      "title": "Loops: Repeat Actions Automatically 🔄",
+      "analogy": "A loop is like telling someone: 'Do this 10 times' or 'Do this for each item in the list'. Instead of writing the same code many times, you write it once inside a loop, and the computer repeats it for you.",
+      "code": "for (let i = 0; i < 5; i++) {\n  console.log(i);\n}\n\n// This prints: 0, 1, 2, 3, 4",
+      "visual": {
+        "type": "array-boxes",
+        "items": ["i = 0", "i = 1", "i = 2", "i = 3", "i = 4"]
+      },
+      "tip": "Loops save you from writing the same code over and over. They're perfect for going through arrays!"
+    },
+    {
+      "type": "builder",
+      "title": "See Loops in Action",
+      "instructions": "Watch how a loop goes through each number. The loop runs 5 times:",
+      "placeholder": "The loop will show: 0, 1, 2, 3, 4",
+      "examples": ["0", "1", "2", "3", "4"]
+    },
+    {
+      "type": "quiz",
+      "title": "Test Your Knowledge",
+      "context": "let arr = [10, 20, 30];\nfor (let i = 0; i < arr.length; i++) {\n  console.log(arr[i]);\n}",
+      "question": "What does this loop print?",
+      "options": [
+        "10, 20, 30",
+        "0, 1, 2",
+        "3"
+      ],
+      "correctIndex": 0,
+      "correctFeedback": "✅ Correct! The loop goes through each element: arr[0]=10, arr[1]=20, arr[2]=30.",
+      "incorrectFeedback": "❌ The loop prints the values in the array: 10, 20, 30 (not the indices)."
+    },
+    {
+      "type": "quiz",
+      "title": "One More Question",
+      "context": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}",
+      "question": "How many times does this loop run?",
+      "options": [
+        "3 times",
+        "4 times",
+        "2 times"
+      ],
+      "correctIndex": 0,
+      "correctFeedback": "✅ Perfect! The loop runs when i is 0, 1, and 2. That's 3 times!",
+      "incorrectFeedback": "❌ The loop runs while i < 3, so it runs when i is 0, 1, and 2. That's 3 times."
+    }
+  ]
+}

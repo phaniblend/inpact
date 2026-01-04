@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>APT Learn — Sign In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-brand" onclick="navigate('/'); return false;">APT LEARN</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link" onclick="navigate('/'); return false;">HOME</a>
+        <a href="/algos" class="nav-link" onclick="navigate('/algos'); return false;">ALGORITHMS</a>
+      </div>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <div class="shell">
+      <h1>Welcome to APT Learn</h1>
+      <p>Get started with your email, or continue as a guest.</p>
+
+      <form id="authForm" onsubmit="handleAuth(event)">
+        <div class="input-group">
+          <label for="email">Email (optional)</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="you@example.com"
+            autocomplete="email"
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+          Continue
+        </button>
+      </form>
+
+      <div class="divider">or</div>
+
+      <button class="btn" style="width: 100%;" onclick="handleGoogleAuth()">
+        Continue with Google
+      </button>
+
+      <button class="btn" style="width: 100%; margin-top: 10px;" onclick="handleGuest()">
+        Skip for now (Guest)
+      </button>
+    </div>
+  </div>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    // Pre-fill email if available
+    const savedEmail = getEmail();
+    if (savedEmail) {
+      document.getElementById('email').value = savedEmail;
+    }
+
+    async function handleAuth(event) {
+      event.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      
+      if (email) {
+        saveEmail(email);
+        await updateSession(email);
+      }
+      
+      navigate('/algos');
+    }
+
+    function handleGoogleAuth() {
+      // Placeholder for future OAuth implementation
+      alert('Google sign-in coming soon! For now, please use email or continue as guest.');
+    }
+
+    function handleGuest() {
+      navigate('/algos');
+    }
+  </script>
+</body>
+</html>
+

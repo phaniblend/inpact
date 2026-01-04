@@ -67,8 +67,23 @@ export default function AlgorithmsHub() {
   };
 
   const handleLanguageSelect = (langId) => {
-    navigate(`/learn/algorithm/${selectedAlgo.slug}?language=${langId}`);
+    if (!selectedAlgo) {
+      console.error('No algorithm selected');
+      alert('Error: No algorithm selected. Please try again.');
+      return;
+    }
+    
+    const targetPath = `/learn/algorithm/${selectedAlgo.slug}?language=${langId}`;
+    console.log('Navigating to:', targetPath);
+    console.log('Selected algorithm:', selectedAlgo);
+    
+    // Close modal first
     setShowLanguageModal(false);
+    
+    // Small delay to ensure modal closes before navigation
+    setTimeout(() => {
+      navigate(targetPath);
+    }, 100);
   };
 
   const getDifficultyColor = (difficulty) => {
@@ -231,14 +246,20 @@ export default function AlgorithmsHub() {
             
             <div className="grid md:grid-cols-5 gap-4">
               {languages.map(lang => (
-                <div
+                <button
                   key={lang.id}
-                  onClick={() => handleLanguageSelect(lang.id)}
-                  className="bg-gray-50 rounded-xl p-6 text-center hover:bg-inpact-green hover:text-black transition cursor-pointer"
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Language clicked:', lang.id, 'Selected algo:', selectedAlgo);
+                    handleLanguageSelect(lang.id);
+                  }}
+                  className="bg-gray-50 rounded-xl p-6 text-center hover:bg-inpact-green hover:text-black transition cursor-pointer border-none focus:outline-none focus:ring-2 focus:ring-inpact-green"
                 >
                   <div className="text-4xl mb-2">{lang.emoji}</div>
                   <div className="font-bold">{lang.name}</div>
-                </div>
+                </button>
               ))}
             </div>
 

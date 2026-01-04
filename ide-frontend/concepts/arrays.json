@@ -1,0 +1,52 @@
+{
+  "id": "arrays",
+  "title": "Arrays Explained",
+  "screens": [
+    {
+      "type": "intro",
+      "title": "Arrays: Your Digital Shopping List 🛒",
+      "analogy": "Think of an array like a shopping list. It stores multiple items in order, and each item has a position number (called an index). Just like how the first item on your list is at position 1, the first item in an array is at position 0.",
+      "code": "let fruits = [\"apple\", \"banana\", \"orange\"];",
+      "visual": {
+        "type": "array-boxes",
+        "items": ["apple", "banana", "orange"]
+      },
+      "tip": "Computers count from 0, not 1! The first item is at index 0, second at index 1, and so on."
+    },
+    {
+      "type": "builder",
+      "title": "Build Your First Array",
+      "instructions": "Create your own array by adding items. Type something and press Enter or click 'Add Item':",
+      "placeholder": "Type an item (e.g., pizza, 42, hello)",
+      "examples": ["\"pizza\"", "42", "\"hello\""]
+    },
+    {
+      "type": "quiz",
+      "title": "Test Your Knowledge",
+      "context": "let pets = [\"dog\", \"cat\", \"fish\"];",
+      "question": "What does pets[1] return?",
+      "options": [
+        "\"dog\"",
+        "\"cat\"",
+        "\"fish\""
+      ],
+      "correctIndex": 1,
+      "correctFeedback": "✅ Correct! Index 1 is the second position (remember, we start counting from 0).",
+      "incorrectFeedback": "❌ Remember: arrays start counting at 0! pets[0] is \"dog\", pets[1] is \"cat\", and pets[2] is \"fish\"."
+    },
+    {
+      "type": "quiz",
+      "title": "One More Question",
+      "context": "let numbers = [10, 20, 30, 40];",
+      "question": "How many items are in this array?",
+      "options": [
+        "3",
+        "4",
+        "5"
+      ],
+      "correctIndex": 1,
+      "correctFeedback": "✅ Perfect! The array has 4 items: 10, 20, 30, and 40.",
+      "incorrectFeedback": "❌ Count the items: 10, 20, 30, 40. That's 4 items!"
+    }
+  ]
+}

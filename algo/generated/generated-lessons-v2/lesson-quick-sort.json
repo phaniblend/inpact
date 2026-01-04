@@ -1,0 +1,89 @@
+{
+  "id": "quick-sort",
+  "title": "Quick Sort",
+  "difficulty": "medium",
+  "pattern": "divide-and-conquer + partitioning",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of numbers in random order.\n\nYour task is to sort the list in **ascending order**.\n\nWe will learn a fast and commonly used sorting technique called **Quick Sort**.",
+      "example": "Input: [5,3,8,4,2]",
+      "action": "next"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Quick Sort works by:\n\n• choosing one element as a **pivot**\n• rearranging the list so:\n  - numbers smaller than the pivot go to the left\n  - numbers larger than the pivot go to the right\n\nAfter that, the pivot is already in its final position.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Example:\n\nList: [5,3,8,4,2]\n\nChoose pivot = 4\n\nAfter rearranging:\n[3,2] 4 [5,8]\n\n4 will never move again.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nOnce the pivot is in the correct position, what remains to be done?",
+      "choices": [
+        {
+          "label": "Sort the left and right parts separately",
+          "next": "divide-and-conquer"
+        },
+        {
+          "label": "The list is fully sorted",
+          "next": "divide-and-conquer"
+        }
+      ]
+    },
+    {
+      "stepId": "divide-and-conquer",
+      "mentorSays": "Correct.\n\nAfter placing the pivot correctly:\n\n• the left part still needs sorting\n• the right part still needs sorting\n\nBut they are **smaller problems of the same type**.",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Because we repeat the same steps on smaller sublists:\n\n• choose a pivot\n• partition\n• sort left and right\n\nRecursion naturally fits this pattern.",
+      "action": "next"
+    },
+    {
+      "stepId": "partition-explained",
+      "mentorSays": "Partitioning means:\n\n• scanning the list\n• moving elements smaller than pivot to one side\n• moving larger elements to the other\n\nWe do this **in-place**.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-partition-walkthrough",
+      "mentorSays": "Example partition step:\n\nList: [5,3,8,4,2]\nPivot = 4\n\nAfter partition:\n[3,2,4,5,8]\n\nPivot index = 2",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "if sublist has 0 or 1 elements, return",
+        "choose a pivot",
+        "partition list around pivot",
+        "recursively quick sort left sublist",
+        "recursively quick sort right sublist"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nWe will implement Quick Sort using recursion and in-place partitioning.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function quickSort(nums, left = 0, right = nums.length - 1) {\n  if (left >= right) return;\n\n  const pivotIndex = partition(nums, left, right);\n  quickSort(nums, left, pivotIndex - 1);\n  quickSort(nums, pivotIndex + 1, right);\n}\n\nfunction partition(nums, left, right) {\n  const pivot = nums[right];\n  let i = left;\n\n  for (let j = left; j < right; j++) {\n    if (nums[j] < pivot) {\n      [nums[i], nums[j]] = [nums[j], nums[i]];\n      i++;\n    }\n  }\n\n  [nums[i], nums[right]] = [nums[right], nums[i]];\n  return i;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example check:\n\n[5,3,8,4,2] → [2,3,4,5,8]\n\nQuick Sort correctly sorts the list.",
+      "action": "complete"
+    }
+  ]
+}

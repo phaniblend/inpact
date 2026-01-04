@@ -1,0 +1,99 @@
+{
+  "id": "subsets-ii",
+  "title": "Subsets II",
+  "difficulty": "medium",
+  "pattern": "backtracking + duplicate-handling",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of numbers that **may contain duplicates**.\n\nYour task is to return **all possible unique subsets**.\n\nRules:\n• A subset can be empty\n• Order inside a subset does not matter\n• The same subset must not appear more than once",
+      "example": "Input: [1, 2, 2]",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s list subsets for a tiny example.\n\nInput: [1, 2, 2]\n\nPossible subsets (unique only):\n• []\n• [1]\n• [2]\n• [1,2]\n• [2,2]\n• [1,2,2]",
+      "action": "next"
+    },
+    {
+      "stepId": "what-changed",
+      "mentorSays": "This problem is almost the same as **Subsets**.\n\nThe only new challenge is:\n\n• Duplicate numbers can create duplicate subsets\n\nWe must prevent that.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf two numbers are the same, how could duplicate subsets be created?",
+      "choices": [
+        {
+          "label": "By choosing the same value from different positions",
+          "next": "root-cause"
+        },
+        {
+          "label": "Duplicates do not affect subsets",
+          "next": "root-cause"
+        }
+      ]
+    },
+    {
+      "stepId": "root-cause",
+      "mentorSays": "Correct.\n\nIf the same number appears multiple times, choosing it from different positions can create **identical subsets**.\n\nWe need a way to avoid exploring duplicate paths.",
+      "action": "next"
+    },
+    {
+      "stepId": "key-idea-sorting",
+      "mentorSays": "The key idea is **sorting**.\n\nWhen duplicates are next to each other:\n• We can detect them easily\n• We can decide when to skip them\n\nExample:\nInput: [2,1,2]\nSorted: [1,2,2]",
+      "action": "next"
+    },
+    {
+      "stepId": "skip-logic",
+      "mentorSays": "While building subsets:\n\n• If the current number is the same as the previous\n• And we are at the same recursion level\n• We **skip** it\n\nThis prevents duplicate subsets from being created.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example: [1, 2, 2]\n\nAt the same level:\n• First 2 → allowed\n• Second 2 → skipped\n\nBut deeper levels can still use the second 2 when appropriate.",
+      "action": "next"
+    },
+    {
+      "stepId": "connect-to-backtracking",
+      "mentorSays": "We still use the **same backtracking structure** as before.\n\nThe only difference is:\n• We skip duplicate choices at the same depth",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "sort the input list",
+        "start with empty subset",
+        "define backtracking function with start index",
+        "add current subset to result",
+        "for each index from start:",
+        "  if index > start and current value equals previous, skip",
+        "  include the number",
+        "  recurse to next index",
+        "  remove the number (backtrack)",
+        "return result"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nFocus on the **skip condition** — that is the only new part.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function subsetsWithDup(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n\n  function backtrack(start, current) {\n    result.push([...current]);\n\n    for (let i = start; i < nums.length; i++) {\n      if (i > start && nums[i] === nums[i - 1]) continue;\n\n      current.push(nums[i]);\n      backtrack(i + 1, current);\n      current.pop();\n    }\n  }\n\n  backtrack(0, []);\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example check:\n\nInput: [1,2,2]\n\nOutput:\n[[], [1], [1,2], [1,2,2], [2], [2,2]]\n\nAll subsets are unique.",
+      "action": "complete"
+    }
+  ]
+}

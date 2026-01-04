@@ -1,0 +1,101 @@
+{
+  "id": "pow-x-n",
+  "title": "Power Function (xⁿ)",
+  "difficulty": "medium",
+  "pattern": "divide-and-conquer + exponentiation",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a number **x** and an integer **n**.\n\nYour task is to calculate **x raised to the power n** (xⁿ).\n\nYou must do this **without using built-in power functions**.",
+      "example": "x = 2, n = 10",
+      "action": "next"
+    },
+    {
+      "stepId": "what-power-means",
+      "mentorSays": "Important clarification:\n\nxⁿ means:\n• multiply x by itself n times\n\nExamples:\n• 2³ = 2 × 2 × 2\n• 5⁰ = 1",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Example:\n\nx = 3, n = 4\n\n3⁴ = 3 × 3 × 3 × 3 = 81",
+      "action": "next"
+    },
+    {
+      "stepId": "negative-exponent",
+      "mentorSays": "What about negative powers?\n\nExample:\n• 2⁻² = 1 / (2²) = 1 / 4\n\nSo a negative exponent means we invert the result.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf n is very large (for example n = 1,000,000), would multiplying x one million times be efficient?",
+      "choices": [
+        {
+          "label": "Yes, just multiply repeatedly",
+          "next": "bruteforce-logic"
+        },
+        {
+          "label": "No, we need a smarter approach",
+          "next": "bruteforce-logic"
+        }
+      ]
+    },
+    {
+      "stepId": "bruteforce-logic",
+      "mentorSays": "A brute-force approach would:\n\n• start with result = 1\n• multiply by x, n times\n\nThis works, but it is too slow for large n.",
+      "action": "next"
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "Key observation:\n\nWe can reuse work.\n\nExample:\n• x⁸ = (x⁴) × (x⁴)\n• x⁴ = (x²) × (x²)\n\nWe are repeating the same calculations.",
+      "action": "next"
+    },
+    {
+      "stepId": "divide-and-conquer",
+      "mentorSays": "Instead of multiplying one by one, we can:\n\n• split the power in half\n• compute xⁿᐟ² once\n• reuse it\n\nThis reduces the number of multiplications drastically.",
+      "action": "next"
+    },
+    {
+      "stepId": "even-vs-odd",
+      "mentorSays": "Two cases:\n\n• If n is even:\n  xⁿ = (xⁿᐟ²) × (xⁿᐟ²)\n\n• If n is odd:\n  xⁿ = x × (xⁿᐟ²) × (xⁿᐟ²)",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\n\nx = 2, n = 10\n\n2¹⁰ = (2⁵)²\n2⁵ = 2 × (2²)²\n\nWe reduce the problem size at each step.",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Notice the repetition:\n\nTo compute xⁿ, we need to compute xⁿᐟ² the same way.\n\nThis makes **recursion** a natural fit.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "if n is 0, return 1",
+        "if n is negative, invert x and make n positive",
+        "compute half = power(x, n / 2)",
+        "if n is even:",
+        "  return half × half",
+        "else:",
+        "  return x × half × half"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Now translate the logic into JavaScript.",
+      "code": "function myPow(x, n) {\n  if (n === 0) return 1;\n\n  if (n < 0) {\n    x = 1 / x;\n    n = -n;\n  }\n\n  function power(base, exp) {\n    if (exp === 0) return 1;\n\n    const half = power(base, Math.floor(exp / 2));\n\n    if (exp % 2 === 0) {\n      return half * half;\n    } else {\n      return base * half * half;\n    }\n  }\n\n  return power(x, n);\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final checks:\n\nmyPow(2, 10) → 1024\nmyPow(2, -2) → 0.25\nmyPow(5, 0) → 1\n\nThe power function works efficiently for large exponents.",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "parameters",
+  "title": "Function Parameters Explained",
+  "screens": [
+    {
+      "type": "intro",
+      "title": "Parameters: Empty Boxes in Your Recipe 📦",
+      "analogy": "Parameters are like empty boxes in your recipe. When you write the recipe (function), you leave boxes for ingredients. When you actually cook (call the function), you fill those boxes with real ingredients (arguments).",
+      "code": "function multiply(x, y) {\n  // x and y are parameters (empty boxes)\n  return x * y;\n}\n\n// When you call it:\nmultiply(4, 5); // 4 goes into x, 5 goes into y\n// Result: 20",
+      "visual": {
+        "type": "array-boxes",
+        "items": ["x = 4", "y = 5", "Result = 20"]
+      },
+      "tip": "Parameters receive values when you call the function. The values you pass are called arguments."
+    },
+    {
+      "type": "builder",
+      "title": "Understand Parameters",
+      "instructions": "See how parameters work. The function has parameters (x, y), and when you call it, you pass actual values:",
+      "placeholder": "Try: multiply(3, 7)",
+      "examples": ["multiply(3, 7)", "multiply(10, 2)", "multiply(5, 5)"]
+    },
+    {
+      "type": "quiz",
+      "title": "Test Your Knowledge",
+      "context": "function greet(first, last) {\n  return first + \" \" + last;\n}",
+      "question": "What does greet(\"John\", \"Doe\") return?",
+      "options": [
+        "\"John Doe\"",
+        "\"John\"",
+        "\"Doe\""
+      ],
+      "correctIndex": 0,
+      "correctFeedback": "✅ Correct! The parameters first and last receive \"John\" and \"Doe\", then they're combined.",
+      "incorrectFeedback": "❌ The function combines first + \" \" + last, so greet(\"John\", \"Doe\") returns \"John Doe\"."
+    }
+  ]
+}

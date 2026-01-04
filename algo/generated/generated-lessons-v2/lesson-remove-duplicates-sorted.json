@@ -1,0 +1,156 @@
+{
+  "id": "remove-duplicates-sorted",
+  "title": "Remove Duplicates from Sorted Array",
+  "pattern": "two-pointers (slow–fast)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-06",
+    "introduces": ["slow-fast-pointers"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "two-pointers",
+      "comparison"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If array is empty, return 0." },
+    { "id": "ps2", "text": "Set slow = 0 (position of last unique element)." },
+    { "id": "ps3", "text": "For fast from 1 to end:" },
+    { "id": "ps4", "text": "  If nums[fast] != nums[slow]:" },
+    { "id": "ps5", "text": "    Move slow forward and copy nums[fast] to nums[slow]." },
+    { "id": "ps6", "text": "Return slow + 1 as the count of unique elements." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Remove Duplicates from Sorted Array**.\n\nThis lesson builds on two pointers and introduces the **slow–fast pointer** pattern.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a **sorted** array of numbers.\n\nYour task:\n- Remove duplicates **in place**\n- Return the number of **unique** elements\n\nThe first part of the array should contain those unique elements.",
+      "example": "nums = [1,1,2,2,3]",
+      "action": "next",
+      "next": "what-in-place-means"
+    },
+    {
+      "stepId": "what-in-place-means",
+      "mentorSays": "### What does \"in place\" mean here?\n\nWe do NOT create a new array.\n\nWe reuse the same array and overwrite values at the front.\n\nOnly the first part of the array matters after the operation.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [1,1,2] → unique count = 2, array starts as [1,2]\n2) [0,0,1,1,2] → unique count = 3, array starts as [0,1,2]",
+      "action": "next",
+      "next": "why-sorted-matters"
+    },
+    {
+      "stepId": "why-sorted-matters",
+      "mentorSays": "Because the array is **sorted**, duplicates always appear next to each other.\n\nThis allows us to compare neighboring elements to detect duplicates.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf we scan the array from left to right, how can we keep track of where the next unique value should go?",
+      "choices": [
+        { "label": "Use two positions (pointers)", "next": "core-idea" },
+        { "label": "Create another array", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe use two pointers:\n\n- **slow** → position of the last unique element\n- **fast** → scans ahead to find the next new value",
+      "action": "next",
+      "next": "slow-fast-explained"
+    },
+    {
+      "stepId": "slow-fast-explained",
+      "mentorSays": "### Slow–Fast pointers\n\n- slow starts at index 0\n- fast starts at index 1\n\nWhen nums[fast] is different from nums[slow]:\n- move slow forward\n- copy nums[fast] into nums[slow]",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums = [1,1,2,2,3]\n\n- slow=0 (1)\n- fast=1 (1) → same → skip\n- fast=2 (2) → different\n  - slow=1, nums[1]=2\n- fast=3 (2) → same → skip\n- fast=4 (3) → different\n  - slow=2, nums[2]=3\n\nUnique count = slow + 1 = 3",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself to build muscle memory.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function removeDuplicates(nums) {\n\n}",
+      "action": "next",
+      "next": "code-02-edge",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-edge",
+      "mentorSays": "Step 2: Handle the empty array case.",
+      "example": "if (nums.length === 0) return 0;",
+      "action": "next",
+      "next": "code-03-pointers",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-pointers",
+      "mentorSays": "Step 3: Initialize slow pointer.",
+      "example": "let slow = 0;",
+      "action": "next",
+      "next": "code-04-loop",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-04-loop",
+      "mentorSays": "Step 4: Move fast pointer through the array.",
+      "example": "for (let fast = 1; fast < nums.length; fast++) {\n\n}",
+      "action": "next",
+      "next": "code-05-compare",
+      "pseudocodeLineIds": ["ps3", "ps4"]
+    },
+    {
+      "stepId": "code-05-compare",
+      "mentorSays": "Step 5: When a new value is found, move slow and copy it.",
+      "example": "if (nums[fast] !== nums[slow]) {\n  slow++;\n  nums[slow] = nums[fast];\n}",
+      "action": "next",
+      "next": "final-code",
+      "pseudocodeLineIds": ["ps4", "ps5"]
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function removeDuplicates(nums) {\n  if (nums.length === 0) return 0;\n\n  let slow = 0;\n\n  for (let fast = 1; fast < nums.length; fast++) {\n    if (nums[fast] !== nums[slow]) {\n      slow++;\n      nums[slow] = nums[fast];\n    }\n  }\n\n  return slow + 1;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- the slow–fast pointer pattern\n- how sorted arrays simplify duplicate handling\n- how to modify arrays in place\n\nThis pattern will appear again with variations.",
+      "action": "complete"
+    }
+  ]
+}

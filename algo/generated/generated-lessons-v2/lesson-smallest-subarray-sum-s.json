@@ -1,0 +1,100 @@
+{
+  "id": "smallest-subarray-sum-s",
+  "title": "Smallest Subarray with Sum ≥ S",
+  "difficulty": "medium",
+  "pattern": "sliding-window",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given:\n\n• a list of **positive numbers**\n• a target sum **S**\n\nYour task is to find the **length of the smallest contiguous subarray** whose sum is **greater than or equal to S**.\n\nIf no such subarray exists, return 0.",
+      "example": "Numbers: [2, 1, 5, 2, 3, 2]\nS = 7",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s start small.\n\nNumbers: [2, 3, 1]\nS = 5\n\nPossible subarrays:\n• [2] → sum 2 (too small)\n• [2,3] → sum 5 (valid, length 2)\n• [3,1] → sum 4 (too small)\n\nSmallest valid length = **2**",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-goal",
+      "mentorSays": "Important clarification:\n\nWe are NOT counting subarrays.\n\nWe are looking for:\n• the **shortest length**\n• among all subarrays whose sum ≥ S",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf the list is long, how would you check all subarrays?\n\nWould it be efficient to sum every start–end pair?",
+      "choices": [
+        {
+          "label": "Yes, checking all subarrays is fine",
+          "next": "bruteforce-discussion"
+        },
+        {
+          "label": "No, that would be too slow",
+          "next": "bruteforce-discussion"
+        }
+      ]
+    },
+    {
+      "stepId": "bruteforce-discussion",
+      "mentorSays": "Correct.\n\nA brute-force approach would:\n• start at every index\n• keep adding numbers\n• track the sum\n• stop when sum ≥ S\n\nThis works, but repeats many calculations.",
+      "action": "next"
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "Key observation:\n\nAll numbers are **positive**.\n\nSo:\n• expanding a subarray increases the sum\n• shrinking a subarray decreases the sum\n\nThis allows us to adjust a range instead of restarting.",
+      "action": "next"
+    },
+    {
+      "stepId": "window-idea",
+      "mentorSays": "Instead of checking every subarray from scratch:\n\n• expand a range to the right\n• keep track of the current sum\n• once the sum reaches S, try to shrink from the left\n\nWe always maintain a **valid window**.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\nNumbers: [2, 1, 5, 2, 3]\nS = 7\n\n• Add 2 → sum = 2\n• Add 1 → sum = 3\n• Add 5 → sum = 8 (valid)\n\nNow shrink:\n• Remove 2 → sum = 6 (invalid)\n\nMinimum length found so far = 3",
+      "action": "next"
+    },
+    {
+      "stepId": "what-changes",
+      "mentorSays": "Compared to other sliding window problems:\n\n• We care about **minimum length**, not count\n• Each time sum ≥ S, we try to shrink as much as possible",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "set left = 0",
+        "initialize sum = 0",
+        "initialize minLength = Infinity",
+        "for each right index:",
+        "  add nums[right] to sum",
+        "  while sum >= S:",
+        "    update minLength",
+        "    subtract nums[left] from sum",
+        "    move left forward",
+        "if minLength is Infinity, return 0",
+        "return minLength"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nWatch how the window expands and shrinks.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function smallestSubarraySum(S, nums) {\n  let left = 0;\n  let sum = 0;\n  let minLength = Infinity;\n\n  for (let right = 0; right < nums.length; right++) {\n    sum += nums[right];\n\n    while (sum >= S) {\n      minLength = Math.min(minLength, right - left + 1);\n      sum -= nums[left];\n      left++;\n    }\n  }\n\n  return minLength === Infinity ? 0 : minLength;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example checks:\n\n[2,1,5,2,3,2], S=7 → 2\n[1,1,1], S=5 → 0\n\nThis confirms the sliding-window solution works correctly.",
+      "action": "complete"
+    }
+  ]
+}

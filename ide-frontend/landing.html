@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>APT LEARN — Master Algorithms While Learning to Code</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: #ffffff;
+      color: #1a1a1a;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .header {
+      background: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+      padding: 12px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-small {
+      font-size: 12px;
+      font-weight: 600;
+      color: #6b7280;
+      padding: 4px 8px;
+      background: #f3f4f6;
+      border-radius: 4px;
+    }
+
+    .header-title {
+      font-size: 14px;
+      color: #374151;
+      font-weight: 500;
+    }
+
+    .header-center {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      justify-content: center;
+      max-width: 400px;
+    }
+
+    .code-icon {
+      font-size: 18px;
+      color: #6b7280;
+    }
+
+    .search-bar {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid #e5e7eb;
+      border-radius: 6px;
+      font-size: 14px;
+      background: #f9fafb;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .header-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #f3f4f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #6b7280;
+      font-size: 14px;
+    }
+
+    .header-icon:hover {
+      background: #e5e7eb;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 56px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .hero-subtitle {
+      font-size: 20px;
+      color: #6b7280;
+      margin-bottom: 40px;
+    }
+
+    .language-selection {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      padding: 12px 24px;
+      border: 2px solid #e5e7eb;
+      background: #ffffff;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #374151;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn:hover {
+      border-color: #3b82f6;
+      color: #3b82f6;
+    }
+
+    .lang-btn.active {
+      border-color: #3b82f6;
+      background: #3b82f6;
+      color: #ffffff;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      padding: 14px 32px;
+      background: #f97316;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: #ea580c;
+    }
+
+    .btn-secondary {
+      padding: 14px 32px;
+      background: #ffffff;
+      color: #374151;
+      border: 2px solid #e5e7eb;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: #d1d5db;
+      background: #f9fafb;
+    }
+
+    .code-preview {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+      margin-top: 48px;
+    }
+
+    .code-editor {
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      color: #e2e8f0;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .code-editor .keyword {
+      color: #c678dd;
+    }
+
+    .code-editor .function {
+      color: #61afef;
+    }
+
+    .code-editor .string {
+      color: #98c379;
+    }
+
+    .output-panel {
+      background: #f9fafb;
+      border-radius: 12px;
+      padding: 24px;
+      border: 1px solid #e5e7eb;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: #e5e7eb;
+      border-radius: 4px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+    }
+
+    .progress-blue {
+      background: #3b82f6;
+      width: 60%;
+    }
+
+    .progress-orange {
+      background: #f97316;
+      width: 40%;
+    }
+
+    /* Why Choose Section */
+    .why-section {
+      background: #f9fafb;
+      padding: 80px 24px;
+    }
+
+    .why-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .why-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .why-header h2 {
+      font-size: 40px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 16px;
+    }
+
+    .why-header p {
+      font-size: 18px;
+      color: #6b7280;
+    }
+
+    .feature-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .feature-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 32px;
+      border: 1px solid #e5e7eb;
+      transition: all 0.2s;
+    }
+
+    .feature-card:hover {
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(-2px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: #eff6ff;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #3b82f6;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #111827;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      font-size: 16px;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    /* Trusted Section */
+    .trusted-section {
+      padding: 80px 24px;
+      background: #ffffff;
+    }
+
+    .trusted-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .trusted-header h2 {
+      font-size: 40px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 16px;
+    }
+
+    .trusted-header p {
+      font-size: 18px;
+      color: #6b7280;
+      margin-bottom: 48px;
+    }
+
+    .learner-avatars {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .learner-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    .avatar-blue {
+      background: #3b82f6;
+    }
+
+    .avatar-purple {
+      background: #a855f7;
+    }
+
+    .avatar-orange {
+      background: #f97316;
+    }
+
+    .trusted-cta {
+      font-size: 18px;
+      color: #6b7280;
+    }
+
+    /* Pricing Section */
+    .pricing-section {
+      background: #f9fafb;
+      padding: 80px 24px;
+    }
+
+    .pricing-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .pricing-header h2 {
+      font-size: 40px;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 48px;
+    }
+
+    .pricing-card {
+      background: #ffffff;
+      border-radius: 16px;
+      padding: 48px;
+      max-width: 500px;
+      margin: 0 auto;
+      border: 1px solid #e5e7eb;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .pricing-free {
+      font-size: 18px;
+      color: #6b7280;
+      margin-bottom: 16px;
+    }
+
+    .pricing-price {
+      font-size: 48px;
+      font-weight: 700;
+      color: #f97316;
+      margin-bottom: 8px;
+    }
+
+    .pricing-unit {
+      font-size: 18px;
+      color: #6b7280;
+      margin-bottom: 24px;
+    }
+
+    .pricing-note {
+      font-size: 16px;
+      color: #6b7280;
+      margin-bottom: 32px;
+    }
+
+    .btn-pricing {
+      padding: 14px 32px;
+      background: #3b82f6;
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .btn-pricing:hover {
+      background: #2563eb;
+    }
+
+    /* Footer */
+    .footer {
+      background: #111827;
+      color: #ffffff;
+      padding: 48px 24px;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-brand {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .footer-tagline {
+      font-size: 16px;
+      color: #9ca3af;
+      margin-bottom: 24px;
+    }
+
+    .footer-copyright {
+      font-size: 14px;
+      color: #6b7280;
+      margin-top: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 36px;
+      }
+
+      .code-preview {
+        grid-template-columns: 1fr;
+      }
+
+      .header-center {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-left">
+        <span class="logo-small">V2</span>
+        <span class="header-title">Homepage for APT LEARN</span>
+        <span class="header-title" style="color: #3b82f6;">View Project</span>
+      </div>
+      <div class="header-center">
+        <span class="code-icon">&lt;/&gt;</span>
+        <input type="text" class="search-bar" placeholder="Search..." />
+      </div>
+      <div class="header-right">
+        <div class="header-icon">Refer</div>
+        <div class="header-icon">Share</div>
+        <div class="header-icon">Publish</div>
+        <div class="avatar">U</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Master Algorithms While Learning to Code</h1>
+    <p class="hero-subtitle">Choose your language. Build step-by-step. Land your dream job.</p>
+    
+    <div class="language-selection">
+      <button class="lang-btn active">JavaScript</button>
+      <button class="lang-btn">Python</button>
+      <button class="lang-btn">Java</button>
+      <button class="lang-btn">C++</button>
+      <button class="lang-btn">TypeScript</button>
+    </div>
+
+    <div class="cta-buttons">
+      <button class="btn-primary" onclick="navigate('/auth')">Start Free</button>
+      <button class="btn-secondary" onclick="navigate('/learn')">Try as Guest</button>
+    </div>
+
+    <div class="code-preview">
+      <div class="code-editor">
+        <div><span class="keyword">function</span> <span class="function">sortArray</span>(arr) {</div>
+        <div style="padding-left: 20px;"><span class="keyword">let</span> n = arr.<span class="function">length</span>;</div>
+        <div style="padding-left: 20px;"><span class="keyword">for</span> (<span class="keyword">let</span> i = 0; i < n - 1; i++) {</div>
+        <div style="padding-left: 40px;"><span class="keyword">for</span> (<span class="keyword">let</span> j = 0; j < n - 1 - i; j++) {</div>
+        <div style="padding-left: 60px;"><span class="keyword">if</span> (arr[j] > arr[j + 1]) {</div>
+        <div style="padding-left: 80px;"><span class="keyword">let</span> temp = arr[j];</div>
+        <div style="padding-left: 80px;">arr[j] = arr[j + 1];</div>
+        <div style="padding-left: 80px;">arr[j + 1] = temp;</div>
+        <div style="padding-left: 60px;">}</div>
+        <div style="padding-left: 40px;">}</div>
+        <div style="padding-left: 20px;">}</div>
+        <div><span class="keyword">return</span> arr;</div>
+        <div>}</div>
+      </div>
+      <div class="output-panel">
+        <div class="progress-bar">
+          <div class="progress-fill progress-blue"></div>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill progress-orange"></div>
+        </div>
+        <div style="margin-top: 24px; color: #374151; font-size: 14px;">
+          <strong>Step 3 of 5:</strong> Compare adjacent elements
+        </div>
+        <div style="margin-top: 12px; color: #6b7280; font-size: 14px;">
+          Your mentor is guiding you through bubble sort...
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Section -->
+  <section class="why-section">
+    <div class="why-content">
+      <div class="why-header">
+        <h2>Why Choose APT LEARN?</h2>
+        <p>Built by developers, for developers. We understand what beginners need to succeed.</p>
+      </div>
+      <div class="feature-cards">
+        <div class="feature-card">
+          <div class="feature-icon">&lt;/&gt;</div>
+          <h3>Learn by Building</h3>
+          <p>Write real code from day one. Every lesson builds practical skills you can use immediately.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>5 Languages, 1 Algorithm</h3>
+          <p>Learn the same algorithm across JavaScript, Python, Java, C++, and TypeScript.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Step-by-Step Mastery</h3>
+          <p>Follow a guided path from beginner to advanced. Track your progress with interactive lessons.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trusted Section -->
+  <section class="trusted-section">
+    <div class="trusted-content">
+      <div class="trusted-header">
+        <h2>Trusted by Learners Worldwide</h2>
+        <p>Join thousands of students building their coding careers</p>
+      </div>
+      <div class="learner-avatars">
+        <div class="learner-avatar avatar-blue">AS</div>
+        <div class="learner-avatar avatar-purple">MJ</div>
+        <div class="learner-avatar avatar-orange">RK</div>
+      </div>
+      <p class="trusted-cta">Join learners improving their coding skills every day</p>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing-section">
+    <div class="pricing-content">
+      <div class="pricing-header">
+        <h2>Simple, Transparent Pricing</h2>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-free">First 10 Free</div>
+        <div class="pricing-price">$2</div>
+        <div class="pricing-unit">per algorithm</div>
+        <div class="pricing-note">No subscription. Pay as you learn.</div>
+        <button class="btn-pricing" onclick="navigate('/auth')">Get Started</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand">APT LEARN</div>
+      <div class="footer-tagline">120+ Algorithms • 5 Programming Languages • Built by Developers, for Developers</div>
+      <div class="footer-copyright">© 2025 APT LEARN. All rights reserved. Master Algorithms. Master Languages.</div>
+    </div>
+  </footer>
+
+  <script src="/assets/app.js"></script>
+  <script>
+    function navigate(path) {
+      window.location.href = path;
+    }
+
+    // Language selection
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

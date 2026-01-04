@@ -1,0 +1,2404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>APT Learn — Learning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <link rel="stylesheet" href="/assets/concept-explainer.css" />
+  <!-- Monaco Editor -->
+  <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-container">
+      <a href="/" class="nav-brand" onclick="navigate('/'); return false;">APT LEARN</a>
+      <div class="nav-links">
+        <a href="/" class="nav-link" onclick="navigate('/'); return false;">HOME</a>
+        <a href="/algos" class="nav-link" onclick="navigate('/algos'); return false;">ALGORITHMS</a>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Single column layout (before language selection) -->
+  <div id="singleColumnLayout" class="shell">
+    <h1>APT Learn — Mentor</h1>
+    <div id="mentorText" class="mentor-text">Loading…</div>
+    <div id="example" class="example" style="display:none;"></div>
+    <div id="choices" class="choices"></div>
+    <div id="meta" class="meta"></div>
+  </div>
+
+  <!-- Two column layout (after language selection) -->
+  <div id="twoColumnLayout" class="lesson-layout" style="display:none;">
+    <!-- Left Column: Instruction Pane (1/3 width) -->
+    <div class="instruction-pane">
+      <div class="instruction-header">
+        <h2>Instructions</h2>
+        <div class="nav-buttons">
+          <button id="prevBtn" class="nav-btn" onclick="goToPreviousStep()" disabled>
+            <span>‹</span> Prev
+          </button>
+          <button id="kcBtn" class="nav-btn" onclick="openKnowledgeCheck()" title="Take Knowledge Check" style="display:none;">
+            📝 KC
+          </button>
+        </div>
+      </div>
+      <div class="instruction-content">
+        <!-- Problem Statement Section -->
+        <div id="problemStatement" class="problem-statement" style="display:none;"></div>
+        
+        <!-- Step Progress Indicator -->
+        <div id="stepProgress" class="step-progress" style="display:none;">
+          <div class="step-info">
+            <span id="stepNumber" class="step-number"></span>
+            <span id="stepTitle" class="step-title"></span>
+          </div>
+          <div class="progress-bar">
+            <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+          </div>
+        </div>
+        
+        <!-- Validation Feedback -->
+        <div id="validationFeedback" class="validation-feedback" style="display:none;"></div>
+        
+        <div id="instructionText" class="instruction-text"></div>
+        <div id="instructionExample" class="instruction-example" style="display:none;"></div>
+        <div id="instructionChoices" class="instruction-choices"></div>
+      </div>
+    </div>
+
+    <!-- Right Column: Code Editor (2/3 width) -->
+    <div class="editor-pane">
+      <div class="editor-header">
+        <h2>Code Editor</h2>
+        <div class="editor-actions">
+          <button id="runBtn" class="btn btn-primary btn-small" onclick="runCode()">
+            Run
+          </button>
+          <button id="resetBtn" class="btn btn-small" onclick="resetCode()">
+            Reset
+          </button>
+        </div>
+      </div>
+      <div id="editorContainer" class="editor-container"></div>
+      <div id="outputContainer" class="output-container">
+        <div class="output-header">Output</div>
+        <div id="outputContent" class="output-content">No output yet. Write code and click Run.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Level Up Modal -->
+  <div id="levelUpModal" class="modal" style="display:none;">
+    <div class="modal-backdrop" onclick="closeLevelUpModal()"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="levelUpTitle">Level Up!</h2>
+        <button class="modal-close" onclick="closeLevelUpModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="levelUpMessage" class="level-up-message"></div>
+        <div class="modal-actions">
+          <button class="btn btn-primary" onclick="takeLevelKC()">Take Level Knowledge Check</button>
+          <button class="btn" onclick="closeLevelUpModal()">Skip and Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Knowledge Check Modal -->
+  <div id="kcModal" class="modal" style="display:none;">
+    <div class="modal-backdrop" onclick="closeKCModal()"></div>
+    <div class="modal-content kc-modal-content">
+      <div class="modal-header">
+        <h2 id="kcTitle">Knowledge Check</h2>
+        <button class="modal-close" onclick="closeKCModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="kcDescription" class="kc-description"></div>
+        <div id="kcQuestions" class="kc-questions"></div>
+        <div id="kcResults" class="kc-results" style="display:none;"></div>
+        <div class="modal-actions" id="kcActions">
+          <button id="kcSubmitBtn" class="btn btn-primary" onclick="submitKC()">Submit Answers</button>
+          <button class="btn" onclick="closeKCModal()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Concept Review Modal (for failed concepts) -->
+  <div id="conceptReviewModal" class="modal" style="display:none;">
+    <div class="modal-backdrop" onclick="closeConceptReviewModal()"></div>
+    <div class="modal-content kc-modal-content">
+      <div class="modal-header">
+        <h2>Review Concepts</h2>
+        <button class="modal-close" onclick="closeConceptReviewModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="conceptReviewContent" class="concept-review-content"></div>
+        <div class="modal-actions" id="conceptReviewActions"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Need More Info Modal -->
+  <div id="needMoreInfoModal" class="modal" style="display:none;">
+    <div class="modal-backdrop" onclick="closeNeedMoreInfoModal()"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="needMoreInfoTitle">Need More Information</h2>
+        <button class="modal-close" onclick="closeNeedMoreInfoModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="needMoreInfoContent" class="need-more-info-content"></div>
+        <div class="modal-actions" id="needMoreInfoActions"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Question Modal (with OpenAI) -->
+  <div id="customQuestionModal" class="modal" style="display:none;">
+    <div class="modal-backdrop" onclick="closeCustomQuestionModal()"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Ask Your Question</h2>
+        <button class="modal-close" onclick="closeCustomQuestionModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom: 16px;">
+          <label style="display: block; margin-bottom: 8px; color: #cbd5e1;">What would you like to know about <strong id="customQuestionConceptName"></strong>?</label>
+          <textarea id="customQuestionInput" style="width: 100%; min-height: 100px; padding: 12px; background: #0f1425; border: 1px solid #3a4a6b; border-radius: 6px; color: #e5e7eb; font-family: 'Courier New', monospace; font-size: 14px; resize: vertical;" placeholder="e.g., Why do we use 'arr' as the variable name?"></textarea>
+        </div>
+        <div class="modal-actions">
+          <button id="submitCustomQuestionBtn" class="btn btn-primary" onclick="submitCustomQuestion()">Ask Question</button>
+          <button class="btn" onclick="closeCustomQuestionModal()">Cancel</button>
+        </div>
+        <div id="customQuestionResponse" style="margin-top: 20px; padding: 16px; background: #0f1425; border-radius: 6px; display: none;">
+          <div style="color: #60a5fa; margin-bottom: 8px; font-weight: 600;">Answer:</div>
+          <div id="customQuestionAnswer" style="color: #e5e7eb; white-space: pre-wrap; line-height: 1.6;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/assets/app.js"></script>
+  <script src="/assets/concept-explainer.js"></script>
+  <script>
+    const lessonId = getLessonIdFromPath();
+    
+    if (!lessonId) {
+      document.getElementById('mentorText').textContent = 'Error: No lesson ID found in URL.';
+      navigate('/algos');
+    }
+
+    let currentStepId = null;
+    let stepHistory = []; // Track step history for prev/next navigation
+    let selectedLanguage = null;
+    let editor = null;
+    let monacoLoaded = false;
+    let instructionPaneProtected = false; // Flag to prevent duplicate event listeners
+    let currentLevel = null;
+    let currentKC = null;
+    let kcAnswers = {};
+
+    // Load completed lessons from localStorage
+    function getCompletedLessons() {
+      const stored = localStorage.getItem('apt_completed_lessons');
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    // Save completed lesson
+    function markLessonCompleted(lessonId) {
+      const completed = getCompletedLessons();
+      if (!completed.includes(lessonId)) {
+        completed.push(lessonId);
+        localStorage.setItem('apt_completed_lessons', JSON.stringify(completed));
+      }
+    }
+
+    // Check if level KC is completed
+    function isLevelKCCompleted(level) {
+      const stored = localStorage.getItem('apt_completed_kcs');
+      const completed = stored ? JSON.parse(stored) : [];
+      return completed.includes(`level-${level}`);
+    }
+
+    // Mark level KC as completed
+    function markLevelKCCompleted(level) {
+      const stored = localStorage.getItem('apt_completed_kcs');
+      const completed = stored ? JSON.parse(stored) : [];
+      if (!completed.includes(`level-${level}`)) {
+        completed.push(`level-${level}`);
+        localStorage.setItem('apt_completed_kcs', JSON.stringify(completed));
+      }
+    }
+
+    let currentLesson = null;
+    let stepValidationState = { passed: false, canContinue: false };
+
+    async function startLesson() {
+      try {
+        const res = await fetch('/api/mentor/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ lessonId })
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to start lesson');
+        }
+
+        const data = await res.json();
+        
+        // Load full lesson data to get problem statement and step info
+        try {
+          const lessonRes = await fetch(`/api/mentor/lesson?lessonId=${lessonId}`);
+          if (lessonRes.ok) {
+            currentLesson = await lessonRes.json();
+            currentProblemStatement = getProblemStatement(currentLesson);
+          }
+        } catch (err) {
+          console.warn('Could not load lesson data for problem statement:', err);
+        }
+        
+        // Check for level-up
+        await checkLevelUp();
+        
+        renderStep(data.step);
+      } catch (err) {
+        console.error(err);
+        document.getElementById('mentorText').textContent = 
+          'Error loading lesson. Please try again or go back to choose another algorithm.';
+        document.getElementById('choices').innerHTML = 
+          '<button class="btn btn-primary" onclick="navigate(\'/algos\')">Back to Algorithms</button>';
+      }
+    }
+
+    async function checkLevelUp() {
+      try {
+        const completedLessons = getCompletedLessons();
+        const res = await fetch(`/api/mentor/level/check-up?currentLessonId=${lessonId}&completedLessonIds=${completedLessons.join(',')}`);
+        
+        if (!res.ok) return;
+        
+        const data = await res.json();
+        
+        if (data.shouldShow && data.levelInfo) {
+          // Get level info
+          const levelRes = await fetch(`/api/mentor/lesson/level?lessonId=${lessonId}`);
+          if (levelRes.ok) {
+            const levelData = await levelRes.json();
+            currentLevel = levelData.level;
+            showLevelUpModal(data.levelInfo);
+          }
+        } else {
+          // Still get level for KC button
+          const levelRes = await fetch(`/api/mentor/lesson/level?lessonId=${lessonId}`);
+          if (levelRes.ok) {
+            const levelData = await levelRes.json();
+            currentLevel = levelData.level;
+          }
+        }
+      } catch (err) {
+        console.error('Failed to check level up:', err);
+      }
+    }
+
+    function showLevelUpModal(levelInfo) {
+      const modal = document.getElementById('levelUpModal');
+      const title = document.getElementById('levelUpTitle');
+      const message = document.getElementById('levelUpMessage');
+      
+      title.textContent = `🎉 ${levelInfo.name}`;
+      message.textContent = levelInfo.congratulationMessage;
+      message.style.whiteSpace = 'pre-wrap';
+      
+      modal.style.display = 'flex';
+    }
+
+    function closeLevelUpModal() {
+      document.getElementById('levelUpModal').style.display = 'none';
+    }
+
+    async function takeLevelKC() {
+      closeLevelUpModal();
+      await openKnowledgeCheck();
+    }
+
+    async function openKnowledgeCheck() {
+      if (!currentLevel || !selectedLanguage) {
+        // Try to get level
+        try {
+          const res = await fetch(`/api/mentor/lesson/level?lessonId=${lessonId}`);
+          if (res.ok) {
+            const data = await res.json();
+            currentLevel = data.level;
+          } else {
+            alert('Please select a language first to take the knowledge check.');
+            return;
+          }
+        } catch (err) {
+          alert('Please select a language first to take the knowledge check.');
+          return;
+        }
+      }
+
+      if (!selectedLanguage) {
+        alert('Please select a language first to take the knowledge check.');
+        return;
+      }
+
+      try {
+        const langMap = {
+          'js': 'js',
+          'python': 'python',
+          'java': 'java',
+          'cpp': 'cpp',
+          'ts': 'ts'
+        };
+        
+        const language = langMap[selectedLanguage] || 'js';
+        const res = await fetch(`/api/mentor/level/kc?level=${currentLevel}&language=${language}`);
+        
+        if (!res.ok) {
+          throw new Error('Failed to load knowledge check');
+        }
+
+        const kc = await res.json();
+        currentKC = kc;
+        kcAnswers = {};
+
+        // Display KC
+        const modal = document.getElementById('kcModal');
+        const title = document.getElementById('kcTitle');
+        const description = document.getElementById('kcDescription');
+        const questionsDiv = document.getElementById('kcQuestions');
+        const resultsDiv = document.getElementById('kcResults');
+        const actionsDiv = document.getElementById('kcActions');
+
+        title.textContent = kc.title;
+        description.textContent = kc.description;
+
+        // Build questions
+        questionsDiv.innerHTML = '';
+        let questionIndex = 0;
+
+        for (const concept of kc.concepts) {
+          if (!concept.test || !concept.test.questions) continue;
+
+          const conceptSection = document.createElement('div');
+          conceptSection.className = 'kc-concept-section';
+          
+          const conceptTitle = document.createElement('h3');
+          conceptTitle.className = 'kc-concept-title';
+          conceptTitle.textContent = concept.name;
+          conceptSection.appendChild(conceptTitle);
+
+          for (let i = 0; i < concept.test.questions.length; i++) {
+            const question = concept.test.questions[i];
+            const qDiv = document.createElement('div');
+            qDiv.className = 'kc-question';
+
+            const qText = document.createElement('div');
+            qText.className = 'kc-question-text';
+            qText.textContent = `${questionIndex + 1}. ${question.question}`;
+            qDiv.appendChild(qText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'kc-options';
+
+            question.options.forEach((option, optIndex) => {
+              const label = document.createElement('label');
+              label.className = 'kc-option';
+
+              const radio = document.createElement('input');
+              radio.type = 'radio';
+              radio.name = `kc-${concept.id}-${i}`;
+              radio.value = optIndex;
+              radio.onchange = () => {
+                if (!kcAnswers[concept.id]) kcAnswers[concept.id] = [];
+                kcAnswers[concept.id][i] = optIndex;
+              };
+
+              label.appendChild(radio);
+              label.appendChild(document.createTextNode(` ${option}`));
+              optionsDiv.appendChild(label);
+            });
+
+            qDiv.appendChild(optionsDiv);
+            conceptSection.appendChild(qDiv);
+            questionIndex++;
+          }
+
+          questionsDiv.appendChild(conceptSection);
+        }
+
+        resultsDiv.style.display = 'none';
+        actionsDiv.style.display = 'flex';
+        document.getElementById('kcSubmitBtn').style.display = 'block';
+
+        modal.style.display = 'flex';
+      } catch (err) {
+        console.error('Failed to open knowledge check:', err);
+        alert('Failed to load knowledge check. Please try again.');
+      }
+    }
+
+    function closeKCModal() {
+      document.getElementById('kcModal').style.display = 'none';
+      kcAnswers = {};
+      currentKC = null;
+    }
+
+    async function submitKC() {
+      if (!currentKC || !selectedLanguage) return;
+
+      const langMap = {
+        'js': 'js',
+        'python': 'python',
+        'java': 'java',
+        'cpp': 'cpp',
+        'ts': 'ts'
+      };
+      
+      const language = langMap[selectedLanguage] || 'js';
+
+      try {
+        // Check if this is a level KC or prerequisites KC
+        if (currentKC.level !== undefined) {
+          // Level KC
+          const res = await fetch('/api/mentor/level/kc/validate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              level: currentLevel,
+              language: language,
+              answers: kcAnswers
+            })
+          });
+
+          if (!res.ok) {
+            throw new Error('Failed to validate answers');
+          }
+
+          const result = await res.json();
+          showKCResults(result);
+          
+          if (result.passed) {
+            markLevelKCCompleted(currentLevel);
+          }
+        } else {
+          // Prerequisites KC - handled by submitPrerequisitesKC
+          await submitPrerequisitesKC(currentKC.concepts, language);
+        }
+      } catch (err) {
+        console.error('Failed to submit KC:', err);
+        alert('Failed to submit answers. Please try again.');
+      }
+    }
+
+    function showKCResults(result) {
+      const resultsDiv = document.getElementById('kcResults');
+      const questionsDiv = document.getElementById('kcQuestions');
+      const actionsDiv = document.getElementById('kcActions');
+
+      questionsDiv.style.display = 'none';
+      resultsDiv.style.display = 'block';
+      resultsDiv.innerHTML = '';
+
+      if (result.passed) {
+        // Success screen - keep it positive
+        const scoreDiv = document.createElement('div');
+        scoreDiv.className = 'kc-score kc-passed';
+        
+        const message = result.level !== undefined 
+          ? 'You\'re ready for this level!'
+          : 'Great! You understand the prerequisites. Let\'s continue!';
+        
+        scoreDiv.innerHTML = `
+          <h3>✅ Great Job!</h3>
+          <p>Score: ${result.correct}/${result.total} (${Math.round(result.score)}%)</p>
+          <p>${message}</p>
+        `;
+        resultsDiv.appendChild(scoreDiv);
+
+        if (result.level !== undefined) {
+          markLevelKCCompleted(result.level);
+        }
+      } else {
+        // Failure screen - make it encouraging
+        const scoreDiv = document.createElement('div');
+        scoreDiv.className = 'kc-score kc-failed-encouraging';
+        
+        // Find failed concepts (score < 70% or wrong answers)
+        const failedConcepts = [];
+        if (result.results && result.concepts) {
+          result.concepts.forEach(concept => {
+            const conceptResult = result.results[concept.id];
+            if (conceptResult && conceptResult.score < 70) {
+              failedConcepts.push({
+                name: concept.name || concept.id,
+                id: concept.id,
+                score: conceptResult.score,
+                correct: conceptResult.correct,
+                total: conceptResult.total
+              });
+            }
+          });
+        }
+
+        // Build encouraging message
+        let message = 'Nice try! 💪';
+        if (failedConcepts.length > 0) {
+          message += ` However, we recommend learning these concepts better:`;
+        } else {
+          message += ` However, we recommend reviewing the concepts to strengthen your understanding.`;
+        }
+
+        scoreDiv.innerHTML = `
+          <div class="encouraging-header">
+            <span class="encouraging-icon">💪</span>
+            <h3>Nice Try!</h3>
+          </div>
+          <p class="encouraging-message">${message}</p>
+          <p class="score-info">Score: ${result.correct}/${result.total} (${Math.round(result.score)}%)</p>
+          ${failedConcepts.length > 0 ? `
+            <div class="failed-concepts-list">
+              <p class="concepts-label">Concepts to focus on:</p>
+              <ul class="concepts-list">
+                ${failedConcepts.map(c => `
+                  <li>
+                    <span class="concept-name">${c.name}</span>
+                    <span class="concept-score">(${c.correct}/${c.total} correct)</span>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          ` : ''}
+        `;
+        resultsDiv.appendChild(scoreDiv);
+
+        // Store failed concepts for the "I wanna learn" button
+        result.failedConcepts = failedConcepts;
+      }
+    }
+
+    async function nextStep(choiceLabel = null, overrideStepId = null) {
+      try {
+        const stepIdToUse = overrideStepId || currentStepId;
+        console.log('[DEBUG] nextStep called with:', { lessonId, currentStepId: stepIdToUse, choiceLabel });
+        
+        const res = await fetch('/api/mentor/next', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            lessonId,
+            currentStepId: stepIdToUse,
+            choiceLabel
+          })
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          console.error('[ERROR] Failed to advance lesson:', res.status, errorText);
+          throw new Error(`Failed to advance lesson: ${res.status} ${errorText}`);
+        }
+
+        const data = await res.json();
+        console.log('[DEBUG] nextStep response:', data);
+
+        if (data.done) {
+          console.log('[DEBUG] Lesson completed!');
+          // Mark lesson as completed
+          markLessonCompleted(lessonId);
+          
+          // Ensure we're in single column layout for completion
+          switchToSingleColumnLayout();
+          
+          document.getElementById('mentorText').textContent = 
+            '🎉 Great job! You\'ve completed this lesson.';
+          document.getElementById('example').style.display = 'none';
+          const finishBtn = document.createElement('button');
+          finishBtn.textContent = 'Finish';
+          finishBtn.className = 'btn btn-primary btn-large';
+          finishBtn.onclick = () => {
+            console.log('[DEBUG] Finish button clicked, navigating to /done');
+            navigate('/done');
+          };
+          document.getElementById('choices').innerHTML = '';
+          document.getElementById('choices').appendChild(finishBtn);
+          document.getElementById('meta').textContent = '';
+          return;
+        }
+
+        if (!data.step) {
+          console.error('[ERROR] No step in response:', data);
+          throw new Error('Invalid response: no step data');
+        }
+
+        renderStep(data.step);
+      } catch (err) {
+        console.error('[ERROR] nextStep error:', err);
+        const errorMsg = 'Error advancing lesson. Please try again.';
+        switchToSingleColumnLayout();
+        document.getElementById('mentorText').textContent = errorMsg;
+        document.getElementById('choices').innerHTML = 
+          '<button class="btn btn-primary" onclick="location.reload()">Reload Page</button>';
+      }
+    }
+
+    // Map step IDs to concept IDs for skipping redundant checks
+    function getConceptIdFromStepId(stepId) {
+      const conceptMap = {
+        'variable-check-js': 'variables',
+        'variable-check-python': 'variables',
+        'variable-check-java': 'variables',
+        'variable-check-cpp': 'variables',
+        'variable-check-ts': 'variables',
+        'function-check-js': 'functions',
+        'function-check-python': 'functions',
+        'function-check-java': 'functions',
+        'function-check-cpp': 'functions',
+        'function-check-ts': 'functions',
+        'function-check-hashmap-js': 'functions',
+        'function-check-hashmap-python': 'functions',
+        'function-check-hashmap-java': 'functions',
+        'function-check-hashmap-cpp': 'functions',
+        'function-check-hashmap-ts': 'functions',
+        'parameter-check-js': 'parameters',
+        'parameter-check-python': 'parameters',
+        'parameter-check-java': 'parameters',
+        'parameter-check-cpp': 'parameters',
+        'parameter-check-ts': 'parameters',
+        'loop-check-js': 'loops',
+        'loop-check-python': 'loops',
+        'loop-check-java': 'loops',
+        'loop-check-cpp': 'loops',
+        'loop-check-ts': 'loops'
+      };
+      return conceptMap[stepId];
+    }
+
+    // Check if a concept was already passed in prerequisites KC
+    function wasConceptPassed(conceptId) {
+      const key = `apt_passed_concepts_${lessonId}`;
+      const stored = localStorage.getItem(key);
+      if (!stored) return false;
+      try {
+        const passedConcepts = JSON.parse(stored);
+        return passedConcepts.includes(conceptId);
+      } catch (e) {
+        return false;
+      }
+    }
+
+    function renderStep(step) {
+      currentStepId = step.stepId;
+      
+      console.log('[DEBUG] Rendering step:', step.stepId, 'type:', step.type);
+      
+      // Check if this is a concept check step and if user already passed it
+      const conceptId = getConceptIdFromStepId(step.stepId);
+      if (conceptId && wasConceptPassed(conceptId)) {
+        console.log(`[DEBUG] Skipping ${step.stepId} - concept ${conceptId} already passed in prerequisites`);
+        // Automatically choose "Yes, I know" and advance
+        const yesChoice = step.choices?.find(c => 
+          c.label.toLowerCase().includes('yes') || 
+          c.label.toLowerCase().includes('i know')
+        );
+        if (yesChoice) {
+          // Add current step to history before skipping
+          stepHistory.push({
+            stepId: step.stepId,
+            step: step
+          });
+          // Automatically advance to next step
+          setTimeout(() => nextStep(yesChoice.label), 100);
+          return;
+        }
+      }
+      
+      // Add to history
+      stepHistory.push({
+        stepId: step.stepId,
+        step: step
+      });
+
+      // Handle special step types
+      if (step.type === 'prerequisites') {
+        console.log('[DEBUG] Rendering prerequisites step');
+        renderPrerequisitesStep(step);
+        return;
+      }
+
+      if (step.type === 'knowledge-check' && step.action === 'open-kc') {
+        // Open KC modal for prerequisites
+        // Get prerequisites from the step or fetch them
+        const prerequisites = step.prerequisites || [];
+        if (prerequisites.length === 0) {
+          // Fetch prerequisites if not in step
+          fetch(`/api/mentor/prerequisites?lessonId=${lessonId}&language=js`)
+            .then(res => res.json())
+            .then(data => {
+              openPrerequisitesKC(data.prerequisites.map(p => p.id));
+            })
+            .catch(err => {
+              console.error('Failed to load prerequisites:', err);
+              alert('Failed to load knowledge check. Please try again.');
+            });
+        } else {
+          openPrerequisitesKC(prerequisites);
+        }
+        return;
+      }
+
+      if (step.type === 'learning-path') {
+        renderLearningPathStep(step);
+        return;
+      }
+
+      // Detect language selection
+      const langMatch = step.stepId.match(/(js|python|java|cpp|ts)$/);
+      if (langMatch && !selectedLanguage) {
+        selectedLanguage = langMatch[1];
+        // Don't initialize editor yet - wait until coding steps
+        
+        // Show KC button
+        const kcBtn = document.getElementById('kcBtn');
+        if (kcBtn) kcBtn.style.display = 'block';
+        
+        // Get level after language is selected
+        if (!currentLevel) {
+          fetch(`/api/mentor/lesson/level?lessonId=${lessonId}`)
+            .then(res => res.json())
+            .then(data => {
+              currentLevel = data.level;
+            })
+            .catch(err => console.error('Failed to get level:', err));
+        }
+      }
+
+      // Check if this is a coding step - only show editor when actually coding
+      // Editor should appear at coding-start-{lang} and stay through all coding/test steps
+      const isCodingStep = step.stepId && (
+        step.stepId.startsWith('coding-') ||
+        step.stepId === 'test-code' ||
+        step.stepId.startsWith('test-code-')
+      );
+
+      // Initialize editor only when reaching coding steps
+      if (selectedLanguage && isCodingStep) {
+        if (!editor) {
+          initializeEditor(selectedLanguage, step);
+        } else {
+          // Update editor code for this step
+          const stepCode = getInitialCode(selectedLanguage, step);
+          editor.setValue(stepCode);
+        }
+        switchToTwoColumnLayout();
+        renderStepTwoColumn(step);
+      } else if (selectedLanguage && !isCodingStep) {
+        // Hide editor during concept checks/explanations (variable-check, function-check, etc.)
+        switchToSingleColumnLayout();
+        renderStepSingleColumn(step);
+      } else {
+        // No language selected yet - single column
+        renderStepSingleColumn(step);
+      }
+    }
+
+    function renderPrerequisitesStep(step) {
+      console.log('[DEBUG] renderPrerequisitesStep called with:', step);
+      
+      // Render in single column layout
+      document.getElementById('singleColumnLayout').style.display = 'block';
+      document.getElementById('twoColumnLayout').style.display = 'none';
+      
+      const mentorTextEl = document.getElementById('mentorText');
+      if (mentorTextEl) {
+        mentorTextEl.textContent = step.mentorSays;
+      }
+      
+      const metaEl = document.getElementById('meta');
+      if (metaEl) {
+        metaEl.textContent = 'Step: ' + step.stepId;
+      }
+
+      const choicesEl = document.getElementById('choices');
+      if (!choicesEl) {
+        console.error('[ERROR] choices element not found');
+        return;
+      }
+      
+      choicesEl.innerHTML = '';
+
+      if (step.choices && step.choices.length) {
+        step.choices.forEach(c => {
+          const btn = document.createElement('button');
+          btn.textContent = c.label;
+          btn.className = 'btn';
+          if (c.action === 'test') {
+            btn.className += ' btn-primary';
+            btn.onclick = async () => {
+              // First advance to prerequisites-kc step
+              const res = await fetch('/api/mentor/next', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  lessonId: lessonId,
+                  currentStepId: step.stepId,
+                  choiceLabel: c.label
+                })
+              });
+              
+              if (res.ok) {
+                const data = await res.json();
+                // Update currentStepId to prerequisites-kc
+                currentStepId = data.step.stepId;
+                // Open KC modal
+                console.log('[DEBUG] Opening prerequisites KC for:', step.prerequisites);
+                openPrerequisitesKC(step.prerequisites || []);
+              } else {
+                console.error('Failed to advance to KC step');
+                // Fallback: just open KC modal
+                openPrerequisitesKC(step.prerequisites || []);
+              }
+            };
+          } else if (c.action === 'learn') {
+            btn.onclick = () => nextStep(c.label);
+          } else {
+            btn.onclick = () => nextStep(c.label);
+          }
+          choicesEl.appendChild(btn);
+        });
+      } else {
+        console.warn('[WARN] No choices found in prerequisites step');
+      }
+    }
+
+    function renderLearningPathStep(step) {
+      document.getElementById('singleColumnLayout').style.display = 'block';
+      document.getElementById('twoColumnLayout').style.display = 'none';
+      
+      document.getElementById('mentorText').textContent = step.mentorSays;
+      document.getElementById('meta').textContent = 'Step: ' + step.stepId;
+
+      const choicesEl = document.getElementById('choices');
+      choicesEl.innerHTML = '';
+
+      // Create concept buttons
+      if (step.prerequisites && step.prerequisites.length > 0) {
+        step.prerequisites.forEach((prereq, idx) => {
+          const btn = document.createElement('button');
+          btn.textContent = `Learn: ${prereq}`;
+          btn.className = 'btn';
+          btn.onclick = async () => {
+            // Load concept info and show explanation
+            const lang = selectedLanguage || 'js';
+            const langMap = { 'js': 'js', 'python': 'python', 'java': 'java', 'cpp': 'cpp', 'ts': 'ts' };
+            const language = langMap[lang] || 'js';
+            
+            try {
+              const res = await fetch(`/api/mentor/concept?conceptId=${prereq}&language=${language}`);
+              if (res.ok) {
+                const concept = await res.json();
+                showConceptModal(concept);
+              }
+            } catch (err) {
+              console.error('Failed to load concept:', err);
+            }
+          };
+          choicesEl.appendChild(btn);
+        });
+
+        // Continue button
+        const continueBtn = document.createElement('button');
+        continueBtn.textContent = 'Continue to Lesson';
+        continueBtn.className = 'btn btn-primary';
+        continueBtn.onclick = () => nextStep();
+        choicesEl.appendChild(continueBtn);
+      }
+    }
+
+    function showConceptModal(concept) {
+      // Create a simple modal to show concept explanation
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      modal.style.display = 'flex';
+      modal.innerHTML = `
+        <div class="modal-backdrop" onclick="this.closest('.modal').remove()"></div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>${concept.name}</h2>
+            <button class="modal-close" onclick="this.closest('.modal').remove()">×</button>
+          </div>
+          <div class="modal-body">
+            <div style="white-space: pre-wrap; margin-bottom: 16px;">${concept.explanation}</div>
+            ${concept.examples && concept.examples.length > 0 ? `
+              <div class="instruction-example">
+                ${concept.examples.map(ex => `<div>${ex}</div>`).join('\n')}
+              </div>
+            ` : ''}
+            ${concept.officialDocs ? `
+              <div style="margin-top: 16px;">
+                <a href="${concept.officialDocs}" target="_blank" class="btn">Read Official Docs</a>
+              </div>
+            ` : ''}
+            <div class="modal-actions">
+              <button class="btn btn-primary" onclick="this.closest('.modal').remove()">Got it!</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    async function openPrerequisitesKC(prerequisiteIds) {
+      // Use selected language or default to js
+      const langMap = {
+        'js': 'js',
+        'python': 'python',
+        'java': 'java',
+        'cpp': 'cpp',
+        'ts': 'ts'
+      };
+      
+      const language = selectedLanguage ? (langMap[selectedLanguage] || 'js') : 'js';
+
+      try {
+        
+        // Load all concepts and their tests
+        const concepts = [];
+        for (const prereqId of prerequisiteIds) {
+          const res = await fetch(`/api/mentor/concept?conceptId=${prereqId}&language=${language}`);
+          if (res.ok) {
+            const concept = await res.json();
+            if (concept.test) {
+              concepts.push(concept);
+            }
+          }
+        }
+
+        if (concepts.length === 0) {
+          alert('No knowledge check available for these prerequisites.');
+          return;
+        }
+
+        currentKC = { concepts: concepts, title: 'Prerequisites Knowledge Check', description: 'Test your understanding of the prerequisites' };
+        kcAnswers = {};
+
+        // Display KC
+        const modal = document.getElementById('kcModal');
+        const title = document.getElementById('kcTitle');
+        const description = document.getElementById('kcDescription');
+        const questionsDiv = document.getElementById('kcQuestions');
+        const resultsDiv = document.getElementById('kcResults');
+        const actionsDiv = document.getElementById('kcActions');
+
+        title.textContent = currentKC.title;
+        description.textContent = currentKC.description;
+
+        // Build questions
+        questionsDiv.innerHTML = '';
+        let questionIndex = 0;
+
+        for (const concept of concepts) {
+          if (!concept.test || !concept.test.questions) continue;
+
+          const conceptSection = document.createElement('div');
+          conceptSection.className = 'kc-concept-section';
+          
+          const conceptTitle = document.createElement('h3');
+          conceptTitle.className = 'kc-concept-title';
+          conceptTitle.textContent = concept.name;
+          conceptSection.appendChild(conceptTitle);
+
+          for (let i = 0; i < concept.test.questions.length; i++) {
+            const question = concept.test.questions[i];
+            const qDiv = document.createElement('div');
+            qDiv.className = 'kc-question';
+
+            const qText = document.createElement('div');
+            qText.className = 'kc-question-text';
+            qText.textContent = `${questionIndex + 1}. ${question.question}`;
+            qDiv.appendChild(qText);
+
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'kc-options';
+
+            question.options.forEach((option, optIndex) => {
+              const label = document.createElement('label');
+              label.className = 'kc-option';
+
+              const radio = document.createElement('input');
+              radio.type = 'radio';
+              radio.name = `kc-${concept.id}-${i}`;
+              radio.value = optIndex;
+              radio.onchange = () => {
+                if (!kcAnswers[concept.id]) kcAnswers[concept.id] = [];
+                kcAnswers[concept.id][i] = optIndex;
+              };
+
+              label.appendChild(radio);
+              label.appendChild(document.createTextNode(` ${option}`));
+              optionsDiv.appendChild(label);
+            });
+
+            qDiv.appendChild(optionsDiv);
+            conceptSection.appendChild(qDiv);
+            questionIndex++;
+          }
+
+          questionsDiv.appendChild(conceptSection);
+        }
+
+        resultsDiv.style.display = 'none';
+        questionsDiv.style.display = 'block';
+        actionsDiv.style.display = 'flex';
+        const submitBtn = document.getElementById('kcSubmitBtn');
+        submitBtn.style.display = 'block';
+        submitBtn.textContent = 'Submit Answers';
+        submitBtn.onclick = () => submitPrerequisitesKC(concepts, language);
+
+        modal.style.display = 'flex';
+      } catch (err) {
+        console.error('Failed to open prerequisites KC:', err);
+        alert('Failed to load knowledge check. Please try again.');
+      }
+    }
+
+    async function submitPrerequisitesKC(concepts, language) {
+      try {
+        let totalQuestions = 0;
+        let totalCorrect = 0;
+        const results = {};
+
+        for (const concept of concepts) {
+          if (!concept.test || !kcAnswers[concept.id]) continue;
+
+          const res = await fetch('/api/mentor/test/validate', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              conceptId: concept.id,
+              language: language,
+              answers: kcAnswers[concept.id]
+            })
+          });
+
+          if (res.ok) {
+            const result = await res.json();
+            results[concept.id] = result;
+            totalQuestions += result.total;
+            totalCorrect += result.correct;
+          }
+        }
+
+        if (totalQuestions === 0) {
+          alert('Please answer at least one question.');
+          return;
+        }
+
+        const score = (totalCorrect / totalQuestions) * 100;
+        const passed = score >= 70;
+
+        // Store passed concepts in localStorage to skip redundant checks during lesson
+        if (passed) {
+          const passedConcepts = concepts
+            .filter(concept => {
+              const result = results[concept.id];
+              return result && result.score >= 70;
+            })
+            .map(c => c.id);
+          
+          // Store passed concepts for this lesson
+          const key = `apt_passed_concepts_${lessonId}`;
+          localStorage.setItem(key, JSON.stringify(passedConcepts));
+          console.log('[DEBUG] Stored passed concepts:', passedConcepts);
+        }
+
+        showKCResults({
+          passed,
+          score,
+          correct: totalCorrect,
+          total: totalQuestions,
+          results,
+          concepts: concepts // Pass concepts so we can show which ones failed
+        });
+
+        // Update submit button
+        const submitBtn = document.getElementById('kcSubmitBtn');
+        if (passed) {
+          submitBtn.textContent = 'Continue to Lesson';
+          submitBtn.onclick = () => {
+            closeKCModal();
+            // Proceed to problem-illustration
+            // Use prerequisites-kc as currentStepId if it was set, otherwise use prerequisites-display
+            const stepIdToUse = currentStepId === 'prerequisites-kc' ? 'prerequisites-kc' : 'prerequisites-display';
+            nextStep('Continue to Lesson', stepIdToUse);
+          };
+        } else {
+          submitBtn.textContent = 'I wanna learn';
+          submitBtn.className = 'btn btn-primary';
+          submitBtn.onclick = () => {
+            closeKCModal();
+            // Show concept review step with explanations
+            showConceptReviewStep(concepts, language, results);
+          };
+        }
+      } catch (err) {
+        console.error('Failed to submit prerequisites KC:', err);
+        alert('Failed to submit answers. Please try again.');
+      }
+    }
+
+    async function showConceptReviewStep(concepts, language, results) {
+      // Find concept IDs that failed (score < 70%)
+      const failedConceptIds = concepts.filter(concept => {
+        const result = results[concept.id];
+        return result && result.score < 70;
+      }).map(c => c.id);
+
+      if (failedConceptIds.length === 0) {
+        // All passed, but score was still < 70 overall - show all concepts
+        failedConceptIds.push(...concepts.map(c => c.id));
+      }
+
+      // Fetch full concept info from backend
+      const failedConcepts = [];
+      for (const conceptId of failedConceptIds) {
+        try {
+          const res = await fetch(`/api/mentor/concept?conceptId=${conceptId}&language=${language}`);
+          if (res.ok) {
+            const conceptInfo = await res.json();
+            failedConcepts.push(conceptInfo);
+          }
+        } catch (err) {
+          console.error(`Failed to fetch concept ${conceptId}:`, err);
+        }
+      }
+
+      if (failedConcepts.length === 0) {
+        alert('Could not load concept information. Please try again.');
+        return;
+      }
+
+      const modal = document.getElementById('conceptReviewModal');
+      const content = document.getElementById('conceptReviewContent');
+      const actions = document.getElementById('conceptReviewActions');
+
+      content.innerHTML = '';
+      actions.innerHTML = '';
+
+      // Show message
+      const message = document.createElement('div');
+      message.style.cssText = 'margin-bottom: 24px; color: #cbd5e1; line-height: 1.6;';
+      message.textContent = `Let's review the concepts you need more practice with. We'll go through each one step by step.`;
+      content.appendChild(message);
+
+      // Show each failed concept with explanation
+      let currentConceptIndex = 0;
+      
+      function showNextConcept() {
+        if (currentConceptIndex >= failedConcepts.length) {
+          // All concepts reviewed
+          const doneMsg = document.createElement('div');
+          doneMsg.style.cssText = 'margin-top: 24px; padding: 16px; background: rgba(34, 197, 94, 0.1); border: 1px solid #22c55e; border-radius: 8px; color: #22c55e;';
+          doneMsg.textContent = 'Great! You\'ve reviewed all the concepts. Ready to try the knowledge check again?';
+          content.appendChild(doneMsg);
+
+          const retryBtn = document.createElement('button');
+          retryBtn.textContent = 'Retry Knowledge Check';
+          retryBtn.className = 'btn btn-primary';
+          retryBtn.style.marginTop = '16px';
+          retryBtn.onclick = () => {
+            closeConceptReviewModal();
+            openPrerequisitesKC(failedConceptIds);
+          };
+          actions.appendChild(retryBtn);
+
+          const continueBtn = document.createElement('button');
+          continueBtn.textContent = 'Continue to Lesson Anyway';
+          continueBtn.className = 'btn';
+          continueBtn.style.marginTop = '16px';
+          continueBtn.onclick = () => {
+            closeConceptReviewModal();
+            const stepIdToUse = currentStepId === 'prerequisites-kc' ? 'prerequisites-kc' : 'prerequisites-display';
+            nextStep('Continue to Lesson', stepIdToUse);
+          };
+          actions.appendChild(continueBtn);
+          return;
+        }
+
+        const concept = failedConcepts[currentConceptIndex];
+        const conceptDiv = document.createElement('div');
+        conceptDiv.className = 'concept-review-item';
+        conceptDiv.style.cssText = 'margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid #3a4a6b;';
+
+        // Concept name
+        const nameDiv = document.createElement('h3');
+        nameDiv.style.cssText = 'color: #60a5fa; margin-bottom: 12px; font-size: 18px;';
+        nameDiv.textContent = concept.name || concept.id;
+        conceptDiv.appendChild(nameDiv);
+
+        // Explanation
+        const explDiv = document.createElement('div');
+        explDiv.style.cssText = 'color: #e5e7eb; line-height: 1.6; margin-bottom: 16px; white-space: pre-wrap;';
+        explDiv.textContent = concept.explanation || concept.description || 'No explanation available.';
+        conceptDiv.appendChild(explDiv);
+
+        // Examples if available
+        if (concept.examples && concept.examples.length > 0) {
+          const examplesDiv = document.createElement('div');
+          examplesDiv.className = 'instruction-example';
+          examplesDiv.style.marginBottom = '16px';
+          concept.examples.forEach(ex => {
+            const exLine = document.createElement('div');
+            exLine.textContent = ex;
+            examplesDiv.appendChild(exLine);
+          });
+          conceptDiv.appendChild(examplesDiv);
+        }
+
+        // "Need more info" button
+        const needMoreBtn = document.createElement('button');
+        needMoreBtn.textContent = 'Need more information';
+        needMoreBtn.className = 'btn';
+        needMoreBtn.style.cssText = 'margin-top: 12px;';
+        needMoreBtn.onclick = () => {
+          showNeedMoreInfoModal(concept, language);
+        };
+        conceptDiv.appendChild(needMoreBtn);
+
+        // "I understand" button
+        const understandBtn = document.createElement('button');
+        understandBtn.textContent = 'I understand this now';
+        understandBtn.className = 'btn btn-primary';
+        understandBtn.style.cssText = 'margin-top: 12px; margin-left: 8px;';
+        understandBtn.onclick = () => {
+          currentConceptIndex++;
+          content.innerHTML = '';
+          showNextConcept();
+        };
+        conceptDiv.appendChild(understandBtn);
+
+        content.appendChild(conceptDiv);
+      }
+
+      showNextConcept();
+
+      modal.style.display = 'flex';
+    }
+
+    function closeConceptReviewModal() {
+      document.getElementById('conceptReviewModal').style.display = 'none';
+    }
+
+    function showNeedMoreInfoModal(concept, language) {
+      const modal = document.getElementById('needMoreInfoModal');
+      const title = document.getElementById('needMoreInfoTitle');
+      const content = document.getElementById('needMoreInfoContent');
+      const actions = document.getElementById('needMoreInfoActions');
+
+      title.textContent = `Need More Information: ${concept.name}`;
+      content.innerHTML = '';
+      actions.innerHTML = '';
+
+      // Create choices appropriate for language learners
+      const choices = [
+        {
+          label: 'Read the official documentation',
+          icon: '📚',
+          action: () => {
+            if (concept.officialDocs) {
+              window.open(concept.officialDocs, '_blank');
+              closeNeedMoreInfoModal();
+            } else {
+              alert('Official documentation not available for this concept.');
+            }
+          }
+        },
+        {
+          label: 'Show me more examples',
+          icon: '💡',
+          action: () => {
+            showMoreExamples(concept, language);
+            closeNeedMoreInfoModal();
+          }
+        },
+        {
+          label: 'Explain it differently',
+          icon: '🔄',
+          action: () => {
+            showAlternativeExplanation(concept, language);
+            closeNeedMoreInfoModal();
+          }
+        },
+        {
+          label: 'I have a specific question',
+          icon: '❓',
+          action: () => {
+            showCustomQuestionModal(concept);
+            closeNeedMoreInfoModal();
+          }
+        }
+      ];
+
+      const choicesDiv = document.createElement('div');
+      choicesDiv.style.cssText = 'display: flex; flex-direction: column; gap: 12px;';
+
+      choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = 'btn';
+        btn.style.cssText = 'text-align: left; padding: 16px; display: flex; align-items: center; gap: 12px;';
+        btn.innerHTML = `<span style="font-size: 20px;">${choice.icon}</span><span>${choice.label}</span>`;
+        btn.onclick = choice.action;
+        choicesDiv.appendChild(btn);
+      });
+
+      content.appendChild(choicesDiv);
+      modal.style.display = 'flex';
+    }
+
+    function closeNeedMoreInfoModal() {
+      document.getElementById('needMoreInfoModal').style.display = 'none';
+    }
+
+    function showMoreExamples(concept, language) {
+      // Map concept names/IDs to concept explainer IDs
+      // Priority: concept.id > concept.name mapping > fallback
+      let conceptId = null;
+      
+      // First, try to use concept.id directly (most reliable)
+      if (concept.id) {
+        conceptId = concept.id;
+        console.log('[DEBUG] Using concept.id:', conceptId);
+      } else if (concept.name) {
+        // Map concept names to IDs (handle variations in naming)
+        const conceptNameMap = {
+          // Arrays
+          'arrays': 'arrays',
+          'Arrays': 'arrays',
+          'Arrays and Indexing': 'arrays',
+          // Variables
+          'variables': 'variables',
+          'Variables': 'variables',
+          // Functions
+          'functions': 'functions',
+          'Functions': 'functions',
+          'Functions/Methods': 'functions',
+          'function': 'functions',
+          'Function': 'functions',
+          // Parameters
+          'parameters': 'parameters',
+          'Parameters': 'parameters',
+          'Function Parameters': 'parameters',
+          'parameter': 'parameters',
+          'Parameter': 'parameters',
+          // Loops
+          'loops': 'loops',
+          'Loops': 'loops',
+          'loop': 'loops',
+          'Loop': 'loops'
+        };
+        conceptId = conceptNameMap[concept.name] || concept.name.toLowerCase();
+        console.log('[DEBUG] Mapped concept.name:', concept.name, 'to:', conceptId);
+      } else {
+        // Last resort: use the concept itself (if it's a string)
+        conceptId = typeof concept === 'string' ? concept.toLowerCase() : 'arrays';
+        console.log('[DEBUG] Using fallback conceptId:', conceptId);
+      }
+      
+      // Use ICL (Interactive Concept Learning)
+      // The ICL will handle 404 errors gracefully
+      console.log('[DEBUG] Showing examples for concept:', conceptId, 'from concept:', concept);
+      showICL(conceptId);
+    }
+
+    function showAlternativeExplanation(concept, language) {
+      // Create a modal with alternative explanation
+      const modal = document.createElement('div');
+      modal.className = 'modal';
+      modal.style.display = 'flex';
+      
+      const conceptId = concept.id || concept;
+      const altExplanation = getAlternativeExplanation(conceptId, language);
+      
+      modal.innerHTML = `
+        <div class="modal-backdrop" onclick="this.closest('.modal').remove()"></div>
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Alternative Explanation: ${concept.name}</h2>
+            <button class="modal-close" onclick="this.closest('.modal').remove()">×</button>
+          </div>
+          <div class="modal-body">
+            <div style="white-space: pre-wrap; line-height: 1.6; color: #e5e7eb;">${altExplanation}</div>
+            <div class="modal-actions">
+              <button class="btn btn-primary" onclick="this.closest('.modal').remove()">Got it!</button>
+            </div>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(modal);
+    }
+
+    function showCustomQuestionModal(concept) {
+      const modal = document.getElementById('customQuestionModal');
+      document.getElementById('customQuestionConceptName').textContent = concept.name;
+      document.getElementById('customQuestionInput').value = '';
+      document.getElementById('customQuestionResponse').style.display = 'none';
+      modal.style.display = 'flex';
+    }
+
+    function closeCustomQuestionModal() {
+      document.getElementById('customQuestionModal').style.display = 'none';
+    }
+
+    async function submitCustomQuestion() {
+      const conceptName = document.getElementById('customQuestionConceptName').textContent;
+      const question = document.getElementById('customQuestionInput').value.trim();
+      const responseDiv = document.getElementById('customQuestionResponse');
+      const answerDiv = document.getElementById('customQuestionAnswer');
+      const submitBtn = document.getElementById('submitCustomQuestionBtn');
+
+      if (!question) {
+        alert('Please enter your question.');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Asking...';
+      answerDiv.textContent = '';
+
+      try {
+        const res = await fetch('/api/mentor/ask-question', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            concept: conceptName,
+            question: question,
+            language: selectedLanguage || 'javascript'
+          })
+        });
+
+        if (!res.ok) {
+          throw new Error('Failed to get answer');
+        }
+
+        const data = await res.json();
+        answerDiv.textContent = data.answer || 'I apologize, but I couldn\'t generate an answer. Please try rephrasing your question.';
+        responseDiv.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Ask Another Question';
+      } catch (err) {
+        console.error('Failed to submit question:', err);
+        answerDiv.textContent = 'Sorry, there was an error getting an answer. Please try again.';
+        responseDiv.style.display = 'block';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Ask Question';
+      }
+    }
+
+    function getAdditionalExamples(conceptId, language) {
+      // Return additional examples based on concept
+      const examples = {
+        'arrays': {
+          'js': [
+            'let fruits = ["apple", "banana", "orange"];',
+            'let numbers = [1, 2, 3, 4, 5];',
+            'let empty = []; // empty array',
+            'let mixed = [1, "hello", true]; // can mix types'
+          ],
+          'python': [
+            'fruits = ["apple", "banana", "orange"]',
+            'numbers = [1, 2, 3, 4, 5]',
+            'empty = []  # empty list',
+            'mixed = [1, "hello", True]  # can mix types'
+          ]
+        },
+        'variables': {
+          'js': [
+            'let name = "John";',
+            'let age = 25;',
+            'let isActive = true;',
+            'let price = 19.99;'
+          ],
+          'python': [
+            'name = "John"',
+            'age = 25',
+            'is_active = True',
+            'price = 19.99'
+          ]
+        },
+        'functions': {
+          'js': [
+            'function greet(name) { return "Hello, " + name; }',
+            'function add(a, b) { return a + b; }',
+            'let result = add(5, 3); // result is 8'
+          ],
+          'python': [
+            'def greet(name): return "Hello, " + name',
+            'def add(a, b): return a + b',
+            'result = add(5, 3)  # result is 8'
+          ]
+        },
+        'parameters': {
+          'js': [
+            'function multiply(x, y) { return x * y; }',
+            'multiply(4, 5); // 20',
+            'function greet(first, last) { return first + " " + last; }'
+          ],
+          'python': [
+            'def multiply(x, y): return x * y',
+            'multiply(4, 5)  # 20',
+            'def greet(first, last): return first + " " + last'
+          ]
+        },
+        'loops': {
+          'js': [
+            'for (let i = 0; i < 5; i++) { console.log(i); }',
+            'for (let num of [1, 2, 3]) { console.log(num); }',
+            'let i = 0; while (i < 5) { i++; }'
+          ],
+          'python': [
+            'for i in range(5): print(i)',
+            'for num in [1, 2, 3]: print(num)',
+            'i = 0; while i < 5: i += 1'
+          ]
+        },
+        'hash-maps': {
+          'js': [
+            'let map = new Map();',
+            'map.set("name", "John");',
+            'let obj = { name: "John", age: 25 };',
+            'let value = obj["name"]; // "John"'
+          ],
+          'python': [
+            'map = {}',
+            'map["name"] = "John"',
+            'obj = {"name": "John", "age": 25}',
+            'value = obj["name"]  # "John"'
+          ]
+        },
+        'two-pointers': {
+          'js': [
+            'let left = 0, right = arr.length - 1;',
+            'while (left < right) { /* process */ }',
+            'if (arr[left] + arr[right] === target) { /* found */ }'
+          ],
+          'python': [
+            'left, right = 0, len(arr) - 1',
+            'while left < right:',
+            '    if arr[left] + arr[right] == target:'
+          ]
+        },
+        'sliding-window': {
+          'js': [
+            'let left = 0;',
+            'for (let right = 0; right < arr.length; right++) {',
+            '  while (/* condition */) { left++; }',
+            '}'
+          ],
+          'python': [
+            'left = 0',
+            'for right in range(len(arr)):',
+            '    while condition: left += 1'
+          ]
+        }
+      };
+
+      return examples[conceptId]?.[language] || ['More examples coming soon!'];
+    }
+
+    function getAlternativeExplanation(conceptId, language) {
+      // Return alternative explanations
+      const explanations = {
+        'arrays': 'Think of an array like a row of lockers. Each locker has a number (the index), and you can put something in each locker. The first locker is number 0, not 1!',
+        'variables': 'A variable is like a sticky note with a name on it. You write the name on the note, and you can stick it on different values. The name stays the same, but what it points to can change.',
+        'functions': 'A function is like a recipe. You write the recipe once, and then you can use it many times with different ingredients (parameters).',
+        'parameters': 'Parameters are like empty boxes in your recipe. When you actually cook (call the function), you fill those boxes with real ingredients (arguments).',
+        'loops': 'A loop is like repeating an action. Instead of writing the same code many times, you tell the computer: "do this 10 times" or "do this for each item in the list".',
+        'hash-maps': 'A hash map is like a phone book. You look up a name (the key) and find the phone number (the value). It\'s super fast to find things!',
+        'two-pointers': 'Two pointers is like having two fingers on a ruler. You start at both ends and move them toward each other, checking things as you go.',
+        'sliding-window': 'A sliding window is like looking through a moving frame. You keep a "window" of elements and slide it along, checking what\'s inside at each position.'
+      };
+
+      return explanations[conceptId] || 'Alternative explanation coming soon!';
+    }
+
+    function renderStepSingleColumn(step) {
+      document.getElementById('mentorText').textContent = step.mentorSays;
+      document.getElementById('meta').textContent = 'Step: ' + step.stepId;
+
+      const exampleEl = document.getElementById('example');
+      if (step.example) {
+        exampleEl.textContent = step.example;
+        exampleEl.style.display = 'block';
+      } else {
+        exampleEl.style.display = 'none';
+      }
+
+      const choicesEl = document.getElementById('choices');
+      choicesEl.innerHTML = '';
+
+      if (step.choices && step.choices.length) {
+        step.choices.forEach(c => {
+          const btn = document.createElement('button');
+          btn.textContent = c.label;
+          btn.onclick = () => nextStep(c.label);
+          choicesEl.appendChild(btn);
+        });
+      } else if (step.action === 'continue') {
+        const btn = document.createElement('button');
+        btn.textContent = 'Continue';
+        btn.className = 'btn btn-primary';
+        btn.onclick = () => {
+          console.log('[DEBUG] Continue button clicked for step:', step.stepId);
+          nextStep();
+        };
+        choicesEl.appendChild(btn);
+      }
+    }
+
+    function renderStepTwoColumn(step) {
+      // Show problem statement if available and this is a coding step
+      const problemStatementEl = document.getElementById('problemStatement');
+      if (currentProblemStatement && step.stepId && step.stepId.startsWith('coding-')) {
+        problemStatementEl.style.display = 'block';
+        problemStatementEl.innerHTML = `
+          <div class="problem-title">PROBLEM: ${currentProblemStatement.title}</div>
+          <div class="problem-description">${currentProblemStatement.description || 'Find the solution to this problem.'}</div>
+          ${currentProblemStatement.example ? `<div class="problem-example"><pre>${currentProblemStatement.example}</pre></div>` : ''}
+        `;
+      } else {
+        problemStatementEl.style.display = 'none';
+      }
+      
+      // Show step progress for coding steps
+      const stepProgressEl = document.getElementById('stepProgress');
+      if (step.stepId && step.stepId.startsWith('coding-') && currentLesson) {
+        const codingSteps = currentLesson.flow.filter(s => 
+          s.stepId && s.stepId.startsWith('coding-') && 
+          (s.stepId.includes(selectedLanguage) || s.stepId.includes('hashmap'))
+        );
+        const currentStepIndex = codingSteps.findIndex(s => s.stepId === step.stepId);
+        if (currentStepIndex >= 0) {
+          const stepNumber = currentStepIndex + 1;
+          const totalSteps = codingSteps.length;
+          const progressPercent = (stepNumber / totalSteps) * 100;
+          
+          // Extract step title from stepId
+          let stepTitle = 'Coding Step';
+          if (step.stepId.includes('outer')) stepTitle = 'Create the Outer Loop';
+          else if (step.stepId.includes('inner')) stepTitle = 'Create the Inner Loop';
+          else if (step.stepId.includes('complete')) stepTitle = 'Complete the Solution';
+          else if (step.stepId.includes('hashmap-loop')) stepTitle = 'Loop Through Array';
+          else if (step.stepId.includes('hashmap-complete')) stepTitle = 'Complete the Solution';
+          
+          document.getElementById('stepNumber').textContent = `Step ${stepNumber} of ${totalSteps}`;
+          document.getElementById('stepTitle').textContent = stepTitle;
+          document.getElementById('progressFill').style.width = `${progressPercent}%`;
+          stepProgressEl.style.display = 'block';
+        } else {
+          stepProgressEl.style.display = 'none';
+        }
+      } else {
+        stepProgressEl.style.display = 'none';
+      }
+      
+      // Hide validation feedback initially
+      document.getElementById('validationFeedback').style.display = 'none';
+      stepValidationState = { passed: false, canContinue: false };
+      
+      // Update instruction pane - replace example with pseudocode for coding steps
+      let instructionText = step.mentorSays;
+      
+      // For coding steps, replace the complete solution in example with pseudocode
+      const instructionExample = document.getElementById('instructionExample');
+      if (step.stepId && step.stepId.startsWith('coding-') && step.example) {
+        // Show pseudocode instead of complete solution
+        const pseudocode = getPseudocodeForStep(step);
+        if (pseudocode) {
+          instructionExample.innerHTML = `<div class="pseudocode">${pseudocode}</div>`;
+          instructionExample.style.display = 'block';
+        } else {
+          instructionExample.style.display = 'none';
+        }
+      } else if (step.example) {
+        instructionExample.textContent = step.example;
+        instructionExample.style.display = 'block';
+      } else {
+        instructionExample.style.display = 'none';
+      }
+      
+      document.getElementById('instructionText').innerHTML = formatInstructionText(instructionText);
+
+      // Update choices
+      const choicesEl = document.getElementById('instructionChoices');
+      choicesEl.innerHTML = '';
+
+      if (step.choices && step.choices.length) {
+        step.choices.forEach(c => {
+          const btn = document.createElement('button');
+          btn.textContent = c.label;
+          btn.className = 'btn';
+          btn.onclick = () => nextStep(c.label);
+          choicesEl.appendChild(btn);
+        });
+      } else if (step.action === 'continue') {
+        // Show continue button in choices area
+        const continueBtn = document.createElement('button');
+        continueBtn.id = 'continueBtn';
+        continueBtn.textContent = 'Continue';
+        continueBtn.className = 'btn btn-primary';
+        // Disable continue button for coding steps until validation passes
+        if (step.stepId && step.stepId.startsWith('coding-')) {
+          continueBtn.disabled = true;
+          stepValidationState = { passed: false, canContinue: false };
+        } else {
+          continueBtn.disabled = false;
+          stepValidationState = { passed: true, canContinue: true };
+        }
+        continueBtn.onclick = () => {
+          console.log('[DEBUG] Continue button clicked for step:', step.stepId);
+          nextStep();
+        };
+        choicesEl.appendChild(continueBtn);
+      }
+
+      // Update prev/next buttons
+      updateNavigationButtons();
+    }
+    
+    function getPseudocodeForStep(step) {
+      const stepId = step.stepId;
+      if (stepId.includes('coding-pairs-outer')) {
+        return `
+          <div class="pseudocode-step">
+            <strong>Step 1: Create outer loop</strong>
+            <ul>
+              <li>Loop through each element in nums array</li>
+              <li>For each element, we'll check if it can pair with another</li>
+            </ul>
+          </div>
+          <div class="pseudocode-step muted">Step 2: Create inner loop (next step)</div>
+          <div class="pseudocode-step muted">Step 3: Check if pair sums to target (next step)</div>
+          <div class="pseudocode-step muted">Step 4: Return the indices (next step)</div>
+        `;
+      } else if (stepId.includes('coding-pairs-inner')) {
+        return `
+          <div class="pseudocode-step completed">✓ Step 1: Create outer loop</div>
+          <div class="pseudocode-step">
+            <strong>Step 2: Create inner loop</strong>
+            <ul>
+              <li>For each element from outer loop, check remaining elements</li>
+              <li>Start inner loop from i+1 to avoid duplicates</li>
+            </ul>
+          </div>
+          <div class="pseudocode-step muted">Step 3: Check if pair sums to target (next step)</div>
+          <div class="pseudocode-step muted">Step 4: Return the indices (next step)</div>
+        `;
+      } else if (stepId.includes('coding-pairs-complete')) {
+        return `
+          <div class="pseudocode-step completed">✓ Step 1: Create outer loop</div>
+          <div class="pseudocode-step completed">✓ Step 2: Create inner loop</div>
+          <div class="pseudocode-step">
+            <strong>Step 3: Check if pair sums to target</strong>
+            <ul>
+              <li>Inside inner loop, check if nums[i] + nums[j] === target</li>
+              <li>If yes, return [i, j]</li>
+            </ul>
+          </div>
+          <div class="pseudocode-step muted">Step 4: Test your solution (next step)</div>
+        `;
+      } else if (stepId.includes('coding-hashmap-loop')) {
+        return `
+          <div class="pseudocode-step">
+            <strong>Step 1: Loop through array</strong>
+            <ul>
+              <li>Go through each number in the array</li>
+              <li>Calculate what we need: target - current number</li>
+            </ul>
+          </div>
+          <div class="pseudocode-step muted">Step 2: Check hash map and store (next step)</div>
+        `;
+      } else if (stepId.includes('coding-hashmap-complete')) {
+        return `
+          <div class="pseudocode-step completed">✓ Step 1: Loop through array</div>
+          <div class="pseudocode-step">
+            <strong>Step 2: Check hash map and store</strong>
+            <ul>
+              <li>Check if needed number exists in map</li>
+              <li>If yes, return indices</li>
+              <li>If no, store current number and index in map</li>
+            </ul>
+          </div>
+        `;
+      }
+      return null;
+    }
+    
+    function formatInstructionText(text) {
+      // Convert plain text to formatted HTML with bullet points
+      const lines = text.split('\n');
+      let html = '';
+      let inList = false;
+      
+      for (let line of lines) {
+        line = line.trim();
+        if (!line) {
+          if (inList) {
+            html += '</ul>';
+            inList = false;
+          }
+          html += '<br>';
+          continue;
+        }
+        
+        // Check for bullet points
+        if (line.startsWith('•') || line.startsWith('-') || line.match(/^\d+\./)) {
+          if (!inList) {
+            html += '<ul class="instruction-list">';
+            inList = true;
+          }
+          const content = line.replace(/^[•\-\d+\.]\s*/, '');
+          html += `<li>${content}</li>`;
+        } else {
+          if (inList) {
+            html += '</ul>';
+            inList = false;
+          }
+          html += `<p>${line}</p>`;
+        }
+      }
+      
+      if (inList) {
+        html += '</ul>';
+      }
+      
+      return html;
+    }
+
+    function switchToTwoColumnLayout() {
+      document.getElementById('singleColumnLayout').style.display = 'none';
+      document.getElementById('twoColumnLayout').style.display = 'flex';
+      
+      // Disable copying from instruction pane and add toast
+      setupInstructionPaneProtection();
+    }
+
+    function switchToSingleColumnLayout() {
+      document.getElementById('twoColumnLayout').style.display = 'none';
+      document.getElementById('singleColumnLayout').style.display = 'block';
+    }
+
+    function setupInstructionPaneProtection() {
+      if (instructionPaneProtected) return; // Already set up
+      
+      const instructionPane = document.querySelector('.instruction-pane');
+      if (!instructionPane) return;
+
+      // Disable text selection
+      instructionPane.style.userSelect = 'none';
+      instructionPane.style.webkitUserSelect = 'none';
+      instructionPane.style.mozUserSelect = 'none';
+      instructionPane.style.msUserSelect = 'none';
+
+      // Prevent copy (Ctrl+C, Cmd+C)
+      instructionPane.addEventListener('copy', (e) => {
+        e.preventDefault();
+        showToast('We recommend typing the code yourself for better learning retention. Please avoid copy-pasting.');
+      });
+
+      // Prevent cut
+      instructionPane.addEventListener('cut', (e) => {
+        e.preventDefault();
+        showToast('We recommend typing the code yourself for better learning retention. Please avoid copy-pasting.');
+      });
+
+      // Show toast on right-click
+      instructionPane.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        showToast('We recommend typing the code yourself for better learning retention. Please avoid copy-pasting.');
+      });
+
+      // Prevent drag
+      instructionPane.addEventListener('dragstart', (e) => {
+        e.preventDefault();
+      });
+
+      // Prevent Ctrl+A (select all)
+      instructionPane.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'a') {
+          e.preventDefault();
+          showToast('We recommend typing the code yourself for better learning retention. Please avoid copy-pasting.');
+        }
+      });
+
+      instructionPaneProtected = true;
+    }
+
+    function showToast(message) {
+      // Remove existing toast and backdrop if any
+      const existingToast = document.getElementById('copyToast');
+      const existingBackdrop = document.getElementById('toastBackdrop');
+      if (existingToast) {
+        existingToast.remove();
+      }
+      if (existingBackdrop) {
+        existingBackdrop.remove();
+      }
+
+      // Create backdrop
+      const backdrop = document.createElement('div');
+      backdrop.id = 'toastBackdrop';
+      backdrop.className = 'toast-backdrop';
+      document.body.appendChild(backdrop);
+
+      // Create toast element
+      const toast = document.createElement('div');
+      toast.id = 'copyToast';
+      toast.className = 'toast';
+      
+      // Create message text
+      const messageText = document.createElement('div');
+      messageText.className = 'toast-message';
+      messageText.textContent = message;
+      toast.appendChild(messageText);
+      
+      // Create OK button
+      const okButton = document.createElement('button');
+      okButton.className = 'btn btn-primary toast-ok-btn';
+      okButton.textContent = 'OK';
+      okButton.onclick = () => {
+        toast.classList.remove('show');
+        backdrop.classList.remove('show');
+        setTimeout(() => {
+          toast.remove();
+          backdrop.remove();
+        }, 300);
+      };
+      toast.appendChild(okButton);
+      
+      document.body.appendChild(toast);
+
+      // Show toast and backdrop
+      setTimeout(() => {
+        toast.classList.add('show');
+        backdrop.classList.add('show');
+      }, 10);
+    }
+
+    function initializeEditor(language, step = null) {
+      if (editor) {
+        // Editor already exists, just update language and code
+        const langMap = {
+          'js': 'javascript',
+          'python': 'python',
+          'java': 'java',
+          'cpp': 'cpp',
+          'ts': 'typescript'
+        };
+        monaco.editor.setModelLanguage(editor.getModel(), langMap[language] || 'javascript');
+        editor.setValue(getInitialCode(language, step));
+        return;
+      }
+
+      if (!monacoLoaded) {
+        require.config({ paths: { vs: 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs' } });
+        require(['vs/editor/editor.main'], function () {
+          const langMap = {
+            'js': 'javascript',
+            'python': 'python',
+            'java': 'java',
+            'cpp': 'cpp',
+            'ts': 'typescript'
+          };
+          
+          editor = monaco.editor.create(document.getElementById('editorContainer'), {
+            value: getInitialCode(language, step),
+            language: langMap[language] || 'javascript',
+            theme: 'vs-dark',
+            fontSize: 14,
+            minimap: { enabled: false },
+            automaticLayout: true,
+            scrollBeyondLastLine: false
+          });
+          
+          monacoLoaded = true;
+        });
+      } else {
+        // Monaco is loaded but editor not created yet
+        const langMap = {
+          'js': 'javascript',
+          'python': 'python',
+          'java': 'java',
+          'cpp': 'cpp',
+          'ts': 'typescript'
+        };
+        
+        editor = monaco.editor.create(document.getElementById('editorContainer'), {
+            value: getInitialCode(language, step),
+            language: langMap[language] || 'javascript',
+          theme: 'vs-dark',
+          fontSize: 14,
+          minimap: { enabled: false },
+          automaticLayout: true,
+          scrollBeyondLastLine: false
+        });
+      }
+    }
+
+    // Get problem statement from lesson
+    let currentProblemStatement = null;
+    
+    function getProblemStatement(lesson) {
+      // Try to get from problem-illustration step
+      const problemStep = lesson.flow.find(s => s.stepId === 'problem-illustration');
+      if (problemStep && problemStep.mentorSays) {
+        // Extract problem info from mentorSays
+        const lines = problemStep.mentorSays.split('\n');
+        const titleMatch = lesson.title || 'Problem';
+        
+        // Extract description - look for key phrases
+        let description = '';
+        for (const line of lines) {
+          if (line.includes('Find two numbers') || line.includes('add up to') || line.includes('target')) {
+            description = line.trim();
+            break;
+          }
+        }
+        if (!description && lines.length > 1) {
+          description = lines[1].trim();
+        }
+        
+        // Format example
+        const exampleMatch = problemStep.example || '';
+        let formattedExample = '';
+        if (exampleMatch) {
+          const exampleLines = exampleMatch.split('\n');
+          formattedExample = exampleLines.map(l => l.trim()).filter(l => l).join('\n');
+        }
+        
+        return {
+          title: titleMatch,
+          description: description || 'Find the solution to this problem.',
+          example: formattedExample
+        };
+      }
+      return null;
+    }
+    
+    function getInitialCode(language, step = null) {
+      // If this is a coding step, generate step-specific starter code
+      if (step && step.stepId && step.stepId.startsWith('coding-')) {
+        return getStepSpecificCode(language, step);
+      }
+      
+      // Default templates for non-coding steps
+      const templates = {
+        'js': '// Write your code here\nfunction solution() {\n  // Your code\n}\n\n// Test your code\nsolution();',
+        'python': '# Write your code here\ndef solution():\n    # Your code\n    pass\n\n# Test your code\nsolution()',
+        'java': '// Write your code here\npublic class Solution {\n    public static void main(String[] args) {\n        // Your code\n    }\n}',
+        'cpp': '// Write your code here\n#include <iostream>\nusing namespace std;\n\nint main() {\n    // Your code\n    return 0;\n}',
+        'ts': '// Write your code here\nfunction solution(): void {\n  // Your code\n}\n\n// Test your code\nsolution();'
+      };
+      return templates[language] || templates['js'];
+    }
+    
+    function getStepSpecificCode(language, step) {
+      const stepId = step.stepId;
+      
+      // Extract function name and parameters from step
+      let funcName = 'twoSum';
+      let params = 'nums, target';
+      let returnType = '';
+      let testCall = '';
+      
+      // Determine function signature based on language and step
+      if (stepId.includes('coding-pairs-outer') || stepId.includes('coding-pairs-inner') || stepId.includes('coding-pairs-complete')) {
+        // Two Sum pairs approach
+        if (language === 'js' || language === 'ts') {
+          funcName = 'twoSum';
+          params = 'nums, target';
+          returnType = language === 'ts' ? ': number[]' : '';
+          testCall = 'console.log(twoSum([2, 6, 7, 9], 9));\n// Expected output: [0, 2]';
+        } else if (language === 'python') {
+          funcName = 'two_sum';
+          params = 'nums, target';
+          testCall = 'print(two_sum([2, 6, 7, 9], 9))\n# Expected output: [0, 2]';
+        } else if (language === 'java') {
+          funcName = 'twoSum';
+          params = 'int[] nums, int target';
+          returnType = 'public int[]';
+          testCall = '// Test: twoSum(new int[]{2, 6, 7, 9}, 9) should return [0, 2]';
+        } else if (language === 'cpp') {
+          funcName = 'twoSum';
+          params = 'vector<int>& nums, int target';
+          returnType = 'vector<int>';
+          testCall = '// Test: twoSum({2, 6, 7, 9}, 9) should return {0, 2}';
+        }
+      } else if (stepId.includes('coding-hashmap')) {
+        // Hash map approach - similar structure
+        if (language === 'js' || language === 'ts') {
+          funcName = 'twoSum';
+          params = 'nums, target';
+          returnType = language === 'ts' ? ': number[]' : '';
+          testCall = 'console.log(twoSum([2, 6, 7, 9], 9));\n// Expected output: [0, 2]';
+        } else if (language === 'python') {
+          funcName = 'two_sum';
+          params = 'nums, target';
+          testCall = 'print(two_sum([2, 6, 7, 9], 9))\n# Expected output: [0, 2]';
+        } else if (language === 'java') {
+          funcName = 'twoSum';
+          params = 'int[] nums, int target';
+          returnType = 'public int[]';
+          testCall = '// Test: twoSum(new int[]{2, 6, 7, 9}, 9) should return [0, 2]';
+        } else if (language === 'cpp') {
+          funcName = 'twoSum';
+          params = 'vector<int>& nums, int target';
+          returnType = 'vector<int>';
+          testCall = '// Test: twoSum({2, 6, 7, 9}, 9) should return {0, 2}';
+        }
+      }
+      
+      // Generate step-specific starter code
+      if (stepId.includes('coding-pairs-outer') || stepId.includes('coding-hashmap-loop')) {
+        // Step 1: Outer loop
+        if (language === 'js') {
+          return `function ${funcName}(${params}) {\n  // Step 1: Write your outer loop here\n  // Hint: for (let i = 0; i < nums.length; i++)\n  \n}\n\n// Test your code\n${testCall}`;
+        } else if (language === 'python') {
+          return `def ${funcName}(${params}):\n    # Step 1: Write your outer loop here\n    # Hint: for i in range(len(nums)):\n    pass\n\n# Test your code\n${testCall}`;
+        } else if (language === 'java') {
+          return `${returnType} ${funcName}(${params}) {\n    // Step 1: Write your outer loop here\n    // Hint: for (int i = 0; i < nums.length; i++)\n    \n}\n\n${testCall}`;
+        } else if (language === 'cpp') {
+          return `${returnType} ${funcName}(${params}) {\n    // Step 1: Write your outer loop here\n    // Hint: for (int i = 0; i < nums.size(); i++)\n    \n}\n\n${testCall}`;
+        } else if (language === 'ts') {
+          return `function ${funcName}(${params})${returnType} {\n  // Step 1: Write your outer loop here\n  // Hint: for (let i = 0; i < nums.length; i++)\n  \n}\n\n// Test your code\n${testCall}`;
+        }
+      } else if (stepId.includes('coding-pairs-inner')) {
+        // Step 2: Inner loop
+        if (language === 'js') {
+          return `function ${funcName}(${params}) {\n  for (let i = 0; i < nums.length; i++) {\n    // Step 2: Write your inner loop here\n    // Hint: for (let j = i + 1; j < nums.length; j++)\n    \n  }\n}\n\n// Test your code\n${testCall}`;
+        } else if (language === 'python') {
+          return `def ${funcName}(${params}):\n    for i in range(len(nums)):\n        # Step 2: Write your inner loop here\n        # Hint: for j in range(i + 1, len(nums)):\n        pass\n\n# Test your code\n${testCall}`;
+        } else if (language === 'java') {
+          return `${returnType} ${funcName}(${params}) {\n    for (int i = 0; i < nums.length; i++) {\n        // Step 2: Write your inner loop here\n        // Hint: for (int j = i + 1; j < nums.length; j++)\n        \n    }\n}\n\n${testCall}`;
+        } else if (language === 'cpp') {
+          return `${returnType} ${funcName}(${params}) {\n    for (int i = 0; i < nums.size(); i++) {\n        // Step 2: Write your inner loop here\n        // Hint: for (int j = i + 1; j < nums.size(); j++)\n        \n    }\n}\n\n${testCall}`;
+        } else if (language === 'ts') {
+          return `function ${funcName}(${params})${returnType} {\n  for (let i = 0; i < nums.length; i++) {\n    // Step 2: Write your inner loop here\n    // Hint: for (let j = i + 1; j < nums.length; j++)\n    \n  }\n}\n\n// Test your code\n${testCall}`;
+        }
+      } else if (stepId.includes('coding-pairs-complete') || stepId.includes('coding-hashmap-complete')) {
+        // Step 3: Complete solution - but we'll show a template with hints
+        if (language === 'js') {
+          return `function ${funcName}(${params}) {\n  // Step 3: Complete the solution\n  // Add your logic here to check if sum equals target\n  \n}\n\n// Test your code\n${testCall}`;
+        } else if (language === 'python') {
+          return `def ${funcName}(${params}):\n    # Step 3: Complete the solution\n    # Add your logic here to check if sum equals target\n    pass\n\n# Test your code\n${testCall}`;
+        } else if (language === 'java') {
+          return `${returnType} ${funcName}(${params}) {\n    // Step 3: Complete the solution\n    // Add your logic here to check if sum equals target\n    \n}\n\n${testCall}`;
+        } else if (language === 'cpp') {
+          return `${returnType} ${funcName}(${params}) {\n    // Step 3: Complete the solution\n    // Add your logic here to check if sum equals target\n    \n}\n\n${testCall}`;
+        } else if (language === 'ts') {
+          return `function ${funcName}(${params})${returnType} {\n  // Step 3: Complete the solution\n  // Add your logic here to check if sum equals target\n  \n}\n\n// Test your code\n${testCall}`;
+        }
+      }
+      
+      // Fallback to default
+      return getInitialCode(language);
+    }
+
+    function updateNavigationButtons() {
+      const prevBtn = document.getElementById('prevBtn');
+      prevBtn.disabled = stepHistory.length <= 1;
+    }
+
+    function goToPreviousStep() {
+      if (stepHistory.length > 1) {
+        // Remove current step from history
+        stepHistory.pop();
+        
+        // Get the previous step
+        const previousStepData = stepHistory[stepHistory.length - 1];
+        currentStepId = previousStepData.stepId;
+        
+        // Re-render the previous step
+        renderStepTwoColumn(previousStepData.step);
+        
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+    }
+
+    async function runCode() {
+      if (!editor || !selectedLanguage) return;
+      
+      const code = editor.getValue();
+      const langMap = {
+        'js': 'javascript',
+        'python': 'python',
+        'java': 'java',
+        'cpp': 'cpp',
+        'ts': 'javascript' // TypeScript runs as JS for now
+      };
+
+      const outputContent = document.getElementById('outputContent');
+      outputContent.textContent = 'Running...';
+
+      try {
+        const res = await fetch('/api/execute', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            language: langMap[selectedLanguage],
+            code: code
+          })
+        });
+
+        const data = await res.json();
+        
+        if (data.error) {
+          outputContent.innerHTML = `<span style="color: #ef4444;">Error:\n${data.error}</span>`;
+          showValidationFeedback(false, 'There\'s an error in your code. Please fix it and try again.');
+        } else {
+          outputContent.textContent = data.output || '(No output)';
+          
+          // Validate the step if this is a coding step
+          if (currentStepId && currentStepId.startsWith('coding-')) {
+            const validation = validateStep(currentStepId, code, selectedLanguage, data.output);
+            showValidationFeedback(validation.success, validation.message, validation.hint);
+            
+            // Enable/disable continue button
+            const continueBtn = document.getElementById('continueBtn');
+            if (continueBtn) {
+              continueBtn.disabled = !validation.success;
+              stepValidationState = { passed: validation.success, canContinue: validation.success };
+            }
+          }
+        }
+      } catch (err) {
+        outputContent.innerHTML = `<span style="color: #ef4444;">Error: ${err.message}</span>`;
+        showValidationFeedback(false, 'Failed to run code. Please try again.');
+      }
+    }
+    
+    function validateStep(stepId, code, language, output) {
+      // Simple validation based on step type
+      if (stepId.includes('coding-pairs-outer') || stepId.includes('coding-hashmap-loop')) {
+        // Check for outer loop
+        const hasForLoop = /for\s*\(/.test(code) || /for\s+\w+\s+in/.test(code);
+        const hasNumsLength = /nums\.(length|size\(\))/.test(code) || /len\(nums\)/.test(code);
+        
+        if (hasForLoop && hasNumsLength) {
+          return {
+            success: true,
+            message: '✅ Great! Your outer loop is working. You\'re now iterating through the array.',
+            hint: null
+          };
+        }
+        
+        return {
+          success: false,
+          message: '❌ Hmm, I don\'t see a for loop yet.',
+          hint: language === 'python' 
+            ? 'Hint: Start with: for i in range(len(nums)):'
+            : 'Hint: Start with: for (let i = 0; i < nums.length; i++)'
+        };
+      } else if (stepId.includes('coding-pairs-inner')) {
+        // Check for inner loop
+        const hasOuterLoop = /for\s*\(/.test(code) || /for\s+\w+\s+in/.test(code);
+        const hasInnerLoop = (code.match(/for\s*\(/g) || []).length >= 2 || 
+                             (code.match(/for\s+\w+\s+in/g) || []).length >= 2;
+        const hasJ = /j\s*=\s*i\s*\+/.test(code) || /range\(i\s*\+\s*1/.test(code);
+        
+        if (hasOuterLoop && hasInnerLoop && hasJ) {
+          return {
+            success: true,
+            message: '✅ Perfect! Your inner loop is set up correctly. You can now check pairs.',
+            hint: null
+          };
+        }
+        
+        return {
+          success: false,
+          message: '❌ I don\'t see an inner loop yet.',
+          hint: language === 'python'
+            ? 'Hint: Add: for j in range(i + 1, len(nums)):'
+            : 'Hint: Add: for (let j = i + 1; j < nums.length; j++)'
+        };
+      } else if (stepId.includes('coding-pairs-complete') || stepId.includes('coding-hashmap-complete')) {
+        // Check for complete solution - look for return statement and target check
+        const hasReturn = /return\s*\[/.test(code) || /return\s*\{/.test(code);
+        const hasTargetCheck = /target/.test(code) || /==\s*9/.test(code) || /nums\[i\]\s*\+\s*nums\[j\]/.test(code);
+        
+        if (hasReturn && hasTargetCheck) {
+          // Check if output matches expected
+          const hasExpectedOutput = output && (output.includes('[0, 2]') || output.includes('0,2') || output.includes('0, 2'));
+          if (hasExpectedOutput) {
+            return {
+              success: true,
+              message: '✅ Excellent! Your solution is working correctly! The output matches the expected result.',
+              hint: null
+            };
+          } else {
+            return {
+              success: true,
+              message: '✅ Good! Your code runs without errors. Make sure it returns [0, 2] for the test case.',
+              hint: null
+            };
+          }
+        }
+        
+        return {
+          success: false,
+          message: '❌ Your solution isn\'t complete yet.',
+          hint: 'Hint: Add a check for if (nums[i] + nums[j] === target) and return [i, j]'
+        };
+      }
+      
+      // Default: no validation for non-coding steps
+      return {
+        success: true,
+        message: null,
+        hint: null
+      };
+    }
+    
+    function showValidationFeedback(success, message, hint = null) {
+      const feedbackEl = document.getElementById('validationFeedback');
+      if (!message) {
+        feedbackEl.style.display = 'none';
+        return;
+      }
+      
+      feedbackEl.style.display = 'block';
+      feedbackEl.className = `validation-feedback ${success ? 'success' : 'error'}`;
+      feedbackEl.innerHTML = `
+        <div class="validation-message">${message}</div>
+        ${hint ? `<div class="validation-hint">${hint}</div>` : ''}
+      `;
+    }
+
+    function resetCode() {
+      if (editor && selectedLanguage) {
+        // Get current step to reset to step-specific code
+        const currentStep = stepHistory[stepHistory.length - 1]?.step;
+        editor.setValue(getInitialCode(selectedLanguage, currentStep));
+        document.getElementById('outputContent').textContent = 'No output yet. Write code and click Run.';
+        
+        // Reset validation state
+        document.getElementById('validationFeedback').style.display = 'none';
+        stepValidationState = { passed: false, canContinue: false };
+        const continueBtn = document.getElementById('continueBtn');
+        if (continueBtn) {
+          continueBtn.disabled = true;
+        }
+      }
+    }
+
+    startLesson();
+  </script>
+</body>
+</html>
+

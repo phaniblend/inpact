@@ -1,0 +1,100 @@
+{
+  "id": "sort-colors",
+  "title": "Sort Colors",
+  "difficulty": "medium",
+  "pattern": "three-pointers",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list containing only three values:\n\n• 0\n• 1\n• 2\n\nEach value represents a color.\n\nYour task is to sort the list **in-place** so that all 0s come first, then 1s, then 2s.\n\nYou must not use built-in sorting.",
+      "example": "Input: [2,0,2,1,1,0]",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Start small.\n\nInput: [2, 0, 1]\n\nSorted result:\n[0, 1, 2]\n\nOnly three distinct values exist.",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-in-place",
+      "mentorSays": "Important clarification:\n\n• You must rearrange the existing list\n• You should not create another list\n\nThis forces us to think about **positions**, not copying.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nSince there are only three possible values, could we organize the list into **regions**?",
+      "choices": [
+        {
+          "label": "Yes, split the list into three regions",
+          "next": "region-idea"
+        },
+        {
+          "label": "No, we must compare everything",
+          "next": "region-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "region-idea",
+      "mentorSays": "Correct.\n\nWe can think of the list as having three regions:\n\n• left region → all 0s\n• middle region → all 1s\n• right region → all 2s\n\nOur goal is to grow these regions correctly.",
+      "action": "next"
+    },
+    {
+      "stepId": "three-pointers",
+      "mentorSays": "To manage these regions, we use three pointers:\n\n• low → boundary for 0s\n• mid → current position being checked\n• high → boundary for 2s\n\nEverything between low and high is still unsorted.",
+      "action": "next"
+    },
+    {
+      "stepId": "how-pointers-move",
+      "mentorSays": "Rules while scanning:\n\n• If value is 0:\n  - swap with low\n  - move low and mid forward\n\n• If value is 1:\n  - already in correct region\n  - move mid forward\n\n• If value is 2:\n  - swap with high\n  - move high backward\n  - do NOT move mid yet",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\nInput: [2,0,2,1]\n\nStart:\nlow=0, mid=0, high=3\n\nnums[mid]=2 → swap with high\n[1,0,2,2]\nhigh--\n\nnums[mid]=1 → mid++\n\nnums[mid]=0 → swap with low\n[0,1,2,2]\nlow++, mid++\n\nDone.",
+      "action": "next"
+    },
+    {
+      "stepId": "why-no-extra-pass",
+      "mentorSays": "Notice:\n\n• Every element is handled at most once\n• No sorting or extra scanning is required\n\nThis makes the solution efficient.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "set low = 0, mid = 0, high = length - 1",
+        "while mid <= high:",
+        "  if nums[mid] == 0:",
+        "    swap nums[low] and nums[mid]",
+        "    increment low and mid",
+        "  else if nums[mid] == 1:",
+        "    increment mid",
+        "  else:",
+        "    swap nums[mid] and nums[high]",
+        "    decrement high",
+        "return nums"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nPay attention to when pointers move.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function sortColors(nums) {\n  let low = 0;\n  let mid = 0;\n  let high = nums.length - 1;\n\n  while (mid <= high) {\n    if (nums[mid] === 0) {\n      [nums[low], nums[mid]] = [nums[mid], nums[low]];\n      low++;\n      mid++;\n    } else if (nums[mid] === 1) {\n      mid++;\n    } else {\n      [nums[mid], nums[high]] = [nums[high], nums[mid]];\n      high--;\n    }\n  }\n\n  return nums;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example checks:\n\n[2,0,2,1,1,0] → [0,0,1,1,2,2]\n[1,0,2] → [0,1,2]\n\nSorting works correctly in-place.",
+      "action": "complete"
+    }
+  ]
+}

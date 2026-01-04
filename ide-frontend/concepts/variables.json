@@ -1,0 +1,38 @@
+{
+  "id": "variables",
+  "title": "Variables Explained",
+  "screens": [
+    {
+      "type": "intro",
+      "title": "Variables: Labeled Storage Boxes 📦",
+      "analogy": "A variable is like a labeled box where you can store a value. You give it a name (like 'age' or 'name') and put data inside it. Later, you can use that name to refer to the value stored in the box.",
+      "code": "let name = \"John\";\nlet age = 25;\nlet isActive = true;\n\n// Use the variables:\nconsole.log(name); // \"John\"\nconsole.log(age);  // 25",
+      "visual": {
+        "type": "array-boxes",
+        "items": ["name = \"John\"", "age = 25", "isActive = true"]
+      },
+      "tip": "Variables let you store and reuse values. Give them meaningful names!"
+    },
+    {
+      "type": "builder",
+      "title": "Create Your Variables",
+      "instructions": "Try creating variables. Type a name and a value:",
+      "placeholder": "e.g., color = \"blue\"",
+      "examples": ["color = \"blue\"", "count = 10", "isReady = true"]
+    },
+    {
+      "type": "quiz",
+      "title": "Test Your Knowledge",
+      "context": "let name = \"Alice\";\nlet age = 30;",
+      "question": "What does name contain?",
+      "options": [
+        "\"Alice\"",
+        "30",
+        "name"
+      ],
+      "correctIndex": 0,
+      "correctFeedback": "✅ Correct! The variable name stores the value \"Alice\".",
+      "incorrectFeedback": "❌ The variable name stores \"Alice\". The variable age stores 30."
+    }
+  ]
+}

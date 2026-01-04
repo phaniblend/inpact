@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>aptlearn.live — Mentor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(1200px 600px at 20% 0%, #0f172a, #020617);
+      color: #e5e7eb;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    .shell {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #020617;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 0 40px rgba(56,189,248,0.08);
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .mentor-text {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+      white-space: pre-wrap;
+    }
+
+    .example {
+      font-family: monospace;
+      background: #020617;
+      border-left: 3px solid #38bdf8;
+      padding: 10px;
+      margin-bottom: 16px;
+      color: #bae6fd;
+    }
+
+    .choices {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button {
+      background: #020617;
+      color: #e5e7eb;
+      border: 1px solid #334155;
+      padding: 12px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 14px;
+    }
+
+    button:hover {
+      border-color: #38bdf8;
+      color: #38bdf8;
+    }
+
+    .meta {
+      margin-top: 12px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="shell">
+    <h1>APT Learn — Mentor</h1>
+    <div id="mentorText" class="mentor-text">Loading…</div>
+    <div id="example" class="example" style="display:none;"></div>
+    <div id="choices" class="choices"></div>
+    <div id="meta" class="meta"></div>
+  </div>
+
+  <script>
+    const API_BASE = "http://localhost:5000/api/mentor";
+    const LESSON_ID = "two-sum";
+
+    let currentStepId = null;
+
+    async function startLesson() {
+      const res = await fetch(API_BASE + "/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ lessonId: LESSON_ID })
+      });
+
+      const data = await res.json();
+      renderStep(data.step);
+    }
+
+    async function nextStep(choiceLabel = null) {
+      const res = await fetch(API_BASE + "/next", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lessonId: LESSON_ID,
+          currentStepId,
+          choiceLabel
+        })
+      });
+
+      const data = await res.json();
+
+      if (data.done) {
+        document.getElementById("mentorText").textContent =
+          "Lesson complete.";
+        document.getElementById("choices").innerHTML = "";
+        return;
+      }
+
+      renderStep(data.step);
+    }
+
+    function renderStep(step) {
+      currentStepId = step.stepId;
+
+      document.getElementById("mentorText").textContent = step.mentorSays;
+      document.getElementById("meta").textContent = "stepId: " + step.stepId;
+
+      const exampleEl = document.getElementById("example");
+      if (step.example) {
+        exampleEl.textContent = step.example;
+        exampleEl.style.display = "block";
+      } else {
+        exampleEl.style.display = "none";
+      }
+
+      const choicesEl = document.getElementById("choices");
+      choicesEl.innerHTML = "";
+
+      if (step.choices && step.choices.length) {
+        step.choices.forEach(c => {
+          const btn = document.createElement("button");
+          btn.textContent = c.label;
+          btn.onclick = () => nextStep(c.label);
+          choicesEl.appendChild(btn);
+        });
+      } else if (step.action === "continue") {
+        const btn = document.createElement("button");
+        btn.textContent = "Continue";
+        btn.onclick = () => nextStep();
+        choicesEl.appendChild(btn);
+      }
+    }
+
+    startLesson();
+  </script>
+</body>
+</html>

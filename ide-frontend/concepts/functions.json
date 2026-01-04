@@ -1,0 +1,52 @@
+{
+  "id": "functions",
+  "title": "Functions Explained",
+  "screens": [
+    {
+      "type": "intro",
+      "title": "Functions: Your Code Recipe Book 📖",
+      "analogy": "Think of a function like a recipe. You write the recipe once with placeholders for ingredients (parameters), and then you can use it many times with different ingredients. Each time you follow the recipe, you get a result!",
+      "code": "function greet(name) {\n  return \"Hello, \" + name;\n}\n\n// Use the function:\ngreet(\"John\"); // Returns: \"Hello, John\"\ngreet(\"Sarah\"); // Returns: \"Hello, Sarah\"",
+      "visual": {
+        "type": "array-boxes",
+        "items": ["Recipe", "Ingredients", "Result"]
+      },
+      "tip": "Functions let you reuse code! Write it once, use it many times with different inputs."
+    },
+    {
+      "type": "builder",
+      "title": "Create Your First Function",
+      "instructions": "Try creating a function. Type a function name and what it should do:",
+      "placeholder": "e.g., add, multiply, greet",
+      "examples": ["add", "multiply", "greet"]
+    },
+    {
+      "type": "quiz",
+      "title": "Test Your Knowledge",
+      "context": "function add(a, b) {\n  return a + b;\n}",
+      "question": "What does add(5, 3) return?",
+      "options": [
+        "8",
+        "53",
+        "15"
+      ],
+      "correctIndex": 0,
+      "correctFeedback": "✅ Correct! add(5, 3) returns 8 because 5 + 3 = 8.",
+      "incorrectFeedback": "❌ Remember: add(5, 3) means 5 + 3, which equals 8."
+    },
+    {
+      "type": "quiz",
+      "title": "One More Question",
+      "context": "function greet(name) {\n  return \"Hello, \" + name;\n}",
+      "question": "What does greet(\"Alice\") return?",
+      "options": [
+        "\"Hello, Alice\"",
+        "\"Alice\"",
+        "\"Hello\""
+      ],
+      "correctIndex": 0,
+      "correctFeedback": "✅ Perfect! The function combines \"Hello, \" with the name parameter.",
+      "incorrectFeedback": "❌ The function returns \"Hello, \" + name, so greet(\"Alice\") returns \"Hello, Alice\"."
+    }
+  ]
+}
