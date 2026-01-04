@@ -1,0 +1,441 @@
+{
+  "id": "course-schedule-ii",
+  "title": "Course Schedule II",
+  "pattern": "topological sort (ordering)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 44,
+    "tier": "ADVANCED",
+    "lessonOrderTag": "ADVANCED-44",
+    "introduces": [
+      "topological-ordering",
+      "postorder-collection"
+    ],
+    "assumesAlreadyTaught": [
+      "topological-sort",
+      "cycle-detection",
+      "graph-states"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "word-ladder"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Build an adjacency list from the prerequisites array where each course points to its dependent courses"
+    },
+    {
+      "id": "ps2",
+      "text": "Initialize a visited array to track node states: 0=unvisited, 1=visiting, 2=completed"
+    },
+    {
+      "id": "ps3",
+      "text": "Create an empty result array to store the course ordering"
+    },
+    {
+      "id": "ps4",
+      "text": "For each unvisited course, perform DFS: mark as visiting, recursively visit all neighbors"
+    },
+    {
+      "id": "ps5",
+      "text": "During DFS, if we encounter a node marked as visiting, return false (cycle detected)"
+    },
+    {
+      "id": "ps6",
+      "text": "After visiting all neighbors of a course, mark it as completed and add to front of result array"
+    },
+    {
+      "id": "ps7",
+      "text": "If any DFS call returns false due to cycle, return empty array, otherwise return the result array"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to take your course scheduling skills to the next level? In our previous lesson, we tackled the basic \"Course Schedule\" problem where we just needed to determine if it was possible to complete all courses. Now we're going even further - we want to find the actual order in which to take those courses!\n\nThis is where **topological sorting** really shines. Think of it like creating a step-by-step plan where each course naturally builds on the prerequisites that come before it. It's the same dependency-solving pattern you see everywhere - from project management to software builds to even getting dressed in the morning (socks before shoes, right?).\n\nHere are the 3 key skills you'll master:\n\n1. **Implement Kahn's Algorithm** - Learn the classic approach using in-degrees and queue processing\n2. **Apply DFS-based topological sorting** - Master the recursive depth-first approach with finish times\n3. **Handle multiple valid orderings** - Understand when problems have multiple correct solutions and how to find any valid one\n\nYou're building on solid foundations from the previous lesson, and topological sorting is one of those elegant algorithms that just clicks once you see it in action. Plus, it's incredibly practical - you'll spot opportunities to use this pattern everywhere!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Directed graphs** - Understanding of directed graph representation and properties\n- **Adjacency list** - Knowledge of adjacency list data structure for graph representation\n- **Depth first search** - Proficiency in DFS traversal and recursive graph exploration\n- **Graph coloring** - Understanding of node states (white/gray/black) for cycle detection\n- **Topological ordering** - Knowledge of topological sort algorithms and their applications\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Directed graphs** - Understanding of directed graph representation and properties\n- **Adjacency list** - Knowledge of adjacency list data structure for graph representation\n- **Depth first search** - Proficiency in DFS traversal and recursive graph exploration\n- **Graph coloring** - Understanding of node states (white/gray/black) for cycle detection\n- **Topological ordering** - Knowledge of topological sort algorithms and their applications\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Directed graphs** - Understanding of directed graph representation and properties\n- **Adjacency list** - Knowledge of adjacency list data structure for graph representation\n- **Depth first search** - Proficiency in DFS traversal and recursive graph exploration\n- **Graph coloring** - Understanding of node states (white/gray/black) for cycle detection\n- **Topological ordering** - Knowledge of topological sort algorithms and their applications\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Directed graphs** - Understanding of directed graph representation and properties\n- **Adjacency list** - Knowledge of adjacency list data structure for graph representation\n- **Depth first search** - Proficiency in DFS traversal and recursive graph exploration\n- **Graph coloring** - Understanding of node states (white/gray/black) for cycle detection\n- **Topological ordering** - Knowledge of topological sort algorithms and their applications\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Directed graphs** - Understanding of directed graph representation and properties\n- **Adjacency list** - Knowledge of adjacency list data structure for graph representation\n- **Depth first search** - Proficiency in DFS traversal and recursive graph exploration\n- **Graph coloring** - Understanding of node states (white/gray/black) for cycle detection\n- **Topological ordering** - Knowledge of topological sort algorithms and their applications\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Course Schedule II problem asks for.\n\nImagine you're getting dressed in the morning - you can't put on your shoes before your socks, or your jacket before your shirt. Course Schedule II is like finding the correct order to put on all your clothes when some items must come before others, using topological sorting to arrange the dependencies and detect if you've created an impossible situation (like needing socks that go over shoes that go over socks).\n\n# Course Schedule II Problem\n\n## What it's asking for\n\nYou're a student trying to figure out the order to take your courses! You have `numCourses` total courses (numbered 0 to numCourses-1) and a list of `prerequisites` where each pair `[a, b]` means \"you must take course b before you can take course a.\"\n\nThe problem asks: **Can you find ANY valid order to take all the courses?** If yes, return one possible ordering. If it's impossible (due to circular dependencies), return an empty array.\n\n## Let's walk through the example\n\n```\nnumCourses = 4\nprerequisites = [[1,0], [2,0], [3,1], [3,2]]\n```\n\nFirst, let's decode what these prerequisites mean:\n- `[1,0]`: Take course 0 before course 1\n- `[2,0]`: Take course 0 before course 2  \n- `[3,1]`: Take course 1 before course 3\n- `[3,2]`: Take course 2 before course 3\n\nSo our dependency chain looks like:\n```\nCourse 0 → Course 1 → Course 3\nCourse 0 → Course 2 → Course 3\n```\n\nCourse 0 has no prerequisites, so we can start there. Both courses 1 and 2 need course 0 first. Course 3 needs both courses 1 and 2.\n\n## Why the example outputs work\n\n**Output `[0,1,2,3]` works because:**\n- Take course 0 first ✓ (no prerequisites)\n- Take course 1 next ✓ (course 0 is done)\n- Take course 2 next ✓ (course 0 is done)  \n- Take course 3 last ✓ (both courses 1 and 2 are done)\n\n**Output `[0,2,1,3]` also works because:**\n- Take course 0 first ✓ (no prerequisites)\n- Take course 2 next ✓ (course 0 is done)\n- Take course 1 next ✓ (course 0 is done)\n- Take course 3 last ✓ (both courses 1 and 2 are done)\n\nThe key insight is that as long as you satisfy all the prerequisite relationships, the exact order can be flexible. Both answers respect the rule that course 3 comes after both 1 and 2, and that 1 and 2 both come after 0.\n\nThis is essentially a **topological sorting** problem on a directed graph!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to find a valid course ordering where prerequisites are satisfied. You have courses [0,1,2,3] with prerequisites [[1,0],[2,0],[3,1],[3,2]]. When using DFS for topological sorting, at what point should you add each course to your result list to ensure prerequisites are completed before dependent courses?",
+      "choices": [
+        {
+          "label": "Add each course to the result list immediately when you first visit it (preorder)",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Add each course to the result list after visiting all its dependencies (postorder)",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This is tempting because it seems logical to record courses as soon as you encounter them. However, this violates the prerequisite constraint. For example, you might add course 3 to your result before adding its prerequisites (courses 1 and 2), creating an invalid ordering where a course appears before its dependencies are satisfied.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Topological Sort with Ordering\n\n**This problem follows the \"topological ordering\" pattern:**\n- **Directed acyclic graph (DAG)** - Courses and prerequisites form a DAG\n- **Topological sort** - Find linear ordering respecting dependencies\n- **Cycle detection** - Detect if ordering is impossible (cycle exists)\n- **Postorder collection** - Collect nodes after processing dependencies\n\n**Similar problems:**\n- Course Schedule (just check if ordering exists)\n- Alien Dictionary (topological sort on characters)\n- Build Order (similar dependency resolution)\n\n**Key insight:** Topological sort finds a valid ordering where all prerequisites come before dependent courses. Postorder DFS or Kahn's algorithm (BFS-based) can solve this.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Result Contains Courses in Valid Order\n\n**Invariant maintained throughout:**\n- **Dependency satisfaction:** For any course in result, all its prerequisites appear before it\n- **Result ordering:** Courses are added in an order that respects all prerequisite constraints\n- **Completeness:** All courses are added if no cycle exists\n\n**Why this works:**\n- Postorder DFS: We add a course only after processing all its prerequisites\n- Kahn's algorithm: We process courses with no remaining dependencies first\n- Both ensure prerequisites always come before dependent courses\n\n**Invariant guarantee:** After processing completes, if result contains all courses, then the ordering is valid - every course appears after all its prerequisites. If result is incomplete, a cycle exists.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Topological Sort State\n\n**State variables (DFS approach):**\n- **`visited`** - Array tracking node states: 0=unvisited, 1=visiting, 2=visited\n- **`result`** - Array storing topological order (collected in postorder)\n- **`graph`** - Adjacency list representation of prerequisites\n\n**State variables (Kahn's approach):**\n- **`indegree`** - Array counting incoming edges for each course\n- **`queue`** - Queue of courses with indegree 0 (no dependencies)\n- **`result`** - Array storing topological order\n\n**State transitions (DFS):**\n1. Mark node as visiting (1)\n2. Recursively process all neighbors\n3. If cycle detected (neighbor is visiting), return false\n4. Mark node as visited (2), add to result (postorder)\n\n**State validity:** Ordering is valid when all courses are in result and no cycles exist.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Preorder Collection (Add on First Visit)**\n- **Why it fails:** Violates prerequisite ordering\n- **Issue:** May add course before its prerequisites\n- **Example:** Course 3 added before courses 1 and 2\n- **Better:** Postorder ensures prerequisites are added first\n\n**Approach 2: Random Ordering**\n- **Why it fails:** Doesn't respect dependencies\n- **Issue:** May place dependent course before prerequisite\n- **Better:** Topological sort guarantees valid ordering\n\n**Approach 3: Greedy by Prerequisite Count**\n- **Why it fails:** Doesn't handle complex dependency chains\n- **Issue:** May get stuck when multiple courses have same prerequisite count\n- **Better:** Topological sort handles all dependency patterns\n\n**Our approach wins because:** Topological sort (DFS postorder or Kahn's) guarantees a valid ordering where all prerequisites come before dependent courses, and detects cycles when no valid ordering exists.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **DFS with postorder traversal** - add each course to the result **after** visiting all its prerequisites (neighbors). This works because in postorder, we only process a node after we've fully explored all nodes that depend on it, naturally creating the correct prerequisite ordering. For example, if course 1 requires course 0, DFS on course 1 will first recursively visit and complete course 0, then add course 1 to the result, giving us the valid sequence [0, 1]. The **postorder guarantees** that prerequisites always appear before the courses that need them in our final ordering.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `numCourses=4, prerequisites=[[1,0],[2,0],[3,1],[3,2]]`:\n\n- Step 1: Build adjacency list: {0: [1,2], 1: [3], 2: [3], 3: []} and indegree array: [0,1,1,2]\n- Step 2: Initialize queue with courses having indegree 0: queue = [0], result = []\n- Step 3: Process course 0, add to result: result = [0], update indegrees of neighbors 1,2 to [0,0,1,2]\n- Step 4: Add courses 1,2 to queue since their indegree became 0: queue = [1,2]\n- Step 5: Process course 1, add to result: result = [0,1], update indegree of neighbor 3 to [0,0,1,1]\n- Step 6: Process course 2, add to result: result = [0,2,1], update indegree of neighbor 3 to [0,0,1,0]\n- Step 7: Add course 3 to queue since its indegree became 0: queue = [3]\n- Step 8: Process course 3, add to result: result = [0,1,2,3], queue becomes empty\n- Final: **[0,1,2,3]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function signature and result array to store topological order\n\n```javascript\nfunction topologicalSort(graph) {\n    const result = [];\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function topologicalSort(graph) {\n    const result = [];\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Create visited set to track processed nodes and avoid cycles\n\n```javascript\nfunction topologicalSort(graph) {\n    const result = [];\n    const visited = new Set();\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    const visited = new Set();"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Define DFS helper function that takes current node as parameter\n\n```javascript\nfunction topologicalSort(graph) {\n    const result = [];\n    const visited = new Set();\n    \n    function dfs(node) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    function dfs(node) {\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Base case: return early if node already visited to prevent infinite loops\n\n```javascript\nfunction topologicalSort(graph) {\n    const result = [];\n    const visited = new Set();\n    \n    function dfs(node) {\n        if (visited.has(node)) return;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        if (visited.has(node)) return;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Mark current node as visited before exploring neighbors\n\n```javascript\nfunction topologicalSort(graph) {\n    const result = [];\n    const visited = new Set();\n    \n    function dfs(node) {\n        if (visited.has(node)) return;\n        visited.add(node);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        visited.add(node);"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Recursively visit all neighbors using DFS before processing current node\n\n```javascript\nfunction topologicalSort(graph) {\n    const result = [];\n    const visited = new Set();\n    \n    function dfs(node) {\n        if (visited.has(node)) return;\n        visited.add(node);\n        \n        for (const neighbor of graph[node] || []) {\n            dfs(neighbor);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        for (const neighbor of graph[node] || []) {\n            dfs(neighbor);\n        }"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "CRITICAL: Add node to result in postorder (after all neighbors visited)\n\n```javascript\nfunction topologicalSort(graph) {\n    const result = [];\n    const visited = new Set();\n    \n    function dfs(node) {\n        if (visited.has(node)) return;\n        visited.add(node);\n        \n        for (const neighbor of graph[node] || []) {\n            dfs(neighbor);\n        }\n        \n        result.push(node);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "        result.push(node);"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Start DFS from all nodes to handle disconnected components\n\n```javascript\nfunction topologicalSort(graph) {\n    const result = [];\n    const visited = new Set();\n    \n    function dfs(node) {\n        if (visited.has(node)) return;\n        visited.add(node);\n        \n        for (const neighbor of graph[node] || []) {\n            dfs(neighbor);\n        }\n        \n        result.push(node);\n    }\n    \n    for (const node in graph) {\n        dfs(node);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-09",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "    for (const node in graph) {\n        dfs(node);\n    }"
+    },
+    {
+      "stepId": "code-09",
+      "mentorSays": "Return result reversed since postorder gives reverse topological order\n\n```javascript\nfunction topologicalSort(graph) {\n    const result = [];\n    const visited = new Set();\n    \n    function dfs(node) {\n        if (visited.has(node)) return;\n        visited.add(node);\n        \n        for (const neighbor of graph[node] || []) {\n            dfs(neighbor);\n        }\n        \n        result.push(node);\n    }\n    \n    for (const node in graph) {\n        dfs(node);\n    }\n    \n    return result.reverse();\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps9"
+      ],
+      "example": "    return result.reverse();"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering topological sort and course scheduling! You've successfully learned how to find valid orderings in directed acyclic graphs, a fundamental skill for handling dependencies and prerequisites. Next, we'll tackle the word ladder problem, where you'll explore BFS techniques to find the shortest transformation path between words - another exciting graph traversal challenge!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

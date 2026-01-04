@@ -1,0 +1,385 @@
+{
+  "id": "burst-balloons",
+  "title": "Burst Balloons",
+  "pattern": "DP (interval)",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 94,
+    "tier": "INTERVIEW-MASTERY",
+    "lessonOrderTag": "INTERVIEW-MASTERY-94",
+    "introduces": [
+      "interval-dp",
+      "divide-conquer-dp"
+    ],
+    "assumesAlreadyTaught": [
+      "dynamic-programming-concept"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "super-egg-drop"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Add sentinel balloons (value 1) at both ends of the array to handle boundaries"
+    },
+    {
+      "id": "ps2",
+      "text": "Define dp[left][right] = maximum coins from bursting all balloons in open interval (left, right)"
+    },
+    {
+      "id": "ps3",
+      "text": "For each interval length from 2 to n+2 (minimum valid interval size)"
+    },
+    {
+      "id": "ps4",
+      "text": "For each left boundary position in the valid range"
+    },
+    {
+      "id": "ps5",
+      "text": "Calculate right boundary: right = left + length"
+    },
+    {
+      "id": "ps6",
+      "text": "Try each balloon k in (left, right) as the LAST balloon to burst"
+    },
+    {
+      "id": "ps7",
+      "text": "When k is last: coins = nums[left] * nums[k] * nums[right] (neighbors are fixed!)"
+    },
+    {
+      "id": "ps8",
+      "text": "Add coins from left subinterval dp[left][k] and right subinterval dp[k][right]"
+    },
+    {
+      "id": "ps9",
+      "text": "Take maximum over all choices of k: dp[left][right] = max(coins for all k)"
+    },
+    {
+      "id": "ps10",
+      "text": "Return dp[0][n+1] (entire array with sentinels)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! **Burst Balloons** - master DP (interval)!\n\nThis lesson teaches: interval-dp, divide-conquer-dp\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which language?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Prerequisites: dynamic-programming-concept\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Prerequisites: dynamic-programming-concept\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Prerequisites: dynamic-programming-concept\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Prerequisites: dynamic-programming-concept\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Prerequisites: dynamic-programming-concept\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "### Burst Balloons Problem\n\n**Given:** Array `nums` representing balloons, where `nums[i]` is the value of balloon `i`.\n\n**Goal:** Burst all balloons to maximize total coins.\n\n**Rules:**\n- When you burst balloon `i`, you get `nums[left] * nums[i] * nums[right]` coins\n- `left` and `right` are the **neighbors** of `i` (adjacent balloons that haven't been burst yet)\n- After bursting, `i` is removed, and `left` and `right` become adjacent\n\n**Example:**\n```\nnums = [3, 1, 5, 8]\n\nBurst order matters! If we burst 1 first:\n  Coins = 3 * 1 * 5 = 15\n  Array becomes [3, 5, 8]\n  Next burst 5: coins = 3 * 5 * 8 = 120\n  ...\n\nTotal depends on order!\n```\n\n**This is an interval DP problem** - we need to find the optimal order to burst balloons in each interval.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "How to solve this efficiently?",
+      "choices": [
+        {
+          "label": "Brute force approach",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use DP (interval)",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Brute force won't be efficient!\n\nThe optimal approach is better.",
+      "action": "next",
+      "next": "core-insight"
+    },
+    {
+      "stepId": "core-insight",
+      "mentorSays": "### Core Insight: Interval DP with Last Balloon Strategy\n\nThe key insight is to use **interval DP** where `dp[left][right]` represents the maximum coins from bursting all balloons in the open interval `(left, right)`.\n\n**Critical insight:** Instead of thinking \"which balloon to burst first\", think \"which balloon to burst LAST\".\n\n**Why last?** When we pick the last balloon `k` in interval `(left, right)`:\n- All other balloons in the interval are already burst\n- The neighbors of `k` are `left` and `right` (the boundaries, which are fixed!)\n- Coins = `nums[left] * nums[k] * nums[right]`\n- Then add: `dp[left][k]` (left subinterval) + `dp[k][right]` (right subinterval)\n\n**Recurrence:** `dp[left][right] = max over k in (left, right) of (nums[left] * nums[k] * nums[right] + dp[left][k] + dp[k][right])`\n\n**This is interval DP** - we solve for all intervals of increasing length, building from smaller to larger intervals.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Interval DP State\n\n**State variables:**\n- **`dp[left][right]`** - Maximum coins from bursting all balloons in open interval `(left, right)`\n- **`nums`** - Array of balloon values (with sentinels 1 at both ends)\n- **`k`** - Index of last balloon to burst in interval `(left, right)`\n\n**State transitions:**\n1. **Add sentinels:** nums = [1, ...original..., 1]\n2. **Initialize:** dp[i][i+1] = 0 for all i (intervals with no balloons)\n3. **Fill DP table:** For length from 2 to n+1:\n   - For each interval (left, right) of this length:\n     - For each k in (left, right):\n       - coins = nums[left] * nums[k] * nums[right] + dp[left][k] + dp[k][right]\n       - dp[left][right] = max(dp[left][right], coins)\n4. **Result:** Return dp[0][n+1] (entire array with sentinels)\n\n**State validity:** After filling, dp[0][n+1] contains maximum coins for bursting all balloons.",
+      "action": "next",
+      "next": "transition-logic"
+    },
+    {
+      "stepId": "transition-logic",
+      "mentorSays": "### Transition Logic: Last Balloon Choice\n\n**For interval (left, right), we try each balloon k as the last one to burst:**\n\n**When k is the last balloon:**\n- All balloons in (left, k) are already burst → left neighbor is nums[left]\n- All balloons in (k, right) are already burst → right neighbor is nums[right]\n- Coins from bursting k = nums[left] * nums[k] * nums[right]\n- Total = coins + dp[left][k] + dp[k][right]\n\n**We choose the k that maximizes this total:**\n- `dp[left][right] = max over k in (left, right) of (nums[left] * nums[k] * nums[right] + dp[left][k] + dp[k][right])`\n\n**Why this works:**\n- By fixing k as the last balloon, we know its neighbors (left and right boundaries)\n- Subproblems dp[left][k] and dp[k][right] are independent and already solved\n- We try all possible k and take the maximum\n\n**Example:** Interval (0, 3) with balloons [1, 3, 1, 5]\n- Try k=1 (last): coins = 1*3*5 + dp[0][1] + dp[1][3] = 15 + 0 + ...\n- Try k=2 (last): coins = 1*1*5 + dp[0][2] + dp[2][3] = 5 + ...\n- Choose maximum\n\n**This transition logic captures all valid bursting orders by considering all possible last balloons.**",
+      "action": "next",
+      "next": "failure-modes"
+    },
+    {
+      "stepId": "failure-modes",
+      "mentorSays": "### Failure Modes: Why Alternative Approaches Fail\n\n**Approach 1: Greedy (Always Burst Smallest/Largest)**\n- **Why it fails:** Doesn't guarantee optimal\n- **Issue:** Local optimal choices don't lead to global optimum\n- **Example:** Bursting smallest first might miss better combinations\n- **Better:** DP considers all possibilities\n\n**Approach 2: Try All Permutations**\n- **Why it fails:** Factorial time O(n!)\n- **Issue:** Too many orders to try\n- **Better:** Interval DP reduces to O(n³) time\n\n**Approach 3: First Balloon Strategy**\n- **Why it fails:** Neighbors change after bursting\n- **Issue:** Hard to track which balloons are adjacent after each burst\n- **Better:** Last balloon strategy fixes neighbors (boundaries)\n\n**Approach 4: Recursion Without Memoization**\n- **Why it fails:** Exponential time due to overlapping subproblems\n- **Issue:** Recalculates same intervals many times\n- **Better:** DP stores results, avoiding recalculation\n\n**Our approach wins because:** Interval DP with last balloon strategy finds the maximum coins in O(n³) time. The key insight of \"last balloon\" fixes the neighbor problem, making the subproblems independent and solvable.",
+      "action": "next",
+      "next": "last-balloon-invariant"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **interval DP** where `dp[left][right]` represents the maximum coins from bursting all balloons in the open interval `(left, right)`. Instead of thinking \"which balloon to burst first\", think \"which balloon to burst LAST\". When we pick the last balloon `k`, its neighbors are fixed as the boundaries `left` and `right`, allowing us to compute subproblems independently.",
+      "action": "next",
+      "next": "last-balloon-invariant"
+    },
+    {
+      "stepId": "last-balloon-invariant",
+      "mentorSays": "### Invariant: We Pick LAST Balloon So Neighbors Are Fixed\n\n**The critical insight:**\n\n**Wrong approach (first balloon):**\n- If we burst balloon `k` first, its neighbors are `k-1` and `k+1`\n- But after bursting, the neighbors change!\n- Hard to track which balloons are adjacent\n\n**Correct approach (last balloon):**\n- If we burst balloon `k` LAST in interval `(left, right)`\n- All other balloons in `(left, k)` and `(k, right)` are already gone\n- The neighbors of `k` are **guaranteed** to be `left` and `right` (the boundaries)\n- These boundaries are **fixed** and don't change!\n\n**Example:**\n```\nInterval (0, 4) with balloons [1, 3, 1, 5, 8]\n\nIf we pick k=2 (value 1) as LAST:\n  - All balloons in (0, 2) are burst → left neighbor is nums[0] = 1\n  - All balloons in (2, 4) are burst → right neighbor is nums[4] = 8\n  - Coins = 1 * 1 * 8 = 8\n  - Then add: dp[0][2] + dp[2][4]\n```\n\n**This invariant makes the problem tractable** - by fixing neighbors, we can compute subproblems independently!",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Interval DP Walkthrough: nums = [3, 1, 5, 8]\n\n**Step 1: Add sentinels**\n```\nOriginal: [3, 1, 5, 8]\nWith sentinels: [1, 3, 1, 5, 8, 1]\nIndices:        0  1  2  3  4  5\n```\n\n**Step 2: Build DP table for intervals**\n\n**Base case:** Intervals of length 2 (no balloons to burst)\n```\ndp[0][2] = 0  (no balloons between 0 and 2)\ndp[1][3] = 0\n...\n```\n\n**Length 3 intervals (1 balloon):**\n```\nInterval (0, 2): only balloon at index 1 (value 3)\n  Last balloon = 1\n  Coins = nums[0] * nums[1] * nums[2] = 1 * 3 * 1 = 3\n  dp[0][2] = 3\n\nInterval (1, 3): only balloon at index 2 (value 1)\n  Coins = nums[1] * nums[2] * nums[3] = 3 * 1 * 5 = 15\n  dp[1][3] = 15\n```\n\n**Length 4 intervals (2 balloons):**\n```\nInterval (0, 3): balloons at indices 1, 2\n  Try k=1 (last): coins = 1 * 3 * 5 + dp[0][1] + dp[1][3] = 15 + 0 + 15 = 30\n  Try k=2 (last): coins = 1 * 1 * 5 + dp[0][2] + dp[2][3] = 5 + 3 + 0 = 8\n  dp[0][3] = max(30, 8) = 30\n```\n\n**Continue building up...**\n\n**Final:** `dp[0][5]` = maximum coins for entire array = 167\n\n**This walkthrough shows how interval DP builds solutions from smaller to larger intervals!**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7",
+        "ps8",
+        "ps9",
+        "ps10"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's the algorithm:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Let's code it step by step!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize data structures.\n\n```javascript\nfunction solve() {\n  // Setup\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "// Initialize"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Implement core logic.\n\n```javascript\nfunction solve() {\n  // Setup\n  // Main algorithm\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "// Core logic"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Complete solution.\n\n```javascript\nfunction solve() {\n  // Full implementation\n  return result;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4"
+      ],
+      "example": "return result;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Excellent! **Burst Balloons** complete!\n\nNext lesson continues your journey to mastery! 🚀",
+      "action": "complete"
+    }
+  ]
+}

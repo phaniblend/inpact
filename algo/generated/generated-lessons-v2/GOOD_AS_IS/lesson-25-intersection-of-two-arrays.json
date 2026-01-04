@@ -1,0 +1,610 @@
+{
+  "id": "intersection-of-two-arrays",
+  "title": "Intersection of Two Arrays",
+  "pattern": "hash set",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 25,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-25",
+    "introduces": [
+      "set-from-array",
+      "set-intersection",
+      "Array.from"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "Set-constructor",
+      "set-has-method"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "single-number"
+    ]
+  },
+  "problemStatement": {
+    "description": "Find the intersection of two arrays. Return an array containing all elements that appear in both arrays. Each element in the result must be unique.",
+    "inputs": [
+      "nums1: array of integers (length 1 to 1000)",
+      "nums2: array of integers (length 1 to 1000)"
+    ],
+    "outputs": [
+      "Array of integers representing the intersection (each element appears once)"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,2,2,1], nums2 = [2,2]",
+        "output": "[2]",
+        "explanation": "Element 2 appears in both arrays. Create set from nums1, check nums2 elements, add to result set. Return [2]."
+      },
+      {
+        "input": "nums1 = [4,9,5], nums2 = [9,4,9,8,4]",
+        "output": "[4,9]",
+        "explanation": "Elements 4 and 9 appear in both. Set from nums1: {4,9,5}, check nums2: 9 in set, 4 in set. Result: [4,9]."
+      },
+      {
+        "input": "nums1 = [1,2], nums2 = [3,4]",
+        "output": "[]",
+        "explanation": "No common elements. Result is empty array."
+      }
+    ],
+    "constraints": [
+      "1 <= nums1.length, nums2.length <= 1000",
+      "0 <= nums1[i], nums2[i] <= 1000"
+    ],
+    "realWorldUse": [
+      "Finding common elements between datasets",
+      "Set operations",
+      "Data comparison and analysis",
+      "Database query intersections"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "We need to find elements that exist in both arrays. Converting one array to a set provides O(1) lookup, making intersection efficient. A result set ensures uniqueness.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks for intersection or common elements → think hash set",
+      "SIGNAL 2: Need O(1) membership testing → use set instead of array",
+      "SIGNAL 3: Result must be unique → use set to automatically handle duplicates"
+    ],
+    "patternRules": [
+      "If problem involves finding common elements → use set for fast lookup",
+      "When you see 'intersection', 'common', or 'both arrays' → consider set-based approach",
+      "If need uniqueness in result → use set to store results"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - we need to find all common elements, not make choices.",
+      "bruteForce": "Nested loops checking all pairs is O(n*m). Set approach is O(n+m) and more efficient.",
+      "alternative": "Sorting both arrays then using two pointers works but is O(n log n + m log m). Set is O(n+m) and simpler."
+    }
+  },
+  "coreInvariant": {
+    "statement": "set1 contains all unique elements from nums1. The result set contains only elements that exist in both set1 and nums2.",
+    "explanation": "This invariant holds because we build set1 from nums1, then check each element in nums2 against set1. If it exists in set1, it's in the intersection and we add it to the result set.",
+    "whyItMatters": "This invariant guarantees correctness: after processing, the result set contains exactly the intersection of nums1 and nums2, with each element appearing at most once."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "set1",
+        "meaning": "Set containing all unique elements from nums1",
+        "indexing": "Set of integer values"
+      },
+      {
+        "name": "result",
+        "meaning": "Set storing intersection elements (ensures uniqueness)",
+        "indexing": "Set of integer values"
+      },
+      {
+        "name": "nums1",
+        "meaning": "First array",
+        "indexing": "0-indexed array"
+      },
+      {
+        "name": "nums2",
+        "meaning": "Second array",
+        "indexing": "0-indexed array"
+      }
+    ],
+    "baseCases": [
+      "If nums1 is empty or nums2 is empty: return []",
+      "If no common elements: return []"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "Build set from nums1:",
+        "transition": "set1 = new Set(nums1)",
+        "explanation": "Convert nums1 to set for O(1) lookup. Set automatically handles duplicates.",
+        "example": "nums1=[1,2,2,1] → set1={1,2}"
+      },
+      {
+        "condition": "For each element num in nums2:",
+        "transition": "If num is in set1: add num to result set",
+        "explanation": "Check if element exists in first array. If yes, it's in intersection, add to result.",
+        "example": "nums2=[2,2], set1={1,2}: 2 is in set1, add 2 to result"
+      },
+      {
+        "condition": "After processing all elements:",
+        "transition": "Return Array.from(result) or [...result]",
+        "explanation": "Convert result set to array for return value.",
+        "example": "result={2} → return [2]"
+      }
+    ],
+    "decisionTree": {
+      "root": "Convert nums1 to set, then check nums2 elements",
+      "branches": [
+        "Create set1 from nums1",
+        "For each element in nums2:",
+        "If element in set1: add to result set",
+        "Convert result set to array and return"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "nums1 = [1,2,2,1], nums2 = [2,2]",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Build set from nums1: set1 = {1, 2}",
+        "state": "set1 = {1, 2}, nums1 processed",
+        "logic": "Convert array to set, duplicates automatically removed",
+        "result": "set1 = {1, 2}"
+      },
+      {
+        "step": 2,
+        "description": "Initialize result = new Set()",
+        "state": "result = {}, ready to collect intersection",
+        "logic": "Result set ensures uniqueness",
+        "result": "result = {}"
+      },
+      {
+        "step": 3,
+        "description": "Check nums2[0]=2: 2 in set1? Yes, add to result",
+        "state": "result = {2}, nums2[0] processed",
+        "logic": "2 exists in both arrays, add to intersection",
+        "result": "result = {2}"
+      },
+      {
+        "step": 4,
+        "description": "Check nums2[1]=2: 2 in set1? Yes, but already in result, set ignores duplicate",
+        "state": "result = {2}, nums2[1] processed",
+        "logic": "Set automatically handles duplicates",
+        "result": "result = {2}"
+      },
+      {
+        "step": 5,
+        "description": "Convert result to array: [2]",
+        "state": "result = {2}",
+        "logic": "Convert set to array for return",
+        "result": "Return [2]"
+      }
+    ],
+    "keyInsight": "Set provides O(1) membership testing, transforming O(n*m) nested loop into O(n+m) solution. The result set automatically ensures uniqueness, eliminating the need for duplicate checking."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Using nested loops to check all pairs",
+      "symptom": "O(n*m) time complexity instead of O(n+m)",
+      "fix": "Convert one array to set, then check elements of other array against set",
+      "example": "Nested loops: for each num1, check all num2 → O(n*m)"
+    },
+    {
+      "mistake": "Not using result set (using array and checking duplicates)",
+      "symptom": "May include duplicates in result or need extra duplicate checking",
+      "fix": "Use Set for result to automatically ensure uniqueness",
+      "example": "If you use array, you need to check if element already exists before adding"
+    },
+    {
+      "mistake": "Converting wrong array to set",
+      "symptom": "Works but less efficient if nums2 is much smaller",
+      "fix": "Convert the smaller array to set for better efficiency (though both work)",
+      "example": "If nums1 has 1000 elements and nums2 has 10, convert nums2 to set instead"
+    },
+    {
+      "mistake": "Not handling empty arrays",
+      "symptom": "May return wrong result for edge cases",
+      "fix": "Check if either array is empty, return [] immediately",
+      "example": "If nums1 is empty, intersection is empty"
+    },
+    {
+      "mistake": "Returning set instead of array",
+      "symptom": "Wrong return type (problem asks for array)",
+      "fix": "Convert result set to array: Array.from(result) or [...result]",
+      "example": "Return [2] not {2}"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a set-based intersection problem.",
+      "",
+      "I'll use hash sets:",
+      "- Convert nums1 to set1 for O(1) lookup",
+      "- Create result set to store intersection",
+      "- For each element in nums2:",
+      "  - If element is in set1: add to result set",
+      "- Convert result set to array and return",
+      "",
+      "Time complexity: O(n+m) - convert to set O(n), check m elements O(m)",
+      "Space complexity: O(min(n,m)) - set stores unique elements from smaller array",
+      "",
+      "Edge cases:",
+      "- Empty arrays: return []",
+      "- No common elements: return []",
+      "- Result set automatically handles uniqueness"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Intersection of Two Arrays (allow duplicates in result)",
+      "approachChange": "If element appears k times in both arrays, include it k times in result",
+      "solution": "Use frequency map instead of set. Count frequencies in both arrays, take minimum for each common element."
+    },
+    "harder": {
+      "problem": "Intersection of Multiple Arrays",
+      "approachChange": "Find intersection of k arrays instead of 2",
+      "solution": "Start with set from first array. For each subsequent array, intersect with current set. O(n*k) time."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Create set1 = new Set(nums1)"
+    },
+    {
+      "id": "ps2",
+      "text": "Create result = new Set()"
+    },
+    {
+      "id": "ps3",
+      "text": "For each element num in nums2:"
+    },
+    {
+      "id": "ps4",
+      "text": "  If num is in set1: result.add(num)"
+    },
+    {
+      "id": "ps5",
+      "text": "Return Array.from(result) or [...result]"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to level up your array skills? Today we're tackling the \"Intersection of Two Arrays\" problem, and you're going to master one of the most powerful patterns in programming - the hash set approach!\n\nHere's what you'll walk away with:\n• How to use hash sets to find common elements between arrays efficiently\n• The technique for eliminating duplicates while preserving unique intersections\n• When to choose hash sets over other approaches for maximum performance\n\nThis builds perfectly on what you learned with finding unique characters - now we're applying similar thinking to multiple arrays. Let's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Array-iteration** - Ability to loop through array elements using for loops or array methods\n- **Set-data-structure** - Understanding of Set as a collection of unique values with O(1) lookup time\n- **Conditional-logic** - Using if statements to check conditions and control program flow\n- **Array-methods** - Knowledge of array operations like push() to add elements to result array\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Array-iteration** - Ability to loop through array elements using for loops or array methods\n- **Set-data-structure** - Understanding of Set as a collection of unique values with O(1) lookup time\n- **Conditional-logic** - Using if statements to check conditions and control program flow\n- **Array-methods** - Knowledge of array operations like push() to add elements to result array\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Array-iteration** - Ability to loop through array elements using for loops or array methods\n- **Set-data-structure** - Understanding of Set as a collection of unique values with O(1) lookup time\n- **Conditional-logic** - Using if statements to check conditions and control program flow\n- **Array-methods** - Knowledge of array operations like push() to add elements to result array\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Array-iteration** - Ability to loop through array elements using for loops or array methods\n- **Set-data-structure** - Understanding of Set as a collection of unique values with O(1) lookup time\n- **Conditional-logic** - Using if statements to check conditions and control program flow\n- **Array-methods** - Knowledge of array operations like push() to add elements to result array\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Array-iteration** - Ability to loop through array elements using for loops or array methods\n- **Set-data-structure** - Understanding of Set as a collection of unique values with O(1) lookup time\n- **Conditional-logic** - Using if statements to check conditions and control program flow\n- **Array-methods** - Knowledge of array operations like push() to add elements to result array\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Intersection of Two Arrays problem asks for.\n\nImagine you and your friend each have a shopping list, and you want to find which items you both need to buy so you can split the cost. You go through your list and check off every item that also appears on your friend's list - those checked items are your \"intersection,\" the things you both actually need.\n\n# Intersection of Two Arrays\n\n## What we're looking for\n\nYou need to find the **unique elements that appear in both arrays**. Think of it like finding the common ground between two lists - what do they share? But here's the key: we only want each shared element to appear **once** in our answer, even if it shows up multiple times in either array.\n\n## Let's see it in action\n\nSay we have:\n- `nums1 = [1,2,2,1]` \n- `nums2 = [2,2]`\n\nThe answer would be `[2]`.\n\n## Why this works\n\nLet's break it down:\n- Looking at `nums1`: we see the numbers 1 and 2 (ignoring duplicates)\n- Looking at `nums2`: we see the number 2\n- What's common between them? Just the number 2\n- Even though 2 appears multiple times in both arrays, we only include it once in our result\n\nSo we get `[2]` as our intersection!\n\nThe key insight is that we're finding the **set intersection** - the unique elements that exist in both arrays, regardless of how many times they appear.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to find elements that exist in both arrays. How would YOU approach this problem efficiently?",
+      "choices": [
+        {
+          "label": "Use nested loops to check each element of arr1 against every element in arr2",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Convert arr1 to a hash set, then iterate through arr2 checking membership, using a result set for uniqueness",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach works but has O(n*m) time complexity. For each element in the first array, you'd scan through the entire second array. Also, you'd need extra logic to handle duplicates in the result, making the solution both slow and complex.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Set-Based Intersection\n\n**This problem follows the \"hash set for fast lookup\" pattern:**\n- **Convert to set** - Transform one array into a set for O(1) membership testing\n- **Linear scan with lookup** - Iterate through second array, checking set membership\n- **Result set for uniqueness** - Use a set to automatically handle duplicates\n\n**Similar problems:**\n- Intersection of Two Arrays II (allows duplicates)\n- Contains Duplicate (set membership check)\n- Two Sum (set for complement lookup)\n\n**Key insight:** Sets provide O(1) lookup time, transforming an O(n*m) nested loop into an O(n+m) solution. The result set automatically ensures uniqueness.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Set Contains All Elements from First Array\n\n**Invariant maintained throughout:**\n- **After converting nums1:** `set1` contains all unique elements from `nums1`\n- **During iteration of nums2:** For each element in `nums2`, we can check in O(1) time if it exists in `set1`\n- **Result set:** Contains only elements that exist in both arrays (intersection)\n\n**Why this works:**\n- First pass: Build set from nums1 → O(n) time\n- Second pass: For each element in nums2, check if it's in set1 → O(m) time, O(1) per check\n- Result set automatically handles uniqueness\n\n**Invariant guarantee:** After processing all elements from `nums2`, the result set contains exactly the intersection of `nums1` and `nums2`, with each element appearing at most once.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to convert the first array into a **set** for O(1) lookup time, then iterate through the second array checking membership against this set. We use a **result set** to automatically handle duplicate elimination, since the problem requires each intersection element to appear only once in the output. This works because sets provide both fast membership testing and inherent uniqueness, transforming what could be an O(n²) nested loop problem into an efficient O(n+m) solution.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `nums1=[1,2,2,1], nums2=[2,2]`:\n\n- Step 1: Convert nums1 to set: {1, 2}\n- Step 2: Convert nums2 to set: {2}\n- Step 3: Find intersection of the two sets: {1, 2} ∩ {2} = {2}\n- Step 4: Convert result set back to list: [2]\n- Final answer: **[2]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function signature and convert first array to Set for O(1) lookups\n\n```javascript\nfunction findIntersection(arr1, arr2) {\n  const set1 = new Set(arr1);\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function findIntersection(arr1, arr2) {\n  const set1 = new Set(arr1);\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize result Set to store intersection elements and ensure uniqueness\n\n```javascript\nfunction findIntersection(arr1, arr2) {\n  const set1 = new Set(arr1);\n  const result = new Set();\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "  const result = new Set();"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start iterating through second array to check each element\n\n```javascript\nfunction findIntersection(arr1, arr2) {\n  const set1 = new Set(arr1);\n  const result = new Set();\n  for (const element of arr2) {\n  }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "  for (const element of arr2) {\n  }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Check if current element exists in first array's Set\n\n```javascript\nfunction findIntersection(arr1, arr2) {\n  const set1 = new Set(arr1);\n  const result = new Set();\n  for (const element of arr2) {\n    if (set1.has(element)) {\n    }\n  }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    if (set1.has(element)) {\n    }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Add matching element to result Set (automatically handles duplicates)\n\n```javascript\nfunction findIntersection(arr1, arr2) {\n  const set1 = new Set(arr1);\n  const result = new Set();\n  for (const element of arr2) {\n    if (set1.has(element)) {\n      result.add(element);\n    }\n  }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "      result.add(element);"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Convert result Set back to array and return final intersection\n\n```javascript\nfunction findIntersection(arr1, arr2) {\n  const set1 = new Set(arr1);\n  const result = new Set();\n  for (const element of arr2) {\n    if (set1.has(element)) {\n      result.add(element);\n    }\n  }\n  return Array.from(result);\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "  return Array.from(result);"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the hash set pattern for finding intersections! You've learned how to efficiently use sets to identify common elements between arrays with optimal time complexity. Next, we'll tackle single-number, where you'll apply similar hash-based thinking to solve a unique element detection problem.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

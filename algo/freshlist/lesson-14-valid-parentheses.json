@@ -1,0 +1,179 @@
+{
+  "id": "valid-parentheses",
+  "title": "Valid Parentheses",
+  "pattern": "stack",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 14,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-14",
+    "introduces": [
+      "stack-concept",
+      "push-method",
+      "pop-method",
+      "LIFO-principle",
+      "bracket-matching",
+      "map-for-pairs"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "loops",
+      "for-of-loop",
+      "functions",
+      "return-statement",
+      "comparison-operators",
+      "objects",
+      "bracket-notation-objects",
+      "string-characters"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["climbing-stairs"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Create an empty stack (array)." },
+    { "id": "ps2", "text": "Create a map of closing → opening brackets." },
+    { "id": "ps3", "text": "For each character in the string:" },
+    { "id": "ps4", "text": "  If it's an opening bracket, push it onto the stack." },
+    { "id": "ps5", "text": "  If it's a closing bracket, check if stack top matches." },
+    { "id": "ps6", "text": "  If no match, return false." },
+    { "id": "ps7", "text": "After loop, return true if stack is empty, false otherwise." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Valid Parentheses**.\n\nThis lesson introduces the **stack** data structure — one of the most important concepts in programming!\n\nA stack is perfect for problems involving matching pairs, nested structures, and \"last in, first out\" logic.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nGiven a string containing just the characters `'('`, `')'`, `'{'`, `'}'`, `'['`, `']'`, determine if the input string is valid.\n\n**A string is valid if:**\n1. Open brackets are closed by the same type of bracket\n2. Open brackets are closed in the correct order\n3. Every close bracket has a corresponding open bracket\n\n**Example:**\n```\n\"()\" → true\n\"()[]{}\" → true\n\"(]\" → false\n\"([)]\" → false (wrong order)\n\"{[]}\" → true (properly nested)\n```",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) \"()\" → true\n2) \"()[]{}\" → true\n3) \"(]\" → false (types don't match)\n4) \"([)]\" → false (wrong nesting order)\n5) \"{[]}\" → true (properly nested)\n6) \"(\" → false (unclosed)\n7) \")\" → false (no matching open)\n```",
+      "action": "next",
+      "next": "why-stacks"
+    },
+    {
+      "stepId": "why-stacks",
+      "mentorSays": "### Why Do We Need a Stack?\n\nThe key challenge is **nesting**:\n\n```\n\"{[]}\"  ← Valid: [ is inside {}, closed first\n\"([)]\"  ← Invalid: [ is opened after (, but ] closes before )\n```\n\nThe most recently opened bracket must close first.\n\nThis is **Last In, First Out** (LIFO) — exactly what a stack does!",
+      "action": "next",
+      "next": "stack-explained"
+    },
+    {
+      "stepId": "stack-explained",
+      "mentorSays": "### What is a Stack?\n\nA **stack** is like a stack of plates:\n- Add plates to the top (push)\n- Remove plates from the top (pop)\n- Can only access the top plate\n\n**In code:**\n```javascript\nconst stack = [];\n\nstack.push('a');  // stack: ['a']\nstack.push('b');  // stack: ['a', 'b']\nstack.push('c');  // stack: ['a', 'b', 'c']\n\nstack.pop();      // returns 'c', stack: ['a', 'b']\nstack.pop();      // returns 'b', stack: ['a']\n```\n\nJavaScript arrays work perfectly as stacks!",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you use a stack to check valid parentheses?",
+      "choices": [
+        { "label": "Push opening brackets, pop when closing brackets match", "next": "core-idea" },
+        { "label": "Count each type of bracket", "next": "why-not-count" },
+        { "label": "Check if the string is a palindrome", "next": "why-not-palindrome" }
+      ]
+    },
+    {
+      "stepId": "why-not-count",
+      "mentorSays": "Just counting brackets doesn't work for nesting:\n\n```\n\"([)]\"  ← 1 of each type, counts match!\n         But it's invalid!\n```\n\nCounting shows that we have pairs, but not that they're properly nested.\n\nThe stack approach tracks the **order** of brackets.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "why-not-palindrome",
+      "mentorSays": "It's not a palindrome problem because:\n\n```\n\"()[]{}\"  ← Not a palindrome, but valid!\n\"{[]}\"    ← Not a palindrome, but valid!\n\"(()())\"  ← A palindrome AND valid!\n```\n\nPalindromes read the same forward and backward.\nValid brackets just need proper nesting.\n\nLet's see the stack approach!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Strategy\n\n1. When we see an **opening bracket** (`(`, `[`, `{`):\n   - Push it onto the stack\n\n2. When we see a **closing bracket** (`)`, `]`, `}`):\n   - Pop from the stack\n   - Check if it matches the closing bracket\n   - If not, return false\n\n3. At the end:\n   - If stack is empty, all brackets matched → true\n   - If stack has items, some brackets unclosed → false",
+      "action": "next",
+      "next": "bracket-mapping"
+    },
+    {
+      "stepId": "bracket-mapping",
+      "mentorSays": "### Mapping Brackets\n\nWe need to check if brackets match:\n- `)` matches `(`\n- `]` matches `[`\n- `}` matches `{`\n\nWe can use an object to map closing → opening:\n\n```javascript\nconst map = {\n  ')': '(',\n  ']': '[',\n  '}': '{'\n};\n\nmap[')']  // '('\nmap['}']  // '{'\n```\n\nThis makes checking matches easy!",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\ns = \"{[]}\"\n```\n\n**char = '{':**\n- Opening bracket, push to stack\n- Stack: ['{']\n\n**char = '[':**\n- Opening bracket, push to stack\n- Stack: ['{', '[']\n\n**char = ']':**\n- Closing bracket, pop from stack\n- Popped: '[', matches ']' ✓\n- Stack: ['{']\n\n**char = '}':**\n- Closing bracket, pop from stack\n- Popped: '{', matches '}' ✓\n- Stack: []\n\n**End:** Stack is empty → **return true**",
+      "action": "next",
+      "next": "walkthrough-fail"
+    },
+    {
+      "stepId": "walkthrough-fail",
+      "mentorSays": "### Walkthrough: Invalid String\n\n```\ns = \"([)]\"\n```\n\n**char = '(':** Stack: ['(']\n**char = '[':** Stack: ['(', '[']\n\n**char = ')':**\n- Closing bracket, pop from stack\n- Popped: '[', needs to match ')'\n- '[' ≠ '(' → **return false**\n\nThe mismatch is caught immediately!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nWe'll use an array as our stack and an object for bracket mapping.\n\nLet's build it step by step.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1", "ps2"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function, stack, and bracket map.\n\n```javascript\nfunction isValid(s) {\n  const stack = [];\n  const map = {\n    ')': '(',\n    ']': '[',\n    '}': '{'\n  };\n\n}\n```\n\n**Explanation:**\n- `stack` is an empty array that will hold opening brackets\n- `map` maps each closing bracket to its matching opening bracket",
+      "example": "function isValid(s) {\n  const stack = [];\n  const map = {\n    ')': '(',\n    ']': '[',\n    '}': '{'\n  };\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "**Step 2:** Loop through each character.\n\n```javascript\nfunction isValid(s) {\n  const stack = [];\n  const map = {\n    ')': '(',\n    ']': '[',\n    '}': '{'\n  };\n\n  for (const char of s) {\n\n  }\n}\n```\n\n**Explanation:**\n- `for (const char of s)` iterates through each character\n- We'll check if each character is opening or closing",
+      "example": "for (const char of s) {\n\n}",
+      "action": "next",
+      "next": "code-03-check",
+      "pseudocodeLineIds": ["ps4", "ps5", "ps6"]
+    },
+    {
+      "stepId": "code-03-check",
+      "mentorSays": "**Step 3:** Handle opening and closing brackets.\n\n```javascript\nfunction isValid(s) {\n  const stack = [];\n  const map = {\n    ')': '(',\n    ']': '[',\n    '}': '{'\n  };\n\n  for (const char of s) {\n    if (char in map) {\n      const top = stack.pop();\n      if (top !== map[char]) {\n        return false;\n      }\n    } else {\n      stack.push(char);\n    }\n  }\n}\n```\n\n**Explanation:**\n- `char in map` checks if it's a closing bracket\n- If closing: pop and check if it matches\n- If opening: push to stack\n- `stack.pop()` returns undefined if empty, which won't match",
+      "example": "if (char in map) {\n  const top = stack.pop();\n  if (top !== map[char]) {\n    return false;\n  }\n} else {\n  stack.push(char);\n}",
+      "action": "next",
+      "next": "code-04-return",
+      "pseudocodeLineIds": ["ps7"]
+    },
+    {
+      "stepId": "code-04-return",
+      "mentorSays": "**Step 4:** Check if stack is empty.\n\n```javascript\nfunction isValid(s) {\n  const stack = [];\n  const map = {\n    ')': '(',\n    ']': '[',\n    '}': '{'\n  };\n\n  for (const char of s) {\n    if (char in map) {\n      const top = stack.pop();\n      if (top !== map[char]) {\n        return false;\n      }\n    } else {\n      stack.push(char);\n    }\n  }\n\n  return stack.length === 0;\n}\n```\n\n**Explanation:**\n- If stack is empty, all brackets were matched\n- If stack has items, some opening brackets weren't closed",
+      "example": "return stack.length === 0;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction isValid(s) {\n  const stack = [];\n  const map = {\n    ')': '(',\n    ']': '[',\n    '}': '{'\n  };\n\n  for (const char of s) {\n    if (char in map) {\n      const top = stack.pop();\n      if (top !== map[char]) {\n        return false;\n      }\n    } else {\n      stack.push(char);\n    }\n  }\n\n  return stack.length === 0;\n}\n```\n\n**How it works:**\n1. Opening brackets go on the stack\n2. Closing brackets pop and check for match\n3. Mismatch = return false immediately\n4. Empty stack at end = valid string",
+      "example": "function isValid(s) {\n  const stack = [];\n  const map = {\n    ')': '(',\n    ']': '[',\n    '}': '{'\n  };\n\n  for (const char of s) {\n    if (char in map) {\n      const top = stack.pop();\n      if (top !== map[char]) {\n        return false;\n      }\n    } else {\n      stack.push(char);\n    }\n  }\n\n  return stack.length === 0;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Stack concept** — Last In, First Out (LIFO)\n- **push() method** — add to top of stack\n- **pop() method** — remove from top of stack\n- **Bracket matching** — using stacks for pairing\n- **Maps for pairs** — storing bracket relationships\n\n**Why this matters:**\n\nStacks are essential for:\n- Expression evaluation\n- Undo/redo functionality\n- Function call tracking (call stack)\n- Backtracking algorithms\n- Parsing nested structures\n\nThe stack is one of the fundamental data structures you'll use throughout your programming career!\n\n**Next recommended lesson:** Climbing Stairs",
+      "action": "complete"
+    }
+  ]
+}

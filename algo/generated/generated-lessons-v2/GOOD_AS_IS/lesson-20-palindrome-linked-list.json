@@ -1,0 +1,627 @@
+{
+  "id": "palindrome-linked-list",
+  "title": "Palindrome Linked List",
+  "pattern": "fast-slow + reversal",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 20,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-20",
+    "introduces": [
+      "find-middle-pattern",
+      "pattern-combination",
+      "half-list-comparison"
+    ],
+    "assumesAlreadyTaught": [
+      "linked-list-concept",
+      "reverse-linked-list",
+      "fast-slow-pointers"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "middle-of-linked-list"
+    ]
+  },
+  "problemStatement": {
+    "description": "Determine if a linked list is a palindrome. A palindrome reads the same forward and backward.",
+    "inputs": [
+      "head: head node of a linked list (length 1 to 10^5)"
+    ],
+    "outputs": [
+      "Boolean: true if linked list is palindrome, false otherwise"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,2,1]",
+        "output": "true",
+        "explanation": "List reads same forward and backward. Find middle with fast-slow, reverse second half, compare halves."
+      },
+      {
+        "input": "head = [1,2]",
+        "output": "false",
+        "explanation": "1→2 is not same as 2→1. After reversing second half and comparing, mismatch found."
+      },
+      {
+        "input": "head = [1]",
+        "output": "true",
+        "explanation": "Single node is a palindrome."
+      }
+    ],
+    "constraints": [
+      "Number of nodes in list is in range [1, 10^5]",
+      "0 <= Node.val <= 9"
+    ],
+    "realWorldUse": [
+      "Palindrome detection in sequences",
+      "String/list validation",
+      "Pattern matching applications",
+      "Combining multiple algorithms"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "This problem combines two patterns: fast-slow pointers to find the middle, and reversing the second half to compare with the first half. This achieves O(1) space solution.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks to check if linked list is palindrome → think fast-slow + reverse",
+      "SIGNAL 2: Need O(1) space solution → avoid storing all values, use in-place reversal",
+      "SIGNAL 3: Palindrome check on linked list → find middle, reverse half, compare"
+    ],
+    "patternRules": [
+      "If problem involves palindrome on linked list → use fast-slow to find middle, then reverse",
+      "When you see 'palindrome' with space constraint → combine fast-slow and reverse patterns",
+      "If need to compare first half with second half → reverse second half for comparison"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - we need to check symmetry, not make choices.",
+      "bruteForce": "Storing all values in array works but uses O(n) space. In-place reversal uses O(1) space.",
+      "alternative": "Recursive solution works but uses O(n) stack space. Iterative approach is more space-efficient."
+    }
+  },
+  "coreInvariant": {
+    "statement": "After finding the middle and reversing the second half, the first half (from head) should match the reversed second half (from prev) node by node if the list is a palindrome.",
+    "explanation": "This invariant holds because in a palindrome, the first half equals the reverse of the second half. By reversing the second half, we can traverse both halves forward and compare them directly.",
+    "whyItMatters": "This invariant guarantees correctness: if all nodes match during comparison, the list is a palindrome. If any mismatch is found, it's not a palindrome."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "slow",
+        "meaning": "Slow pointer for finding middle (moves 1 step)",
+        "indexing": "Starts at head, moves: slow = slow.next"
+      },
+      {
+        "name": "fast",
+        "meaning": "Fast pointer for finding middle (moves 2 steps)",
+        "indexing": "Starts at head, moves: fast = fast.next.next"
+      },
+      {
+        "name": "prev",
+        "meaning": "Head of reversed second half",
+        "indexing": "Result of reversing second half starting from slow"
+      },
+      {
+        "name": "head",
+        "meaning": "Head of first half (original head)",
+        "indexing": "Points to start of first half"
+      }
+    ],
+    "baseCases": [
+      "If head is null or head.next is null: return true (empty or single node is palindrome)"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "Find middle using fast-slow pointers:",
+        "transition": "While fast != null and fast.next != null: slow = slow.next, fast = fast.next.next",
+        "explanation": "Fast moves twice as fast, so when fast reaches end, slow is at middle.",
+        "example": "For list of length 5, slow ends at node 3 (middle)"
+      },
+      {
+        "condition": "Reverse second half starting from slow:",
+        "transition": "Use three-pointer reversal: prev = null, curr = slow, reverse links",
+        "explanation": "Reverse the second half so we can compare it with first half.",
+        "example": "If second half is 4→5, reverse to 5→4"
+      },
+      {
+        "condition": "Compare first half with reversed second half:",
+        "transition": "While prev != null: compare head.val and prev.val, if mismatch return false, advance both",
+        "explanation": "Traverse both halves simultaneously, comparing values.",
+        "example": "Compare head (1) with prev (1), then head.next (2) with prev.next (2), etc."
+      }
+    ],
+    "decisionTree": {
+      "root": "Find middle, reverse second half, then compare",
+      "branches": [
+        "Use fast-slow to find middle",
+        "Reverse second half starting from slow",
+        "Compare first half (head) with reversed second half (prev)",
+        "If all match: return true, else return false"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "head = [1,2,2,1]",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Find middle: slow starts at 1, fast starts at 1",
+        "state": "slow = node 1, fast = node 1",
+        "logic": "Initialize both at head",
+        "result": "Ready to find middle"
+      },
+      {
+        "step": 2,
+        "description": "Iteration 1: slow = 2, fast = 2 (fast: 1→2→2)",
+        "state": "slow = node 2, fast = node 2",
+        "logic": "Fast moves 2 steps, slow moves 1",
+        "result": "slow at middle"
+      },
+      {
+        "step": 3,
+        "description": "Reverse second half: starting from slow (node 2), reverse 2→1 to 1→2",
+        "state": "prev = node 1 (head of reversed), second half: 1→2",
+        "logic": "Reverse second half using three-pointer technique",
+        "result": "Second half reversed: 1→2"
+      },
+      {
+        "step": 4,
+        "description": "Compare: head.val=1, prev.val=1, match. head = head.next (node 2), prev = prev.next (node 2)",
+        "state": "head = node 2, prev = node 2",
+        "logic": "First comparison matches, continue",
+        "result": "First pair matches"
+      },
+      {
+        "step": 5,
+        "description": "Compare: head.val=2, prev.val=2, match. head = head.next (null), prev = prev.next (null)",
+        "state": "head = null, prev = null",
+        "logic": "Second comparison matches, both reach end",
+        "result": "All pairs match, return true"
+      }
+    ],
+    "keyInsight": "By finding the middle with fast-slow pointers and reversing the second half, we can compare the first half with the reversed second half in O(1) space. This avoids storing all values in an array."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Not handling odd-length lists correctly",
+      "symptom": "May compare middle node with itself or skip it incorrectly",
+      "fix": "After finding middle, reverse second half starting from slow (or slow.next for odd length). Skip middle node in comparison if odd length.",
+      "example": "For [1,2,3,2,1], middle is 3, compare [1,2] with reversed [1,2], skip middle 3"
+    },
+    {
+      "mistake": "Not reversing second half correctly",
+      "symptom": "Wrong comparison, may miss palindrome",
+      "fix": "Use three-pointer reversal technique on second half starting from slow",
+      "example": "Must properly reverse second half before comparison"
+    },
+    {
+      "mistake": "Modifying original list without restoring",
+      "symptom": "List is modified after function (may be acceptable depending on problem)",
+      "fix": "Note that this approach modifies the list. If restoration needed, reverse again after comparison.",
+      "example": "Reversing second half modifies the list structure"
+    },
+    {
+      "mistake": "Using O(n) space by storing all values",
+      "symptom": "Works but uses extra space unnecessarily",
+      "fix": "Use in-place reversal for O(1) space solution",
+      "example": "Storing values in array uses O(n) space"
+    },
+    {
+      "mistake": "Not handling edge cases (empty, single node)",
+      "symptom": "Error or wrong answer for edge cases",
+      "fix": "Check if head is null or head.next is null, return true (palindromes)",
+      "example": "Empty list or single node is always a palindrome"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This problem combines fast-slow pointers and list reversal.",
+      "",
+      "I'll solve it in O(1) space:",
+      "- Use fast-slow pointers to find middle",
+      "- Reverse second half starting from slow",
+      "- Compare first half (head) with reversed second half (prev)",
+      "- If all nodes match: return true, else return false",
+      "",
+      "Time complexity: O(n) - find middle O(n), reverse O(n), compare O(n)",
+      "Space complexity: O(1) - only using pointers, modifying in-place",
+      "",
+      "Edge cases:",
+      "- Empty or single node: return true",
+      "- Odd length: skip middle node in comparison",
+      "- Note: this modifies the original list"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Valid Palindrome (string version)",
+      "approachChange": "String instead of linked list, can use two pointers directly",
+      "solution": "Use two pointers from both ends, compare characters, move inward. O(1) space if checking in-place."
+    },
+    "harder": {
+      "problem": "Palindrome Linked List (restore original list)",
+      "approachChange": "After checking, need to restore the reversed second half back to original",
+      "solution": "After comparison, reverse the second half again to restore original structure. More complex but preserves input."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "If head is null or head.next is null: return true"
+    },
+    {
+      "id": "ps2",
+      "text": "Find middle: slow = head, fast = head, while fast != null and fast.next != null: slow = slow.next, fast = fast.next.next"
+    },
+    {
+      "id": "ps3",
+      "text": "Reverse second half: prev = null, curr = slow, while curr != null: next = curr.next, curr.next = prev, prev = curr, curr = next"
+    },
+    {
+      "id": "ps4",
+      "text": "Compare halves: while prev != null: if head.val != prev.val return false, head = head.next, prev = prev.next"
+    },
+    {
+      "id": "ps5",
+      "text": "Return true (all matched)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to level up your linked list skills? Today we're tackling palindrome detection in linked lists - and here's the cool part: we're combining the fast-slow pointer technique you've been practicing with a clever reversal trick!\n\nBy the end of this lesson, you'll be able to:\n• Master the two-pointer approach to find the middle of any linked list in one pass\n• Reverse linked lists on the fly without using extra space\n• Combine these techniques to solve palindrome problems with O(1) space complexity\n\nThis is where linked list manipulation really starts to click - you're building on everything from merge-two-sorted-lists and adding some serious problem-solving power to your toolkit!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Linked-list-concept** - Understanding of linked list data structure and node traversal\n- **Reverse-linked-list** - Ability to reverse a linked list iteratively or recursively\n- **Fast-slow-pointers** - Two-pointer technique to find middle of linked list\n- **String-palindrome** - Understanding palindrome concept and comparison logic\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Linked-list-concept** - Understanding of linked list data structure and node traversal\n- **Reverse-linked-list** - Ability to reverse a linked list iteratively or recursively\n- **Fast-slow-pointers** - Two-pointer technique to find middle of linked list\n- **String-palindrome** - Understanding palindrome concept and comparison logic\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Linked-list-concept** - Understanding of linked list data structure and node traversal\n- **Reverse-linked-list** - Ability to reverse a linked list iteratively or recursively\n- **Fast-slow-pointers** - Two-pointer technique to find middle of linked list\n- **String-palindrome** - Understanding palindrome concept and comparison logic\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Linked-list-concept** - Understanding of linked list data structure and node traversal\n- **Reverse-linked-list** - Ability to reverse a linked list iteratively or recursively\n- **Fast-slow-pointers** - Two-pointer technique to find middle of linked list\n- **String-palindrome** - Understanding palindrome concept and comparison logic\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Linked-list-concept** - Understanding of linked list data structure and node traversal\n- **Reverse-linked-list** - Ability to reverse a linked list iteratively or recursively\n- **Fast-slow-pointers** - Two-pointer technique to find middle of linked list\n- **String-palindrome** - Understanding palindrome concept and comparison logic\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Palindrome Linked List problem asks for.\n\nImagine a line of cars at a drive-through where you need to check if the license plates read the same forwards and backwards. You walk to the middle of the line, then have one person walk forward from the front while another walks backward from the end, comparing each license plate they encounter. If all the pairs match as they meet in the middle, you have a palindrome formation.\n\n# Palindrome Linked List\n\n## The Problem\nYou're given the head of a singly linked list, and you need to determine whether the values in the list form a palindrome. A palindrome reads the same forwards and backwards (like \"racecar\" or \"12321\").\n\n## Example\nLet's say you have this linked list:\n```\n1 → 2 → 2 → 1\n```\n\n**Answer: `true`**\n\n## Why This Works\nThink of it like reading the values: `1, 2, 2, 1`\n\n- Reading left to right: 1, 2, 2, 1\n- Reading right to left: 1, 2, 2, 1\n\nThey're identical! The sequence is symmetric around the middle.\n\nAnother way to think about it: if you folded the list in half, each number would match up with its mirror position. The first `1` matches the last `1`, and the first `2` matches the last `2`.\n\n**Counter-example:** `1 → 2 → 3 → 1` would return `false` because reading backwards gives you `1, 3, 2, 1`, which is different from `1, 2, 3, 1`.\n\nThe tricky part? You can only traverse a singly linked list in one direction, so you'll need to get creative about how to \"read it backwards\"!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "To check if a linked list is a palindrome, you need to compare elements from both ends. Since you can't traverse backwards, how would YOU approach this?",
+      "choices": [
+        {
+          "label": "Convert to array, then use two pointers from ends",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use fast-slow pointers to find middle, reverse second half, then compare both halves",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works, it uses O(n) extra space to store all values. The problem likely expects an O(1) space solution that works directly with the linked list structure.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Fast-Slow Pointers + Reverse\n\n**This problem combines two classic patterns:**\n- **Fast-slow pointers** - Find middle of linked list in one pass\n- **Reverse linked list** - Reverse second half for comparison\n- **Two-pointer comparison** - Compare first half with reversed second half\n\n**Similar problems:**\n- Reverse Linked List (uses reverse technique)\n- Middle of Linked List (uses fast-slow pointers)\n- Valid Palindrome (string version with two pointers)\n\n**Key insight:** A palindrome reads the same forwards and backwards. By reversing the second half and comparing with the first half, we can check palindromic property in O(1) space.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: First Half Matches Reversed Second Half\n\n**Invariant maintained throughout:**\n- **After finding middle:** `slow` points to the start of the second half\n- **After reversing:** Second half is reversed, `prev` points to its head\n- **During comparison:** First half (from `head`) should match reversed second half (from `prev`)\n\n**Why this works:**\n- In a palindrome, the first half equals the reverse of the second half\n- Fast-slow pointers find the middle without knowing the length\n- Reversing the second half allows us to traverse it forwards while comparing with the first half\n- If all nodes match, it's a palindrome\n\n**Invariant guarantee:** After reversing the second half, if the list is a palindrome, then `head` through `middle` should match `reversed_second_half` node by node.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use the **two-pointer technique** to find the middle of the linked list, then **reverse the second half** and compare it element-by-element with the first half. This works because in a palindrome, the first half should be identical to the second half when reversed. The **fast-slow pointer approach** efficiently locates the midpoint in one pass, while reversing only half the list minimizes operations and allows for direct comparison without extra space.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `1→2→2→1`:\n\n- Step 1: Find the middle of the linked list using slow/fast pointers (slow at position 2, fast at end)\n- Step 2: Reverse the second half of the list: 1→2→2→1 becomes 1→2 and 1→2 (reversed)\n- Step 3: Compare first half (1→2) with reversed second half (1→2) node by node\n- Step 4: First nodes match: 1 == 1 ✓\n- Step 5: Second nodes match: 2 == 2 ✓\n- Step 6: Both halves fully traversed with all matches\n- Final answer: **true**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Set up function signature and handle edge cases\n\n```javascript\nfunction isPalindrome(head) {\n    if (!head || !head.next) return true;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function isPalindrome(head) {\n    if (!head || !head.next) return true;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize slow and fast pointers for finding middle\n\n```javascript\nfunction isPalindrome(head) {\n    if (!head || !head.next) return true;\n    \n    let slow = head;\n    let fast = head;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let slow = head;\n    let fast = head;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Move pointers to find middle of linked list\n\n```javascript\nfunction isPalindrome(head) {\n    if (!head || !head.next) return true;\n    \n    let slow = head;\n    let fast = head;\n    \n    while (fast.next && fast.next.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    while (fast.next && fast.next.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Create helper function to reverse a linked list\n\n```javascript\nfunction isPalindrome(head) {\n    if (!head || !head.next) return true;\n    \n    let slow = head;\n    let fast = head;\n    \n    while (fast.next && fast.next.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    function reverse(node) {\n        let prev = null;\n        let curr = node;\n        while (curr) {\n            let next = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = next;\n        }\n        return prev;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    function reverse(node) {\n        let prev = null;\n        let curr = node;\n        while (curr) {\n            let next = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = next;\n        }\n        return prev;\n    }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Reverse the second half of the linked list\n\n```javascript\nfunction isPalindrome(head) {\n    if (!head || !head.next) return true;\n    \n    let slow = head;\n    let fast = head;\n    \n    while (fast.next && fast.next.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    function reverse(node) {\n        let prev = null;\n        let curr = node;\n        while (curr) {\n            let next = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = next;\n        }\n        return prev;\n    }\n    \n    let secondHalf = reverse(slow.next);\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "    let secondHalf = reverse(slow.next);"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Set up pointers for comparing both halves\n\n```javascript\nfunction isPalindrome(head) {\n    if (!head || !head.next) return true;\n    \n    let slow = head;\n    let fast = head;\n    \n    while (fast.next && fast.next.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    function reverse(node) {\n        let prev = null;\n        let curr = node;\n        while (curr) {\n            let next = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = next;\n        }\n        return prev;\n    }\n    \n    let secondHalf = reverse(slow.next);\n    let firstHalf = head;\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "    let firstHalf = head;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Compare values of both halves node by node\n\n```javascript\nfunction isPalindrome(head) {\n    if (!head || !head.next) return true;\n    \n    let slow = head;\n    let fast = head;\n    \n    while (fast.next && fast.next.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    function reverse(node) {\n        let prev = null;\n        let curr = node;\n        while (curr) {\n            let next = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = next;\n        }\n        return prev;\n    }\n    \n    let secondHalf = reverse(slow.next);\n    let firstHalf = head;\n    \n    while (secondHalf) {\n        if (firstHalf.val !== secondHalf.val) {\n            return false;\n        }\n        firstHalf = firstHalf.next;\n        secondHalf = secondHalf.next;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "    while (secondHalf) {\n        if (firstHalf.val !== secondHalf.val) {\n            return false;\n        }\n        firstHalf = firstHalf.next;\n        secondHalf = secondHalf.next;\n    }"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return true if all comparisons matched\n\n```javascript\nfunction isPalindrome(head) {\n    if (!head || !head.next) return true;\n    \n    let slow = head;\n    let fast = head;\n    \n    while (fast.next && fast.next.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    function reverse(node) {\n        let prev = null;\n        let curr = node;\n        while (curr) {\n            let next = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = next;\n        }\n        return prev;\n    }\n    \n    let secondHalf = reverse(slow.next);\n    let firstHalf = head;\n    \n    while (secondHalf) {\n        if (firstHalf.val !== secondHalf.val) {\n            return false;\n        }\n        firstHalf = firstHalf.next;\n        secondHalf = secondHalf.next;\n    }\n    \n    return true;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "    return true;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the palindrome linked list problem using the fast-slow pointer technique combined with list reversal! You've successfully learned how to efficiently check if a linked list reads the same forwards and backwards by finding the middle and comparing both halves. Next, we'll tackle the middle-of-linked-list problem to further strengthen your two-pointer skills.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

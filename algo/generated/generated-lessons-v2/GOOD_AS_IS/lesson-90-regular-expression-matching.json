@@ -1,0 +1,429 @@
+{
+  "id": "regular-expression-matching",
+  "title": "Regular Expression Matching - DP for Regex",
+  "pattern": "regex-dp",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 90,
+    "tier": "COMPETITIVE",
+    "lessonOrderTag": "COMPETITIVE-90",
+    "introduces": [
+      "regex-matching",
+      "pattern-dp",
+      "wildcard-patterns"
+    ],
+    "assumesAlreadyTaught": [
+      "dynamic-programming",
+      "strings",
+      "2d-dp"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "wildcard-matching"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Create DP table where dp[i][j] = does s[0..i-1] match p[0..j-1]"
+    },
+    {
+      "id": "ps2",
+      "text": "Initialize dp[0][0] = true (empty matches empty)"
+    },
+    {
+      "id": "ps3",
+      "text": "Handle patterns starting with '*' (can match empty)"
+    },
+    {
+      "id": "ps4",
+      "text": "For each position (i, j):"
+    },
+    {
+      "id": "ps5",
+      "text": "  If p[j-1] is letter: dp[i][j] = dp[i-1][j-1] && s[i-1] == p[j-1]"
+    },
+    {
+      "id": "ps6",
+      "text": "  If p[j-1] is '.': dp[i][j] = dp[i-1][j-1] (matches any char)"
+    },
+    {
+      "id": "ps7",
+      "text": "  If p[j-1] is '*':"
+    },
+    {
+      "id": "ps8",
+      "text": "    Match zero: dp[i][j] = dp[i][j-2]"
+    },
+    {
+      "id": "ps9",
+      "text": "    Match one+: dp[i][j] = dp[i-1][j] if s[i-1] matches p[j-2]"
+    },
+    {
+      "id": "ps10",
+      "text": "Return dp[m][n]"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "# Welcome to Regular Expression Matching! 🎯\n\nReady to build your own regex engine? This is one of the most challenging DP problems!\n\n## What You'll Master:\n\n- Implementing regex with '.' and '*' operators\n- Advanced 2D dynamic programming\n- Pattern matching state machines\n- String processing at expert level\n\nThis is the foundation of grep, sed, text editors, and search engines!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which programming language would you like to use for this lesson?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "To solve this in JavaScript, you'll need to know:\n\n- **Dynamic programming** (2D DP tables)\n- **String manipulation**\n- **Boolean logic**\n- **Pattern matching** concepts\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "To solve this in Python, you'll need to know:\n\n- **Dynamic programming** (2D lists)\n- **String manipulation**\n- **Boolean logic**\n- **Pattern matching** concepts\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "To solve this in Java, you'll need to know:\n\n- **Dynamic programming** (2D boolean arrays)\n- **String manipulation**\n- **Boolean logic**\n- **Pattern matching** concepts\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "To solve this in C++, you'll need to know:\n\n- **Dynamic programming** (2D vectors)\n- **String manipulation**\n- **Boolean logic**\n- **Pattern matching** concepts\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "To solve this in TypeScript, you'll need to know:\n\n- **Dynamic programming** (2D boolean arrays)\n- **String manipulation**\n- **Boolean logic**\n- **Pattern matching** concepts\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "# The Problem: Regular Expression Matching 🔍\n\n**Real-world analogy:** You're building a simplified version of grep or the regex engine in a text editor. Users can search for patterns using special characters: '.' matches any single character, and '*' means \"zero or more of the preceding character.\"\n\n## The Challenge:\n\nGiven a string `s` and a pattern `p`, implement regular expression matching with:\n- **'.'** matches any single character\n- **'*'** matches zero or more of the preceding element\n\nThe matching should cover the **entire** string (not partial).\n\n## Examples:\n\n**Example 1:**\n```\ns = \"aa\", p = \"a\"\nOutput: false\nExplanation: \"a\" doesn't match entire \"aa\"\n```\n\n**Example 2:**\n```\ns = \"aa\", p = \"a*\"\nOutput: true\nExplanation: '*' means zero or more 'a's\n```\n\n**Example 3:**\n```\ns = \"ab\", p = \".*\"\nOutput: true\nExplanation: '.*' means zero or more of any character\n```\n\n**Example 4:**\n```\ns = \"mississippi\", p = \"mis*is*p*.\"\nOutput: false\n```\n\n**Key insight:** This is NOT about using JavaScript's built-in regex - we're implementing the matching logic ourselves!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "# 🤔 How Should We Approach This?\n\nThe '*' operator makes this tricky because it can match zero or more of the preceding character.\n\n**Question:** What's the key challenge with the '*' operator?",
+      "choices": [
+        {
+          "label": "Deciding whether to use the '*' to match 0, 1, or more characters",
+          "next": "core-idea"
+        },
+        {
+          "label": "The '*' can only appear after a character",
+          "next": "wrong-constraint"
+        },
+        {
+          "label": "We need to check all possible combinations",
+          "next": "wrong-brute-force"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-constraint",
+      "mentorSays": "That's a constraint of the problem, but not the main challenge!\n\nThe real difficulty is deciding how many times to apply the '*' match. Should \"a*\" match zero 'a's? One? Two? More?\n\nWe need a systematic way to try these options...",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "wrong-brute-force",
+      "mentorSays": "Trying all combinations would be exponential - way too slow!\n\nBut you're on the right track. We need to consider multiple possibilities, and that sounds like... dynamic programming!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "# The Key Insight: 2D DP State Machine! 💡\n\n**Core idea:** Build a DP table where `dp[i][j]` = \"does s[0..i-1] match p[0..j-1]?\"\n\n## The DP Recurrence:\n\n**For regular characters:**\n```\nif p[j-1] is a letter:\n    dp[i][j] = dp[i-1][j-1] && s[i-1] == p[j-1]\n```\n\n**For '.' (matches any single character):**\n```\nif p[j-1] is '.':\n    dp[i][j] = dp[i-1][j-1]\n```\n\n**For '*' (zero or more of preceding):**\n```\nif p[j-1] is '*':\n    // Option 1: Match zero of preceding char\n    dp[i][j] = dp[i][j-2]\n    \n    // Option 2: Match one or more (if chars match)\n    if s[i-1] matches p[j-2] or p[j-2] is '.':\n        dp[i][j] = dp[i][j] || dp[i-1][j]\n```\n\n## Why This Works:\n\nFor '*', we try two strategies:\n1. **Ignore the pattern** (x* matches zero x's) → look at dp[i][j-2]\n2. **Use it** (if current char matches) → look at dp[i-1][j]\n\nThe OR of these gives us the answer!",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "# Let's Walk Through an Example 🚶\n\n```\ns = \"aa\"\np = \"a*\"\n```\n\n**Build DP table (rows = s + empty, cols = p + empty):**\n\n```\n    ''  a   *\n''  T   F   T\na   F   T   T\na   F   F   T\n```\n\n**Step-by-step:**\n\n1. **dp[0][0] = true** (empty matches empty)\n\n2. **dp[0][2] = true** (\"a*\" can match empty by matching zero 'a's)\n   - p[1] is '*', so check dp[0][0] = true ✓\n\n3. **dp[1][1] = true** (\"a\" matches \"a\")\n   - s[0] == p[0], and dp[0][0] = true ✓\n\n4. **dp[1][2] = true** (\"a\" matches \"a*\")\n   - p[1] is '*', option 2: s[0] matches p[0], dp[0][2] = true ✓\n\n5. **dp[2][2] = true** (\"aa\" matches \"a*\")\n   - p[1] is '*', option 2: s[1] matches p[0], dp[1][2] = true ✓\n\n**Result:** dp[2][2] = true → \"aa\" matches \"a*\" ✓\n\n---\n\n**Another example:**\n```\ns = \"ab\"\np = \".*\"\n```\n\n```\n    ''  .   *\n''  T   F   T\na   F   T   T\nb   F   F   T\n```\n\n- dp[0][2] = T (\".*\" matches empty)\n- dp[1][2] = T (\"a\" matches \".*\")\n- dp[2][2] = T (\"ab\" matches \".*\")\n\nThe '.*' pattern matches everything!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "# Here's Our Battle Plan 📋",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7",
+        "ps8",
+        "ps9",
+        "ps10"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "# Time to Code! 💻\n\nWe'll build the DP table carefully, handling each case: regular chars, '.', and '*'.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Start with the function and create the DP table:\n\n```javascript\nfunction isMatch(s, p) {\n    const m = s.length;\n    const n = p.length;\n    \n    // dp[i][j] = does s[0..i-1] match p[0..j-1]?\n    const dp = Array(m + 1).fill(false)\n        .map(() => Array(n + 1).fill(false));\n```\n\nWe need m+1 rows and n+1 columns to handle empty string cases.",
+      "action": "next",
+      "next": "code-02",
+      "example": "function isMatch(s, p) {\n    const m = s.length;\n    const n = p.length;\n    \n    const dp = Array(m + 1).fill(false)\n        .map(() => Array(n + 1).fill(false));"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize base case - empty string matches empty pattern:\n\n```javascript\n    dp[0][0] = true;\n```\n\nThis is our foundation!",
+      "action": "next",
+      "next": "code-03",
+      "example": "    dp[0][0] = true;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Handle patterns that can match empty string (like \"a*\", \"a*b*\", etc):\n\n```javascript\n    // Patterns like a*, a*b*, etc can match empty string\n    for (let j = 2; j <= n; j++) {\n        if (p[j - 1] === '*') {\n            dp[0][j] = dp[0][j - 2];\n        }\n    }\n```\n\nA pattern with '*' can match empty if we use zero occurrences.",
+      "action": "next",
+      "next": "code-04",
+      "example": "    for (let j = 2; j <= n; j++) {\n        if (p[j - 1] === '*') {\n            dp[0][j] = dp[0][j - 2];\n        }\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Now fill the DP table row by row:\n\n```javascript\n    for (let i = 1; i <= m; i++) {\n        for (let j = 1; j <= n; j++) {\n```\n\nFor each position, we'll check what the pattern character is.",
+      "action": "next",
+      "next": "code-05",
+      "example": "    for (let i = 1; i <= m; i++) {\n        for (let j = 1; j <= n; j++) {"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Handle the '*' case (most complex):\n\n```javascript\n            if (p[j - 1] === '*') {\n                // Option 1: match zero of preceding character\n                dp[i][j] = dp[i][j - 2];\n```\n\nFirst option: don't use the '*' at all (match zero).",
+      "action": "next",
+      "next": "code-06",
+      "example": "            if (p[j - 1] === '*') {\n                dp[i][j] = dp[i][j - 2];"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Add option 2 for '*' - match one or more:\n\n```javascript\n                // Option 2: match one or more (if chars match)\n                if (p[j - 2] === s[i - 1] || p[j - 2] === '.') {\n                    dp[i][j] = dp[i][j] || dp[i - 1][j];\n                }\n```\n\nIf the char before '*' matches current string char, we can use the '*' to match it!",
+      "action": "next",
+      "next": "code-07",
+      "example": "                if (p[j - 2] === s[i - 1] || p[j - 2] === '.') {\n                    dp[i][j] = dp[i][j] || dp[i - 1][j];\n                }"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Handle regular character and '.' cases:\n\n```javascript\n            } else if (p[j - 1] === '.' || p[j - 1] === s[i - 1]) {\n                // '.' matches any char, or chars are equal\n                dp[i][j] = dp[i - 1][j - 1];\n            }\n```\n\nBoth '.' and exact character match work the same way!",
+      "action": "next",
+      "next": "code-08",
+      "example": "            } else if (p[j - 1] === '.' || p[j - 1] === s[i - 1]) {\n                dp[i][j] = dp[i - 1][j - 1];\n            }"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Close the loops and return the result:\n\n```javascript\n        }\n    }\n    \n    return dp[m][n];\n}\n```\n\nThe bottom-right cell contains our final answer!",
+      "action": "next",
+      "next": "complexity-analysis",
+      "example": "        }\n    }\n    \n    return dp[m][n];\n}"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "# Complexity Analysis 📊\n\n## Time Complexity: O(m × n)\n- m = length of string s\n- n = length of pattern p\n- We fill an (m+1) × (n+1) table\n- Each cell takes O(1) to compute\n\n## Space Complexity: O(m × n)\n- DP table of size (m+1) × (n+1)\n- Can be optimized to O(n) using rolling array, but clarity is better here\n\n## Why DP Beats Recursion:\n\n**Naive recursion:** O(2^(m+n)) - exponential!\n**DP with memoization:** O(m × n) - polynomial!\n\nThe DP table prevents recalculating the same subproblems thousands of times.\n\n## Comparison:\n- **Brute force:** Try all possible ways to match - exponential\n- **Recursion with memo:** O(m × n) time, O(m × n) space\n- **Bottom-up DP:** O(m × n) time, O(m × n) space, no recursion overhead",
+      "action": "next",
+      "next": "star-operator-deep-dive"
+    },
+    {
+      "stepId": "star-operator-deep-dive",
+      "mentorSays": "# Deep Dive: Understanding the '*' Operator 🌟\n\nThe '*' is the trickiest part. Let's understand why we check `dp[i-1][j]`:\n\n**Example:** s = \"aaa\", p = \"a*\"\n\nWhen at dp[3][2] (\"aaa\" vs \"a*\"):\n```\n    ''  a   *\n''  T   F   T\na   F   T   T\na   F   F   T\na   F   F   ?\n```\n\nFor dp[3][2]:\n- **Option 1:** Match zero 'a's → dp[3][0] = false ✗\n- **Option 2:** s[2]='a' matches p[0]='a', so check dp[2][2] = true ✓\n\n**Why dp[i-1][j]?**\nIt asks: \"If we already matched s[0..i-2] with this pattern, can we match one more character?\"\n\nThink of it as: \"The '*' is still active, consuming more characters.\"\n\n**Key insight:** We keep the same pattern position (j) but advance the string position (i-1). This lets the '*' match multiple characters!",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "# Edge Cases 🎯\n\n1. **Empty string and pattern:** \"\" vs \"\" → true ✓\n\n2. **Empty string, non-empty pattern:** \"\" vs \"a*\" → true (match zero)\n   \"\" vs \"a*b*\" → true\n   \"\" vs \"a\" → false\n\n3. **Non-empty string, empty pattern:** \"a\" vs \"\" → false\n\n4. **Pattern with multiple stars:** \"aa\" vs \"a*a*\" → true\n\n5. **'.*' pattern:** Matches anything!\n   \"anything\" vs \".*\" → true\n\n6. **Invalid star usage:** \"a\" vs \"*\" → technically invalid input (star without preceding char)\n   But our code handles it: dp[i][j-2] would access j=-1, so be careful!\n\n7. **Long patterns:** \"a\" vs \"a*a*a*a*a*a*a*b\" → false (b doesn't match)\n\n8. **Case sensitivity:** \"A\" vs \"a\" → false (exact match required)\n\nOur solution handles all valid cases correctly!",
+      "action": "next",
+      "next": "optimization-note"
+    },
+    {
+      "stepId": "optimization-note",
+      "mentorSays": "# Space Optimization 🔧\n\nWe can optimize space from O(m × n) to O(n):\n\n```javascript\nfunction isMatchOptimized(s, p) {\n    const m = s.length, n = p.length;\n    let prev = Array(n + 1).fill(false);\n    let curr = Array(n + 1).fill(false);\n    \n    prev[0] = true;\n    \n    // ... similar logic using prev and curr rows\n    // Swap after each iteration\n}\n```\n\n**Tradeoffs:**\n- Saves space: O(n) instead of O(m × n)\n- Slightly more complex code\n- Same time complexity\n\n**When to optimize:**\n- Very long strings (m is huge)\n- Memory-constrained environments\n\n**For interviews:** The O(m × n) solution is clearer and sufficient!",
+      "action": "next",
+      "next": "real-world-applications"
+    },
+    {
+      "stepId": "real-world-applications",
+      "mentorSays": "# Real-World Applications 🌍\n\nRegex matching is everywhere:\n\n**1. Text Editors**\n- VS Code, Vim, Emacs use regex for find/replace\n- Our algorithm is a simplified version\n\n**2. Command-Line Tools**\n- `grep` searches files using regex\n- `sed` edits text with regex patterns\n\n**3. Programming Languages**\n- JavaScript: `/pattern/.test(string)`\n- Python: `re.match(pattern, string)`\n- All use similar DP or NFA approaches\n\n**4. Validation**\n- Email validation: `^[a-z]+@[a-z]+\\.[a-z]+$`\n- Phone numbers, URLs, etc.\n\n**5. Compilers**\n- Lexical analysis uses regex to tokenize code\n- Pattern matching in language features\n\n**Full regex engines** support much more:\n- Character classes: `[a-z]`, `[0-9]`\n- Quantifiers: `+`, `?`, `{n,m}`\n- Groups: `(abc)`\n- Anchors: `^`, `$`\n\nBut the DP foundation remains the same!",
+      "action": "next",
+      "next": "common-mistakes"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "# Congratulations! 🎉\n\nYou've mastered one of the hardest DP problems - **Regular Expression Matching**!\n\n## What You Learned:\n\n✅ Implementing regex with '.' and '*' operators\n✅ Advanced 2D DP table construction\n✅ Handling multiple matching strategies with OR logic\n✅ Understanding the '*' operator's \"zero or more\" semantics\n✅ Building the foundation of grep and text processing tools\n\n## Skills Unlocked:\n\n- **Pattern matching DP** - applicable to many string problems\n- **State machine thinking** - essential for complex algorithms\n- **Multiple decision points** - using OR to combine strategies\n- **Interview confidence** - this is a top-tier hard problem!\n\n## Next Steps:\n\nReady for a related challenge? Try **Wildcard Matching** (Lesson 91) - similar but with different operators ('?' for single char, '*' for any sequence).\n\nYou've completed the Competitive Tier! These skills put you in the top tier of candidates at any tech company. 🚀\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

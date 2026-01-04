@@ -1,0 +1,67 @@
+{
+  "id": "word-search-ii",
+  "title": "Word Search II",
+  "pattern": "trie + backtracking",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 52,
+    "tier": "EXPERT",
+    "lessonOrderTag": "EXPERT-52",
+    "introduces": ["trie-backtracking", "grid-search", "pruning"],
+    "assumesAlreadyTaught": ["trie-concept", "backtracking-concept", "DFS-on-grid"],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["largest-rectangle-histogram"]
+  },
+  "pseudocode": [
+    {"id": "ps1", "text": "Build trie from word list"},
+    {"id": "ps2", "text": "For each cell in grid, start DFS"},
+    {"id": "ps3", "text": "DFS: check bounds, visited, and if current char in trie"},
+    {"id": "ps4", "text": "If trie node has word, add to results and remove from trie"},
+    {"id": "ps5", "text": "Explore all 4 directions recursively"},
+    {"id": "ps6", "text": "Backtrack: unmark visited"},
+    {"id": "ps7", "text": "Optimization: prune trie branches with no children"}
+  ],
+  "flow": [
+    {"stepId": "objectives", "mentorSays": "Hey! Ready for **Word Search II** - combining Trie with backtracking!\n\nThis challenging problem shows how Trie dramatically improves grid search by letting us prune invalid paths early.\n\nYou'll learn:\n• Combining data structures (Trie + DFS)\n• Advanced pruning techniques\n• Building complex solutions from simple parts\n\nLet's dive in!", "action": "continue", "next": "language-selection"},
+    {"stepId": "language-selection", "mentorSays": "Which programming language?", "choices": [{"label": "💛 JavaScript", "next": "prereq-check-js"}, {"label": "🐍 Python", "next": "prereq-check-python"}, {"label": "☕ Java", "next": "prereq-check-java"}, {"label": "⚡ C++", "next": "prereq-check-cpp"}, {"label": "💙 TypeScript", "next": "prereq-check-ts"}]},
+    {"stepId": "prereq-check-js", "mentorSays": "To solve in JavaScript:\n- **Trie concept** - Prefix tree structure\n- **Backtracking** - Exploring paths with undo\n- **DFS on grid** - Grid traversal\n\nConfident?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-js"}, {"label": "Some", "next": "select-prereqs-js"}]},
+    {"stepId": "teach-prereqs-js", "mentorSays": "I'll teach prerequisites. [Phase 2]\n\nLet's continue!", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-js", "mentorSays": "Select concepts to explain. [Phase 2]\n\nContinuing!", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-python", "mentorSays": "To solve in Python:\n- **Trie concept**\n- **Backtracking**\n- **DFS on grid**\n\nConfident?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-python"}, {"label": "Some", "next": "select-prereqs-python"}]},
+    {"stepId": "teach-prereqs-python", "mentorSays": "I'll teach prerequisites. [Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-python", "mentorSays": "Select concepts. [Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-java", "mentorSays": "To solve in Java:\n- **Trie concept**\n- **Backtracking**\n- **DFS on grid**\n\nConfident?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-java"}, {"label": "Some", "next": "select-prereqs-java"}]},
+    {"stepId": "teach-prereqs-java", "mentorSays": "I'll teach prerequisites. [Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-java", "mentorSays": "Select concepts. [Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-cpp", "mentorSays": "To solve in C++:\n- **Trie concept**\n- **Backtracking**\n- **DFS on grid**\n\nConfident?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-cpp"}, {"label": "Some", "next": "select-prereqs-cpp"}]},
+    {"stepId": "teach-prereqs-cpp", "mentorSays": "I'll teach prerequisites. [Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-cpp", "mentorSays": "Select concepts. [Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-ts", "mentorSays": "To solve in TypeScript:\n- **Trie concept**\n- **Backtracking**\n- **DFS on grid**\n\nConfident?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-ts"}, {"label": "Some", "next": "select-prereqs-ts"}]},
+    {"stepId": "teach-prereqs-ts", "mentorSays": "I'll teach prerequisites. [Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-ts", "mentorSays": "Select concepts. [Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "**Imagine playing Boggle** - finding words in a letter grid by connecting adjacent letters. But instead of checking one word at a time, you want to find ALL words from a dictionary!\n\nGiven:\n- `board`: m×n grid of characters\n- `words`: list of words to find\n\nReturn all words that exist in the board. Words can be formed from sequentially adjacent cells (up/down/left/right). Same cell can't be used twice in one word.\n\nExample:\n```\nboard = [\n  ['o','a','a','n'],\n  ['e','t','a','e'],\n  ['i','h','k','r'],\n  ['i','f','l','v']\n]\nwords = [\"oath\",\"pea\",\"eat\",\"rain\"]\n```\nOutput: `[\"eat\",\"oath\"]`",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {"stepId": "thinking-challenge", "mentorSays": "How can we efficiently search for multiple words?\n\nThink about sharing work...", "choices": [{"label": "Search for each word separately using DFS", "next": "wrong-choice"}, {"label": "Build Trie from words, DFS once while traversing Trie", "next": "core-idea"}]},
+    {"stepId": "wrong-choice", "mentorSays": "Searching separately would repeat work! If 'eat' and 'eaten' both start with 'ea', we'd explore that path twice.\n\nA Trie lets us explore all words simultaneously, pruning branches early!", "action": "next", "next": "core-idea"},
+    {"stepId": "core-idea", "mentorSays": "The key insight: **combine Trie with DFS backtracking for powerful pruning**.\n\nAlgorithm:\n1. Build Trie from all words\n2. For each grid cell, start DFS with trie root\n3. During DFS:\n   - If char not in current trie node's children → prune!\n   - If we reach a word end → add to results\n   - Explore 4 directions, marking visited\n   - Backtrack (unmark visited)\n4. Optimization: Remove found words from trie to avoid duplicates\n\nThis is WAY faster than searching each word separately!", "action": "next", "next": "walkthrough", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "walkthrough", "mentorSays": "Finding 'oath' in grid:\n\n```\n['o','a','a','n']\n['e','t','a','e']\n['i','h','k','r']\n```\n\n- Start at (0,0): 'o' → trie has 'o'\n- Move to (1,0): 'oa' → nope, trie wants 'oa' from (0,1)\n- Backtrack, try (0,1): 'oa' ✓\n- Continue: 'oat' → (1,1) ✓\n- Finally: 'oath' → (2,1) ✓ **Found!**\n\nWithout Trie, we'd explore many invalid paths. Trie prunes early!", "action": "next", "next": "pseudocode-step", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "pseudocode-step", "mentorSays": "Here's our plan:", "action": "next", "next": "coding-intro", "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"]},
+    {"stepId": "coding-intro", "mentorSays": "Let's build this step by step!", "action": "next", "next": "code-01"},
+    {"stepId": "code-01", "mentorSays": "Build Trie from words.\n\n```javascript\nfunction findWords(board, words) {\n  const trie = {};\n  for (const word of words) {\n    let node = trie;\n    for (const char of word) {\n      if (!node[char]) node[char] = {};\n      node = node[char];\n    }\n    node.word = word;\n  }\n}\n```", "action": "next", "next": "code-02", "pseudocodeLineIds": ["ps1"], "example": "const trie = {};\nfor (const word of words) {\n  let node = trie;\n  for (const char of word) {\n    if (!node[char]) node[char] = {};\n    node = node[char];\n  }\n  node.word = word;"
+    },
+    {"stepId": "code-02", "mentorSays": "Initialize results and start DFS from each cell.\n\n```javascript\nfunction findWords(board, words) {\n  const trie = {};\n  for (const word of words) {\n    let node = trie;\n    for (const char of word) {\n      if (!node[char]) node[char] = {};\n      node = node[char];\n    }\n    node.word = word;\n  }\n  \n  const result = [];\n  for (let r = 0; r < board.length; r++) {\n    for (let c = 0; c < board[0].length; c++) {\n      dfs(r, c, trie);\n    }\n  }\n  return result;\n}\n```", "action": "next", "next": "code-03", "pseudocodeLineIds": ["ps2"], "example": "const result = [];\nfor (let r = 0; r < board.length; r++) {\n  for (let c = 0; c < board[0].length; c++) dfs(r, c, trie);"
+    },
+    {"stepId": "code-03", "mentorSays": "Define DFS with boundary and validation checks.\n\n```javascript\nfunction findWords(board, words) {\n  const trie = {};\n  for (const word of words) {\n    let node = trie;\n    for (const char of word) {\n      if (!node[char]) node[char] = {};\n      node = node[char];\n    }\n    node.word = word;\n  }\n  \n  const result = [];\n  \n  const dfs = (r, c, node) => {\n    if (r < 0 || r >= board.length || c < 0 || c >= board[0].length) return;\n    const char = board[r][c];\n    if (!node[char]) return;\n  };\n  \n  for (let r = 0; r < board.length; r++) {\n    for (let c = 0; c < board[0].length; c++) {\n      dfs(r, c, trie);\n    }\n  }\n  return result;\n}\n```", "action": "next", "next": "code-04", "pseudocodeLineIds": ["ps3"], "example": "const dfs = (r, c, node) => {\n  if (r < 0 || r >= board.length || c < 0 || c >= board[0].length) return;\n  const char = board[r][c];\n  if (!node[char]) return;"
+    },
+    {"stepId": "code-04", "mentorSays": "Check if word found, explore 4 directions with backtracking.\n\n```javascript\nfunction findWords(board, words) {\n  const trie = {};\n  for (const word of words) {\n    let node = trie;\n    for (const char of word) {\n      if (!node[char]) node[char] = {};\n      node = node[char];\n    }\n    node.word = word;\n  }\n  \n  const result = [];\n  \n  const dfs = (r, c, node) => {\n    if (r < 0 || r >= board.length || c < 0 || c >= board[0].length) return;\n    const char = board[r][c];\n    if (!node[char]) return;\n    \n    node = node[char];\n    if (node.word) {\n      result.push(node.word);\n      delete node.word;\n    }\n    \n    board[r][c] = '#';\n    dfs(r-1, c, node);\n    dfs(r+1, c, node);\n    dfs(r, c-1, node);\n    dfs(r, c+1, node);\n    board[r][c] = char;\n  };\n  \n  for (let r = 0; r < board.length; r++) {\n    for (let c = 0; c < board[0].length; c++) {\n      dfs(r, c, trie);\n    }\n  }\n  return result;\n}\n```", "action": "next", "next": "wrap-up", "pseudocodeLineIds": ["ps4", "ps5", "ps6"], "example": "node = node[char];\nif (node.word) {\n  result.push(node.word);\n  delete node.word;\n}\nboard[r][c] = '#';\ndfs(r-1, c, node); dfs(r+1, c, node); dfs(r, c-1, node); dfs(r, c+1, node);\nboard[r][c] = char;"
+    },
+    {"stepId": "wrap-up", "mentorSays": "Brilliant! You've combined **Trie + Backtracking** for a powerful solution!\n\nThis pattern is used in:\n• Word games (Boggle, Scrabble)\n• Pattern matching\n• Text search engines\n\nNext: **Largest Rectangle in Histogram** - monotonic stack mastery!\n\nYou're crushing advanced algorithms! 💪", "action": "complete"}
+  ]
+}

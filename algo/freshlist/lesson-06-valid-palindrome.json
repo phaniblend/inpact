@@ -1,0 +1,201 @@
+{
+  "id": "valid-palindrome",
+  "title": "Valid Palindrome",
+  "pattern": "two-pointers (strings)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 6,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-06",
+    "introduces": [
+      "string-characters",
+      "charAt-method",
+      "toLowerCase-method",
+      "alphanumeric-check",
+      "character-code",
+      "charCodeAt-method",
+      "skip-logic",
+      "boolean-return"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "array-indexing",
+      "loops",
+      "while-loop",
+      "functions",
+      "function-parameters",
+      "return-statement",
+      "comparison-operators",
+      "two-pointers"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["remove-element"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left pointer to 0, right pointer to end of string." },
+    { "id": "ps2", "text": "While left < right:" },
+    { "id": "ps3", "text": "  Skip non-alphanumeric characters on the left." },
+    { "id": "ps4", "text": "  Skip non-alphanumeric characters on the right." },
+    { "id": "ps5", "text": "  If lowercase of left char ≠ lowercase of right char, return false." },
+    { "id": "ps6", "text": "  Move both pointers inward." },
+    { "id": "ps7", "text": "If loop completes, return true (it's a palindrome)." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Valid Palindrome**.\n\nThis lesson applies the **two-pointer technique** to strings. You'll learn how to:\n\n- Access individual characters in a string\n- Handle uppercase vs lowercase\n- Skip non-letter, non-number characters\n\nThis is a classic interview problem!",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nA **palindrome** is a word or phrase that reads the same backward as forward.\n\nYour task:\n- Given a string, determine if it's a valid palindrome\n- Consider only letters and numbers (ignore spaces, punctuation)\n- Ignore uppercase vs lowercase differences\n\n**Example:**\n```\nInput: \"A man, a plan, a canal: Panama\"\nOutput: true\n\nAfter removing non-alphanumeric: \"amanaplanacanalpanama\"\nThis reads the same forward and backward!\n```",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) \"racecar\" → true (classic palindrome)\n2) \"hello\" → false (\"olleh\" is different)\n3) \"A Santa at NASA\" → true (ignore spaces, case)\n4) \"\" → true (empty string is a palindrome)\n5) \"a\" → true (single character is a palindrome)\n```",
+      "action": "next",
+      "next": "what-is-alphanumeric"
+    },
+    {
+      "stepId": "what-is-alphanumeric",
+      "mentorSays": "### What is \"Alphanumeric\"?\n\n**Alphanumeric** characters are:\n- Letters: a-z, A-Z\n- Numbers: 0-9\n\n**NOT alphanumeric:**\n- Spaces: \" \"\n- Punctuation: , . : ; ! ? ' \"\n- Special characters: @ # $ % etc.\n\nIn \"A man, a plan\" the alphanumeric characters are: \"Amanaplan\"",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you check if a string is a palindrome?",
+      "choices": [
+        { "label": "Reverse the string and compare", "next": "why-not-reverse" },
+        { "label": "Use two pointers from both ends", "next": "core-idea" },
+        { "label": "Check each character against its mirror position", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "why-not-reverse",
+      "mentorSays": "Reversing and comparing works, but:\n\n1. It creates a new string (uses extra memory)\n2. We'd need to first filter out non-alphanumeric characters\n3. Then reverse, then compare\n\nThe two-pointer approach is more elegant — we can check characters from both ends **while** skipping invalid characters.\n\nLet's see how.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### Two Pointers on Strings\n\nWe use the same two-pointer pattern from reversing arrays:\n\n1. Place `left` at the start (index 0)\n2. Place `right` at the end (last index)\n3. Compare characters at both positions\n4. Move inward and repeat\n\n**Additional logic for this problem:**\n- Skip non-alphanumeric characters\n- Compare lowercase versions (ignore case)",
+      "action": "next",
+      "next": "accessing-characters"
+    },
+    {
+      "stepId": "accessing-characters",
+      "mentorSays": "### Accessing Characters in JavaScript\n\nStrings work like arrays — you can access individual characters by index:\n\n```javascript\nconst str = \"hello\";\nstr[0]  // 'h'\nstr[1]  // 'e'\nstr[4]  // 'o'\nstr.length  // 5\n```\n\nYou can also use `.charAt()`:\n```javascript\nstr.charAt(0)  // 'h'\n```\n\nBoth work the same way. We'll use bracket notation `str[i]`.",
+      "action": "next",
+      "next": "lowercase-explained"
+    },
+    {
+      "stepId": "lowercase-explained",
+      "mentorSays": "### Converting to Lowercase\n\nTo ignore case differences, we convert both characters to lowercase:\n\n```javascript\n'A'.toLowerCase()  // 'a'\n'Z'.toLowerCase()  // 'z'\n'a'.toLowerCase()  // 'a' (already lowercase)\n'5'.toLowerCase()  // '5' (numbers unchanged)\n```\n\nSo `'A' === 'a'` is false, but `'A'.toLowerCase() === 'a'.toLowerCase()` is true!",
+      "action": "next",
+      "next": "alphanumeric-check-explained"
+    },
+    {
+      "stepId": "alphanumeric-check-explained",
+      "mentorSays": "### Checking if a Character is Alphanumeric\n\nWe need a helper function to check if a character is a letter or digit.\n\n```javascript\nfunction isAlphanumeric(char) {\n  const code = char.charCodeAt(0);\n  return (\n    (code >= 48 && code <= 57) ||  // 0-9\n    (code >= 65 && code <= 90) ||  // A-Z\n    (code >= 97 && code <= 122)    // a-z\n  );\n}\n```\n\n**Explanation:**\n- `charCodeAt(0)` gets the character's numeric code\n- Codes 48-57 are digits 0-9\n- Codes 65-90 are uppercase A-Z\n- Codes 97-122 are lowercase a-z",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\ns = \"A man, a\"\n```\n\n**Start:**\n- left = 0 ('A'), right = 7 ('a')\n- Both alphanumeric\n- 'A'.toLowerCase() = 'a', 'a'.toLowerCase() = 'a'\n- Match! Move inward.\n\n**left = 1, right = 6:**\n- left = ' ' (space) — skip it, left = 2\n- left = 'm', right = ' ' — skip right, right = 5\n- right = 'a', compare 'm' vs 'a'\n- 'm' ≠ 'a' → **return false**\n\nWait, that's wrong! \"A man, a\" isn't a palindrome anyway. Let's try \"aba\":\n\n```\ns = \"aba\"\n```\n- left = 0 ('a'), right = 2 ('a') — match!\n- left = 1, right = 1 — pointers meet\n- **return true**",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nWe'll first create the helper function, then the main function.\n\nLet's start.",
+      "action": "next",
+      "next": "code-01-helper",
+      "pseudocodeLineIds": ["ps3", "ps4"]
+    },
+    {
+      "stepId": "code-01-helper",
+      "mentorSays": "**Step 1:** Create the helper function to check alphanumeric.\n\n```javascript\nfunction isAlphanumeric(char) {\n  const code = char.charCodeAt(0);\n  return (\n    (code >= 48 && code <= 57) ||\n    (code >= 65 && code <= 90) ||\n    (code >= 97 && code <= 122)\n  );\n}\n```\n\n**Explanation:**\n- `charCodeAt(0)` returns the Unicode value of the character\n- We check if it falls in the ranges for digits (48-57), uppercase (65-90), or lowercase (97-122)\n- Returns `true` if alphanumeric, `false` otherwise",
+      "example": "function isAlphanumeric(char) {\n  const code = char.charCodeAt(0);\n  return (\n    (code >= 48 && code <= 57) ||\n    (code >= 65 && code <= 90) ||\n    (code >= 97 && code <= 122)\n  );\n}",
+      "action": "next",
+      "next": "code-02-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-function",
+      "mentorSays": "**Step 2:** Create the main function and initialize pointers.\n\n```javascript\nfunction isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n}\n```\n\n**Explanation:**\n- `isPalindrome` — function that returns true or false\n- `s` — the input string\n- `left` starts at 0, `right` starts at the last index",
+      "example": "function isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n}",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "**Step 3:** Create the main loop.\n\n```javascript\nfunction isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n  while (left < right) {\n\n  }\n}\n```\n\n**Explanation:**\n- `while (left < right)` — keep going until pointers meet or cross\n- Same condition as when we reversed arrays!",
+      "example": "while (left < right) {\n\n}",
+      "action": "next",
+      "next": "code-04-skip-left",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-04-skip-left",
+      "mentorSays": "**Step 4:** Skip non-alphanumeric characters on the left.\n\n```javascript\nfunction isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n  while (left < right) {\n    while (left < right && !isAlphanumeric(s[left])) {\n      left++;\n    }\n\n  }\n}\n```\n\n**Explanation:**\n- Inner `while` skips spaces, punctuation, etc.\n- `!isAlphanumeric(s[left])` means \"if NOT alphanumeric\"\n- Keep moving left forward until we find a valid character\n- `left < right` check prevents going past right",
+      "example": "while (left < right && !isAlphanumeric(s[left])) {\n  left++;\n}",
+      "action": "next",
+      "next": "code-05-skip-right",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-05-skip-right",
+      "mentorSays": "**Step 5:** Skip non-alphanumeric characters on the right.\n\n```javascript\nfunction isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n  while (left < right) {\n    while (left < right && !isAlphanumeric(s[left])) {\n      left++;\n    }\n    while (left < right && !isAlphanumeric(s[right])) {\n      right--;\n    }\n\n  }\n}\n```\n\n**Explanation:**\n- Same logic, but moving right backward\n- `right--` decreases right by 1\n- After both skips, left and right point to valid characters",
+      "example": "while (left < right && !isAlphanumeric(s[right])) {\n  right--;\n}",
+      "action": "next",
+      "next": "code-06-compare",
+      "pseudocodeLineIds": ["ps5", "ps6"]
+    },
+    {
+      "stepId": "code-06-compare",
+      "mentorSays": "**Step 6:** Compare characters and move pointers.\n\n```javascript\nfunction isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n  while (left < right) {\n    while (left < right && !isAlphanumeric(s[left])) {\n      left++;\n    }\n    while (left < right && !isAlphanumeric(s[right])) {\n      right--;\n    }\n\n    if (s[left].toLowerCase() !== s[right].toLowerCase()) {\n      return false;\n    }\n\n    left++;\n    right--;\n  }\n}\n```\n\n**Explanation:**\n- Convert both to lowercase before comparing\n- If they don't match, it's not a palindrome — return false immediately\n- If they match, move both pointers inward and continue",
+      "example": "if (s[left].toLowerCase() !== s[right].toLowerCase()) {\n  return false;\n}\n\nleft++;\nright--;",
+      "action": "next",
+      "next": "code-07-return",
+      "pseudocodeLineIds": ["ps7"]
+    },
+    {
+      "stepId": "code-07-return",
+      "mentorSays": "**Step 7:** Return true if the loop completes.\n\n```javascript\nfunction isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n  while (left < right) {\n    while (left < right && !isAlphanumeric(s[left])) {\n      left++;\n    }\n    while (left < right && !isAlphanumeric(s[right])) {\n      right--;\n    }\n\n    if (s[left].toLowerCase() !== s[right].toLowerCase()) {\n      return false;\n    }\n\n    left++;\n    right--;\n  }\n\n  return true;\n}\n```\n\n**Explanation:**\n- If we checked all pairs without finding a mismatch, it's a palindrome\n- Return true",
+      "example": "return true;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction isAlphanumeric(char) {\n  const code = char.charCodeAt(0);\n  return (\n    (code >= 48 && code <= 57) ||\n    (code >= 65 && code <= 90) ||\n    (code >= 97 && code <= 122)\n  );\n}\n\nfunction isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n  while (left < right) {\n    while (left < right && !isAlphanumeric(s[left])) {\n      left++;\n    }\n    while (left < right && !isAlphanumeric(s[right])) {\n      right--;\n    }\n\n    if (s[left].toLowerCase() !== s[right].toLowerCase()) {\n      return false;\n    }\n\n    left++;\n    right--;\n  }\n\n  return true;\n}\n```\n\n**How it works:**\n1. Start with pointers at both ends\n2. Skip any non-alphanumeric characters\n3. Compare lowercase versions of valid characters\n4. If mismatch found, return false\n5. If loop completes, return true",
+      "example": "function isAlphanumeric(char) {\n  const code = char.charCodeAt(0);\n  return (\n    (code >= 48 && code <= 57) ||\n    (code >= 65 && code <= 90) ||\n    (code >= 97 && code <= 122)\n  );\n}\n\nfunction isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n  while (left < right) {\n    while (left < right && !isAlphanumeric(s[left])) {\n      left++;\n    }\n    while (left < right && !isAlphanumeric(s[right])) {\n      right--;\n    }\n\n    if (s[left].toLowerCase() !== s[right].toLowerCase()) {\n      return false;\n    }\n\n    left++;\n    right--;\n  }\n\n  return true;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **String character access** — using `str[i]` to get individual characters\n- **toLowerCase()** — converting characters for case-insensitive comparison\n- **charCodeAt()** — getting the numeric code of a character\n- **Skip logic** — using inner while loops to skip invalid characters\n- **Boolean returns** — returning true/false based on conditions\n\n**Why this matters:**\n\nThis problem combines several skills:\n- Two-pointer technique (from Lesson 1)\n- Character manipulation (new)\n- Helper functions (from Lesson 4)\n\nPalindrome checking appears in many variations:\n- Palindrome numbers\n- Palindrome linked lists\n- Longest palindromic substring\n\n**Next recommended lesson:** Remove Element",
+      "action": "complete"
+    }
+  ]
+}

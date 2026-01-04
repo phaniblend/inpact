@@ -1,0 +1,168 @@
+{
+  "id": "react-12-todo-item-component",
+  "title": "Todo Item Component",
+  "technology": "React",
+  "difficulty": "junior",
+  "language": "javascript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "5-15 min",
+    "tests": "Props, conditional rendering",
+    "challenge_number": "12"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Todo Item Component in React\n2. Implement the solution using Props, conditional rendering\n3. Apply React best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write clean, maintainable React code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Have you ever needed to implement a todo item component in React?\n\n**The Challenge:**\nCreate a React component for a todo item that:\n- Displays the todo text\n- Shows a checkbox for completion status\n- Has a delete button\n- Uses functional component syntax\n- Accepts props for todo data and handlers\n\n**What We're Building:**\nThis challenge tests your understanding of props and conditional rendering in React.\n\n**Why This Matters:**\nTodo item components are fundamental building blocks. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n\n**Real-World Applications:**\nTodoist uses todo item components to display individual tasks. Each todo item shows the task text, a checkbox for completion status, and a delete button, all managed by React state.",
+      "example": "// Create a React component for a todo item:\n// - Display todo text from props\n// - Checkbox for completion status\n// - Delete button\n// - Use functional component syntax",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Todo Item Component challenge?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach:\n\n```javascript\nfunction TodoItem({ todo, onToggle, onDelete }) {\n  return (\n    <li className={todo.completed ? 'completed' : ''}>\n      <input\n        type=\"checkbox\"\n        checked={todo.completed}\n        onChange={() => onToggle(todo.id)}\n      />\n      <span>{todo.text}</span>\n      <button onClick={() => onDelete(todo.id)}>Delete</button>\n    </li>\n  );\n}\n\nexport default TodoItem;\n```\n\nThis solution demonstrates best practices for React development and shows how to properly implement Props, conditional rendering.",
+      "example": "function TodoItem({ todo, onToggle, onDelete }) {\n  return (\n    <li className={todo.completed ? 'completed' : ''}>\n      <input type=\"checkbox\" checked={todo.completed} onChange={() => onToggle(todo.id)} />\n      <span>{todo.text}</span>\n      <button onClick={() => onDelete(todo.id)}>Delete</button>\n    </li>\n  );\n}",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Since this is a React JavaScript challenge, we'll use JavaScript. Let's start coding!",
+      "action": "continue",
+      "next": "component-check"
+    },
+    {
+      "stepId": "component-check",
+      "mentorSays": "Do you understand React components and how they work?",
+      "choices": [
+        {
+          "label": "Yes, I understand components",
+          "next": "jsx-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "component-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "component-check-explanation",
+      "mentorSays": "React components are JavaScript functions that return JSX (JavaScript XML). They encapsulate UI logic and can be reused throughout your application.\n\n**Key Points:**\n- Components can receive data through props\n- Components can manage internal state using hooks like useState\n- Components should be single-responsibility and reusable\n\n**Example:**\n```javascript\nfunction Greeting({ name }) {\n  return <h1>Hello, {name}!</h1>;\n}\n```",
+      "example": "function Greeting({ name }) {\n  return <h1>Hello, {name}!</h1>;\n}",
+      "action": "continue",
+      "next": "jsx-check"
+    },
+    {
+      "stepId": "jsx-check",
+      "mentorSays": "Do you understand JSX and how to write it?",
+      "choices": [
+        {
+          "label": "Yes, I understand JSX",
+          "next": "props-check"
+        },
+        {
+          "label": "No, please explain",
+          "next": "jsx-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "jsx-check-explanation",
+      "mentorSays": "JSX is a syntax extension that lets you write HTML-like code in JavaScript.\n\n**Key Points:**\n- Use className instead of class\n- Use camelCase for attributes (onClick, onChange)\n- Expressions go in curly braces: {variable}\n- Components must return a single root element",
+      "example": "<div className=\"container\">\n  <h1>{title}</h1>\n  <button onClick={handleClick}>Click me</button>\n</div>",
+      "action": "continue",
+      "next": "props-check"
+    },
+    {
+      "stepId": "props-check",
+      "mentorSays": "Do you understand React props and how to use them?",
+      "choices": [
+        {
+          "label": "Yes, I understand props",
+          "next": "coding-start-js"
+        },
+        {
+          "label": "No, please explain",
+          "next": "props-check-explanation"
+        }
+      ]
+    },
+    {
+      "stepId": "props-check-explanation",
+      "mentorSays": "Props are how you pass data from parent to child components.\n\n**Key Points:**\n- Props are read-only (don't modify them)\n- Destructure props for cleaner code\n- Pass functions as props for callbacks",
+      "example": "// Parent\n<TodoItem todo={todo} onDelete={handleDelete} />\n\n// Child\nfunction TodoItem({ todo, onDelete }) {\n  return <button onClick={() => onDelete(todo.id)}>Delete</button>;\n}",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Let's build the TodoItem component step by step.\n\n**Step 1: Import React**",
+      "example": "import React from 'react';",
+      "action": "continue",
+      "next": "coding-step-2-js"
+    },
+    {
+      "stepId": "coding-step-2-js",
+      "mentorSays": "**Step 2: Create the component function with props**",
+      "example": "function TodoItem({ todo, onToggle, onDelete }) {\n  // Component body\n}",
+      "action": "continue",
+      "next": "coding-step-3-js"
+    },
+    {
+      "stepId": "coding-step-3-js",
+      "mentorSays": "**Step 3: Add the JSX return with checkbox, text, and delete button**",
+      "example": "return (\n  <li className={todo.completed ? 'completed' : ''}>\n    <input\n      type=\"checkbox\"\n      checked={todo.completed}\n      onChange={() => onToggle(todo.id)}\n    />\n    <span>{todo.text}</span>\n    <button onClick={() => onDelete(todo.id)}>Delete</button>\n  </li>\n);",
+      "action": "continue",
+      "next": "coding-complete-js"
+    },
+    {
+      "stepId": "coding-complete-js",
+      "mentorSays": "**Complete Solution:**",
+      "example": "import React from 'react';\n\nfunction TodoItem({ todo, onToggle, onDelete }) {\n  return (\n    <li className={todo.completed ? 'completed' : ''}>\n      <input\n        type=\"checkbox\"\n        checked={todo.completed}\n        onChange={() => onToggle(todo.id)}\n      />\n      <span>{todo.text}</span>\n      <button onClick={() => onDelete(todo.id)}>Delete</button>\n    </li>\n  );\n}\n\nexport default TodoItem;",
+      "action": "continue",
+      "next": "test-code-js"
+    },
+    {
+      "stepId": "test-code-js",
+      "mentorSays": "Now test your component!\n\n**Test Cases:**\n1. Render with a sample todo\n2. Click checkbox - should trigger onToggle\n3. Click delete - should trigger onDelete\n4. Completed todo should have 'completed' class",
+      "example": "// Usage in parent:\n<TodoItem\n  todo={{ id: 1, text: 'Learn React', completed: false }}\n  onToggle={(id) => console.log('Toggle:', id)}\n  onDelete={(id) => console.log('Delete:', id)}\n/>",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "Well done! You've completed the Todo Item Component challenge.\n\n**Key Takeaways:**\n- You've mastered Props, conditional rendering\n- You understand how to create reusable React components\n- You've applied best practices for React development\n\nKeep practicing!",
+      "action": "continue"
+    }
+  ]
+}

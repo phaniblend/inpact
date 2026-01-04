@@ -1,0 +1,634 @@
+{
+  "id": "rotate-array",
+  "title": "Rotate Array",
+  "pattern": "array rotation + reversal",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 4,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-4",
+    "introduces": [
+      "modulo-operator",
+      "rotation-concept",
+      "multi-step-transformation",
+      "helper-functions"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "two-pointers",
+      "in-place-swap"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "remove-duplicates-sorted"
+    ]
+  },
+  "problemStatement": {
+    "description": "Rotate an array to the right by k steps in-place. Elements that fall off the right end wrap around to the beginning.",
+    "inputs": [
+      "nums: array of integers (length 1 to 10^5)",
+      "k: number of steps to rotate right (0 to 10^5)"
+    ],
+    "outputs": [
+      "Modify nums in-place (no return value needed, or return the rotated array)"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3,4,5,6,7], k = 3",
+        "output": "[5,6,7,1,2,3,4]",
+        "explanation": "Rotate right by 3: last 3 elements [5,6,7] move to front. Reverse entire array → [7,6,5,4,3,2,1], reverse first 3 → [5,6,7,4,3,2,1], reverse last 4 → [5,6,7,1,2,3,4]."
+      },
+      {
+        "input": "nums = [-1,-100,3,99], k = 2",
+        "output": "[3,99,-1,-100]",
+        "explanation": "Rotate right by 2: last 2 elements [3,99] move to front. After three reversals: [3,99,-1,-100]."
+      },
+      {
+        "input": "nums = [1,2], k = 1",
+        "output": "[2,1]",
+        "explanation": "Rotate right by 1: last element [2] moves to front. Reverse all → [2,1], reverse first 1 → [2,1], reverse last 1 → [2,1]."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^5",
+      "-2^31 <= nums[i] <= 2^31 - 1",
+      "0 <= k <= 10^5"
+    ],
+    "realWorldUse": [
+      "Circular buffer implementations",
+      "Ring data structures rotation",
+      "Image rotation algorithms",
+      "Queue rotation operations"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "Array rotation can be achieved through three strategic reversals. This pattern leverages the property that reversing twice restores order, allowing us to reposition elements efficiently in-place.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks to rotate/shift array elements → think reversal technique",
+      "SIGNAL 2: Need in-place rotation without extra space → three-reversal method",
+      "SIGNAL 3: Circular shift or wrap-around behavior → modulo + reversal pattern"
+    ],
+    "patternRules": [
+      "If problem requires array rotation → use three-reversal technique",
+      "When you see 'rotate', 'shift', or 'circular' in array context → consider reversal approach",
+      "If O(1) space constraint exists → avoid creating new arrays, use reversals"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - there's no local optimal choice. We need a systematic transformation.",
+      "bruteForce": "Moving elements one by one is O(n*k) time. Three reversals achieve O(n) time with O(1) space.",
+      "alternative": "Creating a new array works but uses O(n) extra space. Reversal method is optimal for in-place requirement."
+    }
+  },
+  "coreInvariant": {
+    "statement": "After reversing the entire array, then reversing the first k elements, then reversing the remaining elements, the array is rotated right by k positions.",
+    "explanation": "This invariant holds because: (1) Full reversal moves elements to opposite positions, (2) Reversing first k elements positions the last k elements correctly at the front, (3) Reversing remaining elements restores the order of the first n-k elements. The three reversals together achieve the rotation.",
+    "whyItMatters": "This invariant guarantees that the three-reversal sequence correctly rotates the array. It's the mathematical foundation that makes this elegant solution work."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "nums",
+        "meaning": "The array being rotated in-place",
+        "indexing": "0-indexed array"
+      },
+      {
+        "name": "k",
+        "meaning": "Effective rotation steps (k % nums.length to handle k > length)",
+        "indexing": "Number of positions to rotate right"
+      },
+      {
+        "name": "n",
+        "meaning": "Length of the array",
+        "indexing": "nums.length"
+      }
+    ],
+    "baseCases": [
+      "If k % n == 0: no rotation needed, return original array",
+      "If n <= 1: array is already in correct state",
+      "If k > n: use k = k % n to get effective rotation"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "Calculate effective k = k % nums.length",
+        "transition": "If k == 0, return (no rotation needed)",
+        "explanation": "Modulo handles cases where k exceeds array length. If k is multiple of length, no rotation needed.",
+        "example": "nums=[1,2,3], k=3: k % 3 = 0, no rotation needed"
+      },
+      {
+        "condition": "Reverse entire array from 0 to n-1",
+        "transition": "All elements are now in reverse order",
+        "explanation": "First reversal moves elements to opposite positions, preparing for rotation",
+        "example": "[1,2,3,4,5] → [5,4,3,2,1]"
+      },
+      {
+        "condition": "Reverse first k elements from 0 to k-1",
+        "transition": "Last k elements are now correctly positioned at front",
+        "explanation": "Second reversal positions the elements that should be at the front",
+        "example": "[5,4,3,2,1] → [4,5,3,2,1] (if k=2)"
+      },
+      {
+        "condition": "Reverse remaining elements from k to n-1",
+        "transition": "First n-k elements are now in correct order at the end",
+        "explanation": "Third reversal restores the order of elements that should be at the end",
+        "example": "[4,5,3,2,1] → [4,5,1,2,3] (if k=2)"
+      }
+    ],
+    "decisionTree": {
+      "root": "Calculate effective rotation k = k % n",
+      "branches": [
+        "If k == 0: return (no rotation needed)",
+        "Else: reverse entire array, then reverse first k, then reverse remaining n-k"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "nums = [1,2,3,4,5,6,7], k = 3",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Calculate effective k = 3 % 7 = 3",
+        "state": "k = 3, n = 7, rotation needed",
+        "logic": "Modulo ensures we handle k correctly even if k > n",
+        "result": "Will rotate right by 3 positions"
+      },
+      {
+        "step": 2,
+        "description": "Reverse entire array: [1,2,3,4,5,6,7] → [7,6,5,4,3,2,1]",
+        "state": "nums = [7,6,5,4,3,2,1], all elements reversed",
+        "logic": "First reversal moves elements to opposite positions",
+        "result": "Array is completely reversed"
+      },
+      {
+        "step": 3,
+        "description": "Reverse first k=3 elements: [7,6,5,4,3,2,1] → [5,6,7,4,3,2,1]",
+        "state": "nums = [5,6,7,4,3,2,1], first 3 elements [5,6,7] are correct",
+        "logic": "Second reversal positions last 3 elements [5,6,7] at the front",
+        "result": "First k elements are in correct final positions"
+      },
+      {
+        "step": 4,
+        "description": "Reverse remaining n-k=4 elements: [5,6,7,4,3,2,1] → [5,6,7,1,2,3,4]",
+        "state": "nums = [5,6,7,1,2,3,4], array is fully rotated",
+        "logic": "Third reversal restores order of first 4 elements [1,2,3,4]",
+        "result": "Array is rotated right by 3 positions"
+      }
+    ],
+    "keyInsight": "Three reversals achieve rotation: full reversal repositions elements, reversing first k positions the last k elements at front, reversing remaining elements restores order. This elegant technique works because reversing twice restores original order while the strategic sequence achieves the rotation."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Not using modulo to handle k > array length",
+      "symptom": "Index out of bounds or incorrect rotation when k exceeds array length",
+      "fix": "Always calculate effective k = k % nums.length before rotating",
+      "example": "nums=[1,2,3], k=5: without modulo, you'd try to rotate by 5, but effective rotation is 5%3=2"
+    },
+    {
+      "mistake": "Reversing in wrong order (reversing first k before full reversal)",
+      "symptom": "Incorrect final array state",
+      "fix": "Must reverse in order: (1) entire array, (2) first k, (3) remaining elements",
+      "example": "If you reverse first k before full reversal, the rotation won't work correctly"
+    },
+    {
+      "mistake": "Forgetting to handle k == 0 case",
+      "symptom": "Unnecessary operations when no rotation is needed",
+      "fix": "Check if k % n == 0 and return early",
+      "example": "nums=[1,2,3], k=3: k%3=0, no rotation needed, return immediately"
+    },
+    {
+      "mistake": "Using wrong indices when reversing subarrays",
+      "symptom": "Incorrect rotation, elements in wrong positions",
+      "fix": "Reverse first k elements from 0 to k-1, then reverse remaining from k to n-1",
+      "example": "For k=3, reverse indices [0,1,2] then [3,4,5,6], not [0,1,2,3] then [4,5,6]"
+    },
+    {
+      "mistake": "Creating new array instead of modifying in-place",
+      "symptom": "Violates in-place requirement, uses O(n) extra space",
+      "fix": "Use two-pointer reversal technique to modify array in-place",
+      "example": "Don't do: result = [...nums.slice(-k), ...nums.slice(0, n-k)]. Use reversals instead."
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is an array rotation problem that can be solved with three reversals.",
+      "",
+      "I'll use the three-reversal technique:",
+      "- First, calculate effective k = k % nums.length",
+      "- If k == 0, return (no rotation needed)",
+      "- Reverse the entire array",
+      "- Reverse the first k elements",
+      "- Reverse the remaining n-k elements",
+      "",
+      "Time complexity: O(n) - we reverse the array twice (each reversal is O(n))",
+      "Space complexity: O(1) - only using a few variables, modifying in-place",
+      "",
+      "Edge cases:",
+      "- k == 0: no rotation needed",
+      "- k > n: use modulo to get effective rotation",
+      "- k == n: same as k == 0, no rotation",
+      "- Single element: already correct"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Rotate Array Left (instead of right)",
+      "approachChange": "Rotate left by k is same as rotate right by n-k. Use same three-reversal technique with adjusted k.",
+      "solution": "Calculate k = n - (k % n), then apply same three reversals"
+    },
+    "harder": {
+      "problem": "Rotate Array with O(1) space using cyclic replacements",
+      "approachChange": "Instead of reversals, use cyclic replacement where each element moves to (i+k) % n position, tracking visited elements.",
+      "solution": "Use GCD to determine number of cycles, then rotate each cycle. More complex but same O(n) time, O(1) space."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Calculate effective k = k % nums.length"
+    },
+    {
+      "id": "ps2",
+      "text": "If k == 0, return (no rotation needed)"
+    },
+    {
+      "id": "ps3",
+      "text": "Reverse entire array from index 0 to n-1 using two pointers"
+    },
+    {
+      "id": "ps4",
+      "text": "Reverse first k elements from index 0 to k-1"
+    },
+    {
+      "id": "ps5",
+      "text": "Reverse remaining elements from index k to n-1"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great job mastering binary search in our last lesson! Now we're going to explore a super clever pattern that shows up everywhere in array problems: **Rotate Array**. \n\nHere's the beautiful pattern you'll learn: when you need to rotate an array, you can achieve it through a series of reversals! Instead of moving elements one by one, you'll reverse the entire array, then reverse specific portions. It's like a magic trick that transforms what seems like a complex shifting operation into simple, elegant reversals.\n\nBy the end of this lesson, you'll gain these powerful skills:\n\n1. **Master the reverse-to-rotate technique** - Transform any array rotation into strategic reversals\n2. **Optimize space complexity** - Perform rotations in-place without extra arrays\n3. **Recognize rotation patterns** - Spot when this technique applies to solve other array challenges\n\nThis pattern is incredibly satisfying once it clicks - you'll love how such an elegant solution handles what initially seems tricky. Let's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Array indexing** - Understanding how to access and modify elements using indices\n- **Modular arithmetic** - Using modulo operator to handle cyclic rotations and wraparound\n- **Array reversal** - Algorithm to reverse elements in an array or subarray\n- **Space complexity** - Understanding in-place operations vs auxiliary space usage\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Array indexing** - Understanding how to access and modify elements using indices\n- **Modular arithmetic** - Using modulo operator to handle cyclic rotations and wraparound\n- **Array reversal** - Algorithm to reverse elements in an array or subarray\n- **Space complexity** - Understanding in-place operations vs auxiliary space usage\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Array indexing** - Understanding how to access and modify elements using indices\n- **Modular arithmetic** - Using modulo operator to handle cyclic rotations and wraparound\n- **Array reversal** - Algorithm to reverse elements in an array or subarray\n- **Space complexity** - Understanding in-place operations vs auxiliary space usage\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Array indexing** - Understanding how to access and modify elements using indices\n- **Modular arithmetic** - Using modulo operator to handle cyclic rotations and wraparound\n- **Array reversal** - Algorithm to reverse elements in an array or subarray\n- **Space complexity** - Understanding in-place operations vs auxiliary space usage\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Array indexing** - Understanding how to access and modify elements using indices\n- **Modular arithmetic** - Using modulo operator to handle cyclic rotations and wraparound\n- **Array reversal** - Algorithm to reverse elements in an array or subarray\n- **Space complexity** - Understanding in-place operations vs auxiliary space usage\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Rotate Array problem asks for.\n\nImagine you're organizing books on a shelf and need to move the first 3 books to the end - instead of moving each book one by one, you take all 3 books as a group, shift the remaining books to fill the gap, then place the group at the end. This is exactly how array rotation works: you're rearranging elements in a circular manner where items that \"fall off\" one end reappear at the other end, maintaining the relative order of all elements.\n\n# Rotate Array Problem\n\nHey! Let me break down this \"Rotate Array\" problem for you - it's actually pretty straightforward once you see what's happening.\n\n## What it's asking\n\nYou're given an array of numbers and a value `k`. Your job is to **rotate the array to the right by `k` steps**. Think of it like a circular shift - elements that \"fall off\" the right side wrap around to the beginning.\n\n## Let's see it in action\n\nHere's the example you mentioned:\n- **Input:** `nums = [1,2,3,4,5,6,7]`, `k = 3`\n- **Output:** `[5,6,7,1,2,3,4]`\n\n## Why this works (step by step)\n\nLet's trace through what happens when we rotate right by 3 steps:\n\n**Original:** `[1, 2, 3, 4, 5, 6, 7]`\n\n**Step 1:** Right rotation by 1 → `[7, 1, 2, 3, 4, 5, 6]`\n- The `7` wraps around to the front\n\n**Step 2:** Right rotation by 1 → `[6, 7, 1, 2, 3, 4, 5]`  \n- The `6` wraps around to the front\n\n**Step 3:** Right rotation by 1 → `[5, 6, 7, 1, 2, 3, 4]`\n- The `5` wraps around to the front\n\n**Final result:** `[5, 6, 7, 1, 2, 3, 4]`\n\n## The key insight\n\nNotice that rotating right by `k=3` is the same as:\n- Taking the **last 3 elements** `[5, 6, 7]` and moving them to the front\n- Moving everything else `[1, 2, 3, 4]` to the back\n\nIt's like cutting the array at position `length - k` and swapping the two pieces!\n\nPretty neat, right? The tricky part is usually implementing this efficiently, but understanding the concept is the first step.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to rotate an array [1,2,3,4,5,6,7] to the right by k=3 positions to get [5,6,7,1,2,3,4]. What's the most efficient approach in terms of space complexity?",
+      "choices": [
+        {
+          "label": "Create a new array and use modular arithmetic to place each element at position (i+k) % n",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Perform three in-place reversals: reverse the entire array, then reverse the first k elements, then reverse the remaining elements",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works correctly, it uses O(n) extra space for the new array. The modular arithmetic approach ((i+k) % n) properly handles the wraparound, but we can achieve the same result in-place with O(1) space complexity.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Three Reversals for Array Rotation\n\n**This problem follows the \"reverse-based rotation\" pattern:**\n- **Three reversals** - Reverse entire array, then reverse two segments\n- **In-place operation** - No extra space needed\n- **Mathematical insight** - Reversing twice restores order, but strategic reversals achieve rotation\n- **Segment reversal** - Reverse first k elements, then reverse remaining elements\n\n**Similar problems:**\n- Reverse String (single reversal)\n- Rotate Array (same problem)\n- Reverse Words in String (multiple reversals)\n\n**Key insight:** Three reversals can achieve any rotation in-place. The trick is reversing the entire array first, then reversing the two segments separately. This is more space-efficient than creating a new array.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Relative Order Within Segments Preserved\n\n**Invariant maintained throughout:**\n- **After full reversal:** Elements are in reverse order, but relative positions within groups are preserved\n- **After first segment reversal:** First k elements are in correct final order\n- **After second segment reversal:** Remaining elements are in correct final order\n- **Final state:** All elements are in rotated positions\n\n**Why this works:**\n- Full reversal moves last k elements to front (but reversed)\n- Reversing first k elements corrects their order\n- Reversing remaining elements corrects their order\n- Result: array rotated right by k positions\n\n**Invariant guarantee:** After three reversals, the array is rotated right by k positions. The relative order of elements within each segment is maintained, just their positions are shifted.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Three Reversal State\n\n**State variables:**\n- **`nums`** - Array being rotated in-place\n- **`k`** - Number of positions to rotate right\n- **`n`** - Length of array\n- **`effectiveK`** - k % n (handles k > n case)\n\n**State transitions:**\n1. **Normalize k:** effectiveK = k % n (handle k > n)\n2. **Reverse entire array:** Reverse nums[0..n-1]\n3. **Reverse first segment:** Reverse nums[0..effectiveK-1]\n4. **Reverse second segment:** Reverse nums[effectiveK..n-1]\n\n**State validity:** Array is rotated right by k positions after all three reversals complete.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Create New Array with Modular Arithmetic**\n- **Why it fails:** Uses O(n) extra space\n- **Issue:** Violates in-place requirement, allocates new array\n- **Better:** Three reversals use O(1) space\n\n**Approach 2: Rotate One Element at a Time**\n- **Why it fails:** O(n*k) time complexity\n- **Issue:** For each of k rotations, shift all n elements\n- **Better:** Three reversals are O(n) time total\n\n**Approach 3: Use Array Slicing and Concatenation**\n- **Why it fails:** Creates new arrays, uses O(n) space\n- **Issue:** Slicing creates copies, not in-place\n- **Better:** Reversals modify array in-place\n\n**Our approach wins because:** Three reversals achieve rotation in O(n) time with O(1) space, which is optimal. The mathematical insight that strategic reversals can achieve rotation is elegant and efficient.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that **three sequential reversals** can achieve array rotation efficiently in-place. First **reverse the entire array**, then **reverse the first k elements**, and finally **reverse the remaining elements**. This works because reversing twice restores original order while the initial full reversal repositions elements to their target sections. For example, rotating [1,2,3,4,5] right by 2: reverse all → [5,4,3,2,1], reverse first 2 → [4,5,3,2,1], reverse last 3 → [4,5,1,2,3].",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `nums=[1,2,3,4,5,6,7], k=3`:\n\n- Step 1: Calculate effective rotation: k = k % len(nums) = 3 % 7 = 3\n- Step 2: Reverse entire array: [1,2,3,4,5,6,7] → [7,6,5,4,3,2,1]\n- Step 3: Reverse first k elements: [7,6,5,4,3,2,1] → [5,6,7,4,3,2,1]\n- Step 4: Reverse remaining elements: [5,6,7,4,3,2,1] → [5,6,7,1,2,3,4]\n- Final: **[5,6,7,1,2,3,4]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function signature with nums array and k parameter\n\n```javascript\nfunction rotate(nums, k) {\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function rotate(nums, k) {\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Handle edge case where k is larger than array length using modulo\n\n```javascript\nfunction rotate(nums, k) {\n    k = k % nums.length;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    k = k % nums.length;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Create helper function to reverse array elements between start and end indices\n\n```javascript\nfunction rotate(nums, k) {\n    k = k % nums.length;\n    \n    function reverse(start, end) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    function reverse(start, end) {\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Implement reverse helper using two pointers that swap elements and move inward\n\n```javascript\nfunction rotate(nums, k) {\n    k = k % nums.length;\n    \n    function reverse(start, end) {\n        while (start < end) {\n            [nums[start], nums[end]] = [nums[end], nums[start]];\n            start++;\n            end--;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        while (start < end) {\n            [nums[start], nums[end]] = [nums[end], nums[start]];\n            start++;\n            end--;\n        }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "First reversal: reverse the entire array\n\n```javascript\nfunction rotate(nums, k) {\n    k = k % nums.length;\n    \n    function reverse(start, end) {\n        while (start < end) {\n            [nums[start], nums[end]] = [nums[end], nums[start]];\n            start++;\n            end--;\n        }\n    }\n    \n    reverse(0, nums.length - 1);\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "    reverse(0, nums.length - 1);"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Second reversal: reverse first k elements to put them in correct order\n\n```javascript\nfunction rotate(nums, k) {\n    k = k % nums.length;\n    \n    function reverse(start, end) {\n        while (start < end) {\n            [nums[start], nums[end]] = [nums[end], nums[start]];\n            start++;\n            end--;\n        }\n    }\n    \n    reverse(0, nums.length - 1);\n    reverse(0, k - 1);\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "    reverse(0, k - 1);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Third reversal: reverse remaining elements from k to end\n\n```javascript\nfunction rotate(nums, k) {\n    k = k % nums.length;\n    \n    function reverse(start, end) {\n        while (start < end) {\n            [nums[start], nums[end]] = [nums[end], nums[start]];\n            start++;\n            end--;\n        }\n    }\n    \n    reverse(0, nums.length - 1);\n    reverse(0, k - 1);\n    reverse(k, nums.length - 1);\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "    reverse(k, nums.length - 1);"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering array rotation using the elegant reversal technique! You've learned how to efficiently rotate arrays in-place by reversing subarrays, which is a powerful pattern that optimizes both time and space complexity. Next, we'll tackle removing duplicates from sorted arrays, where you'll apply two-pointer techniques to modify arrays in-place while maintaining order.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

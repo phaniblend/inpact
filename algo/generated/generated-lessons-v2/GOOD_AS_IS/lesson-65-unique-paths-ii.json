@@ -1,0 +1,413 @@
+{
+  "id": "unique-paths-ii",
+  "title": "Unique Paths II - Grid DP with Obstacles",
+  "pattern": "grid-dp-obstacles",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 65,
+    "tier": "MASTERY-I",
+    "lessonOrderTag": "MASTERY-I-65",
+    "introduces": [
+      "grid-dp",
+      "obstacle-handling",
+      "2d-dp-arrays"
+    ],
+    "assumesAlreadyTaught": [
+      "dynamic-programming",
+      "arrays",
+      "2d-arrays"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "minimum-path-sum"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "If start or end is obstacle, return 0"
+    },
+    {
+      "id": "ps2",
+      "text": "Create DP grid same size as input grid"
+    },
+    {
+      "id": "ps3",
+      "text": "Initialize dp[0][0] = 1 (starting position)"
+    },
+    {
+      "id": "ps4",
+      "text": "Fill first row: dp[0][j] = dp[0][j-1] if no obstacle, else 0"
+    },
+    {
+      "id": "ps5",
+      "text": "Fill first column: dp[i][0] = dp[i-1][0] if no obstacle, else 0"
+    },
+    {
+      "id": "ps6",
+      "text": "For each cell (i, j) in grid:"
+    },
+    {
+      "id": "ps7",
+      "text": "  If cell is obstacle: dp[i][j] = 0"
+    },
+    {
+      "id": "ps8",
+      "text": "  Else: dp[i][j] = dp[i-1][j] + dp[i][j-1]"
+    },
+    {
+      "id": "ps9",
+      "text": "Return dp[m-1][n-1]"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "# Welcome to Unique Paths II! 🤖\n\nYou're about to learn one of the most practical DP patterns: **grid navigation with obstacles**.\n\n## What You'll Master:\n\n- Solving grid DP problems with constraints\n- Handling obstacles in pathfinding\n- 2D DP array initialization and filling\n- Real-world robot navigation\n\nThis pattern is used in robotics, warehouse automation, game development, and logistics!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which programming language would you like to use for this lesson?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "To solve this in JavaScript, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **2D arrays** (arrays of arrays)\n- **Grid traversal**\n- **Basic iteration**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "To solve this in Python, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **2D lists** (lists of lists)\n- **Grid traversal**\n- **Basic iteration**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "To solve this in Java, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **2D arrays** (int[][])\n- **Grid traversal**\n- **Basic iteration**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "To solve this in C++, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **2D vectors** (vector<vector<int>>)\n- **Grid traversal**\n- **Basic iteration**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "To solve this in TypeScript, you'll need to know:\n\n- **Dynamic programming** fundamentals\n- **2D arrays** with type annotations\n- **Grid traversal**\n- **Basic iteration**\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I'm ready!",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, I need a refresher",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Show me what I need to review",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "# The Problem: Unique Paths II 🚧\n\n**Real-world analogy:** Imagine you're programming a warehouse robot that needs to navigate from the loading dock (top-left) to the shipping area (bottom-right). The robot can only move right or down. Some aisles are blocked by inventory (obstacles marked as 1). How many different valid paths can the robot take?\n\n## The Challenge:\n\nYou're given an `m x n` grid. A robot starts at `grid[0][0]` and wants to reach `grid[m-1][n-1]`. The robot can only move down or right at any point.\n\nCells with value `1` are obstacles - the robot cannot pass through them.\nCells with value `0` are open paths.\n\nReturn the number of possible unique paths the robot can take to reach the destination.\n\n## Example:\n```\ngrid = [\n  [0,0,0],\n  [0,1,0],\n  [0,0,0]\n]\nOutput: 2\n\nPaths:\n1. Right → Right → Down → Down\n2. Down → Down → Right → Right\n```\n\nThe middle obstacle blocks the direct diagonal approaches!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "# 🤔 How Should We Think About This?\n\nLet's think about the robot's decision-making:\n\n**Question:** At any cell (i, j), how many ways can the robot reach that cell?",
+      "choices": [
+        {
+          "label": "The sum of ways to reach all previous cells",
+          "next": "wrong-all-previous"
+        },
+        {
+          "label": "The sum of ways to reach the cell above and the cell to the left",
+          "next": "core-idea"
+        },
+        {
+          "label": "We need to try all possible paths with backtracking",
+          "next": "wrong-backtracking"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-all-previous",
+      "mentorSays": "Not quite! The robot can only move right or down, so it can only arrive from two directions.\n\nThink about which cells can directly lead to cell (i, j)...",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "wrong-backtracking",
+      "mentorSays": "Backtracking would work but is incredibly inefficient! We'd be recalculating the same sub-paths many times.\n\nThere's a much smarter way using dynamic programming...",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "# The Key Insight: Grid DP 💡\n\n**Perfect!** At any cell (i, j), the robot can only arrive from:\n1. The cell above (i-1, j) - if it exists\n2. The cell to the left (i, j-1) - if it exists\n\n**Core recurrence:**\n```\ndp[i][j] = dp[i-1][j] + dp[i][j-1]\n```\n\n**But with obstacles:**\n```\nif grid[i][j] == 1:\n    dp[i][j] = 0  // Obstacle! No paths through here\nelse:\n    dp[i][j] = dp[i-1][j] + dp[i][j-1]\n```\n\n## Why This Works:\n\nWe build up the solution from the start, cell by cell. Each cell's answer depends only on the answers for cells we've already computed. Classic DP!",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "# Let's Walk Through an Example 🚶\n\n```\ngrid = [\n  [0,0,0],\n  [0,1,0],\n  [0,0,0]\n]\n```\n\n**Step 1:** Initialize first cell\n```\ndp = [\n  [1,0,0],\n  [0,0,0],\n  [0,0,0]\n]\n```\n\n**Step 2:** Fill first row (can only come from left)\n```\ndp = [\n  [1,1,1],\n  [0,0,0],\n  [0,0,0]\n]\n```\n\n**Step 3:** Fill first column (can only come from above)\n```\ndp = [\n  [1,1,1],\n  [1,0,0],\n  [1,0,0]\n]\n```\n\n**Step 4:** Fill remaining cells\n- dp[1][1] = obstacle! = 0\n- dp[1][2] = dp[0][2] + dp[1][1] = 1 + 0 = 1\n- dp[2][1] = dp[1][1] + dp[2][0] = 0 + 1 = 1\n- dp[2][2] = dp[1][2] + dp[2][1] = 1 + 1 = 2 ✓\n\n**Final:**\n```\ndp = [\n  [1,1,1],\n  [1,0,1],\n  [1,1,2]\n]\n```\n\nAnswer: 2 paths!",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "# Here's Our Battle Plan 📋",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7",
+        "ps8",
+        "ps9"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "# Time to Code! 💻\n\nWe'll build this solution step by step, handling obstacles carefully.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Start with the function signature and edge case checks:\n\n```javascript\nfunction uniquePathsWithObstacles(obstacleGrid) {\n    const m = obstacleGrid.length;\n    const n = obstacleGrid[0].length;\n```",
+      "action": "next",
+      "next": "code-02",
+      "example": "function uniquePathsWithObstacles(obstacleGrid) {\n    const m = obstacleGrid.length;\n    const n = obstacleGrid[0].length;"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Check if start or end is blocked:\n\n```javascript\n    // If start or end is obstacle, no path possible\n    if (obstacleGrid[0][0] === 1 || obstacleGrid[m-1][n-1] === 1) {\n        return 0;\n    }\n```",
+      "action": "next",
+      "next": "code-03",
+      "example": "    if (obstacleGrid[0][0] === 1 || obstacleGrid[m-1][n-1] === 1) {\n        return 0;\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Create DP grid and initialize starting position:\n\n```javascript\n    // Create DP grid\n    const dp = Array(m).fill(0).map(() => Array(n).fill(0));\n    dp[0][0] = 1; // Starting position\n```",
+      "action": "next",
+      "next": "code-04",
+      "example": "    const dp = Array(m).fill(0).map(() => Array(n).fill(0));\n    dp[0][0] = 1;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Fill the first row:\n\n```javascript\n    // Fill first row\n    for (let j = 1; j < n; j++) {\n        dp[0][j] = (obstacleGrid[0][j] === 1) ? 0 : dp[0][j-1];\n    }\n```\n\nIf there's an obstacle, that cell and all cells after it in the row become unreachable from the start.",
+      "action": "next",
+      "next": "code-05",
+      "example": "    for (let j = 1; j < n; j++) {\n        dp[0][j] = (obstacleGrid[0][j] === 1) ? 0 : dp[0][j-1];\n    }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Fill the first column:\n\n```javascript\n    // Fill first column\n    for (let i = 1; i < m; i++) {\n        dp[i][0] = (obstacleGrid[i][0] === 1) ? 0 : dp[i-1][0];\n    }\n```\n\nSame logic: obstacle blocks all cells below it in the column.",
+      "action": "next",
+      "next": "code-06",
+      "example": "    for (let i = 1; i < m; i++) {\n        dp[i][0] = (obstacleGrid[i][0] === 1) ? 0 : dp[i-1][0];\n    }"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Now fill the rest of the grid:\n\n```javascript\n    // Fill remaining cells\n    for (let i = 1; i < m; i++) {\n        for (let j = 1; j < n; j++) {\n```",
+      "action": "next",
+      "next": "code-07",
+      "example": "    for (let i = 1; i < m; i++) {\n        for (let j = 1; j < n; j++) {"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Check if current cell is an obstacle:\n\n```javascript\n            if (obstacleGrid[i][j] === 1) {\n                dp[i][j] = 0;\n```\n\nIf it's an obstacle, no paths go through it!",
+      "action": "next",
+      "next": "code-08",
+      "example": "            if (obstacleGrid[i][j] === 1) {\n                dp[i][j] = 0;"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Otherwise, sum paths from above and left:\n\n```javascript\n            } else {\n                dp[i][j] = dp[i-1][j] + dp[i][j-1];\n            }\n```\n\nThis is the core DP recurrence!",
+      "action": "next",
+      "next": "code-09",
+      "example": "            } else {\n                dp[i][j] = dp[i-1][j] + dp[i][j-1];\n            }"
+    },
+    {
+      "stepId": "code-09",
+      "mentorSays": "Close the loops and return the result:\n\n```javascript\n        }\n    }\n    return dp[m-1][n-1];\n}\n```\n\nThe bottom-right cell contains our answer!",
+      "action": "next",
+      "next": "complexity-analysis",
+      "example": "        }\n    }\n    return dp[m-1][n-1];\n}"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "# Complexity Analysis 📊\n\n## Time Complexity: O(m × n)\n- We visit each cell exactly once\n- m = number of rows, n = number of columns\n- Each cell requires O(1) work\n\n## Space Complexity: O(m × n)\n- We use a 2D DP array of size m × n\n- Can be optimized to O(n) by using only one row at a time!\n\n## Space Optimization:\n\nSince each row only depends on the previous row, we could use just two 1D arrays (or even one with careful updates). But the 2D approach is clearer and m × n is usually acceptable.",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "# Edge Cases to Consider 🎯\n\n1. **Start is obstacle:** grid[0][0] = 1 → return 0\n\n2. **End is obstacle:** grid[m-1][n-1] = 1 → return 0\n\n3. **Single cell:** [[0]] → return 1, [[1]] → return 0\n\n4. **All obstacles:** No valid path → return 0\n\n5. **No obstacles:** Same as Unique Paths I problem\n\n6. **Obstacle in first row/column:** Blocks all cells after it in that row/column\n\nOur implementation handles all these correctly!",
+      "action": "next",
+      "next": "common-mistakes"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "# Congratulations! 🎉\n\nYou've mastered **grid DP with constraints**!\n\n## What You Learned:\n\n✅ Solving DP problems on 2D grids\n✅ Handling obstacles and constraints\n✅ Building solutions bottom-up with DP\n✅ Initializing grid DP correctly\n\n## Next Steps:\n\nReady for optimization? The next lesson is **Minimum Path Sum** - finding the cheapest path through a weighted grid. It builds directly on what you learned here!\n\nGrid DP is everywhere: games, robotics, route planning. Master this pattern!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

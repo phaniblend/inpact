@@ -1,0 +1,352 @@
+{
+  "id": "interleaving-string",
+  "title": "Interleaving String",
+  "pattern": "DP (2D - string merge)",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 93,
+    "tier": "INTERVIEW-MASTERY",
+    "lessonOrderTag": "INTERVIEW-MASTERY-93",
+    "introduces": [
+      "interleave-dp",
+      "path-dp"
+    ],
+    "assumesAlreadyTaught": [
+      "2D-DP",
+      "strings"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "burst-balloons"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Solve Interleaving String step 1"
+    },
+    {
+      "id": "ps2",
+      "text": "Solve Interleaving String step 2"
+    },
+    {
+      "id": "ps3",
+      "text": "Solve Interleaving String step 3"
+    },
+    {
+      "id": "ps4",
+      "text": "Return result"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! **Interleaving String** - master DP (2D - string merge)!\n\nThis lesson teaches: interleave-dp, path-dp\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which language?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Prerequisites: 2D-DP, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Prerequisites: 2D-DP, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Prerequisites: 2D-DP, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Prerequisites: 2D-DP, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Prerequisites: 2D-DP, strings\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "**Interleaving String** problem: Given three strings s1, s2, and s3, determine if s3 can be formed by interleaving s1 and s2. An interleaving means characters from s1 and s2 appear in s3 in their original order, but may be interleaved. For example, s1=\"aabcc\", s2=\"dbbca\", s3=\"aadbbcbcac\" returns true because we can interleave: a(s1) + a(s1) + d(s2) + b(s2) + b(s1) + c(s2) + b(s2) + c(s1) + a(s2) + c(s1).\n\nThis uses DP (2D - string merge).",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "How to solve this efficiently?",
+      "choices": [
+        {
+          "label": "Brute force approach",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use DP (2D - string merge)",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Brute force won't be efficient!\n\nThe optimal approach is better.",
+      "action": "next",
+      "next": "core-insight"
+    },
+    {
+      "stepId": "core-insight",
+      "mentorSays": "### Core Insight: 2D DP for String Interleaving\n\nThe key insight is to use **2D dynamic programming** where `dp[i][j]` represents whether `s3[0..i+j-1]` can be formed by interleaving `s1[0..i-1]` and `s2[0..j-1]`.\n\n**Recurrence relation:**\n- If `s3[i+j-1] == s1[i-1]` and `dp[i-1][j]` is true: We can use s1[i-1]\n- If `s3[i+j-1] == s2[j-1]` and `dp[i][j-1]` is true: We can use s2[j-1]\n- `dp[i][j] = (s3[i+j-1] == s1[i-1] && dp[i-1][j]) || (s3[i+j-1] == s2[j-1] && dp[i][j-1])`\n\n**Base cases:**\n- `dp[0][0] = true` (empty strings can form empty string)\n- `dp[i][0] = (s3[0..i-1] == s1[0..i-1])` (only using s1)\n- `dp[0][j] = (s3[0..j-1] == s2[0..j-1])` (only using s2)\n\n**Why this works:** We check if the current character in s3 can come from either s1 or s2, building up the solution incrementally.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Interleaving DP State\n\n**State variables:**\n- **`dp[i][j]`** - Whether s3[0..i+j-1] can be formed by interleaving s1[0..i-1] and s2[0..j-1]\n- **`s1`** - First source string\n- **`s2`** - Second source string\n- **`s3`** - Target interleaved string\n\n**State transitions:**\n1. **Initialize:** dp[0][0] = true, fill first row and column\n2. **Fill DP table:** For i from 1 to m, j from 1 to n:\n   - dp[i][j] = (s3[i+j-1]==s1[i-1] && dp[i-1][j]) || (s3[i+j-1]==s2[j-1] && dp[i][j-1])\n3. **Result:** Return dp[m][n]\n\n**State validity:** After filling, dp[m][n] indicates if s3 can be formed by interleaving s1 and s2.",
+      "action": "next",
+      "next": "transition-logic"
+    },
+    {
+      "stepId": "transition-logic",
+      "mentorSays": "### Transition Logic: Character Matching Decision\n\n**For dp[i][j], we check if s3[i+j-1] matches:**\n\n**Option 1: Match with s1[i-1]**\n- If `s3[i+j-1] == s1[i-1]` and `dp[i-1][j]` is true\n- This means: s3[0..i+j-2] can be formed by s1[0..i-2] and s2[0..j-1]\n- Adding s1[i-1] forms s3[0..i+j-1]\n\n**Option 2: Match with s2[j-1]**\n- If `s3[i+j-1] == s2[j-1]` and `dp[i][j-1]` is true\n- This means: s3[0..i+j-2] can be formed by s1[0..i-1] and s2[0..j-2]\n- Adding s2[j-1] forms s3[0..i+j-1]\n\n**If neither matches:** dp[i][j] = false\n\n**Example:** s1=\"aabcc\", s2=\"dbbca\", s3=\"aadbbcbcac\"\n- At dp[2][2]: s3[3]='b' can match s1[1]='b' (if dp[1][2] true) or s2[1]='b' (if dp[2][1] true)\n\n**This transition logic captures all valid interleaving paths.**",
+      "action": "next",
+      "next": "failure-modes"
+    },
+    {
+      "stepId": "failure-modes",
+      "mentorSays": "### Failure Modes: Why Alternative Approaches Fail\n\n**Approach 1: Brute Force (Try All Interleavings)**\n- **Why it fails:** Exponential time O(2^(m+n)) where m=|s1|, n=|s2|\n- **Issue:** Too many interleaving combinations to try\n- **Better:** DP reduces to O(m*n) time\n\n**Approach 2: Greedy Matching**\n- **Why it fails:** May make wrong choices early\n- **Issue:** Matching first available character doesn't guarantee valid interleaving\n- **Better:** DP considers all possibilities\n\n**Approach 3: Recursion Without Memoization**\n- **Why it fails:** Exponential time due to overlapping subproblems\n- **Issue:** Recalculates same subproblems many times\n- **Better:** DP stores results, avoiding recalculation\n\n**Our approach wins because:** 2D DP checks all valid interleaving paths in O(m*n) time with O(m*n) space (can be optimized to O(n)). The recurrence relation correctly captures the \"match from s1 or s2\" decision at each position.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **2D dynamic programming** where `dp[i][j]` represents whether `s3[0..i+j-1]` can be formed by interleaving `s1[0..i-1]` and `s2[0..j-1]`. At each position, we check if the current character in s3 matches either s1 or s2, building up the solution: `dp[i][j] = (s3[i+j-1]==s1[i-1] && dp[i-1][j]) || (s3[i+j-1]==s2[j-1] && dp[i][j-1])`.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through s1=\"aabcc\", s2=\"dbbca\", s3=\"aadbbcbcac\":\n\n**DP table (rows = s1, cols = s2):**\n```\n        \"\"  d  b  b  c  a\n    \"\" [T, F, F, F, F, F]\n    a  [T, F, F, F, F, F]\n    a  [T, T, T, T, F, F]\n    b  [F, T, T, T, T, F]\n    c  [F, F, T, T, T, T]\n    c  [F, F, F, T, T, T]\n```\n\n**Key transitions:**\n- dp[1][1]: s3[1]='a' matches s1[0]='a' → dp[0][1]=F, or s2[0]='d' → no match → F\n- dp[2][1]: s3[2]='d' matches s2[0]='d' and dp[2][0]=T → T\n- Continue building up...\n\n**Final answer:** dp[5][5] = true (s3 can be formed by interleaving s1 and s2).",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's the algorithm:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Let's code it step by step!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize data structures.\n\n```javascript\nfunction solve() {\n  // Setup\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "// Initialize"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Implement core logic.\n\n```javascript\nfunction solve() {\n  // Setup\n  // Main algorithm\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "// Core logic"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Complete solution.\n\n```javascript\nfunction solve() {\n  // Full implementation\n  return result;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4"
+      ],
+      "example": "return result;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Excellent! **Interleaving String** complete!\n\nNext lesson continues your journey to mastery! 🚀",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "id": "reverse-linked-list",
+  "title": "Reverse Linked List",
+  "difficulty": "easy",
+  "pattern": "linked-list + pointers",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the head of a singly linked list.\n\nYour task is to reverse the list and return the new head.",
+      "action": "next"
+    },
+    {
+      "stepId": "what-is-linked-list",
+      "mentorSays": "Before we solve this, let’s be very clear.\n\nA linked list is NOT an array.\n\nEach element (called a node) contains:\n• a value\n• a reference to the next node",
+      "example": "1 → 2 → 3 → null",
+      "action": "next"
+    },
+    {
+      "stepId": "what-reverse-means",
+      "mentorSays": "Reversing a linked list means:\n\n1 → 2 → 3 → null\nbecomes\n3 → 2 → 1 → null\n\nWe change the **direction of links**, not the values.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s take a very small list:\n\nA → B → C → null\n\nAfter reversing:\nC → B → A → null",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you are standing on one node, what do you need in order to reverse its direction?",
+      "choices": [
+        {
+          "label": "Access to the previous node",
+          "next": "core-idea"
+        },
+        {
+          "label": "Access to all nodes at once",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nTo reverse links safely, we must track:\n• the current node\n• the previous node\n• the next node (temporarily)",
+      "action": "next"
+    },
+    {
+      "stepId": "pointer-setup",
+      "mentorSays": "We will use three pointers:\n\n• prev → starts as null\n• curr → starts at head\n• next → used to store curr.next temporarily",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example walkthrough:\n\nInitial:\nprev = null\ncurr = A\n\nStep 1:\nnext = B\nA.next → null\nprev = A\ncurr = B\n\nStep 2:\nnext = C\nB.next → A\nprev = B\ncurr = C\n\nContinue until curr becomes null.",
+      "action": "next"
+    },
+    {
+      "stepId": "when-to-stop",
+      "mentorSays": "When curr becomes null:\n\n• prev will be pointing to the new head\n• the list is fully reversed",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic step by step.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "set prev = null",
+        "set curr = head",
+        "while curr is not null:",
+        "  store curr.next in next",
+        "  point curr.next to prev",
+        "  move prev to curr",
+        "  move curr to next",
+        "return prev"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Now translate the logic into JavaScript.",
+      "code": "function reverseList(head) {\n  let prev = null;\n  let curr = head;\n\n  while (curr !== null) {\n    let next = curr.next;\n    curr.next = prev;\n    prev = curr;\n    curr = next;\n  }\n\n  return prev;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final check:\n\nInput: 1 → 2 → 3 → null\nOutput: 3 → 2 → 1 → null\n\nThe list is reversed correctly.",
+      "action": "complete"
+    }
+  ]
+}

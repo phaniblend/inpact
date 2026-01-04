@@ -1,0 +1,361 @@
+{
+  "id": "minimum-window-substring",
+  "title": "Minimum Window Substring",
+  "pattern": "sliding window (advanced)",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 56,
+    "tier": "EXPERT",
+    "lessonOrderTag": "EXPERT-56",
+    "introduces": [
+      "template-matching",
+      "window-validity",
+      "minimum-window"
+    ],
+    "assumesAlreadyTaught": [
+      "sliding-window-concept",
+      "hash-map",
+      "variable-window"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "find-median-data-stream"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Count target characters in t"
+    },
+    {
+      "id": "ps2",
+      "text": "Expand window: add right character to window counts"
+    },
+    {
+      "id": "ps3",
+      "text": "When window valid (contains all t chars): contract"
+    },
+    {
+      "id": "ps4",
+      "text": "While contracting, track minimum window"
+    },
+    {
+      "id": "ps5",
+      "text": "Remove left character, check if still valid"
+    },
+    {
+      "id": "ps6",
+      "text": "Return minimum window found"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! **Minimum Window Substring** - one of the toughest sliding window problems!\n\nThis teaches advanced window management: expanding to find valid windows, contracting to minimize.\n\nYou'll learn:\n• Variable window with validity checks\n• Frequency-based matching\n• Expand-contract rhythm\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which language?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Prerequisites:\n- **Sliding window**\n- **Hash map**\n- **Variable window**\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Prerequisites:\n- **Sliding window**\n- **Hash map**\n- **Variable window**",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Prerequisites:\n- **Sliding window**\n- **Hash map**\n- **Variable window**",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Prerequisites:\n- **Sliding window**\n- **Hash map**\n- **Variable window**",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Prerequisites:\n- **Sliding window**\n- **Hash map**\n- **Variable window**",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "**Finding a needle in a haystack** - but you want the SMALLEST haystack section containing the needle!\n\nGiven strings `s` and `t`, find the **minimum window** in `s` which contains all characters from `t` (including duplicates).\n\nExample:\n```\ns = \"ADOBECODEBANC\"\nt = \"ABC\"\n```\nOutput: `\"BANC\"`\n\nThe window \"BANC\" is the smallest substring containing A, B, C.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "How to find minimum window efficiently?",
+      "choices": [
+        {
+          "label": "Check every substring",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Expand window until valid, then contract to minimize",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Checking all substrings is O(n³)!\n\nSliding window with expand-contract is O(n).",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key: **expand to satisfy, contract to minimize**.\n\n1. Count characters needed from t\n2. **Expand** window right: add chars until window valid\n3. Once valid: **contract** from left while still valid\n4. Track minimum window during contraction\n5. Repeat\n\nThis ensures we find the smallest valid window!",
+      "action": "next",
+      "next": "formed-vs-required-invariant"
+    },
+    {
+      "stepId": "formed-vs-required-invariant",
+      "mentorSays": "### Formed vs Required Invariant\n\n**Window validity condition:**\n\n- **`required`** = number of unique characters in `t` that must appear in window\n- **`formed`** = number of unique characters in current window that have satisfied their frequency requirement\n\n**Invariant:** Window is valid when `formed == required`\n\n**Example:**\n```\ns = \"ADOBECODEBANC\"\nt = \"ABC\"\n\nrequired = 3 (need A, B, C)\n\nWindow \"ADOBEC\":\n  A: need 1, have 1 → satisfied ✓\n  B: need 1, have 1 → satisfied ✓\n  C: need 1, have 1 → satisfied ✓\n  formed = 3 == required = 3 → VALID!\n\nWindow \"DOBEC\":\n  A: need 1, have 0 → NOT satisfied\n  B: need 1, have 1 → satisfied ✓\n  C: need 1, have 1 → satisfied ✓\n  formed = 2 != required = 3 → INVALID\n```\n\n**Why extra chars don't matter:**\n\n- Extra characters (like 'D', 'O', 'E') don't affect validity\n- Only characters in `t` matter for the `formed` count\n- Having more than needed frequency is fine (e.g., 2 A's when need 1)\n- **Window validity = all required chars have sufficient frequency, regardless of extras**\n\n**This invariant guides our algorithm:** We expand until `formed == required`, then contract while maintaining this equality.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Tracing s=\"ADOBECODEBANC\", t=\"ABC\":\n\n- Expand to \"ADOBEC\" - valid! (has A,B,C)\n- Contract: \"DOBEC\" - still valid\n- Contract: \"OBEC\" - invalid (no A), stop\n- Continue expanding...\n- Find \"CODEBA\" - valid\n- Contract to \"BA\" - invalid\n- Final \"BANC\" is minimum!\n\nAnswer: **\"BANC\"** (length 4)",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Let's build this!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Count target frequencies.\n\n```javascript\nfunction minWindow(s, t) {\n  const need = {};\n  for (const char of t) {\n    need[char] = (need[char] || 0) + 1;\n  }\n  let required = Object.keys(need).length;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "const need = {};\nfor (const char of t) need[char] = (need[char] || 0) + 1;\nlet required = Object.keys(need).length;"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize window and tracking variables.\n\n```javascript\nfunction minWindow(s, t) {\n  const need = {};\n  for (const char of t) {\n    need[char] = (need[char] || 0) + 1;\n  }\n  let required = Object.keys(need).length;\n  \n  let left = 0, formed = 0;\n  const windowCounts = {};\n  let result = [Infinity, 0, 0];\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "let left = 0, formed = 0;\nconst windowCounts = {};\nlet result = [Infinity, 0, 0];"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Expand window and check validity.\n\n```javascript\nfunction minWindow(s, t) {\n  const need = {};\n  for (const char of t) need[char] = (need[char] || 0) + 1;\n  let required = Object.keys(need).length;\n  let left = 0, formed = 0;\n  const windowCounts = {};\n  let result = [Infinity, 0, 0];\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    windowCounts[char] = (windowCounts[char] || 0) + 1;\n    if (need[char] && windowCounts[char] === need[char]) formed++;\n  }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps2",
+        "ps3"
+      ],
+      "example": "for (let right = 0; right < s.length; right++) {\n  const char = s[right];\n  windowCounts[char] = (windowCounts[char] || 0) + 1;\n  if (need[char] && windowCounts[char] === need[char]) formed++;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Contract window when valid.\n\n```javascript\nfunction minWindow(s, t) {\n  const need = {};\n  for (const char of t) need[char] = (need[char] || 0) + 1;\n  let required = Object.keys(need).length;\n  let left = 0, formed = 0;\n  const windowCounts = {};\n  let result = [Infinity, 0, 0];\n  \n  for (let right = 0; right < s.length; right++) {\n    const char = s[right];\n    windowCounts[char] = (windowCounts[char] || 0) + 1;\n    if (need[char] && windowCounts[char] === need[char]) formed++;\n    \n    while (formed === required) {\n      if (right - left + 1 < result[0]) {\n        result = [right - left + 1, left, right];\n      }\n      const leftChar = s[left];\n      windowCounts[leftChar]--;\n      if (need[leftChar] && windowCounts[leftChar] < need[leftChar]) formed--;\n      left++;\n    }\n  }\n  \n  return result[0] === Infinity ? \"\" : s.substring(result[1], result[2] + 1);\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ],
+      "example": "while (formed === required) {\n  if (right - left + 1 < result[0]) result = [right - left + 1, left, right];\n  const leftChar = s[left];\n  windowCounts[leftChar]--;\n  if (need[leftChar] && windowCounts[leftChar] < need[leftChar]) formed--;\n  left++;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Amazing! **Minimum Window Substring** conquered!\n\nThis pattern powers:\n• Fuzzy string matching\n• DNA sequence analysis\n• Text search\n\nNext: **Find Median from Data Stream** - dual heap mastery!\n\nYou're unstoppable! 🚀",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,337 @@
+{
+  "id": "wildcard-matching",
+  "title": "Wildcard Matching",
+  "pattern": "DP (2D - wildcard)",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 91,
+    "tier": "INTERVIEW-MASTERY",
+    "lessonOrderTag": "INTERVIEW-MASTERY-91",
+    "introduces": [
+      "wildcard-dp",
+      "greedy-matching"
+    ],
+    "assumesAlreadyTaught": [
+      "2D-DP",
+      "string-matching-DP"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "distinct-subsequences"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Create DP table: dp[i][j] = s[0..i] matches p[0..j]"
+    },
+    {
+      "id": "ps2",
+      "text": "Handle base cases: empty string/pattern"
+    },
+    {
+      "id": "ps3",
+      "text": "If chars match or p[j]='?': dp[i][j] = dp[i-1][j-1]"
+    },
+    {
+      "id": "ps4",
+      "text": "If p[j]='*': match zero (dp[i][j-1]) or more (dp[i-1][j])"
+    },
+    {
+      "id": "ps5",
+      "text": "Return dp[m][n]"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! **Wildcard Matching** - advanced pattern matching with '*' and '?'!\n\nThis challenging DP problem teaches wildcard matching used in file systems, search engines, and regex.\n\nYou'll learn:\n• Wildcard pattern matching\n• Advanced 2D DP\n• Greedy optimization\n\nLet's go!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Language?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Prerequisites:\n- **2D DP**\n- **String matching DP**\n\nReady?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Ready?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Ready?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Ready?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Ready?",
+      "choices": [
+        {
+          "label": "Yes",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Some",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Let's quickly recap the basics you'll need for this problem.",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "**File system wildcards!** Match strings using '?' (any char) and '*' (any sequence).\n\nGiven string `s` and pattern `p` with wildcards:\n- '?' matches any single character\n- '*' matches any sequence (including empty)\n\nExample:\n```\ns = \"adceb\", p = \"*a*b\"\nOutput: true\n```\n'*' matches \"d\", middle '*' matches \"ce\"",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "How to handle '*' wildcard?",
+      "choices": [
+        {
+          "label": "Recursively try all possibilities",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use DP: '*' can match zero chars OR consume one char from string",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "Pure recursion is exponential!\n\nDP with memoization solves it in O(mn).",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key: **dp[i][j] = can s[0..i] match p[0..j]**\n\nRules:\n• If chars match or p[j]='?': dp[i][j] = dp[i-1][j-1]\n• If p[j]='*':\n  - Match zero: dp[i][j-1]\n  - Match one+: dp[i-1][j]\n  - Take OR of both\n\nBase: dp[0][0]=true, handle '*' in pattern start",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Match s=\"cb\", p=\"?a*\":\n\n```\n    \"\" ?  a  *\n\"\"  T  F  F  F\nc   F  T  F  F\nb   F  F  F  T\n```\n\n- '?' matches 'c' ✓\n- 'a' vs 'b' fails\n- '*' matches \"b\" ✓\n\nResult: **true**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Build it!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create DP table.\n\n```javascript\nfunction isMatch(s, p) {\n  const m = s.length, n = p.length;\n  const dp = Array.from({length: m+1}, () => Array(n+1).fill(false));\n  dp[0][0] = true;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2"
+      ],
+      "example": "const dp = Array.from({length: m+1}, () => Array(n+1).fill(false));\ndp[0][0] = true;"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Handle leading '*' in pattern.\n\n```javascript\nfunction isMatch(s, p) {\n  const m = s.length, n = p.length;\n  const dp = Array.from({length: m+1}, () => Array(n+1).fill(false));\n  dp[0][0] = true;\n  \n  for (let j = 1; j <= n; j++) {\n    if (p[j-1] === '*') dp[0][j] = dp[0][j-1];\n  }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "for (let j = 1; j <= n; j++) {\n  if (p[j-1] === '*') dp[0][j] = dp[0][j-1];"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Fill DP table with matching logic.\n\n```javascript\nfunction isMatch(s, p) {\n  const m = s.length, n = p.length;\n  const dp = Array.from({length: m+1}, () => Array(n+1).fill(false));\n  dp[0][0] = true;\n  \n  for (let j = 1; j <= n; j++) {\n    if (p[j-1] === '*') dp[0][j] = dp[0][j-1];\n  }\n  \n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (p[j-1] === '*') {\n        dp[i][j] = dp[i][j-1] || dp[i-1][j];\n      } else if (p[j-1] === '?' || s[i-1] === p[j-1]) {\n        dp[i][j] = dp[i-1][j-1];\n      }\n    }\n  }\n  \n  return dp[m][n];\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4",
+        "ps5"
+      ],
+      "example": "if (p[j-1] === '*') {\n  dp[i][j] = dp[i][j-1] || dp[i-1][j];\n} else if (p[j-1] === '?' || s[i-1] === p[j-1]) {\n  dp[i][j] = dp[i-1][j-1];"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Brilliant! **Wildcard matching** mastered!\n\nUsed in:\n• File globbing\n• Search engines\n• Regular expressions\n\nNext: **Distinct Subsequences** - counting DP!\n\n🔥",
+      "action": "complete"
+    }
+  ]
+}

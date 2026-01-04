@@ -1,0 +1,79 @@
+{
+  "id": "add-two-numbers",
+  "title": "Add Two Numbers",
+  "pattern": "linked-list + carry",
+  "difficulty": "medium",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given **two numbers**, but they are not written normally.\n\nEach number is stored as a **linked list**, where:\n- Each node contains a single digit\n- Digits are stored in **reverse order**\n\nYour task is to return the **sum** of these two numbers as a linked list, also in reverse order.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s look at a very small example.\n\nNumber 1: 2 → 4 → 3\nNumber 2: 5 → 6 → 4\n\nBecause the digits are reversed:\n- First list represents 342\n- Second list represents 465\n\n342 + 465 = 807",
+      "action": "next"
+    },
+    {
+      "stepId": "expected-output",
+      "mentorSays": "The result should also be a linked list in reverse order.\n\n807 becomes:\n\n7 → 0 → 8",
+      "action": "next"
+    },
+    {
+      "stepId": "concept-linked-list",
+      "mentorSays": "Before solving the problem, let’s understand **what a linked list is**.\n\nA linked list is a chain of boxes.\n\nEach box (node) contains:\n- a value\n- a reference to the next box\n\nExample:\n\n7 → 0 → 8 → null",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now think carefully.\n\nIf you were adding numbers **by hand**, digit by digit:\n\n- You start from the rightmost digit\n- You add digits one at a time\n- Sometimes the sum is greater than 9\n\nHow would you handle that extra value?",
+      "action": "next"
+    },
+    {
+      "stepId": "introduce-carry",
+      "mentorSays": "When a digit sum is greater than 9, we:\n\n- Write down the rightmost digit\n- Carry the extra value to the next addition\n\nExample:\n8 + 7 = 15\n- Write 5\n- Carry 1\n\nWe call this extra value the **carry**.",
+      "action": "next"
+    },
+    {
+      "stepId": "logic-walkthrough",
+      "mentorSays": "Now let’s connect this idea to linked lists.\n\nWe will:\n- Start at the first node of both lists\n- Add their values plus any carry\n- Create a new node for the result\n- Move to the next nodes\n\nWe repeat until both lists are finished.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Here is the logic written in plain steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "create a dummy result node",
+        "set current pointer to dummy node",
+        "set carry to 0",
+        "while at least one list has nodes",
+        "  add values from both lists and carry",
+        "  update carry",
+        "  create new node with digit",
+        "  move to next nodes",
+        "if carry remains, add new node",
+        "return next of dummy node"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself. Focus on understanding each step.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function addTwoNumbers(l1, l2) {\n  let dummy = { val: 0, next: null };\n  let current = dummy;\n  let carry = 0;\n\n  while (l1 !== null || l2 !== null) {\n    let sum = carry;\n\n    if (l1 !== null) {\n      sum += l1.val;\n      l1 = l1.next;\n    }\n\n    if (l2 !== null) {\n      sum += l2.val;\n      l2 = l2.next;\n    }\n\n    carry = Math.floor(sum / 10);\n    current.next = { val: sum % 10, next: null };\n    current = current.next;\n  }\n\n  if (carry > 0) {\n    current.next = { val: carry, next: null };\n  }\n\n  return dummy.next;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "For the input:\n\n2 → 4 → 3\n5 → 6 → 4\n\nThe output will be:\n\n7 → 0 → 8\n\nThis confirms the addition logic is correct.",
+      "action": "complete"
+    }
+  ]
+}

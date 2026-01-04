@@ -1,0 +1,60 @@
+{
+  "id": "find-median-data-stream",
+  "title": "Find Median from Data Stream",
+  "pattern": "two heaps",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 57,
+    "tier": "EXPERT",
+    "lessonOrderTag": "EXPERT-57",
+    "introduces": ["heap-concept", "max-heap", "min-heap", "balanced-heaps"],
+    "assumesAlreadyTaught": ["arrays", "comparison-operators", "Math.floor"],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["kth-largest-element"]
+  },
+  "pseudocode": [
+    {"id": "ps1", "text": "Maintain two heaps: maxHeap (lower half), minHeap (upper half)"},
+    {"id": "ps2", "text": "AddNum: add to maxHeap first"},
+    {"id": "ps3", "text": "Balance: move maxHeap top to minHeap if needed"},
+    {"id": "ps4", "text": "Rebalance: ensure heaps differ by at most 1"},
+    {"id": "ps5", "text": "FindMedian: if sizes equal, average of tops; else return larger heap top"}
+  ],
+  "flow": [
+    {"stepId": "objectives", "mentorSays": "Hey! **Find Median from Data Stream** - the two-heap pattern!\n\nThis elegant solution maintains the median in O(log n) time using two heaps working together.\n\nYou'll learn:\n• Max heap and min heap concepts\n• Balancing two heaps\n• Finding median in constant time\n\nLet's dive in!", "action": "continue", "next": "language-selection"},
+    {"stepId": "language-selection", "mentorSays": "Which language?", "choices": [{"label": "💛 JavaScript", "next": "prereq-check-js"}, {"label": "🐍 Python", "next": "prereq-check-python"}, {"label": "☕ Java", "next": "prereq-check-java"}, {"label": "⚡ C++", "next": "prereq-check-cpp"}, {"label": "💙 TypeScript", "next": "prereq-check-ts"}]},
+    {"stepId": "prereq-check-js", "mentorSays": "Prerequisites:\n- **Arrays**\n- **Comparison operators**\n- **Math.floor**\n\nReady?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-js"}, {"label": "Some", "next": "select-prereqs-js"}]},
+    {"stepId": "teach-prereqs-js", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-js", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-python", "mentorSays": "Prerequisites ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-python"}, {"label": "Some", "next": "select-prereqs-python"}]},
+    {"stepId": "teach-prereqs-python", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-python", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-java", "mentorSays": "Prerequisites ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-java"}, {"label": "Some", "next": "select-prereqs-java"}]},
+    {"stepId": "teach-prereqs-java", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-java", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-cpp", "mentorSays": "Prerequisites ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-cpp"}, {"label": "Some", "next": "select-prereqs-cpp"}]},
+    {"stepId": "teach-prereqs-cpp", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-cpp", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-ts", "mentorSays": "Prerequisites ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-ts"}, {"label": "Some", "next": "select-prereqs-ts"}]},
+    {"stepId": "teach-prereqs-ts", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-ts", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "problem-understanding", "mentorSays": "**Processing live data** - numbers arrive one at a time, and you need to report the median at any moment!\n\nDesign a data structure that supports:\n• `addNum(num)`: Add number to the stream\n• `findMedian()`: Return median of all numbers\n\nExample:\n```javascript\nconst mf = new MedianFinder();\nmf.addNum(1);\nmf.addNum(2);\nmf.findMedian(); // 1.5\nmf.addNum(3);\nmf.findMedian(); // 2\n```", "action": "continue", "next": "thinking-challenge"},
+    {"stepId": "thinking-challenge", "mentorSays": "How to maintain median efficiently?", "choices": [{"label": "Sort array each time", "next": "wrong-choice"}, {"label": "Use two heaps: max heap for lower half, min heap for upper half", "next": "core-idea"}]},
+    {"stepId": "wrong-choice", "mentorSays": "Sorting each time is O(n log n)!\n\nTwo heaps give us O(log n) insert and O(1) median lookup.", "action": "next", "next": "core-idea"},
+    {"stepId": "core-idea", "mentorSays": "The key: **split data into two balanced heaps**.\n\n• **MaxHeap**: Stores smaller half (largest at top)\n• **MinHeap**: Stores larger half (smallest at top)\n\nBalance rule: Heaps differ by at most 1 element\n\n**Median:**\n• If equal sizes: average of both tops\n• If unequal: top of larger heap\n\nThis keeps median accessible in O(1)!", "action": "next", "next": "walkthrough", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "walkthrough", "mentorSays": "Adding numbers [1,2,3]:\n\n**Add 1:** maxHeap=[1], minHeap=[]\n- Median: 1\n\n**Add 2:** maxHeap=[1], minHeap=[2]\n- Median: (1+2)/2 = 1.5\n\n**Add 3:** maxHeap=[1], minHeap=[2,3]\n- Rebalance: maxHeap=[1,2], minHeap=[3]\n- Median: 2 (top of larger heap)\n\nHeaps stay balanced!", "action": "next", "next": "pseudocode-step", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "pseudocode-step", "mentorSays": "Pseudocode:", "action": "next", "next": "coding-intro", "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5"]},
+    {"stepId": "coding-intro", "mentorSays": "Build it step by step!", "action": "next", "next": "code-01"},
+    {"stepId": "code-01", "mentorSays": "Initialize two heaps (arrays for simplicity).\n\n```javascript\nclass MedianFinder {\n  constructor() {\n    this.maxHeap = [];\n    this.minHeap = [];\n  }\n}\n```", "action": "next", "next": "code-02", "pseudocodeLineIds": ["ps1"], "example": "constructor() {\n  this.maxHeap = [];\n  this.minHeap = [];"
+    },
+    {"stepId": "code-02", "mentorSays": "Implement addNum with balancing.\n\n```javascript\nclass MedianFinder {\n  constructor() {\n    this.maxHeap = [];\n    this.minHeap = [];\n  }\n  \n  addNum(num) {\n    if (this.maxHeap.length === 0 || num <= this.maxHeap[0]) {\n      this.maxHeap.push(num);\n      this.maxHeap.sort((a,b) => b-a);\n    } else {\n      this.minHeap.push(num);\n      this.minHeap.sort((a,b) => a-b);\n    }\n  }\n}\n```", "action": "next", "next": "code-03", "pseudocodeLineIds": ["ps2", "ps3"], "example": "addNum(num) {\n  if (this.maxHeap.length === 0 || num <= this.maxHeap[0]) {\n    this.maxHeap.push(num); this.maxHeap.sort((a,b) => b-a);\n  } else {\n    this.minHeap.push(num); this.minHeap.sort((a,b) => a-b);"
+    },
+    {"stepId": "code-03", "mentorSays": "Balance heaps.\n\n```javascript\nclass MedianFinder {\n  constructor() {\n    this.maxHeap = [];\n    this.minHeap = [];\n  }\n  \n  addNum(num) {\n    if (this.maxHeap.length === 0 || num <= this.maxHeap[0]) {\n      this.maxHeap.push(num);\n      this.maxHeap.sort((a,b) => b-a);\n    } else {\n      this.minHeap.push(num);\n      this.minHeap.sort((a,b) => a-b);\n    }\n    \n    if (this.maxHeap.length > this.minHeap.length + 1) {\n      this.minHeap.push(this.maxHeap.shift());\n      this.minHeap.sort((a,b) => a-b);\n    } else if (this.minHeap.length > this.maxHeap.length) {\n      this.maxHeap.push(this.minHeap.shift());\n      this.maxHeap.sort((a,b) => b-a);\n    }\n  }\n}\n```", "action": "next", "next": "code-04", "pseudocodeLineIds": ["ps4"], "example": "if (this.maxHeap.length > this.minHeap.length + 1) {\n  this.minHeap.push(this.maxHeap.shift());\n  this.minHeap.sort((a,b) => a-b);"
+    },
+    {"stepId": "code-04", "mentorSays": "Implement findMedian.\n\n```javascript\nclass MedianFinder {\n  constructor() {\n    this.maxHeap = [];\n    this.minHeap = [];\n  }\n  \n  addNum(num) {\n    if (this.maxHeap.length === 0 || num <= this.maxHeap[0]) {\n      this.maxHeap.push(num);\n      this.maxHeap.sort((a,b) => b-a);\n    } else {\n      this.minHeap.push(num);\n      this.minHeap.sort((a,b) => a-b);\n    }\n    \n    if (this.maxHeap.length > this.minHeap.length + 1) {\n      this.minHeap.push(this.maxHeap.shift());\n      this.minHeap.sort((a,b) => a-b);\n    } else if (this.minHeap.length > this.maxHeap.length) {\n      this.maxHeap.push(this.minHeap.shift());\n      this.maxHeap.sort((a,b) => b-a);\n    }\n  }\n  \n  findMedian() {\n    if (this.maxHeap.length > this.minHeap.length) {\n      return this.maxHeap[0];\n    }\n    return (this.maxHeap[0] + this.minHeap[0]) / 2;\n  }\n}\n```", "action": "next", "next": "wrap-up", "pseudocodeLineIds": ["ps5"], "example": "findMedian() {\n  if (this.maxHeap.length > this.minHeap.length) return this.maxHeap[0];\n  return (this.maxHeap[0] + this.minHeap[0]) / 2;"
+    },
+    {"stepId": "wrap-up", "mentorSays": "Perfect! **Two-heap pattern** mastered!\n\nUsed in:\n• Running statistics\n• Real-time data analysis\n• Streaming algorithms\n\nNext: **Kth Largest Element** - quickselect!\n\nYou're on fire! 🔥", "action": "complete"}
+  ]
+}

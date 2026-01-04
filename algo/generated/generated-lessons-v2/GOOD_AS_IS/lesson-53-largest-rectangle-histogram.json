@@ -1,0 +1,458 @@
+{
+  "id": "largest-rectangle-histogram",
+  "title": "Largest Rectangle in Histogram",
+  "pattern": "monotonic stack",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 53,
+    "tier": "EXPERT",
+    "lessonOrderTag": "EXPERT-53",
+    "introduces": [
+      "monotonic-stack-concept",
+      "increasing-stack",
+      "area-calculation"
+    ],
+    "assumesAlreadyTaught": [
+      "stack-concept",
+      "arrays",
+      "Math.max"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "trapping-rain-water"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize empty stack to store indices and maxArea = 0"
+    },
+    {
+      "id": "ps2",
+      "text": "For each bar index i from 0 to n:"
+    },
+    {
+      "id": "ps3",
+      "text": "  While stack not empty AND heights[stack.top] >= heights[i]:"
+    },
+    {
+      "id": "ps4",
+      "text": "    Pop height_index from stack"
+    },
+    {
+      "id": "ps5",
+      "text": "    Calculate width = i - (stack.top + 1) if stack not empty, else i"
+    },
+    {
+      "id": "ps6",
+      "text": "    Calculate area = heights[height_index] * width"
+    },
+    {
+      "id": "ps7",
+      "text": "    Update maxArea = max(maxArea, area)"
+    },
+    {
+      "id": "ps8",
+      "text": "  Push current index i to stack"
+    },
+    {
+      "id": "ps9",
+      "text": "Repeat steps 3-7 for remaining indices in stack (using n as right boundary)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Remember how in Word Search II we had to keep track of valid paths and backtrack when we hit dead ends? Today we're tackling \"Largest Rectangle in Histogram\" - and here's the cool part: we're going to use a completely different approach called a **monotonic stack**.\n\nSo what's a monotonic stack? Think of it as a stack that maintains a specific order - either always increasing or always decreasing. In our case, we'll keep indices of histogram bars in increasing order of their heights. When we encounter a bar that would break this order, we pop elements and calculate rectangles! It's like having a bouncer at a club who only lets people in if they're taller than everyone already inside.\n\nThe magic happens when we pop: each popped element represents the height of a potential rectangle, and we can calculate its width using the indices. It's this \"pop and calculate\" pattern that makes monotonic stacks so powerful for these geometric problems.\n\n**Three key skills you'll master:**\n1. **Monotonic Stack Pattern** - Learning when and how to maintain ordered stacks for optimization problems\n2. **Rectangle Area Calculation** - Using stack indices to determine width boundaries efficiently  \n3. **Stack State Management** - Understanding what each pop operation represents and how to handle edge cases\n\nReady to see how this elegant technique turns an O(n²) brute force into an O(n) solution?",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "To solve this in JavaScript, you'll need:\n- **Monotonic_stack** - Understanding how to maintain a stack where elements are in increasing or decreasing order, and when to pop elements\n- **Stack_operations** - Proficiency with push/pop operations and accessing stack top element for processing indices or values\n- **Array_traversal** - Ability to iterate through arrays while maintaining auxiliary data structures for lookups\n- **Area_calculation** - Computing rectangular areas using width×height where width spans between array indices\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "To solve this in Python, you'll need:\n- **Monotonic_stack** - Understanding how to maintain a stack where elements are in increasing or decreasing order, and when to pop elements\n- **Stack_operations** - Proficiency with push/pop operations and accessing stack top element for processing indices or values\n- **Array_traversal** - Ability to iterate through arrays while maintaining auxiliary data structures for lookups\n- **Area_calculation** - Computing rectangular areas using width×height where width spans between array indices\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "To solve this in Java, you'll need:\n- **Monotonic_stack** - Understanding how to maintain a stack where elements are in increasing or decreasing order, and when to pop elements\n- **Stack_operations** - Proficiency with push/pop operations and accessing stack top element for processing indices or values\n- **Array_traversal** - Ability to iterate through arrays while maintaining auxiliary data structures for lookups\n- **Area_calculation** - Computing rectangular areas using width×height where width spans between array indices\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "To solve this in C++, you'll need:\n- **Monotonic_stack** - Understanding how to maintain a stack where elements are in increasing or decreasing order, and when to pop elements\n- **Stack_operations** - Proficiency with push/pop operations and accessing stack top element for processing indices or values\n- **Array_traversal** - Ability to iterate through arrays while maintaining auxiliary data structures for lookups\n- **Area_calculation** - Computing rectangular areas using width×height where width spans between array indices\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "To solve this in TypeScript, you'll need:\n- **Monotonic_stack** - Understanding how to maintain a stack where elements are in increasing or decreasing order, and when to pop elements\n- **Stack_operations** - Proficiency with push/pop operations and accessing stack top element for processing indices or values\n- **Array_traversal** - Ability to iterate through arrays while maintaining auxiliary data structures for lookups\n- **Area_calculation** - Computing rectangular areas using width×height where width spans between array indices\n\nConfident with these?",
+      "choices": [
+        {
+          "label": "Yes, I know all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, explain",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "Some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Imagine you're a city planner looking at a skyline of buildings with different heights, and you want to find the largest rectangular billboard that can fit entirely within the silhouette without extending above any building. You need to find the perfect spot where you can place the widest possible rectangle that doesn't exceed the height of the shortest building in that span. This is like scanning across the skyline to find the optimal width-height combination that gives you the maximum rectangular area for your billboard.\n\n# Largest Rectangle in Histogram\n\nHey there! Let's talk about a classic problem that comes up a lot in coding interviews and competitive programming.\n\n## The Problem\n\nImagine you're looking at a histogram (you know, those bar charts where each bar has a different height). Your job is to find the **largest rectangular area** you can form using the bars in this histogram.\n\nHere's the catch though - you can only form rectangles by using **consecutive bars**, and the height of your rectangle is limited by the **shortest bar** in the range you choose.\n\n## Example Walkthrough\n\nLet's say we have histogram heights: `[2, 1, 5, 6, 2, 3]`\n\n```\n    6\n  5 6\n  5 6   3\n2 1 5 6 2 3\n```\n\nNow, let's think about some possible rectangles:\n- Using just the first bar (height 2): area = 2 × 1 = 2\n- Using bars 3-4 (heights 5,6): the limiting height is 5, so area = 5 × 2 = 10\n- Using bars 3-5 (heights 5,6,2): the limiting height is 2, so area = 2 × 3 = 6\n- Using just bar 4 (height 6): area = 6 × 1 = 6\n\nAfter checking all possibilities, the **maximum area is 10**, formed by taking bars at positions 2 and 3 (the bars with heights 5 and 6), where the rectangle has width 2 and height 5 (limited by the shorter bar).\n\n## Your Task\n\nGiven an array of integers representing the heights of histogram bars, return the area of the largest rectangle you can form.\n\n**Input:** An array of non-negative integers  \n**Output:** An integer representing the maximum rectangular area\n\nThe tricky part? You need to do this efficiently - a brute force approach checking every possible rectangle would be too slow for large inputs!\n\nThis problem is all about finding clever ways to avoid checking every single possibility. Think about how you might use data structures like stacks to keep track of potential rectangles as you scan through the histogram... 🤔",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You're finding the largest rectangle in a histogram. When you encounter a bar shorter than the previous one, what should you do to efficiently calculate all possible rectangles?",
+      "choices": [
+        {
+          "label": "Skip the shorter bar and continue, then backtrack later to calculate rectangles",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Pop taller bars from the stack and calculate rectangles using each popped height, with width determined by stack positions",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach misses the key insight. Skipping shorter bars means you lose the opportunity to calculate rectangles at the moment when their right boundary is determined. Backtracking later would require additional passes and complex bookkeeping, making the solution inefficient and error-prone.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Monotonic Stack for Next Smaller Element\n\n**This problem follows the \"monotonic stack\" pattern:**\n- **Monotonic increasing stack** - Stack maintains indices in increasing height order\n- **Next smaller element** - When we find a smaller height, it's the right boundary for previous heights\n- **Rectangle calculation** - Calculate area when popping (height × width)\n- **Sentinel bar** - Add height 0 at end to process remaining stack\n\n**Similar problems:**\n- Trapping Rain Water (similar stack usage)\n- Daily Temperatures (monotonic stack)\n- Next Greater Element (similar pattern)\n\n**Key insight:** A monotonic stack helps us find the next smaller element efficiently. When we encounter a smaller height, we know it's the right boundary for all taller heights in the stack, allowing us to calculate their rectangles.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Stack Contains Indices in Increasing Height Order\n\n**Invariant maintained throughout:**\n- **Stack property:** Heights at stack indices are in increasing order (bottom to top)\n- **Rectangle boundaries:** When popping, current index is right boundary, new stack top is left boundary\n- **Width calculation:** width = right - left - 1 (or right if left is -1)\n- **Area calculation:** area = height[popped] × width\n\n**Why this works:**\n- Initially, stack is empty\n- When height[i] >= height[stack.top], push i (maintains increasing order)\n- When height[i] < height[stack.top], pop and calculate rectangles\n- Popped height can no longer extend rightward (smaller height found)\n- Stack's increasing property tells us how far left the height extends\n\n**Invariant guarantee:** After processing all heights (with sentinel), all possible rectangles have been calculated. The maximum area is the answer.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Monotonic Stack State\n\n**State variables:**\n- **`stack`** - Stack storing indices (heights at these indices are increasing)\n- **`heights`** - Array of histogram bar heights\n- **`maxArea`** - Maximum rectangle area found so far\n- **`i`** - Current index being processed\n\n**State transitions:**\n1. **Initialize:** stack = [], maxArea = 0\n2. **Loop:** For i from 0 to n (with sentinel height 0 at end):\n   - While stack not empty and heights[i] < heights[stack.top]:\n     - Pop index h, calculate width, update maxArea\n   - Push i\n3. **Result:** Return maxArea\n\n**State validity:** After processing, maxArea contains the largest rectangle area.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Try All Possible Rectangles**\n- **Why it fails:** O(n²) time complexity\n- **Issue:** For each starting position, try all ending positions\n- **Better:** Monotonic stack processes in O(n) time\n\n**Approach 2: For Each Height, Find Width**\n- **Why it fails:** O(n²) time to find boundaries for each height\n- **Issue:** Need to scan left and right for each height\n- **Better:** Stack efficiently tracks boundaries\n\n**Approach 3: Divide and Conquer**\n- **Why it doesn't fail:** Actually works, but O(n log n) time\n- **Issue:** More complex, slower than stack approach\n- **Better:** Monotonic stack is O(n) time and simpler\n\n**Our approach wins because:** Monotonic stack finds the largest rectangle in O(n) time by efficiently tracking height boundaries. The stack's increasing property allows us to calculate rectangles as soon as we find their right boundary.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to **maintain a monotonically increasing stack** of indices while iterating through the histogram. When we encounter a height that's smaller than the stack's top, we **pop elements and calculate rectangles** using each popped height as the rectangle's height, with the current position as the right boundary and the new stack top as the left boundary. This works because the popped element represents the **tallest bar that can no longer extend rightward**, and since the stack was increasing, we know exactly how far left this height could extend. By processing heights in this manner, we ensure each bar is considered exactly once as a potential rectangle height, achieving **O(n) time complexity**.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through the \"Largest Rectangle in Histogram\" problem using a stack-based approach:\n\n**Initial setup:**\n- heights = [2,1,5,6,2,3]\n- stack = [] (stores indices)\n- max_area = 0\n\n**Step 1: i=0, height=2**\n- Stack is empty, push index 0\n- stack = [0]\n\n**Step 2: i=1, height=1**\n- heights[1]=1 < heights[0]=2, so pop and calculate area\n- Pop index 0: width = 1-0 = 1, area = 2×1 = 2\n- max_area = max(0, 2) = 2\n- Push index 1: stack = [1]\n\n**Step 3: i=2, height=5**\n- heights[2]=5 > heights[1]=1, push index 2\n- stack = [1, 2]\n\n**Step 4: i=3, height=6**\n- heights[3]=6 > heights[2]=5, push index 3\n- stack = [1, 2, 3]\n\n**Step 5: i=4, height=2**\n- heights[4]=2 < heights[3]=6, pop index 3\n- Width = 4-2-1 = 1, area = 6×1 = 6, max_area = max(2, 6) = 6\n- heights[4]=2 < heights[2]=5, pop index 2\n- Width = 4-1-1 = 2, area = 5×2 = 10, max_area = max(6, 10) = 10\n- heights[4]=2 > heights[1]=1, push index 4\n- stack = [1, 4]\n\n**Step 6: i=5, height=3**\n- heights[5]=3 > heights[4]=2, push index 5\n- stack = [1, 4, 5]\n\n**Step 7: Process remaining stack**\n- Pop index 5: width = 6-4-1 = 1, area = 3×1 = 3\n- Pop index 4: width = 6-1-1 = 4, area = 2×4 = 8\n- Pop index 1: width = 6-0 = 6, area = 1×6 = 6\n\n**10 (rectangle 5×2)**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7",
+        "ps8",
+        "ps9"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now JavaScript, step by step.\n\n1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function with stack for indices and maxArea variable\n\n```javascript\nfunction largestRectangleArea(heights) {\n    let stack = [];\n    let maxArea = 0;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "initialize"
+      ],
+      "example": "let stack = [];\nlet maxArea = 0;"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Loop through all bars plus one extra iteration\n\n```javascript\nfunction largestRectangleArea(heights) {\n    let stack = [];\n    let maxArea = 0;\n    \n    for (let i = 0; i <= heights.length; i++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "iterate"
+      ],
+      "example": "for (let i = 0; i <= heights.length; i++) {\n}"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Get current height, treating end case as 0\n\n```javascript\nfunction largestRectangleArea(heights) {\n    let stack = [];\n    let maxArea = 0;\n    \n    for (let i = 0; i <= heights.length; i++) {\n        let currentHeight = i < heights.length ? heights[i] : 0;\n    }\n}\n```",
+      "action": "next",
+      "next": "sentinel-bar-explanation"
+    },
+    {
+      "stepId": "sentinel-bar-explanation",
+      "mentorSays": "### Explicit Sentinel Bar = 0 Step (Essential for Correctness)\n\n**Why we need a sentinel bar:**\n\nAfter processing all bars, the stack may still contain indices. These bars can extend to the end of the histogram, but we never get a chance to calculate their rectangles.\n\n**Solution: Add a sentinel bar of height 0 at the end**\n\n```javascript\n// Loop goes one extra iteration: i <= heights.length\n// When i === heights.length, currentHeight = 0 (sentinel)\n```\n\n**What this does:**\n- The sentinel bar (height 0) is shorter than any real bar\n- It forces all remaining bars in the stack to be popped\n- Each popped bar gets its rectangle calculated with width extending to the end\n\n**Example:**\n```\nheights = [2, 1, 5, 6, 2, 3]\nAfter processing all bars, stack = [1, 4, 5]\n\nWith sentinel (height 0 at index 6):\n- 0 < 3 → pop 5, calculate rectangle\n- 0 < 2 → pop 4, calculate rectangle  \n- 0 < 1 → pop 1, calculate rectangle\n\nWithout sentinel: These rectangles would never be calculated!\n```\n\n**This is essential for correctness** - without it, the algorithm misses rectangles that extend to the end.",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "get-height"
+      ],
+      "example": "let currentHeight = i < heights.length ? heights[i] : 0;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "While stack not empty and current height is less than top height\n\n```javascript\nfunction largestRectangleArea(heights) {\n    let stack = [];\n    let maxArea = 0;\n    \n    for (let i = 0; i <= heights.length; i++) {\n        let currentHeight = i < heights.length ? heights[i] : 0;\n        \n        while (stack.length > 0 && currentHeight < heights[stack[stack.length - 1]]) {\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "check-decreasing"
+      ],
+      "example": "while (stack.length > 0 && currentHeight < heights[stack[stack.length - 1]]) {\n}"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Pop the top index and get its height\n\n```javascript\nfunction largestRectangleArea(heights) {\n    let stack = [];\n    let maxArea = 0;\n    \n    for (let i = 0; i <= heights.length; i++) {\n        let currentHeight = i < heights.length ? heights[i] : 0;\n        \n        while (stack.length > 0 && currentHeight < heights[stack[stack.length - 1]]) {\n            let topIndex = stack.pop();\n            let height = heights[topIndex];\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "pop-calculate"
+      ],
+      "example": "let topIndex = stack.pop();\nlet height = heights[topIndex];"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Calculate width using current position and previous stack top\n\n```javascript\nfunction largestRectangleArea(heights) {\n    let stack = [];\n    let maxArea = 0;\n    \n    for (let i = 0; i <= heights.length; i++) {\n        let currentHeight = i < heights.length ? heights[i] : 0;\n        \n        while (stack.length > 0 && currentHeight < heights[stack[stack.length - 1]]) {\n            let topIndex = stack.pop();\n            let height = heights[topIndex];\n            let width = stack.length === 0 ? i : i - stack[stack.length - 1] - 1;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "calculate-width"
+      ],
+      "example": "let width = stack.length === 0 ? i : i - stack[stack.length - 1] - 1;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Calculate area and update maximum\n\n```javascript\nfunction largestRectangleArea(heights) {\n    let stack = [];\n    let maxArea = 0;\n    \n    for (let i = 0; i <= heights.length; i++) {\n        let currentHeight = i < heights.length ? heights[i] : 0;\n        \n        while (stack.length > 0 && currentHeight < heights[stack[stack.length - 1]]) {\n            let topIndex = stack.pop();\n            let height = heights[topIndex];\n            let width = stack.length === 0 ? i : i - stack[stack.length - 1] - 1;\n            let area = height * width;\n            maxArea = Math.max(maxArea, area);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "update-max"
+      ],
+      "example": "let area = height * width;\nmaxArea = Math.max(maxArea, area);"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Push current index to maintain increasing stack\n\n```javascript\nfunction largestRectangleArea(heights) {\n    let stack = [];\n    let maxArea = 0;\n    \n    for (let i = 0; i <= heights.length; i++) {\n        let currentHeight = i < heights.length ? heights[i] : 0;\n        \n        while (stack.length > 0 && currentHeight < heights[stack[stack.length - 1]]) {\n            let topIndex = stack.pop();\n            let height = heights[topIndex];\n            let width = stack.length === 0 ? i : i - stack[stack.length - 1] - 1;\n            let area = height * width;\n            maxArea = Math.max(maxArea, area);\n        }\n        \n        stack.push(i);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-09",
+      "pseudocodeLineIds": [
+        "push-index"
+      ],
+      "example": "stack.push(i);"
+    },
+    {
+      "stepId": "code-09",
+      "mentorSays": "Return the maximum area found\n\n```javascript\nfunction largestRectangleArea(heights) {\n    let stack = [];\n    let maxArea = 0;\n    \n    for (let i = 0; i <= heights.length; i++) {\n        let currentHeight = i < heights.length ? heights[i] : 0;\n        \n        while (stack.length > 0 && currentHeight < heights[stack[stack.length - 1]]) {\n            let topIndex = stack.pop();\n            let height = heights[topIndex];\n            let width = stack.length === 0 ? i : i - stack[stack.length - 1] - 1;\n            let area = height * width;\n            maxArea = Math.max(maxArea, area);\n        }\n        \n        stack.push(i);\n    }\n    \n    return maxArea;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "return-result"
+      ],
+      "example": "return maxArea;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "🎉 Fantastic work conquering the Largest Rectangle in Histogram! You've mastered the powerful monotonic stack pattern, which elegantly handles complex area calculations by maintaining elements in sorted order. Now you're perfectly prepared to tackle Trapping Rain Water, where you'll apply similar stack principles to calculate water volumes between barriers - another classic that will solidify your understanding of this versatile technique!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,628 @@
+{
+  "id": "merge-sorted-array",
+  "title": "Merge Sorted Array",
+  "pattern": "two pointers (backward)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 13,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-13",
+    "introduces": [
+      "backward-traversal",
+      "merge-pattern",
+      "three-pointers",
+      "space-at-end"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "two-pointers",
+      "comparison-operators"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "valid-parentheses"
+    ]
+  },
+  "problemStatement": {
+    "description": "Merge two sorted arrays into the first array in-place. The first array has enough space at the end to hold all elements from both arrays.",
+    "inputs": [
+      "nums1: sorted array with m elements followed by n zeros (length m+n)",
+      "nums2: sorted array with n elements",
+      "m: number of elements in nums1",
+      "n: number of elements in nums2"
+    ],
+    "outputs": [
+      "Modify nums1 in-place to contain merged sorted array (no return value needed)"
+    ],
+    "examples": [
+      {
+        "input": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
+        "output": "[1,2,2,3,5,6]",
+        "explanation": "Merge from back: compare 3 vs 6, place 6. Compare 3 vs 5, place 5. Compare 3 vs 2, place 3. Compare 2 vs 2, place 2. Remaining: place 2, then 1."
+      },
+      {
+        "input": "nums1 = [1], m = 1, nums2 = [], n = 0",
+        "output": "[1]",
+        "explanation": "nums2 is empty, nums1 already contains result."
+      },
+      {
+        "input": "nums1 = [0], m = 0, nums2 = [1], n = 1",
+        "output": "[1]",
+        "explanation": "nums1 is empty, copy all elements from nums2."
+      }
+    ],
+    "constraints": [
+      "nums1.length == m + n",
+      "nums2.length == n",
+      "0 <= m, n <= 200",
+      "1 <= m + n <= 200",
+      "-10^9 <= nums1[i], nums2[j] <= 10^9"
+    ],
+    "realWorldUse": [
+      "Merging sorted data structures",
+      "Database merge operations",
+      "Combining sorted lists efficiently",
+      "In-place array operations"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "Merging from the back avoids overwriting unprocessed elements in nums1. Since nums1 has extra space at the end, we can safely place elements starting from the last position and work backward.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks to merge sorted arrays in-place → think backward merge",
+      "SIGNAL 2: First array has extra space at end → use backward traversal",
+      "SIGNAL 3: Need to avoid overwriting unprocessed elements → merge from back"
+    ],
+    "patternRules": [
+      "If problem involves merging with in-place requirement → use backward merge",
+      "When you see 'merge sorted', 'in-place', or 'space at end' → consider backward two pointers",
+      "If overwriting is a concern → merge from back to front"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - we need to systematically merge all elements, not make local choices.",
+      "bruteForce": "Creating new array then copying back works but uses O(m+n) extra space. Backward merge uses O(1) space.",
+      "alternative": "Merging from front would overwrite unprocessed elements in nums1. Backward merge avoids this."
+    }
+  },
+  "coreInvariant": {
+    "statement": "All positions > p contain elements in their final sorted positions, while positions ≤ p are available for placement. Pointers p1 and p2 point to the last unprocessed elements in their respective arrays.",
+    "explanation": "This invariant holds because we place elements starting from the end (position m+n-1) and work backward. Once we place an element at position p, we never need positions > p again, so they're safe. Positions ≤ p are either zeros (empty) or unprocessed elements that will be moved.",
+    "whyItMatters": "This invariant guarantees correctness: by the time we finish, all elements are in their final positions. Merging from back ensures we never overwrite elements we still need to process."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "p1",
+        "meaning": "Pointer to last unprocessed element in nums1 (0-indexed)",
+        "indexing": "0-indexed, starts at m-1, moves backward"
+      },
+      {
+        "name": "p2",
+        "meaning": "Pointer to last unprocessed element in nums2 (0-indexed)",
+        "indexing": "0-indexed, starts at n-1, moves backward"
+      },
+      {
+        "name": "p",
+        "meaning": "Write position in nums1 (0-indexed)",
+        "indexing": "0-indexed, starts at m+n-1, moves backward"
+      }
+    ],
+    "baseCases": [
+      "If n == 0: nums1 already contains result, no merging needed",
+      "If m == 0: copy all elements from nums2 to nums1"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "While p1 >= 0 and p2 >= 0:",
+        "transition": "Compare nums1[p1] and nums2[p2], place larger at nums1[p], then decrement pointers",
+        "explanation": "Compare largest remaining elements, place larger one at current write position, move backward",
+        "example": "nums1[p1]=3, nums2[p2]=6: place 6 at nums1[p], then p2--, p--"
+      },
+      {
+        "condition": "If p1 < 0 (nums1 exhausted):",
+        "transition": "Copy remaining elements from nums2 to nums1",
+        "explanation": "All nums1 elements placed, copy remaining nums2 elements",
+        "example": "If p1 < 0, copy nums2[0..p2] to nums1[0..p]"
+      },
+      {
+        "condition": "If p2 < 0 (nums2 exhausted):",
+        "transition": "No action needed (nums1 elements already in place)",
+        "explanation": "All nums2 elements placed, nums1 elements are already in correct positions",
+        "example": "If p2 < 0, nums1[0..p1] are already in correct positions"
+      }
+    ],
+    "decisionTree": {
+      "root": "While both arrays have elements, compare and place larger element",
+      "branches": [
+        "If nums1[p1] > nums2[p2]: place nums1[p1] at nums1[p], p1--, p--",
+        "Else: place nums2[p2] at nums1[p], p2--, p--",
+        "If p1 < 0: copy remaining nums2",
+        "If p2 < 0: done (nums1 elements in place)"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Initialize: p1 = 2, p2 = 2, p = 5",
+        "state": "p1 = 2 (nums1[2]=3), p2 = 2 (nums2[2]=6), p = 5 (write position)",
+        "logic": "Start from ends of both arrays and end of result array",
+        "result": "Ready to merge"
+      },
+      {
+        "step": 2,
+        "description": "Compare nums1[2]=3 vs nums2[2]=6, place 6 at nums1[5]",
+        "state": "nums1 = [1,2,3,0,0,6], p1 = 2, p2 = 1, p = 4",
+        "logic": "6 is larger, place it at end. Move p2 and p backward.",
+        "result": "nums1[5] = 6"
+      },
+      {
+        "step": 3,
+        "description": "Compare nums1[2]=3 vs nums2[1]=5, place 5 at nums1[4]",
+        "state": "nums1 = [1,2,3,0,5,6], p1 = 2, p2 = 0, p = 3",
+        "logic": "5 is larger, place it. Continue backward.",
+        "result": "nums1[4] = 5"
+      },
+      {
+        "step": 4,
+        "description": "Compare nums1[2]=3 vs nums2[0]=2, place 3 at nums1[3]",
+        "state": "nums1 = [1,2,3,3,5,6], p1 = 1, p2 = 0, p = 2",
+        "logic": "3 is larger, place it. Move p1 backward.",
+        "result": "nums1[3] = 3"
+      },
+      {
+        "step": 5,
+        "description": "Compare nums1[1]=2 vs nums2[0]=2, place 2 at nums1[2]",
+        "state": "nums1 = [1,2,2,3,5,6], p1 = 1, p2 = -1, p = 1",
+        "logic": "Equal values, place nums2's 2. p2 exhausted.",
+        "result": "nums1[2] = 2, p2 < 0"
+      },
+      {
+        "step": 6,
+        "description": "p2 < 0, nums1 elements [1,2] already in correct positions",
+        "state": "nums1 = [1,2,2,3,5,6], merge complete",
+        "logic": "All nums2 elements placed, nums1 elements already sorted",
+        "result": "Final: [1,2,2,3,5,6]"
+      }
+    ],
+    "keyInsight": "Merging from the back avoids overwriting unprocessed elements. By placing elements starting from the end and working backward, we use positions that won't interfere with future comparisons. This enables in-place merging with O(1) extra space."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Merging from front instead of back",
+      "symptom": "Overwrites unprocessed elements in nums1, causing data loss",
+      "fix": "Always merge from back: start with p = m+n-1 and work backward",
+      "example": "If you merge from front, placing at nums1[0] overwrites nums1[0] which you still need"
+    },
+    {
+      "mistake": "Not handling remaining elements from nums2",
+      "symptom": "Missing elements when nums1 is exhausted first",
+      "fix": "After main loop, if p2 >= 0, copy remaining nums2[0..p2] to nums1[0..p]",
+      "example": "If nums1=[0,0], nums2=[1,2], must copy both elements from nums2"
+    },
+    {
+      "mistake": "Using wrong starting indices for pointers",
+      "symptom": "Off-by-one errors, missing or duplicating elements",
+      "fix": "p1 = m-1 (last element in nums1), p2 = n-1 (last element in nums2), p = m+n-1 (last position)",
+      "example": "If m=3, p1 should be 2 (not 3), p should be 5 (not 6)"
+    },
+    {
+      "mistake": "Not decrementing pointers correctly",
+      "symptom": "Infinite loop or wrong placement",
+      "fix": "Always decrement p and the pointer that provided the element (p1 or p2)",
+      "example": "After placing nums1[p1], do p1-- and p--"
+    },
+    {
+      "mistake": "Creating new array instead of modifying in-place",
+      "symptom": "Uses O(m+n) extra space unnecessarily",
+      "fix": "Use backward merge to modify nums1 in-place with O(1) extra space",
+      "example": "Don't create result = [] then copy back. Merge directly into nums1."
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a backward merge problem using three pointers.",
+      "",
+      "I'll merge from the back to avoid overwriting:",
+      "- Initialize p1 = m-1, p2 = n-1, p = m+n-1",
+      "- While p1 >= 0 and p2 >= 0:",
+      "  - If nums1[p1] > nums2[p2]: place nums1[p1] at nums1[p], p1--, p--",
+      "  - Else: place nums2[p2] at nums1[p], p2--, p--",
+      "- If p2 >= 0: copy remaining nums2[0..p2] to nums1[0..p]",
+      "",
+      "Time complexity: O(m+n) - process each element once",
+      "Space complexity: O(1) - only using pointers, modifying in-place",
+      "",
+      "Edge cases:",
+      "- nums2 empty: nums1 already correct",
+      "- nums1 empty: copy all from nums2",
+      "- All nums1 elements larger: copy nums2 first, then nums1"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Merge Sorted Array (return new array)",
+      "approachChange": "Can create new array instead of modifying in-place, simpler but uses O(m+n) space",
+      "solution": "Create result array, merge from front using two pointers, return result"
+    },
+    "harder": {
+      "problem": "Merge K Sorted Arrays",
+      "approachChange": "Need to merge k sorted arrays. Use min heap to always pick smallest element, or merge pairs repeatedly.",
+      "solution": "Use min heap storing (value, array_index, element_index). Pop smallest, add next from same array. O(nk log k) time."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize p1 = m-1, p2 = n-1, p = m+n-1"
+    },
+    {
+      "id": "ps2",
+      "text": "While p1 >= 0 and p2 >= 0:"
+    },
+    {
+      "id": "ps3",
+      "text": "  If nums1[p1] > nums2[p2]: nums1[p] = nums1[p1], p1--, p--"
+    },
+    {
+      "id": "ps4",
+      "text": "  Else: nums1[p] = nums2[p2], p2--, p--"
+    },
+    {
+      "id": "ps5",
+      "text": "While p2 >= 0: nums1[p] = nums2[p2], p2--, p--"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great work on conquering maximum-subarray! Now we're moving into an exciting territory where we'll master the **two pointers (backward)** pattern. This technique is all about working from the end of arrays toward the beginning - it's like solving a puzzle in reverse and often leads to surprisingly elegant solutions!\n\nIn this lesson, you'll gain three powerful skills:\n\n1. **Master backward two-pointer traversal** - Learn when and why moving from right to left gives you a major advantage\n2. **Optimize in-place array operations** - Discover how to efficiently merge data without needing extra space\n3. **Handle multiple sorted sequences** - Build confidence working with pre-sorted data and maintaining that order\n\nThis pattern opens up a whole new way of thinking about array problems, and once you see it in action, you'll start spotting opportunities to use it everywhere. You're building some seriously valuable problem-solving muscles here!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Arrays** - Understanding array data structure, indexing, and basic operations\n- **Two pointers** - Technique using multiple pointers to traverse data structures efficiently\n- **Loops** - Iterative control structures for repeating operations\n- **Comparison operators** - Operators for comparing values to determine ordering relationships\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Arrays** - Understanding array data structure, indexing, and basic operations\n- **Two pointers** - Technique using multiple pointers to traverse data structures efficiently\n- **Loops** - Iterative control structures for repeating operations\n- **Comparison operators** - Operators for comparing values to determine ordering relationships\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Arrays** - Understanding array data structure, indexing, and basic operations\n- **Two pointers** - Technique using multiple pointers to traverse data structures efficiently\n- **Loops** - Iterative control structures for repeating operations\n- **Comparison operators** - Operators for comparing values to determine ordering relationships\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Arrays** - Understanding array data structure, indexing, and basic operations\n- **Two pointers** - Technique using multiple pointers to traverse data structures efficiently\n- **Loops** - Iterative control structures for repeating operations\n- **Comparison operators** - Operators for comparing values to determine ordering relationships\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Arrays** - Understanding array data structure, indexing, and basic operations\n- **Two pointers** - Technique using multiple pointers to traverse data structures efficiently\n- **Loops** - Iterative control structures for repeating operations\n- **Comparison operators** - Operators for comparing values to determine ordering relationships\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Merge Sorted Array problem asks for.\n\nImagine you're organizing two stacks of graded test papers (both already sorted by score) into one final stack. You compare the top papers from each stack, place the higher-scoring one onto your final pile, and repeat until both original stacks are empty. Just like the merge algorithm, you're efficiently combining two pre-sorted sequences by always picking the \"best\" (highest/lowest) available option from the front of either stack.\n\n# Merge Sorted Array - Problem Statement\n\n## What does this problem ask?\n\nYou're given two sorted arrays that need to be merged into one sorted array. Here's the catch though - instead of creating a new array, you need to merge everything **in-place** into the first array.\n\nThe first array (`nums1`) has extra space at the end specifically for this purpose. It contains `m` actual elements followed by `m` zeros as placeholders. The second array (`nums2`) contains `n` elements that need to be merged in.\n\nYour job is to merge both arrays so that `nums1` ends up containing all elements in sorted order.\n\n## Let's walk through an example\n\n**Input:**\n- `nums1 = [1,2,3,0,0,0]` with `m = 3` (so the first 3 elements are real)\n- `nums2 = [2,5,6]` with `n = 3`\n\n**Output:** `nums1` becomes `[1,2,2,3,5,6]`\n\n## Why does this example work?\n\nLet's trace through what needs to happen:\n\n1. **Starting point:** We have `[1,2,3]` from nums1 and `[2,5,6]` from nums2\n2. **Merge process:** We need to combine these while maintaining sorted order\n3. **Final result:** `[1,2,2,3,5,6]` - notice how the `2` from nums2 fits perfectly between the existing elements\n\nThe tricky part is doing this **in-place**. Since nums1 has those convenient zeros at the end, we have just enough space to fit all elements. The challenge is figuring out how to merge without overwriting elements we haven't processed yet.\n\nThink of it like having two sorted lists that you need to weave together into one master list, but you can only use the space that's already been provided. Pretty neat puzzle, right?",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to merge two sorted arrays nums1 and nums2 into nums1, where nums1 has enough space at the end. You're considering two approaches: starting from the front and comparing smallest elements, or starting from the back and comparing largest elements. Which approach avoids the problem of overwriting unprocessed elements?",
+      "choices": [
+        {
+          "label": "Start from the front, compare nums1[i] and nums2[j], place smaller element at nums1[k], increment pointers forward",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Start from the back, compare nums1[i] and nums2[j], place larger element at nums1[k], decrement pointers backward",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach seems natural since we typically merge from left to right, but it fails because placing elements at the beginning of nums1 overwrites unprocessed elements. You'd need extra space or complex shifting operations to avoid data loss.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Merge from Back (Two Pointers)\n\n**This problem follows the \"merge from back\" pattern:**\n- **Backward merge** - Fill result array from end to beginning\n- **Two pointers** - One for each sorted array, moving backward\n- **In-place merge** - Use extra space at end of first array\n- **Largest first** - Compare and place largest remaining elements first\n\n**Similar problems:**\n- Merge Two Sorted Lists (linked list version)\n- Merge K Sorted Lists (multiple arrays)\n- Sorted Array Merge (similar concept)\n\n**Key insight:** Merging from the back avoids overwriting unprocessed elements. Since nums1 has extra space at the end, we can safely place elements starting from the last position and work backward.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Positions [p+1..m+n-1] Contain Final Merged Elements\n\n**Invariant maintained throughout:**\n- **Final positions:** All positions > p contain elements in their final sorted positions\n- **Unprocessed positions:** Positions ≤ p are available for placement\n- **Pointer positions:** p1 points to last unprocessed in nums1, p2 points to last unprocessed in nums2\n- **Merge completeness:** When p < 0, all elements are merged\n\n**Why this works:**\n- We start with p = m+n-1 (last position)\n- Compare nums1[p1] and nums2[p2], place larger at nums1[p]\n- Decrement p and the pointer that provided the element\n- Positions > p are never overwritten because we only move backward\n\n**Invariant guarantee:** After each iteration, all elements at positions > p are in their final sorted positions. When p < 0, the entire array is merged and sorted.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Backward Merge State\n\n**State variables:**\n- **`p1`** - Pointer to last unprocessed element in nums1 (starts at m-1)\n- **`p2`** - Pointer to last unprocessed element in nums2 (starts at n-1)\n- **`p`** - Write position in nums1 (starts at m+n-1)\n\n**State transitions:**\n1. **Initialize:** p1 = m-1, p2 = n-1, p = m+n-1\n2. **Loop:** While p1 >= 0 and p2 >= 0:\n   - If nums1[p1] > nums2[p2]: nums1[p] = nums1[p1], p1--, p--\n   - Else: nums1[p] = nums2[p2], p2--, p--\n3. **Copy remaining:** Copy remaining elements from nums2 if any\n\n**State validity:** After loop, nums1[0..m+n-1] contains merged sorted array.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Merge from Front**\n- **Why it fails:** Overwrites unprocessed elements\n- **Issue:** Placing elements at beginning overwrites nums1 elements we haven't processed yet\n- **Better:** Merging from back uses positions that won't be needed\n\n**Approach 2: Create New Array Then Copy Back**\n- **Why it fails:** Uses O(m+n) extra space\n- **Issue:** Defeats purpose of in-place merge\n- **Better:** Backward merge uses O(1) extra space\n\n**Approach 3: Shift Elements Forward**\n- **Why it fails:** O(n²) time complexity\n- **Issue:** Shifting elements requires moving all subsequent elements\n- **Better:** Backward merge is O(m+n) time\n\n**Our approach wins because:** Merging from the back avoids overwriting unprocessed elements, achieves O(m+n) time with O(1) space, and naturally handles the in-place requirement.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to **fill the merged array from the back** rather than the front to avoid overwriting unprocessed elements in the first array. Since we know the final size, we can **compare the largest remaining elements** from both arrays and place the larger one at the end, working backwards. This works because we're always placing elements in positions that won't interfere with future comparisons - once we place an element at position `k`, we'll never need to access positions `k+1` and beyond again. For example, with `nums1 = [1,2,3,0,0,0]` and `nums2 = [2,5,6]`, we compare `3` vs `6`, place `6` at the end, then compare `3` vs `5`, and so on, eliminating the need for extra space.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `nums1=[1,2,3,0,0,0], m=3, nums2=[2,5,6], n=3`:\n\n- Step 1: Initialize pointers: p1=2 (nums1[2]=3), p2=2 (nums2[2]=6), p=5 (fill position)\n- Step 2: Compare 3 vs 6, place 6 at nums1[5]: nums1=[1,2,3,0,0,6], p2=1, p=4\n- Step 3: Compare 3 vs 5, place 5 at nums1[4]: nums1=[1,2,3,0,5,6], p2=0, p=3\n- Step 4: Compare 3 vs 2, place 3 at nums1[3]: nums1=[1,2,3,3,5,6], p1=1, p=2\n- Step 5: Compare 2 vs 2, place 2 at nums1[2]: nums1=[1,2,2,3,5,6], p2=-1, p=1\n- Step 6: Only nums1 elements remain, already in correct positions\n- Final: **[1,2,2,3,5,6]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function that takes three arrays as parameters\n\n```javascript\nfunction merge(nums1, m, nums2, n) {\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function merge(nums1, m, nums2, n) {"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize three pointers: i for nums1 end, j for nums2 end, k for merge position\n\n```javascript\nfunction merge(nums1, m, nums2, n) {\n    let i = m - 1;\n    let j = n - 1;\n    let k = m + n - 1;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let i = m - 1;\n    let j = n - 1;\n    let k = m + n - 1;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start while loop to continue while both arrays have elements to process\n\n```javascript\nfunction merge(nums1, m, nums2, n) {\n    let i = m - 1;\n    let j = n - 1;\n    let k = m + n - 1;\n    \n    while (i >= 0 && j >= 0) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    while (i >= 0 && j >= 0) {"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Compare elements and place larger one at position k, then decrement appropriate pointers\n\n```javascript\nfunction merge(nums1, m, nums2, n) {\n    let i = m - 1;\n    let j = n - 1;\n    let k = m + n - 1;\n    \n    while (i >= 0 && j >= 0) {\n        if (nums1[i] > nums2[j]) {\n            nums1[k--] = nums1[i--];\n        } else {\n            nums1[k--] = nums2[j--];\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4",
+        "ps5"
+      ],
+      "example": "        if (nums1[i] > nums2[j]) {\n            nums1[k--] = nums1[i--];\n        } else {\n            nums1[k--] = nums2[j--];\n        }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Handle remaining elements from nums2 if any exist after main loop\n\n```javascript\nfunction merge(nums1, m, nums2, n) {\n    let i = m - 1;\n    let j = n - 1;\n    let k = m + n - 1;\n    \n    while (i >= 0 && j >= 0) {\n        if (nums1[i] > nums2[j]) {\n            nums1[k--] = nums1[i--];\n        } else {\n            nums1[k--] = nums2[j--];\n        }\n    }\n    \n    while (j >= 0) {\n        nums1[k--] = nums2[j--];\n    }\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "    while (j >= 0) {\n        nums1[k--] = nums2[j--];\n    }"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the two pointers backward technique with \"Merge Sorted Array\"! You've demonstrated excellent understanding of how to efficiently merge arrays by working from the end, avoiding unnecessary shifts and achieving optimal O(m+n) time complexity. Next, we'll tackle \"Valid Parentheses\" where you'll explore stack-based pattern matching to ensure proper bracket pairing and nesting!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

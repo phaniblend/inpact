@@ -1,0 +1,380 @@
+{
+  "id": "counting-bits",
+  "title": "Counting Bits",
+  "pattern": "bit manipulation + DP",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 30,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-30",
+    "introduces": [
+      "bit-count",
+      "dp-with-bits",
+      "least-significant-bit"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "bit-manipulation-basics",
+      "dynamic-programming-concept"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "max-consecutive-ones-iii"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize result array of size n+1 with dp[0] = 0"
+    },
+    {
+      "id": "ps2",
+      "text": "For each number i from 1 to n:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Find bit count of i/2 using dp[i >> 1]"
+    },
+    {
+      "id": "ps4",
+      "text": "  Check if i is odd using (i & 1)"
+    },
+    {
+      "id": "ps5",
+      "text": "  Set dp[i] = dp[i >> 1] + (i & 1)"
+    },
+    {
+      "id": "ps6",
+      "text": "Return the dp array containing bit counts for 0 to n"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle one of the most elegant patterns in competitive programming? After mastering range sum queries, we're diving into **Counting Bits** - where bit manipulation meets dynamic programming in beautiful harmony.\n\nYou'll discover how to efficiently count set bits across ranges of numbers by recognizing patterns instead of brute-forcing each calculation. This technique appears everywhere from interview questions to contest problems!\n\nHere are the 3 key skills you'll master:\n\n🔹 **Pattern Recognition** - Spot the recurring structure in bit representations across number sequences\n\n🔹 **Optimal Recurrence** - Build DP relations using bit manipulation tricks like `i & (i-1)` and right shifts\n\n🔹 **Time Complexity Mastery** - Transform O(n log n) brute force solutions into elegant O(n) algorithms\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Arrays** - Understanding array data structures and indexing\n- **Bit-manipulation-basics** - Knowledge of bitwise operations and binary representation\n- **Dynamic-programming-concept** - Understanding of overlapping subproblems and optimal substructure\n- **Binary-representation** - Knowledge of how numbers are represented in binary format\n- **Bitwise-operations** - Familiarity with AND, OR, XOR, and bit shifting operations\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Arrays** - Understanding array data structures and indexing\n- **Bit-manipulation-basics** - Knowledge of bitwise operations and binary representation\n- **Dynamic-programming-concept** - Understanding of overlapping subproblems and optimal substructure\n- **Binary-representation** - Knowledge of how numbers are represented in binary format\n- **Bitwise-operations** - Familiarity with AND, OR, XOR, and bit shifting operations\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Arrays** - Understanding array data structures and indexing\n- **Bit-manipulation-basics** - Knowledge of bitwise operations and binary representation\n- **Dynamic-programming-concept** - Understanding of overlapping subproblems and optimal substructure\n- **Binary-representation** - Knowledge of how numbers are represented in binary format\n- **Bitwise-operations** - Familiarity with AND, OR, XOR, and bit shifting operations\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Arrays** - Understanding array data structures and indexing\n- **Bit-manipulation-basics** - Knowledge of bitwise operations and binary representation\n- **Dynamic-programming-concept** - Understanding of overlapping subproblems and optimal substructure\n- **Binary-representation** - Knowledge of how numbers are represented in binary format\n- **Bitwise-operations** - Familiarity with AND, OR, XOR, and bit shifting operations\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Arrays** - Understanding array data structures and indexing\n- **Bit-manipulation-basics** - Knowledge of bitwise operations and binary representation\n- **Dynamic-programming-concept** - Understanding of overlapping subproblems and optimal substructure\n- **Binary-representation** - Knowledge of how numbers are represented in binary format\n- **Bitwise-operations** - Familiarity with AND, OR, XOR, and bit shifting operations\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Counting Bits problem asks for.\n\nThink of counting the number of light bulbs that are turned ON in different rooms of your house. Just like how you'd walk through each room and tally up only the illuminated bulbs (ignoring the OFF ones), counting bits means examining each position in a binary number and counting only the 1s (ignoring the 0s).\n\n# Counting Bits Problem\n\n**What it asks:**\nGiven a number `n`, return an array where each position `i` contains the count of 1-bits in the binary representation of number `i`, for all numbers from 0 to `n`.\n\n**Example:**\nIf `n = 5`, the answer is `[0, 1, 1, 2, 1, 2]`\n\n**Why this works:**\nLet's break down each number and count the 1s in its binary form:\n\n- `0` → `000` → 0 ones\n- `1` → `001` → 1 one  \n- `2` → `010` → 1 one\n- `3` → `011` → 2 ones\n- `4` → `100` → 1 one\n- `5` → `101` → 2 ones\n\nSo our result array becomes `[0, 1, 1, 2, 1, 2]` - each position tells us how many 1-bits that number has!\n\nThe tricky part is doing this efficiently. You could convert each number to binary and count manually, but there are some clever bit manipulation tricks that make this much faster.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "When counting bits for all numbers from 0 to n, what's the most efficient way to avoid recalculating from scratch for each number?",
+      "choices": [
+        {
+          "label": "Use bit manipulation: dp[i] = dp[i & (i-1)] + 1 (clear rightmost set bit)",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use the parent-child relationship: dp[i] = dp[i >> 1] + (i & 1)",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this Brian Kernighan approach works and uses DP, it's less intuitive and harder to understand. The recurrence relation dp[i] = dp[i & (i-1)] + 1 removes the rightmost set bit, but this bit manipulation trick is more complex than necessary and doesn't leverage the simple pattern of how bit counts relate between a number and its half.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: DP with Bit Manipulation\n\n**This problem follows the \"reuse smaller subproblems\" pattern:**\n- **Parent-child relationship:** Number `i` and `i >> 1` (i divided by 2)\n- **DP recurrence:** `dp[i] = dp[i >> 1] + (i & 1)`\n- **Bit manipulation:** Right shift (>>) and bitwise AND (&) for efficient computation\n\n**Similar problems:**\n- Power of Two (bit manipulation)\n- Number of 1 Bits (single number version)\n- Reverse Bits (bit manipulation)\n\n**Key insight:** The bit count of a number is related to its half: right-shifting removes the least significant bit, and we add 1 if the number was odd. This creates a simple DP recurrence.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: dp[i] = Bit Count of i for All Processed Numbers\n\n**Invariant maintained throughout:**\n- **After processing i:** `dp[i]` correctly stores the number of 1-bits in the binary representation of `i`\n- **Recurrence relation:** `dp[i] = dp[i >> 1] + (i & 1)`\n  - `i >> 1` = i divided by 2 (removes least significant bit)\n  - `i & 1` = 1 if i is odd, 0 if i is even\n\n**Why this works:**\n- Right-shifting by 1 divides by 2, which removes the least significant bit\n- The bit count of `i` equals the bit count of `i >> 1` plus 1 if `i` is odd\n- Since we process numbers in order, `dp[i >> 1]` is always already computed\n\n**Invariant guarantee:** After processing all numbers from 0 to n, `dp[i]` contains the correct bit count for every number i in that range.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that we can **reuse the bit count** of a number's half to calculate its own bit count using the formula **dp[i] = dp[i >> 1] + (i & 1)**. This works because right-shifting a number by 1 bit (i >> 1) effectively divides it by 2, and we only need to add 1 if the original number was odd (checked by i & 1). Since we're building up from smaller numbers, we've already computed the bit count for i/2, making this an **O(n) dynamic programming** solution instead of counting bits individually for each number.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `5`:\n- Step 1: Initialize result array with n+1 zeros: [0,0,0,0,0,0]\n- Step 2: For i=0: 0 in binary is \"0\", has 0 ones, result[0] = 0\n- Step 3: For i=1: 1 in binary is \"1\", has 1 one, result[1] = 1\n- Step 4: For i=2: 2 in binary is \"10\", has 1 one, result[2] = 1\n- Step 5: For i=3: 3 in binary is \"11\", has 2 ones, result[3] = 2\n- Step 6: For i=4: 4 in binary is \"100\", has 1 one, result[4] = 1\n- Step 7: For i=5: 5 in binary is \"101\", has 2 ones, result[5] = 2\n- Final answer: **[0,1,1,2,1,2]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function signature and initialize result array\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function countBits(n) {\n    const dp = new Array(n + 1);\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Set base case - 0 has zero 1-bits\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    dp[0] = 0;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start loop from 1 to n to fill remaining positions\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= n; i++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    \n    for (let i = 1; i <= n; i++) {\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Apply key recurrence: reuse count from i/2 plus current bit\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= n; i++) {\n        dp[i] = dp[i >> 1] + (i & 1);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        dp[i] = dp[i >> 1] + (i & 1);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Return the completed dp array with all bit counts\n\n```javascript\nfunction countBits(n) {\n    const dp = new Array(n + 1);\n    dp[0] = 0;\n    \n    for (let i = 1; i <= n; i++) {\n        dp[i] = dp[i >> 1] + (i & 1);\n    }\n    \n    return dp;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "    \n    return dp;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering bit manipulation with dynamic programming! You've successfully learned how to count set bits efficiently by recognizing patterns and building solutions from previously computed results. Next, we'll tackle max-consecutive-ones-iii, where you'll apply sliding window techniques to maximize consecutive sequences.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

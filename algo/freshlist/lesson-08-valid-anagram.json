@@ -1,0 +1,204 @@
+{
+  "id": "valid-anagram",
+  "title": "Valid Anagram",
+  "pattern": "frequency map (objects)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 8,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-08",
+    "introduces": [
+      "objects",
+      "object-literals",
+      "key-value-pairs",
+      "bracket-notation-objects",
+      "property-access",
+      "frequency-counting",
+      "hash-map-concept",
+      "undefined-check",
+      "or-operator-default",
+      "for-of-loop",
+      "Object.keys"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "loops",
+      "for-loop",
+      "functions",
+      "function-parameters",
+      "return-statement",
+      "comparison-operators",
+      "string-characters"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["contains-duplicate"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If lengths differ, return false." },
+    { "id": "ps2", "text": "Create an empty frequency map (object)." },
+    { "id": "ps3", "text": "For each character in string s, increment its count in the map." },
+    { "id": "ps4", "text": "For each character in string t, decrement its count in the map." },
+    { "id": "ps5", "text": "Check if all counts in the map are zero." },
+    { "id": "ps6", "text": "If all zero, return true. Otherwise, return false." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Valid Anagram**.\n\nThis is a **critical lesson** that introduces **objects** (also called hash maps or dictionaries).\n\nObjects let us store and look up data instantly — a superpower for many algorithm problems!\n\nThis concept unlocks 30+ problems in future lessons.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nAn **anagram** is a word formed by rearranging the letters of another word.\n\nGiven two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.\n\n**Example:**\n```\ns = \"listen\", t = \"silent\"\nOutput: true\n\nBoth use the same letters: e, i, l, n, s, t (one of each)\n```\n\n**Example 2:**\n```\ns = \"rat\", t = \"car\"\nOutput: false\n\n\"rat\" has t, but \"car\" doesn't\n```",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) s = \"ab\", t = \"ba\" → true (same letters)\n2) s = \"ab\", t = \"aa\" → false (different counts)\n3) s = \"aab\", t = \"aba\" → true (2 a's, 1 b)\n4) s = \"abc\", t = \"ab\" → false (different lengths)\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you check if two strings are anagrams?",
+      "choices": [
+        { "label": "Sort both strings and compare", "next": "why-not-sort" },
+        { "label": "Count the frequency of each letter", "next": "core-idea" },
+        { "label": "Check if each letter in s appears in t", "next": "why-not-simple-check" }
+      ]
+    },
+    {
+      "stepId": "why-not-sort",
+      "mentorSays": "Sorting both strings and comparing works!\n\n```javascript\ns.split('').sort().join('') === t.split('').sort().join('')\n```\n\nBut sorting takes extra time. For very long strings, counting is faster.\n\nLet's learn the counting approach — it introduces a powerful data structure!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "why-not-simple-check",
+      "mentorSays": "Just checking if each letter appears doesn't account for **counts**.\n\nExample: `\"aab\"` and `\"abb\"`\n- Both have 'a' and 'b'\n- But `\"aab\"` has 2 a's, while `\"abb\"` has 2 b's\n- They're NOT anagrams\n\nWe need to count how many times each letter appears.\n\nLet's learn how!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Frequency Counting Strategy\n\n**Idea:** Count how many times each letter appears in both strings.\n\nIf the counts match exactly, they're anagrams!\n\n```\ns = \"listen\"  →  e:1, i:1, l:1, n:1, s:1, t:1\nt = \"silent\"  →  e:1, i:1, l:1, n:1, s:1, t:1\n\nSame counts → Anagram!\n```\n\nTo store these counts, we use an **object** (also called a hash map).",
+      "action": "next",
+      "next": "objects-explained"
+    },
+    {
+      "stepId": "objects-explained",
+      "mentorSays": "### Objects in JavaScript\n\nAn **object** stores data as **key-value pairs**.\n\n```javascript\nconst person = {\n  name: \"Alice\",\n  age: 25\n};\n```\n\n**Accessing values:**\n```javascript\nperson.name     // \"Alice\" (dot notation)\nperson[\"age\"]   // 25 (bracket notation)\n```\n\n**Adding new keys:**\n```javascript\nperson.city = \"NYC\";       // dot notation\nperson[\"country\"] = \"USA\"; // bracket notation\n```\n\nBracket notation is powerful because the key can be a variable!",
+      "action": "next",
+      "next": "objects-as-maps"
+    },
+    {
+      "stepId": "objects-as-maps",
+      "mentorSays": "### Using Objects as Frequency Maps\n\nWe can use letters as keys and counts as values:\n\n```javascript\nconst freq = {};\n\nfreq['a'] = 1;  // { a: 1 }\nfreq['b'] = 2;  // { a: 1, b: 2 }\nfreq['a'] = 3;  // { a: 3, b: 2 } (updated!)\n```\n\n**Incrementing a count:**\n```javascript\nfreq['a'] = (freq['a'] || 0) + 1;\n```\n\n**What does `freq['a'] || 0` mean?**\n- If `freq['a']` exists, use its value\n- If it doesn't exist (undefined), use 0 instead",
+      "action": "next",
+      "next": "or-operator-explained"
+    },
+    {
+      "stepId": "or-operator-explained",
+      "mentorSays": "### The `||` (OR) Operator for Defaults\n\n```javascript\nfreq['a'] || 0\n```\n\nThis pattern means: \"use freq['a'] if it exists, otherwise use 0\"\n\n**Example:**\n```javascript\nconst freq = {};\n\n// First time seeing 'a'\nfreq['a'] || 0  // undefined || 0 = 0\n\n// After freq['a'] = 1\nfreq['a'] || 0  // 1 || 0 = 1\n```\n\nSo `(freq['a'] || 0) + 1` safely increments even if 'a' isn't in the object yet!",
+      "action": "next",
+      "next": "for-of-explained"
+    },
+    {
+      "stepId": "for-of-explained",
+      "mentorSays": "### The `for...of` Loop\n\nTo loop through each character in a string:\n\n```javascript\nfor (const char of \"hello\") {\n  console.log(char);\n}\n// Prints: h, e, l, l, o\n```\n\n**`for...of`** iterates over the **values** (characters).\n\nThis is cleaner than:\n```javascript\nfor (let i = 0; i < str.length; i++) {\n  const char = str[i];\n}\n```",
+      "action": "next",
+      "next": "strategy-walkthrough"
+    },
+    {
+      "stepId": "strategy-walkthrough",
+      "mentorSays": "### Our Strategy\n\n1. Build a frequency map from string `s` (count each letter)\n2. Subtract frequencies using string `t`\n3. If all counts end up at 0, they're anagrams\n\n**Alternative approach:**\n- Increment for `s`, decrement for `t`\n- Check if all values are 0\n\nThis uses only one object instead of two!",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\ns = \"ab\", t = \"ba\"\n```\n\n**Build frequency map from s:**\n- 'a': freq['a'] = 0 + 1 = 1\n- 'b': freq['b'] = 0 + 1 = 1\n- Map: { a: 1, b: 1 }\n\n**Subtract using t:**\n- 'b': freq['b'] = 1 - 1 = 0\n- 'a': freq['a'] = 1 - 1 = 0\n- Map: { a: 0, b: 0 }\n\n**Check:** All values are 0 → **return true**",
+      "action": "next",
+      "next": "walkthrough-fail"
+    },
+    {
+      "stepId": "walkthrough-fail",
+      "mentorSays": "### Walkthrough: Not an Anagram\n\n```\ns = \"ab\", t = \"aa\"\n```\n\n**Build frequency map from s:**\n- Map: { a: 1, b: 1 }\n\n**Subtract using t:**\n- 'a': freq['a'] = 1 - 1 = 0\n- 'a': freq['a'] = 0 - 1 = -1\n- Map: { a: -1, b: 1 }\n\n**Check:** Not all zero → **return false**",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis introduces several new concepts, so we'll take it step by step.\n\nLet's start.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function and check lengths.\n\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n}\n```\n\n**Explanation:**\n- `isAnagram` — returns true or false\n- `s` and `t` — the two strings to compare\n- If lengths differ, they can't be anagrams",
+      "example": "function isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n}",
+      "action": "next",
+      "next": "code-02-object",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-object",
+      "mentorSays": "**Step 2:** Create an empty frequency map.\n\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n\n  const freq = {};\n}\n```\n\n**Explanation:**\n- `{}` creates an empty object\n- `const` because we modify the object's contents, not the variable itself\n- `freq` will store character counts",
+      "example": "const freq = {};",
+      "action": "next",
+      "next": "code-03-count-s",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-03-count-s",
+      "mentorSays": "**Step 3:** Count characters in string s.\n\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n\n  const freq = {};\n\n  for (const char of s) {\n    freq[char] = (freq[char] || 0) + 1;\n  }\n}\n```\n\n**Explanation:**\n- `for (const char of s)` loops through each character\n- `freq[char]` accesses the count for this character\n- `(freq[char] || 0) + 1` increments safely (0 if undefined)",
+      "example": "for (const char of s) {\n  freq[char] = (freq[char] || 0) + 1;\n}",
+      "action": "next",
+      "next": "code-04-subtract-t",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-04-subtract-t",
+      "mentorSays": "**Step 4:** Subtract counts using string t.\n\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n\n  const freq = {};\n\n  for (const char of s) {\n    freq[char] = (freq[char] || 0) + 1;\n  }\n\n  for (const char of t) {\n    freq[char] = (freq[char] || 0) - 1;\n  }\n}\n```\n\n**Explanation:**\n- Same loop structure, but we subtract 1 instead of adding\n- If t has extra characters not in s, they'll become negative\n- If s and t match perfectly, all values become 0",
+      "example": "for (const char of t) {\n  freq[char] = (freq[char] || 0) - 1;\n}",
+      "action": "next",
+      "next": "code-05-check",
+      "pseudocodeLineIds": ["ps5", "ps6"]
+    },
+    {
+      "stepId": "code-05-check",
+      "mentorSays": "**Step 5:** Check if all counts are zero.\n\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n\n  const freq = {};\n\n  for (const char of s) {\n    freq[char] = (freq[char] || 0) + 1;\n  }\n\n  for (const char of t) {\n    freq[char] = (freq[char] || 0) - 1;\n  }\n\n  for (const key of Object.keys(freq)) {\n    if (freq[key] !== 0) {\n      return false;\n    }\n  }\n\n  return true;\n}\n```\n\n**Explanation:**\n- `Object.keys(freq)` returns an array of all keys in the object\n- We loop through and check each value\n- If any value isn't 0, return false\n- If all are 0, return true",
+      "example": "for (const key of Object.keys(freq)) {\n  if (freq[key] !== 0) {\n    return false;\n  }\n}\n\nreturn true;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n\n  const freq = {};\n\n  for (const char of s) {\n    freq[char] = (freq[char] || 0) + 1;\n  }\n\n  for (const char of t) {\n    freq[char] = (freq[char] || 0) - 1;\n  }\n\n  for (const key of Object.keys(freq)) {\n    if (freq[key] !== 0) {\n      return false;\n    }\n  }\n\n  return true;\n}\n```\n\n**How it works:**\n1. Quick length check\n2. Count characters in s (add to map)\n3. Subtract characters in t (from map)\n4. Verify all counts are zero\n5. Return true if anagram, false otherwise",
+      "example": "function isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n\n  const freq = {};\n\n  for (const char of s) {\n    freq[char] = (freq[char] || 0) + 1;\n  }\n\n  for (const char of t) {\n    freq[char] = (freq[char] || 0) - 1;\n  }\n\n  for (const key of Object.keys(freq)) {\n    if (freq[key] !== 0) {\n      return false;\n    }\n  }\n\n  return true;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Objects (hash maps)** — storing key-value pairs\n- **Bracket notation** — accessing object properties with variables\n- **`|| 0` pattern** — providing defaults for undefined values\n- **`for...of` loop** — iterating over string characters\n- **`Object.keys()`** — getting all keys from an object\n- **Frequency counting** — a fundamental algorithm pattern\n\n**Why this matters:**\n\nObjects (hash maps) are one of the most powerful tools in programming:\n- Instant lookup (O(1) time)\n- Store any data by key\n- Count occurrences of anything\n\nThis pattern appears in 30+ problems:\n- Two Sum (next after Contains Duplicate)\n- Group Anagrams\n- Word Pattern\n- Most Common Word\n- And many more!\n\n**Next recommended lesson:** Contains Duplicate",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,296 @@
+{
+  "id": "find-all-anagrams",
+  "title": "Find all anagrams in string",
+  "pattern": "sliding-window",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Find all anagrams in string lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Find all anagrams in string problem\n- Recognize the sliding-window pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function findAnagrams(s, p) {\n  return [];\n}\n\nfindAnagrams(\"cbaebabacd\", \"abc\") returns [0, 6]",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Find All Anagrams problem asks for\n2. Use a sliding window with hash maps to track character frequencies\n3. Compare character counts to find anagram matches\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the find all anagrams solution in JavaScript.",
+      "example": "function findAnagrams(s, p) {\n  \n}",
+      "action": "continue",
+      "next": "coding-count-p-js"
+    },
+    {
+      "stepId": "coding-count-p-js",
+      "mentorSays": "First, count character frequencies in p.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  // Count character frequencies in p\n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Initialize variables: result array, window size, and sCount for tracking window frequencies.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n}",
+      "action": "continue",
+      "next": "coding-window-js"
+    },
+    {
+      "stepId": "coding-window-js",
+      "mentorSays": "Now, create the first window and count its character frequencies.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n  \n  // Count frequencies in first window\n  for (let i = 0; i < windowSize; i++) {\n    const char = s[i];\n    sCount[char] = (sCount[char] || 0) + 1;\n  }\n}",
+      "action": "continue",
+      "next": "coding-check-match-js"
+    },
+    {
+      "stepId": "coding-check-match-js",
+      "mentorSays": "Check if the first window matches p frequencies. We'll create a helper function to compare counts.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n  \n  for (let i = 0; i < windowSize; i++) {\n    const char = s[i];\n    sCount[char] = (sCount[char] || 0) + 1;\n  }\n  \n  // Check if first window matches\n  let matches = true;\n  for (let char in pCount) {\n    if (sCount[char] !== pCount[char]) {\n      matches = false;\n      break;\n    }\n  }\n  if (matches) {\n    result.push(0);\n  }\n}",
+      "action": "continue",
+      "next": "coding-slide-js"
+    },
+    {
+      "stepId": "coding-slide-js",
+      "mentorSays": "Now slide the window: remove leftmost character, add rightmost character, and check if frequencies match.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n  \n  for (let i = 0; i < windowSize; i++) {\n    const char = s[i];\n    sCount[char] = (sCount[char] || 0) + 1;\n  }\n  \n  let matches = true;\n  for (let char in pCount) {\n    if (sCount[char] !== pCount[char]) {\n      matches = false;\n      break;\n    }\n  }\n  if (matches) {\n    result.push(0);\n  }\n  \n  // Slide window\n  for (let i = windowSize; i < s.length; i++) {\n    // Remove leftmost character\n    const leftChar = s[i - windowSize];\n    sCount[leftChar]--;\n    if (sCount[leftChar] === 0) {\n      delete sCount[leftChar];\n    }\n    \n    // Add rightmost character\n    const rightChar = s[i];\n    sCount[rightChar] = (sCount[rightChar] || 0) + 1;\n    \n    // Check if frequencies match\n    matches = true;\n    for (let char in pCount) {\n      if (sCount[char] !== pCount[char]) {\n        matches = false;\n        break;\n      }\n    }\n    if (matches) {\n      result.push(i - windowSize + 1);\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return the result array.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n  \n  for (let i = 0; i < windowSize; i++) {\n    const char = s[i];\n    sCount[char] = (sCount[char] || 0) + 1;\n  }\n  \n  let matches = true;\n  for (let char in pCount) {\n    if (sCount[char] !== pCount[char]) {\n      matches = false;\n      break;\n    }\n  }\n  if (matches) {\n    result.push(0);\n  }\n  \n  for (let i = windowSize; i < s.length; i++) {\n    const leftChar = s[i - windowSize];\n    sCount[leftChar]--;\n    if (sCount[leftChar] === 0) {\n      delete sCount[leftChar];\n    }\n    \n    const rightChar = s[i];\n    sCount[rightChar] = (sCount[rightChar] || 0) + 1;\n    \n    matches = true;\n    for (let char in pCount) {\n      if (sCount[char] !== pCount[char]) {\n        matches = false;\n        break;\n      }\n    }\n    if (matches) {\n      result.push(i - windowSize + 1);\n    }\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Find all anagrams in string!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

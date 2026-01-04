@@ -1,0 +1,190 @@
+{
+  "id": "reverse-linked-list",
+  "title": "Reverse Linked List",
+  "pattern": "pointer manipulation",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 18,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-18",
+    "introduces": [
+      "pointer-reversal",
+      "prev-curr-next-pattern",
+      "iterative-list-traversal"
+    ],
+    "assumesAlreadyTaught": [
+      "linked-list-concept",
+      "node-structure"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "merge-two-sorted-lists"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize prev = null, curr = head"
+    },
+    {
+      "id": "ps2",
+      "text": "While curr is not null:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Store next = curr.next to save the rest of the list"
+    },
+    {
+      "id": "ps4",
+      "text": "  Reverse the link: curr.next = prev"
+    },
+    {
+      "id": "ps5",
+      "text": "  Advance pointers: prev = curr, curr = next"
+    },
+    {
+      "id": "ps6",
+      "text": "Return prev (new head of reversed list)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work mastering cycle detection with the two-pointer technique! Now we're going to build on your pointer manipulation skills by learning how to reverse the direction of a linked list—a fundamental operation that requires carefully rewiring the connections between nodes while keeping track of multiple pointers simultaneously.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given a singly linked list, reverse the order of all nodes so that the first node becomes the last and the last node becomes the first. You must reverse the list in-place by modifying the existing nodes and their pointers, without creating a new list.\n\n**Example:**\n```text\nInput: 1→2→3→4→5\nOutput: 5→4→3→2→1\n```\nThe original list with head pointing to node 1 is reversed so that the head now points to node 5, and each arrow direction is flipped.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) 1→2→3 → 3→2→1\n2) 7→9 → 9→7\n3) 5 → 5\n4) 2→1→4→3 → 3→4→1→2\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to reverse a singly linked list in-place?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Use a stack to store all node values, then traverse the list again and replace each node's value with values popped from the stack",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use three pointers (prev, curr, next) to iteratively reverse the direction of each link while traversing the list once",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach works but uses O(n) extra space and requires two passes through the list, making it less efficient than the optimal solution.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to **reverse the direction of each pointer** by maintaining three pointers that track the **previous**, **current**, and **next** nodes. At each step, we redirect the current node's next pointer to point backwards: `curr.next = prev`, then advance all three pointers forward: `prev = curr`, `curr = next`, `next = next.next`. This **iterative approach** systematically reverses each link while preserving access to the remaining nodes, avoiding the need for recursion or extra space.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `1→2→3→4→5`:\n- Step 1: Initialize prev=null, curr=1, next=2. Reverse: 1→null. Advance: prev=1, curr=2, next=3.\n- Step 2: Reverse: 2→1→null. Advance: prev=2, curr=3, next=4.\n- Step 3: Reverse: 3→2→1→null. Advance: prev=3, curr=4, next=5.\n- Step 4: Reverse: 4→3→2→1→null. Advance: prev=4, curr=5, next=null.\n- Step 5: Reverse: 5→4→3→2→1→null. Advance: prev=5, curr=null (done).\n- Final answer: **5→4→3→2→1**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Define the function signature and initialize the prev pointer to null since the new tail will point to null.\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function reverseList(head) {\n    let prev = null;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize the curr pointer to head to start traversing from the beginning of the list.\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "    let curr = head;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Create the main loop that continues until we've processed all nodes in the list.\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n    \n    while (curr !== null) {\n        \n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    while (curr !== null) {\n        \n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Store the next node and reverse the current node's pointer to point to the previous node.\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n    \n    while (curr !== null) {\n        let next = curr.next;\n        curr.next = prev;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "        let next = curr.next;\n        curr.next = prev;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Advance all three pointers (prev becomes curr, curr becomes next) and return the new head when done.\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n    \n    while (curr !== null) {\n        let next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    \n    return prev;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4"
+      ],
+      "example": "        prev = curr;\n        curr = next;\n    }\n    \n    return prev;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great job mastering the pointer reversal technique! You've learned how to manipulate pointers using the prev-curr-next pattern to iteratively traverse and reverse a linked list in-place. Next, we'll tackle merging two sorted lists, where you'll apply similar pointer manipulation skills but focus on maintaining sorted order while combining structures—another essential building block for more complex list operations!",
+      "action": "complete"
+    }
+  ]
+}

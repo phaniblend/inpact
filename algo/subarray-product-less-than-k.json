@@ -1,0 +1,150 @@
+{
+  "id": "subarray-product-less-than-k",
+  "title": "Subarray Product Less Than K",
+  "pattern": "sliding-window",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-13",
+    "introduces": ["sliding-window", "window-shrink"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "two-pointers"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If k <= 1, return 0." },
+    { "id": "ps2", "text": "Initialize left = 0, product = 1, count = 0." },
+    { "id": "ps3", "text": "For right from 0 to end:" },
+    { "id": "ps4", "text": "  Multiply product by nums[right]." },
+    { "id": "ps5", "text": "  While product >= k, divide by nums[left] and move left." },
+    { "id": "ps6", "text": "  Add (right - left + 1) to count." },
+    { "id": "ps7", "text": "Return count." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Subarray Product Less Than K**.\n\nThis lesson introduces the **sliding window** pattern—used to process contiguous ranges efficiently.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array of positive numbers and a number `k`.\n\nCount how many **contiguous subarrays** have a product **less than k**.",
+      "example": "nums = [10,5,2,6], k = 100",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [10,5] → products: 10, 50 → both < 100\n2) [5,2,6] → products: 5, 10, 60 → all < 100",
+      "action": "next",
+      "next": "why-not-bruteforce"
+    },
+    {
+      "stepId": "why-not-bruteforce",
+      "mentorSays": "Brute force checks every subarray.\n\nThat becomes slow as the array grows.\n\nWe need a way to **reuse work** as we move forward.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf we expand a window to the right and the product becomes too large, what can we do?",
+      "choices": [
+        { "label": "Shrink the window from the left", "next": "core-idea" },
+        { "label": "Restart from the next index", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe maintain a **window** with two pointers:\n- expand by moving `right`\n- shrink by moving `left` until the product is valid again",
+      "action": "next",
+      "next": "sliding-window-explained"
+    },
+    {
+      "stepId": "sliding-window-explained",
+      "mentorSays": "### Sliding window\n\nAt any moment, the window [left … right] has a product < k.\n\nAll subarrays ending at `right` and starting from `left` to `right` are valid.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums=[10,5,2], k=100\n\n- right=0 → product=10 → add 1\n- right=1 → product=50 → add 2\n- right=2 → product=100 → shrink left → product=10 → add 1\n\nTotal = 4",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5","ps6","ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself for strong retention.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function and handle k <= 1.",
+      "example": "function numSubarrayProductLessThanK(nums, k) {\n  if (k <= 1) return 0;\n\n}",
+      "action": "next",
+      "next": "code-02-setup",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-setup",
+      "mentorSays": "Step 2: Initialize window state.",
+      "example": "let left = 0;\nlet product = 1;\nlet count = 0;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps3","ps4"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Expand window with right pointer.",
+      "example": "for (let right = 0; right < nums.length; right++) {\n  product *= nums[right];\n\n}",
+      "action": "next",
+      "next": "code-04-shrink",
+      "pseudocodeLineIds": ["ps5"]
+    },
+    {
+      "stepId": "code-04-shrink",
+      "mentorSays": "Step 4: Shrink window while product is too large.",
+      "example": "while (product >= k) {\n  product /= nums[left];\n  left++;\n}",
+      "action": "next",
+      "next": "code-05-count",
+      "pseudocodeLineIds": ["ps6"]
+    },
+    {
+      "stepId": "code-05-count",
+      "mentorSays": "Step 5: Count valid subarrays ending at right.",
+      "example": "count += right - left + 1;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function numSubarrayProductLessThanK(nums, k) {\n  if (k <= 1) return 0;\n\n  let left = 0;\n  let product = 1;\n  let count = 0;\n\n  for (let right = 0; right < nums.length; right++) {\n    product *= nums[right];\n\n    while (product >= k) {\n      product /= nums[left];\n      left++;\n    }\n\n    count += right - left + 1;\n  }\n\n  return count;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- the sliding window pattern\n- how to grow and shrink a window\n- how to count subarrays efficiently\n\nThis pattern is essential for many range problems.",
+      "action": "complete"
+    }
+  ]
+}

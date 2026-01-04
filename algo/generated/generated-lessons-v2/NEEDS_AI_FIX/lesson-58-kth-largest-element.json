@@ -1,0 +1,58 @@
+{
+  "id": "kth-largest-element",
+  "title": "Kth Largest Element in Array",
+  "pattern": "quickselect / heap",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 58,
+    "tier": "EXPERT",
+    "lessonOrderTag": "EXPERT-58",
+    "introduces": ["quickselect-algorithm", "partition", "average-linear"],
+    "assumesAlreadyTaught": ["arrays", "heap-concept", "recursion-concept"],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["merge-k-sorted-lists"]
+  },
+  "pseudocode": [
+    {"id": "ps1", "text": "Choose pivot, partition array around it"},
+    {"id": "ps2", "text": "If pivot index equals k-1, found answer"},
+    {"id": "ps3", "text": "If k-1 < pivot index, search left"},
+    {"id": "ps4", "text": "Else search right"},
+    {"id": "ps5", "text": "Average O(n) time"}
+  ],
+  "flow": [
+    {"stepId": "objectives", "mentorSays": "Hey! **Kth Largest Element** - learning quickselect!\n\nThis teaches an elegant O(n) average algorithm - faster than sorting!\n\nYou'll learn:\n• Quickselect algorithm\n• Partition technique\n• When NOT to sort\n\nLet's dive in!", "action": "continue", "next": "language-selection"},
+    {"stepId": "language-selection", "mentorSays": "Language?", "choices": [{"label": "💛 JavaScript", "next": "prereq-check-js"}, {"label": "🐍 Python", "next": "prereq-check-python"}, {"label": "☕ Java", "next": "prereq-check-java"}, {"label": "⚡ C++", "next": "prereq-check-cpp"}, {"label": "💙 TypeScript", "next": "prereq-check-ts"}]},
+    {"stepId": "prereq-check-js", "mentorSays": "Prerequisites:\n- **Arrays**\n- **Heap concept**\n- **Recursion**\n\nReady?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-js"}, {"label": "Some", "next": "select-prereqs-js"}]},
+    {"stepId": "teach-prereqs-js", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-js", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-python", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-python"}, {"label": "Some", "next": "select-prereqs-python"}]},
+    {"stepId": "teach-prereqs-python", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-python", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-java", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-java"}, {"label": "Some", "next": "select-prereqs-java"}]},
+    {"stepId": "teach-prereqs-java", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-java", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-cpp", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-cpp"}, {"label": "Some", "next": "select-prereqs-cpp"}]},
+    {"stepId": "teach-prereqs-cpp", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-cpp", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-ts", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-ts"}, {"label": "Some", "next": "select-prereqs-ts"}]},
+    {"stepId": "teach-prereqs-ts", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-ts", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "problem-understanding", "mentorSays": "**Finding the kth largest** without fully sorting!\n\nGiven array and integer k, return the **kth largest** element.\n\nExample:\n```\nnums = [3,2,1,5,6,4], k = 2\n```\nOutput: `5`\n\nThe 2nd largest element is 5.", "action": "continue", "next": "thinking-challenge"},
+    {"stepId": "thinking-challenge", "mentorSays": "How to find kth largest efficiently?", "choices": [{"label": "Sort and return nums[length-k]", "next": "wrong-choice"}, {"label": "Use quickselect - partition until pivot at position k", "next": "core-idea"}]},
+    {"stepId": "wrong-choice", "mentorSays": "Sorting works but is O(n log n).\n\nQuickselect is O(n) average!", "action": "next", "next": "core-idea"},
+    {"stepId": "core-idea", "mentorSays": "The key: **partition like quicksort, but only recurse on one side**.\n\nQuickselect:\n1. Pick pivot, partition array\n2. If pivot at index k-1 → found!\n3. If k-1 < pivot index → search left\n4. Else → search right\n\nAverage O(n) because we eliminate half each time!", "action": "next", "next": "walkthrough", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "walkthrough", "mentorSays": "Finding 2nd largest in [3,2,1,5,6,4]:\n\nTarget index: 1 (length - k)\n\n- Partition with pivot=4: [3,2,1,4,6,5]\n- Pivot at index 3, want index 1\n- Search left: [3,2,1]\n- Partition: [1,2,3]\n- Pivot=2 at index 1 ✓\n\nAnswer: **5**", "action": "next", "next": "pseudocode-step", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "pseudocode-step", "mentorSays": "Pseudocode:", "action": "next", "next": "coding-intro", "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5"]},
+    {"stepId": "coding-intro", "mentorSays": "Build it!", "action": "next", "next": "code-01"},
+    {"stepId": "code-01", "mentorSays": "Simple solution using built-in sort.\n\n```javascript\nfunction findKthLargest(nums, k) {\n  nums.sort((a,b) => b-a);\n  return nums[k-1];\n}\n```", "action": "next", "next": "code-02", "pseudocodeLineIds": ["ps1"], "example": "nums.sort((a,b) => b-a);\nreturn nums[k-1];"
+    },
+    {"stepId": "code-02", "mentorSays": "For quickselect, implement partition helper.\n\n```javascript\nfunction findKthLargest(nums, k) {\n  const partition = (left, right) => {\n    const pivot = nums[right];\n    let i = left;\n    for (let j = left; j < right; j++) {\n      if (nums[j] >= pivot) {\n        [nums[i], nums[j]] = [nums[j], nums[i]];\n        i++;\n      }\n    }\n    [nums[i], nums[right]] = [nums[right], nums[i]];\n    return i;\n  };\n}\n```", "action": "next", "next": "code-03", "pseudocodeLineIds": ["ps1"], "example": "const partition = (left, right) => {\n  const pivot = nums[right];\n  let i = left;\n  for (let j = left; j < right; j++) {\n    if (nums[j] >= pivot) [nums[i], nums[j]] = [nums[j], nums[i]], i++;\n  }\n  [nums[i], nums[right]] = [nums[right], nums[i]];\n  return i;"
+    },
+    {"stepId": "code-03", "mentorSays": "Implement quickselect logic.\n\n```javascript\nfunction findKthLargest(nums, k) {\n  const partition = (left, right) => {\n    const pivot = nums[right];\n    let i = left;\n    for (let j = left; j < right; j++) {\n      if (nums[j] >= pivot) {\n        [nums[i], nums[j]] = [nums[j], nums[i]];\n        i++;\n      }\n    }\n    [nums[i], nums[right]] = [nums[right], nums[i]];\n    return i;\n  };\n  \n  let left = 0, right = nums.length - 1;\n  while (true) {\n    const pivotIndex = partition(left, right);\n    if (pivotIndex === k - 1) return nums[pivotIndex];\n    if (pivotIndex > k - 1) right = pivotIndex - 1;\n    else left = pivotIndex + 1;\n  }\n}\n```", "action": "next", "next": "wrap-up", "pseudocodeLineIds": ["ps2", "ps3", "ps4"], "example": "let left = 0, right = nums.length - 1;\nwhile (true) {\n  const pivotIndex = partition(left, right);\n  if (pivotIndex === k - 1) return nums[pivotIndex];\n  if (pivotIndex > k - 1) right = pivotIndex - 1;\n  else left = pivotIndex + 1;"
+    },
+    {"stepId": "wrap-up", "mentorSays": "Brilliant! **Quickselect** mastered!\n\nUsed for:\n• Finding medians\n• Top-k problems\n• Order statistics\n\nNext: **Merge K Sorted Lists** - heap mastery!\n\nYou're crushing it! 💪", "action": "complete"}
+  ]
+}

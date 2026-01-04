@@ -1,0 +1,189 @@
+{
+  "id": "range-sum-query",
+  "title": "Range Sum Query - Immutable",
+  "pattern": "prefix sum",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 29,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-29",
+    "introduces": [
+      "prefix-sum-array",
+      "precomputation",
+      "class-based-solution"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "counting-bits"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize prefix sum array of size n+1, where n is length of input array"
+    },
+    {
+      "id": "ps2",
+      "text": "Set prefix[0] = 0 as base case"
+    },
+    {
+      "id": "ps3",
+      "text": "For each index i from 0 to n-1, compute prefix[i+1] = prefix[i] + nums[i]"
+    },
+    {
+      "id": "ps4",
+      "text": "Store the prefix sum array for future queries"
+    },
+    {
+      "id": "ps5",
+      "text": "For range query from left to right, return prefix[right+1] - prefix[left]"
+    },
+    {
+      "id": "ps6",
+      "text": "Handle edge cases where left equals right (single element)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work mastering binary search with the sqrt(x) problem! Now we're going to explore a completely different but equally powerful technique called prefix sums, which will help you efficiently answer multiple queries about ranges of data without having to recalculate the same information over and over again.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given an integer array `nums` and need to implement a data structure that can efficiently answer range sum queries. A range sum query asks for the sum of elements between indices `i` and `j` (inclusive), and you may be asked to handle multiple such queries on the same array.\n\n**Example:**\n```text\nInput: nums=[-2,0,3,-5,2,-1], sumRange(0,2)\nOutput: 1\n```\nThe sum of elements from index 0 to 2 is (-2) + 0 + 3 = 1.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) nums=[1,2,3], sumRange(0,2) → 6\n2) nums=[5,-3,2,1], sumRange(1,3) → 0\n3) nums=[4,1,-2], sumRange(2,2) → -2\n4) nums=[-1,-1,-1,-1], sumRange(0,3) → -4\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to handle multiple range sum queries on a fixed array?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "For each query, iterate through the range and sum all elements from left to right index",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Precompute prefix sums once, then calculate range sums using prefix[right+1] - prefix[left]",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This brute force approach works but has O(n) time complexity per query, making it inefficient for multiple queries on the same array.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to **precompute prefix sums** during initialization to avoid recalculating range sums repeatedly. By storing the cumulative sum from index 0 to each position in a **prefix array**, any range sum can be computed in O(1) time using the formula: **range_sum(left, right) = prefix[right+1] - prefix[left]**. This works because the prefix difference eliminates all elements before the left boundary, leaving only the sum of elements within the desired range.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `nums=[-2,0,3,-5,2,-1], sumRange(0,2)`:\n- Step 1: Build prefix array: prefix = [0, -2, -2, 1, -4, -2, -3]\n- Step 2: For sumRange(0,2), use formula: prefix[right+1] - prefix[left]\n- Step 3: Calculate prefix[2+1] - prefix[0] = prefix[3] - prefix[0]\n- Step 4: Substitute values: 1 - 0 = 1\n- Final answer: **1**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create the NumArray constructor that stores the input array and initializes a prefix sum array.\n\n```javascript\nvar NumArray = function(nums) {\n    this.nums = nums;\n    this.prefixSum = new Array(nums.length + 1);\n    this.prefixSum[0] = 0;\n};\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "var NumArray = function(nums) {\n    this.nums = nums;\n    this.prefixSum = new Array(nums.length + 1);\n    this.prefixSum[0] = 0;\n};"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Build the prefix sum array by accumulating sums from left to right in the constructor.\n\n```javascript\nvar NumArray = function(nums) {\n    this.nums = nums;\n    this.prefixSum = new Array(nums.length + 1);\n    this.prefixSum[0] = 0;\n    \n    // Build prefix sum array\n    for (let i = 0; i < nums.length; i++) {\n        this.prefixSum[i + 1] = this.prefixSum[i] + nums[i];\n    }\n};\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    // Build prefix sum array\n    for (let i = 0; i < nums.length; i++) {\n        this.prefixSum[i + 1] = this.prefixSum[i] + nums[i];\n    }"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Add the sumRange method skeleton that will handle range sum queries.\n\n```javascript\nvar NumArray = function(nums) {\n    this.nums = nums;\n    this.prefixSum = new Array(nums.length + 1);\n    this.prefixSum[0] = 0;\n    \n    // Build prefix sum array\n    for (let i = 0; i < nums.length; i++) {\n        this.prefixSum[i + 1] = this.prefixSum[i] + nums[i];\n    }\n};\n\nNumArray.prototype.sumRange = function(left, right) {\n    // TODO: implement range sum logic\n};\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "NumArray.prototype.sumRange = function(left, right) {\n    // TODO: implement range sum logic\n};"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Implement the range sum calculation using the key insight: prefix[right+1] - prefix[left].\n\n```javascript\nvar NumArray = function(nums) {\n    this.nums = nums;\n    this.prefixSum = new Array(nums.length + 1);\n    this.prefixSum[0] = 0;\n    \n    // Build prefix sum array\n    for (let i = 0; i < nums.length; i++) {\n        this.prefixSum[i + 1] = this.prefixSum[i] + nums[i];\n    }\n};\n\nNumArray.prototype.sumRange = function(left, right) {\n    return this.prefixSum[right + 1] - this.prefixSum[left];\n};\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    return this.prefixSum[right + 1] - this.prefixSum[left];"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Add example usage to demonstrate the complete working solution with initialization and queries.\n\n```javascript\nvar NumArray = function(nums) {\n    this.nums = nums;\n    this.prefixSum = new Array(nums.length + 1);\n    this.prefixSum[0] = 0;\n    \n    // Build prefix sum array\n    for (let i = 0; i < nums.length; i++) {\n        this.prefixSum[i + 1] = this.prefixSum[i] + nums[i];\n    }\n};\n\nNumArray.prototype.sumRange = function(left, right) {\n    return this.prefixSum[right + 1] - this.prefixSum[left];\n};\n\n// Example usage:\n// const numArray = new NumArray([-2, 0, 3, -5, 2, -1]);\n// numArray.sumRange(0, 2); // returns 1 (sum of [-2, 0, 3])\n// numArray.sumRange(2, 5); // returns -1 (sum of [3, -5, 2, -1])\n// numArray.sumRange(0, 5); // returns -3 (sum of entire array)\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "// Example usage:\n// const numArray = new NumArray([-2, 0, 3, -5, 2, -1]);\n// numArray.sumRange(0, 2); // returns 1 (sum of [-2, 0, 3])\n// numArray.sumRange(2, 5); // returns -1 (sum of [3, -5, 2, -1])\n// numArray.sumRange(0, 5); // returns -3 (sum of entire array)"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the prefix sum pattern! You've learned how to use precomputation and prefix sum arrays to transform multiple range queries from O(n) to O(1) operations, and implemented your first class-based solution. Next, we'll tackle the counting-bits problem, which will introduce you to bit manipulation techniques and dynamic programming optimizations - another powerful tool for your algorithmic toolkit!",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "id": "valid-anagram",
+  "title": "Valid Anagram",
+  "pattern": "frequency-map (object)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-08",
+    "introduces": ["objects-as-maps", "frequency-counting"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "strings"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If lengths of the two strings differ, return false." },
+    { "id": "ps2", "text": "Create an empty map to count characters." },
+    { "id": "ps3", "text": "Count each character in the first string." },
+    { "id": "ps4", "text": "For each character in the second string:" },
+    { "id": "ps5", "text": "  If character not in map or count is zero, return false." },
+    { "id": "ps6", "text": "  Decrease the character count." },
+    { "id": "ps7", "text": "If all checks pass, return true." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Valid Anagram**.\n\nThis lesson introduces **objects used as maps** to count frequencies.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given two strings.\n\nYour task is to determine if one string is an **anagram** of the other.\n\nAn anagram uses the same characters with the same counts, just rearranged.",
+      "example": "s = \"anagram\", t = \"nagaram\"",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) \"listen\" & \"silent\" → true\n2) \"rat\" & \"car\" → false",
+      "action": "next",
+      "next": "length-check"
+    },
+    {
+      "stepId": "length-check",
+      "mentorSays": "First observation:\n\nIf the strings have different lengths, they **cannot** be anagrams.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nHow can we make sure both strings contain the same characters the same number of times?",
+      "choices": [
+        { "label": "Count how many times each character appears", "next": "core-idea" },
+        { "label": "Sort both strings", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe will **count characters**.\n\nWe store counts using a JavaScript **object**, where:\n- key = character\n- value = how many times it appears",
+      "action": "next",
+      "next": "object-explained"
+    },
+    {
+      "stepId": "object-explained",
+      "mentorSays": "### Objects as maps (important)\n\nIn JavaScript, objects can store key–value pairs.\n\nExample:\n```\nconst counts = { a: 2, b: 1 }\n```\n\nThis means:\n- character 'a' appeared twice\n- character 'b' appeared once",
+      "action": "next",
+      "next": "visual-frequency-table"
+    },
+    {
+      "stepId": "visual-frequency-table",
+      "mentorSays": "### Visual Frequency Table\n\nLet's see a concrete example with frequency counting:\n\n**s = \"anagram\"**\n\nFrequency table:\n```\ncount['a'] = 3\ncount['n'] = 1\ncount['g'] = 1\ncount['r'] = 1\ncount['m'] = 1\n```\n\n**t = \"nagaram\"**\n\nWe check each character:\n- 'n' → count['n'] = 1, decrease to 0\n- 'a' → count['a'] = 3, decrease to 2\n- 'g' → count['g'] = 1, decrease to 0\n- 'a' → count['a'] = 2, decrease to 1\n- 'r' → count['r'] = 1, decrease to 0\n- 'a' → count['a'] = 1, decrease to 0\n- 'm' → count['m'] = 1, decrease to 0\n\nAll counts reach zero → valid anagram!\n\n**Why this works:** Counting ensures both strings have the exact same character frequencies, just in different orders.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\ns = \"abb\"\nt = \"bab\"\n\nCount s:\n- a → 1\n- b → 2\n\nCheck t:\n- b → reduce to 1\n- a → reduce to 0\n- b → reduce to 0\n\nAll counts valid → anagram",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself for strong retention.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function isAnagram(s, t) {\n\n}",
+      "action": "next",
+      "next": "code-02-length",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-length",
+      "mentorSays": "Step 2: Check lengths.",
+      "example": "if (s.length !== t.length) return false;",
+      "action": "next",
+      "next": "code-03-map",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-map",
+      "mentorSays": "Step 3: Create an empty object for counts.",
+      "example": "const counts = {};",
+      "action": "next",
+      "next": "code-04-count",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-04-count",
+      "mentorSays": "Step 4: Count characters from the first string.",
+      "example": "for (let char of s) {\n  counts[char] = (counts[char] || 0) + 1;\n}",
+      "action": "next",
+      "next": "code-05-check",
+      "pseudocodeLineIds": ["ps4", "ps5", "ps6"]
+    },
+    {
+      "stepId": "code-05-check",
+      "mentorSays": "Step 5: Decrease counts using the second string.",
+      "example": "for (let char of t) {\n  if (!counts[char]) return false;\n  counts[char]--;\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function isAnagram(s, t) {\n  if (s.length !== t.length) return false;\n\n  const counts = {};\n\n  for (let char of s) {\n    counts[char] = (counts[char] || 0) + 1;\n  }\n\n  for (let char of t) {\n    if (!counts[char]) return false;\n    counts[char]--;\n  }\n\n  return true;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Forgetting length check** - Different lengths can't be anagrams, check first\n2. **Using `!counts[char]` incorrectly** - This fails when count is 0 (falsy), use `counts[char] === undefined` or check before decrementing\n3. **Not handling case sensitivity** - The problem usually expects case-insensitive comparison\n4. **Sorting instead of counting** - Sorting works but is O(n log n), counting is O(n)\n5. **Decrementing before checking** - Always check if character exists before decrementing",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"First, I check if the strings have the same length - if not, they can't be anagrams\"**\n2. **\"I use a frequency map to count characters in the first string\"**\n3. **\"Then I iterate through the second string and decrement counts\"**\n4. **\"If any character doesn't exist or count goes negative, it's not an anagram\"**\n5. **\"This gives us O(n) time complexity, better than sorting which is O(n log n)\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how to use objects as frequency maps\n- how counting avoids sorting\n- a core pattern used in many string problems\n- visual frequency table representation\n\nThis pattern is critical for upcoming hash-based problems.\n\n**Follow-up variant:**\n\n**Group Anagrams:** Given an array of strings, group all anagrams together. How would you use frequency maps to solve this?",
+      "action": "complete"
+    }
+  ]
+}

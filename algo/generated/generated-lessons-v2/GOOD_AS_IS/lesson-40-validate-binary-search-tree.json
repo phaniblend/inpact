@@ -1,0 +1,422 @@
+{
+  "id": "validate-binary-search-tree",
+  "title": "Validate Binary Search Tree",
+  "pattern": "tree validation + range checking",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 40,
+    "tier": "INTERMEDIATE",
+    "lessonOrderTag": "INTERMEDIATE-40",
+    "introduces": [
+      "BST-property",
+      "range-validation",
+      "recursive-bounds"
+    ],
+    "assumesAlreadyTaught": [
+      "binary-tree-concept",
+      "recursion-on-trees",
+      "comparison-operators"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "symmetric-tree"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Define a helper function that takes a node, minimum allowed value, and maximum allowed value as parameters"
+    },
+    {
+      "id": "ps2",
+      "text": "If the current node is null or empty, return true (empty trees are valid BSTs)"
+    },
+    {
+      "id": "ps3",
+      "text": "Check if the current node's value violates the min/max bounds - if so, return false"
+    },
+    {
+      "id": "ps4",
+      "text": "Recursively validate the left subtree with updated maximum bound (current node's value becomes new max)"
+    },
+    {
+      "id": "ps5",
+      "text": "Recursively validate the right subtree with updated minimum bound (current node's value becomes new min)"
+    },
+    {
+      "id": "ps6",
+      "text": "Return true only if both left and right subtree validations return true"
+    },
+    {
+      "id": "ps7",
+      "text": "Start the validation by calling the helper function with root node, negative infinity as min, and positive infinity as max"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great work on mastering level-order traversal! Now we're ready to tackle an even more exciting challenge - validating binary search trees.\n\nThis problem introduces you to the powerful pattern of **tree validation combined with range checking**. Instead of just traversing nodes, you'll learn to verify that a tree maintains its structural properties by tracking valid value ranges as you move through each subtree. It's like being a tree detective, ensuring every node follows the BST rules!\n\nBy the end of this lesson, you'll have gained three crucial skills:\n\n1. **Range-based validation** - Track and update valid value bounds as you traverse\n2. **BST property verification** - Understand and enforce the complete BST constraint (not just parent-child relationships)\n3. **Recursive constraint passing** - Pass and modify constraints down through recursive calls\n\nThis is going to build beautifully on your traversal knowledge while introducing you to a whole new way of thinking about tree problems. You're developing some serious algorithmic intuition here!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Binary search tree properties** - Understanding that left subtree values < root < right subtree values\n- **Tree traversal methods** - Knowledge of inorder, preorder, or postorder traversal techniques\n- **Boundary checking** - Ability to track and validate min/max value constraints during traversal\n- **Null handling** - Proper handling of null/empty nodes in tree structures\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Binary search tree properties** - Understanding that left subtree values < root < right subtree values\n- **Tree traversal methods** - Knowledge of inorder, preorder, or postorder traversal techniques\n- **Boundary checking** - Ability to track and validate min/max value constraints during traversal\n- **Null handling** - Proper handling of null/empty nodes in tree structures\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Binary search tree properties** - Understanding that left subtree values < root < right subtree values\n- **Tree traversal methods** - Knowledge of inorder, preorder, or postorder traversal techniques\n- **Boundary checking** - Ability to track and validate min/max value constraints during traversal\n- **Null handling** - Proper handling of null/empty nodes in tree structures\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Binary search tree properties** - Understanding that left subtree values < root < right subtree values\n- **Tree traversal methods** - Knowledge of inorder, preorder, or postorder traversal techniques\n- **Boundary checking** - Ability to track and validate min/max value constraints during traversal\n- **Null handling** - Proper handling of null/empty nodes in tree structures\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Binary search tree properties** - Understanding that left subtree values < root < right subtree values\n- **Tree traversal methods** - Knowledge of inorder, preorder, or postorder traversal techniques\n- **Boundary checking** - Ability to track and validate min/max value constraints during traversal\n- **Null handling** - Proper handling of null/empty nodes in tree structures\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Validate Binary Search Tree problem asks for.\n\nImagine you're checking if a library's book organization system is correct - every book on a shelf must have a call number greater than all books to its left and smaller than all books to its right. You walk through each section, verifying that no book is out of place by comparing it against the valid range inherited from the sections above it. Just like validating a BST, you're ensuring the ordering property holds throughout the entire system, not just between immediate neighbors.\n\n# Validate Binary Search Tree - Problem Statement\n\n## What are we trying to do?\n\nYou're given the root of a binary tree, and you need to figure out if it's a **valid binary search tree (BST)** or not.\n\n## What makes a BST valid?\n\nA binary search tree is valid when it follows this rule at **every single node**:\n- All nodes in the **left subtree** must have values **less than** the current node\n- All nodes in the **right subtree** must have values **greater than** the current node\n- Both left and right subtrees must also be valid BSTs themselves\n\n## Let's walk through an example\n\nSay we have this tree:\n```\n    2\n   / \\\n  1   3\n```\n\nSo `root = [2,1,3]`\n\n**Is this a valid BST?** → **Yes, it returns `true`**\n\n**Why does it work?**\n\nLet's check each node:\n\n1. **At node 2 (root):**\n   - Left subtree contains: [1] → all values < 2 ✓\n   - Right subtree contains: [3] → all values > 2 ✓\n\n2. **At node 1:**\n   - No children, so automatically valid ✓\n\n3. **At node 3:**\n   - No children, so automatically valid ✓\n\nSince every node follows the BST property, the whole tree is valid!\n\n## The tricky part\n\nHere's what catches people: it's not enough to just check if `left.val < node.val < right.val`. You need to make sure **ALL** nodes in the left subtree are smaller, and **ALL** nodes in the right subtree are larger. That's why we often need to keep track of valid ranges as we traverse down the tree.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to validate if a binary tree is a valid Binary Search Tree. Consider this tree: root(5) -> left(3) -> right(7). The root's left child (3) has a right child (7). What is the most reliable approach to determine if this is a valid BST?",
+      "choices": [
+        {
+          "label": "Check each node against its immediate parent only: 3 < 5 ✓, 7 > 3 ✓, so it's valid",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use range-based validation: each node must satisfy min < node.val < max, updating bounds recursively",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach only validates local parent-child relationships but misses the global BST property. While 7 > 3 (its parent), the node 7 is in the left subtree of root 5, violating the rule that all nodes in the left subtree must be less than the root. This creates a false positive.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Range-Based Tree Validation\n\n**This problem follows the \"range constraint propagation\" pattern:**\n- **Range bounds** - Each node must satisfy `min < node.val < max`\n- **Bound updates** - Going left updates max, going right updates min\n- **Recursive validation** - Validate subtrees with updated bounds\n\n**Similar problems:**\n- Binary Tree Inorder Traversal (uses inorder property)\n- Kth Smallest Element in BST (uses BST property)\n- Range Sum of BST (uses range constraints)\n\n**Key insight:** Local parent-child checks aren't enough. We need to track valid ranges that propagate down the tree, ensuring all nodes in left subtree are < root and all nodes in right subtree are > root.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: All Nodes in Subtree Satisfy Range [min, max]\n\n**Invariant maintained throughout:**\n- **Range constraint:** Each node must satisfy `min < node.val < max`\n- **Bound propagation:** Left subtree gets `(min, node.val)`, right subtree gets `(node.val, max)`\n- **Global property:** All descendants satisfy the range constraint\n\n**Why this works:**\n- Root starts with range `(-∞, +∞)`\n- Going left: new range is `(min, node.val)` - ensures all left descendants < node\n- Going right: new range is `(node.val, max)` - ensures all right descendants > node\n- If any node violates its range, tree is invalid\n\n**Invariant guarantee:** After validating a node and its subtrees, if all nodes satisfy their range constraints, then the entire subtree rooted at that node is a valid BST.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Range Validation State\n\n**State variables:**\n- **`node`** - Current node being validated\n- **`min`** - Minimum allowed value for current node\n- **`max`** - Maximum allowed value for current node\n- **Return value** - Boolean indicating if subtree is valid BST\n\n**State transitions:**\n1. **Base case:** If `node === null`, return `true` (empty tree is valid)\n2. **Range check:** If `node.val <= min` or `node.val >= max`, return `false`\n3. **Recursive validation:**\n   - Validate left subtree with range `(min, node.val)`\n   - Validate right subtree with range `(node.val, max)`\n   - Return `leftValid && rightValid`\n\n**State validity:** Tree is valid when all nodes satisfy their range constraints.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Check Only Parent-Child Relationships**\n- **Why it fails:** Misses global BST property\n- **Issue:** A node can satisfy `left.val < node.val < right.val` but still violate BST if it's in wrong subtree\n- **Example:** Node 7 in left subtree of root 5 violates BST even if 7 > its parent 3\n- **Better:** Range-based validation ensures global property\n\n**Approach 2: Inorder Traversal + Check Sorted**\n- **Why it doesn't fail:** Actually works correctly\n- **Issue:** Requires O(n) extra space for storing values\n- **Better:** Range-based approach uses O(h) space (recursion stack)\n\n**Approach 3: Check All Ancestors for Each Node**\n- **Why it fails:** O(n²) time complexity\n- **Issue:** For each node, check all ancestors - inefficient\n- **Better:** Range-based approach is O(n) time\n\n**Our approach wins because:** Range-based validation ensures the global BST property efficiently in O(n) time and O(h) space, catching violations that local checks miss.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that **each node must satisfy a range constraint** based on its position in the tree, not just be greater than its left child and less than its right child. We maintain **min and max bounds** that get updated as we traverse: when going left, the max bound becomes the current node's value; when going right, the min bound becomes the current node's value. This works because **every node in a left subtree must be less than all ancestors above it**, and every node in a right subtree must be greater than all ancestors above it. For example, in a tree with root 5, if we go right to node 7 then left to node 6, node 6 must be both > 5 (min bound) and < 7 (max bound).",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `root=[2,1,3]`:\n- Step 1: Start at root node 2 with bounds (-∞, +∞), which is valid\n- Step 2: Check left child 1 with bounds (-∞, 2), since 1 < 2 it's valid\n- Step 3: Node 1 has no children, return true for left subtree\n- Step 4: Check right child 3 with bounds (2, +∞), since 3 > 2 it's valid\n- Step 5: Node 3 has no children, return true for right subtree\n- Final: **true**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Define the main function that takes a tree root and returns boolean for valid BST\n\n```javascript\nfunction isValidBST(root) {\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function isValidBST(root) {\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Call helper function with root node and initial bounds of negative/positive infinity\n\n```javascript\nfunction isValidBST(root) {\n    return validate(root, -Infinity, Infinity);\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    return validate(root, -Infinity, Infinity);"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Define the recursive helper function that takes node, minimum bound, and maximum bound\n\n```javascript\nfunction isValidBST(root) {\n    return validate(root, -Infinity, Infinity);\n}\n\nfunction validate(node, min, max) {\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "function validate(node, min, max) {\n}"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Handle base case: if node is null, return true (empty subtree is valid)\n\n```javascript\nfunction isValidBST(root) {\n    return validate(root, -Infinity, Infinity);\n}\n\nfunction validate(node, min, max) {\n    if (node === null) return true;\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    if (node === null) return true;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Check if current node value violates the min/max bounds - return false if invalid\n\n```javascript\nfunction isValidBST(root) {\n    return validate(root, -Infinity, Infinity);\n}\n\nfunction validate(node, min, max) {\n    if (node === null) return true;\n    if (node.val <= min || node.val >= max) return false;\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "    if (node.val <= min || node.val >= max) return false;"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Recursively validate left subtree with updated maximum bound (current node value)\n\n```javascript\nfunction isValidBST(root) {\n    return validate(root, -Infinity, Infinity);\n}\n\nfunction validate(node, min, max) {\n    if (node === null) return true;\n    if (node.val <= min || node.val >= max) return false;\n    return validate(node.left, min, node.val);\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "    return validate(node.left, min, node.val);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Add AND condition to also validate right subtree with updated minimum bound\n\n```javascript\nfunction isValidBST(root) {\n    return validate(root, -Infinity, Infinity);\n}\n\nfunction validate(node, min, max) {\n    if (node === null) return true;\n    if (node.val <= min || node.val >= max) return false;\n    return validate(node.left, min, node.val) && validate(node.right, node.val, max);\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "    return validate(node.left, min, node.val) && validate(node.right, node.val, max);"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering binary search tree validation through range checking! You've successfully learned how to use upper and lower bounds to ensure each node maintains the BST property throughout the entire tree structure. Next, we'll tackle the symmetric tree problem, where you'll apply tree traversal techniques to check if a binary tree is a mirror of itself - another fundamental validation pattern that will strengthen your tree analysis skills!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

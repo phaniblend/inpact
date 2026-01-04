@@ -1,0 +1,403 @@
+{
+  "id": "single-number",
+  "title": "Single Number",
+  "pattern": "bit manipulation (XOR)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 26,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-26",
+    "introduces": [
+      "xor-operator",
+      "bit-manipulation-basics",
+      "xor-self-cancellation"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "plus-one"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize result variable to 0"
+    },
+    {
+      "id": "ps2",
+      "text": "Iterate through each number in the array"
+    },
+    {
+      "id": "ps3",
+      "text": "XOR the current number with the result variable"
+    },
+    {
+      "id": "ps4",
+      "text": "Store the XOR result back in the result variable"
+    },
+    {
+      "id": "ps5",
+      "text": "Continue until all numbers are processed"
+    },
+    {
+      "id": "ps6",
+      "text": "Return the final result (the single number)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle another fascinating problem? In this lesson, we're moving from array intersections to exploring the \"Single Number\" problem - and we'll discover an elegant solution using bit manipulation with the XOR operator!\n\nHere's what you'll master:\n\n• **Bit manipulation fundamentals** - Learn how XOR works and why it's perfect for finding unique elements\n• **Space-efficient problem solving** - Solve this in O(1) space instead of using extra data structures  \n• **Mathematical thinking in code** - Recognize when mathematical properties can simplify complex-looking problems\n\nThis is one of those \"aha!\" moments where a tricky problem becomes beautifully simple once you see the pattern. Let's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Bitwise-xor** - Understanding XOR operation and its properties (a^a=0, a^0=a)\n- **Hash-tables** - Using hash maps to track element frequencies or visited elements\n- **Array-traversal** - Iterating through arrays to process each element\n- **Mathematical-properties** - Understanding commutative and associative properties for optimization\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Bitwise-xor** - Understanding XOR operation and its properties (a^a=0, a^0=a)\n- **Hash-tables** - Using hash maps to track element frequencies or visited elements\n- **Array-traversal** - Iterating through arrays to process each element\n- **Mathematical-properties** - Understanding commutative and associative properties for optimization\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Bitwise-xor** - Understanding XOR operation and its properties (a^a=0, a^0=a)\n- **Hash-tables** - Using hash maps to track element frequencies or visited elements\n- **Array-traversal** - Iterating through arrays to process each element\n- **Mathematical-properties** - Understanding commutative and associative properties for optimization\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Bitwise-xor** - Understanding XOR operation and its properties (a^a=0, a^0=a)\n- **Hash-tables** - Using hash maps to track element frequencies or visited elements\n- **Array-traversal** - Iterating through arrays to process each element\n- **Mathematical-properties** - Understanding commutative and associative properties for optimization\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Bitwise-xor** - Understanding XOR operation and its properties (a^a=0, a^0=a)\n- **Hash-tables** - Using hash maps to track element frequencies or visited elements\n- **Array-traversal** - Iterating through arrays to process each element\n- **Mathematical-properties** - Understanding commutative and associative properties for optimization\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Single Number problem asks for.\n\nImagine you're at a party where everyone is supposed to bring a partner, but one person came alone. As you walk around the room, you see couples paired up everywhere - when you spot two people wearing the same colored shirt, you mentally \"cancel them out\" as a matched pair. The person left standing without a match is your single number.\n\n# Single Number Problem\n\n**What it's asking:** You're given an array where every number appears exactly twice, except for one lonely number that appears only once. Your job is to find that single number.\n\n**Example:** \n- Input: `[2, 2, 1]`\n- Output: `1`\n\n**Why this works:** Looking at our array `[2, 2, 1]`, we can see that the number `2` appears twice, but `1` only appears once. So `1` is our answer - it's the odd one out!\n\nThe tricky part is doing this efficiently. You could count occurrences of each number, but there's actually a really elegant solution using bit manipulation (XOR) that solves it in one pass without extra space. Pretty neat, right?",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Given an array where every element appears exactly twice except for one element which appears exactly once, how would YOU find that single element?",
+      "choices": [
+        {
+          "label": "Use a HashSet to track seen numbers, removing duplicates",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "XOR all numbers together in a single pass",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works, it uses O(n) extra space and requires additional operations to add/remove from the set. You're essentially doing bookkeeping when the math can solve this elegantly.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: XOR for Duplicate Elimination\n\n**This problem follows the \"XOR cancellation\" pattern:**\n- **XOR properties:** a ^ a = 0, a ^ 0 = a, XOR is commutative and associative\n- **Pair cancellation:** Identical numbers XOR to zero, eliminating pairs\n- **Single pass:** Process all numbers once, no extra space needed\n\n**Similar problems:**\n- Single Number II (three occurrences)\n- Missing Number (XOR with range)\n- Find the Duplicate Number (XOR variant)\n\n**Key insight:** XOR's mathematical properties make it perfect for problems where pairs cancel out, leaving only the unique element.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: XOR Result Contains Only Unpaired Elements\n\n**Invariant maintained throughout:**\n- **After XORing element i:** `result` contains XOR of all elements from `nums[0..i]`\n- **Pair cancellation:** If an element appears twice, it contributes 0 to the result\n- **Single element:** The element appearing once contributes itself to the result\n\n**Why this works:**\n- XOR is commutative: a ^ b = b ^ a\n- XOR is associative: (a ^ b) ^ c = a ^ (b ^ c)\n- a ^ a = 0 (pairs cancel)\n- 0 ^ a = a (single element remains)\n\n**Invariant guarantee:** After XORing all elements, `result` contains only the XOR of unpaired elements. Since all pairs cancel to 0 and only one element appears once, `result` equals that single element.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to **XOR all numbers** in the array, leveraging the mathematical properties of the XOR operation. This works because **XOR is commutative and associative**, meaning identical numbers will cancel each other out (**a ^ a = 0**), while any number XORed with zero returns itself (**0 ^ a = a**). Since every number except one appears exactly twice, all pairs eliminate each other, leaving only the single number that appears once.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[2,2,1]`:\n- Step 1: Initialize result = 0\n- Step 2: XOR with first element: 0 ^ 2 = 2\n- Step 3: XOR with second element: 2 ^ 2 = 0\n- Step 4: XOR with third element: 0 ^ 1 = 1\n- Final answer: **1**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create function signature with nums array parameter\n\n```javascript\nfunction singleNumber(nums) {\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function singleNumber(nums) {\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize result variable to 0 for XOR operations\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let result = 0;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start for loop to iterate through all numbers in array\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n    for (let i = 0; i < nums.length; i++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    for (let i = 0; i < nums.length; i++) {\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "XOR current number with result (pairs cancel, single remains)\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n    for (let i = 0; i < nums.length; i++) {\n        result ^= nums[i];\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        result ^= nums[i];"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Return the final result containing the single number\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n    for (let i = 0; i < nums.length; i++) {\n        result ^= nums[i];\n    }\n    return result;\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "    return result;"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Alternative: Use for...of loop for cleaner iteration syntax\n\n```javascript\nfunction singleNumber(nums) {\n    let result = 0;\n    for (let num of nums) {\n        result ^= num;\n    }\n    return result;\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4"
+      ],
+      "example": "    for (let num of nums) {\n        result ^= num;\n    }"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Ultra-compact: Use reduce method for functional approach\n\n```javascript\nfunction singleNumber(nums) {\n    return nums.reduce((result, num) => result ^ num, 0);\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5"
+      ],
+      "example": "    return nums.reduce((result, num) => result ^ num, 0);"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering bit manipulation with XOR! You've learned how this powerful operation can elegantly solve problems by exploiting the property that identical numbers cancel each other out. Next, we'll tackle plus-one, where you'll practice array manipulation and handling carry operations in mathematical computations.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

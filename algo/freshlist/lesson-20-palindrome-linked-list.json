@@ -1,0 +1,166 @@
+{
+  "id": "palindrome-linked-list",
+  "title": "Palindrome Linked List",
+  "pattern": "fast-slow + reversal",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 20,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-20",
+    "introduces": [
+      "find-middle-pattern",
+      "pattern-combination",
+      "half-list-comparison"
+    ],
+    "assumesAlreadyTaught": [
+      "linked-list-concept",
+      "reverse-linked-list",
+      "fast-slow-pointers"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "middle-of-linked-list"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Find the middle of the list using fast-slow pointers."
+    },
+    {
+      "id": "ps2",
+      "text": "Reverse the second half of the list."
+    },
+    {
+      "id": "ps3",
+      "text": "Compare the first half with the reversed second half."
+    },
+    {
+      "id": "ps4",
+      "text": "If all values match, it's a palindrome."
+    },
+    {
+      "id": "ps5",
+      "text": "Return true or false based on comparison."
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "In **Merge Two Sorted Lists**, you learned the dummy node technique for building lists. Now we combine **two patterns you already know** — fast-slow pointers and list reversal — to solve a classic problem: checking if a linked list is a palindrome.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given the head of a singly linked list, determine if it is a **palindrome** — meaning it reads the same forward and backward.\n\n**Example:**\n```text\nInput: 1→2→2→1\nOutput: true\n```\nThe list reads the same forwards (1,2,2,1) and backwards (1,2,2,1).",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) 1→2→2→1 → true (palindrome)\n2) 1→2→3 → false (not palindrome)\n3) 1→2→1 → true (odd length palindrome)\n4) 1 → true (single node is palindrome)\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "How can we check if a linked list is a palindrome without using O(n) extra space?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Copy all values to an array and check if the array is a palindrome",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Find the middle, reverse the second half, then compare both halves",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This works but uses O(n) extra space for the array. We can do better by combining patterns we already know — find middle + reverse — to achieve O(1) space!",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The strategy combines **two patterns**:\n\n1. **Find middle** using fast-slow pointers (fast moves 2x, slow ends at middle)\n2. **Reverse** the second half starting from slow\n3. **Compare** first half with reversed second half\n\nFor `1→2→2→1`:\n- Middle: slow stops at second `2`\n- Reverse second half: `1→2`\n- Compare: `1==1`, `2==2` ✓ Palindrome!",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `1→2→2→1`:\n\n**Step 1: Find middle**\n- slow=1, fast=1 → slow=2, fast=2 → slow=2(second), fast=null\n- slow is at middle (second 2)\n\n**Step 2: Reverse from slow**\n- Reverse `2→1` to get `1→2`\n\n**Step 3: Compare halves**\n- First half: 1→2\n- Reversed second: 1→2\n- Compare: 1==1 ✓, 2==2 ✓\n\n**Result: true (palindrome)**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "First, find the middle using fast-slow pointers.\n\n```javascript\nfunction isPalindrome(head) {\n  let slow = head;\n  let fast = head;\n  \n  while (fast && fast.next) {\n    slow = slow.next;\n    fast = fast.next.next;\n  }\n  // slow is now at the middle\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "while (fast && fast.next) {\n  slow = slow.next;\n  fast = fast.next.next;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Reverse the second half starting from slow.\n\n```javascript\nfunction isPalindrome(head) {\n  let slow = head;\n  let fast = head;\n  \n  while (fast && fast.next) {\n    slow = slow.next;\n    fast = fast.next.next;\n  }\n  \n  // Reverse second half\n  let prev = null;\n  while (slow) {\n    let next = slow.next;\n    slow.next = prev;\n    prev = slow;\n    slow = next;\n  }\n  // prev is now head of reversed second half\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "let prev = null;\nwhile (slow) {\n  let next = slow.next;\n  slow.next = prev;\n  prev = slow;\n  slow = next;\n}"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Compare the first half with the reversed second half.\n\n```javascript\nfunction isPalindrome(head) {\n  let slow = head;\n  let fast = head;\n  \n  while (fast && fast.next) {\n    slow = slow.next;\n    fast = fast.next.next;\n  }\n  \n  let prev = null;\n  while (slow) {\n    let next = slow.next;\n    slow.next = prev;\n    prev = slow;\n    slow = next;\n  }\n  \n  // Compare halves\n  let left = head;\n  let right = prev;\n  while (right) {\n    if (left.val !== right.val) return false;\n    left = left.next;\n    right = right.next;\n  }\n  return true;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps3",
+        "ps4",
+        "ps5"
+      ],
+      "example": "while (right) {\n  if (left.val !== right.val) return false;\n  left = left.next;\n  right = right.next;\n}"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Excellent! You've learned the power of **combining patterns**. By using fast-slow to find the middle and then reversing, we achieved O(1) space complexity.\n\nThis pattern-combination approach is key to solving harder problems efficiently.\n\nNext, we'll isolate the **find middle** technique as its own standalone skill!",
+      "action": "complete"
+    }
+  ]
+}

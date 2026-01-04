@@ -1,0 +1,153 @@
+{
+  "id": "three-sum",
+  "title": "Three Sum",
+  "pattern": "sorting + two-pointers",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-16",
+    "introduces": ["sort-then-scan", "duplicate-skipping"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "two-pointers",
+      "hash-map-lookup"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Sort the array in ascending order." },
+    { "id": "ps2", "text": "For each index i from 0 to n-3:" },
+    { "id": "ps3", "text": "  If i > 0 and nums[i] == nums[i-1], skip." },
+    { "id": "ps4", "text": "  Set left = i + 1 and right = last index." },
+    { "id": "ps5", "text": "  While left < right:" },
+    { "id": "ps6", "text": "    Compute sum = nums[i] + nums[left] + nums[right]." },
+    { "id": "ps7", "text": "    If sum == 0, record triplet and move both pointers skipping duplicates." },
+    { "id": "ps8", "text": "    If sum < 0, move left forward." },
+    { "id": "ps9", "text": "    If sum > 0, move right backward." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Three Sum**.\n\nThis lesson builds directly on **two pointers**, but requires **sorting first** and careful handling of duplicates.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array of integers.\n\nYour task is to find **all unique triplets** such that the sum of the three numbers is **0**.\n\nThe solution set must not contain duplicate triplets.",
+      "example": "nums = [-1,0,1,2,-1,-4]",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [-1,0,1] → [[-1,0,1]]\n2) [-1,-1,2] → [[-1,-1,2]]",
+      "action": "next",
+      "next": "why-not-bruteforce"
+    },
+    {
+      "stepId": "why-not-bruteforce",
+      "mentorSays": "Brute force checks every triplet.\n\nThat costs **O(n³)** time, which becomes impractical quickly.\n\nWe need to reduce the problem intelligently.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf the array is sorted and one number is fixed, how can we find two others efficiently?",
+      "choices": [
+        { "label": "Use two pointers", "next": "core-idea" },
+        { "label": "Use nested loops only", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe:\n1) Sort the array\n2) Fix one number at index `i`\n3) Use two pointers to find pairs that sum with it to zero",
+      "action": "next",
+      "next": "sorting-explained"
+    },
+    {
+      "stepId": "sorting-explained",
+      "mentorSays": "### Why sorting matters\n\nSorting allows us to:\n- move pointers based on sum\n- skip duplicate values cleanly\n\nWithout sorting, duplicates are hard to manage.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums = [-1,0,1,2,-1,-4]\n\nAfter sort: [-4,-1,-1,0,1,2]\n\nFix i=1 (-1):\n- left=2 (-1), right=5 (2)\n- sum=0 → record [-1,-1,2]\n\nMove pointers, skip duplicates",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5","ps6","ps7","ps8","ps9"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis is a structured combination of patterns you already know.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function and sort the array.",
+      "example": "function threeSum(nums) {\n  nums.sort((a, b) => a - b);\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps2","ps3"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "Step 2: Loop through indices and skip duplicates.",
+      "example": "const result = [];\nfor (let i = 0; i < nums.length - 2; i++) {\n  if (i > 0 && nums[i] === nums[i - 1]) continue;\n\n}",
+      "action": "next",
+      "next": "code-03-pointers",
+      "pseudocodeLineIds": ["ps4","ps5"]
+    },
+    {
+      "stepId": "code-03-pointers",
+      "mentorSays": "Step 3: Use two pointers to find pairs.",
+      "example": "let left = i + 1;\nlet right = nums.length - 1;\n\nwhile (left < right) {\n\n}",
+      "action": "next",
+      "next": "code-04-sum",
+      "pseudocodeLineIds": ["ps6"]
+    },
+    {
+      "stepId": "code-04-sum",
+      "mentorSays": "Step 4: Compute sum and move pointers.",
+      "example": "const sum = nums[i] + nums[left] + nums[right];",
+      "action": "next",
+      "next": "code-05-actions",
+      "pseudocodeLineIds": ["ps7","ps8","ps9"]
+    },
+    {
+      "stepId": "code-05-actions",
+      "mentorSays": "Step 5: Handle three cases.",
+      "example": "if (sum === 0) {\n  result.push([nums[i], nums[left], nums[right]]);\n\n  while (left < right && nums[left] === nums[left + 1]) left++;\n  while (left < right && nums[right] === nums[right - 1]) right--;\n\n  left++;\n  right--;\n} else if (sum < 0) {\n  left++;\n} else {\n  right--;\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function threeSum(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n\n  for (let i = 0; i < nums.length - 2; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n\n    let left = i + 1;\n    let right = nums.length - 1;\n\n    while (left < right) {\n      const sum = nums[i] + nums[left] + nums[right];\n\n      if (sum === 0) {\n        result.push([nums[i], nums[left], nums[right]]);\n\n        while (left < right && nums[left] === nums[left + 1]) left++;\n        while (left < right && nums[right] === nums[right - 1]) right--;\n\n        left++;\n        right--;\n      } else if (sum < 0) {\n        left++;\n      } else {\n        right--;\n      }\n    }\n  }\n\n  return result;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how sorting enables pointer movement\n- how to avoid duplicate triplets\n- how to layer known patterns into stronger solutions\n\nThis pattern generalizes to k-sum problems.",
+      "action": "complete"
+    }
+  ]
+}

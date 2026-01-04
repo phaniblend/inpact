@@ -1,0 +1,188 @@
+{
+  "id": "middle-of-linked-list",
+  "title": "Middle of the Linked List",
+  "pattern": "fast-slow pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 21,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-21",
+    "introduces": [
+      "middle-node-return",
+      "even-odd-handling"
+    ],
+    "assumesAlreadyTaught": [
+      "linked-list-concept",
+      "fast-slow-pointers"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "move-zeroes"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize two pointers: slow = head, fast = head"
+    },
+    {
+      "id": "ps2",
+      "text": "While fast is not null AND fast.next is not null:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Move slow pointer one step forward: slow = slow.next"
+    },
+    {
+      "id": "ps4",
+      "text": "  Move fast pointer two steps forward: fast = fast.next.next"
+    },
+    {
+      "id": "ps5",
+      "text": "When loop ends, slow pointer is at the middle node"
+    },
+    {
+      "id": "ps6",
+      "text": "Return slow"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work on using the fast-slow pointer technique to find the middle of a linked list for palindrome checking! Now let's dive deeper into this powerful pattern and master finding the middle node itself, which is a fundamental skill that opens doors to solving many other linked list problems efficiently.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given a linked list, find and return the value of the middle node. If the linked list has an even number of nodes, return the value of the second middle node.\n\n**Example:**\n```text\nInput: 1→2→3→4→5\nOutput: 3\n```\nIn this linked list with 5 nodes, the middle node is the 3rd node with value 3.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) 1→2→3 → 2\n2) 1→2→3→4 → 3\n3) 1→2 → 2\n4) 5 → 5\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to find the middle node of a linked list in a single pass?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "First traverse the entire list to count nodes, then traverse again to the middle position",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use two pointers where one moves twice as fast as the other - when the fast pointer reaches the end, the slow pointer will be at the middle",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This brute force approach works but requires two passes through the list, making it less efficient than the optimal single-pass solution",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The **key insight** is using two pointers moving at different speeds: the **fast pointer** advances 2 nodes per step while the **slow pointer** advances 1 node per step. When the **fast pointer** reaches the end of the list (or becomes null), it has traveled exactly twice the distance of the **slow pointer**. Since the fast pointer has covered the entire list length, the **slow pointer** will be positioned exactly at the **middle node**. This works because: if list length = n, then slow travels n/2 steps while fast travels n steps.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `1→2→3→4→5`:\n- Step 1: Initialize slow=1, fast=1\n- Step 2: Move slow to 2, fast to 3 (fast moves 2 steps)\n- Step 3: Move slow to 3, fast to 5 (fast moves 2 steps)\n- Step 4: Fast reaches end (no next node), slow stops at middle\n- Final answer: **3**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Define the function and handle the base case where the list is empty.\n\n```javascript\nfunction findMiddle(head) {\n    if (!head) return null;\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function findMiddle(head) {\n    if (!head) return null;\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize both slow and fast pointers to start at the head of the linked list.\n\n```javascript\nfunction findMiddle(head) {\n    if (!head) return null;\n    \n    let slow = head;\n    let fast = head;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let slow = head;\n    let fast = head;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Create the main loop that continues while fast pointer and its next node exist.\n\n```javascript\nfunction findMiddle(head) {\n    if (!head) return null;\n    \n    let slow = head;\n    let fast = head;\n    \n    while (fast && fast.next) {\n        \n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    while (fast && fast.next) {\n        \n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Move the slow pointer one step and fast pointer two steps in each iteration.\n\n```javascript\nfunction findMiddle(head) {\n    if (!head) return null;\n    \n    let slow = head;\n    let fast = head;\n    \n    while (fast && fast.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        slow = slow.next;\n        fast = fast.next.next;"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Return the slow pointer which will be pointing to the middle node when the loop ends.\n\n```javascript\nfunction findMiddle(head) {\n    if (!head) return null;\n    \n    let slow = head;\n    let fast = head;\n    \n    while (fast && fast.next) {\n        slow = slow.next;\n        fast = fast.next.next;\n    }\n    \n    return slow;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "    return slow;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the fast-slow pointer technique to find the middle of a linked list! You've learned how to handle both even and odd-length lists by returning the appropriate middle node, which is a fundamental skill that appears in many linked list problems. Next, we'll tackle the move-zeroes problem where you'll apply array manipulation techniques to efficiently organize elements - keep up the excellent progress!",
+      "action": "complete"
+    }
+  ]
+}

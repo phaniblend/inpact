@@ -1,0 +1,629 @@
+{
+  "id": "house-robber",
+  "title": "House Robber",
+  "pattern": "dynamic programming (linear)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 16,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-16",
+    "introduces": [
+      "dp-with-constraints",
+      "skip-or-take-decision",
+      "optimal-substructure"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "basic-dp-concepts"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "linked-list-cycle"
+    ]
+  },
+  "problemStatement": {
+    "description": "Find the maximum amount of money you can rob from houses arranged in a line, where you cannot rob two adjacent houses.",
+    "inputs": [
+      "nums: array of integers representing money in each house (length 1 to 100)"
+    ],
+    "outputs": [
+      "Integer representing the maximum amount of money that can be robbed"
+    ],
+    "examples": [
+      {
+        "input": "nums = [1,2,3,1]",
+        "output": "4",
+        "explanation": "Rob house 1 (money=2) and house 3 (money=1). Total = 2+1=4. Cannot rob house 0 and house 2 together (adjacent)."
+      },
+      {
+        "input": "nums = [2,7,9,3,1]",
+        "output": "12",
+        "explanation": "Rob house 0 (money=2), house 2 (money=9), and house 4 (money=1). Total = 2+9+1=12."
+      },
+      {
+        "input": "nums = [2,1,1,2]",
+        "output": "4",
+        "explanation": "Rob house 0 (money=2) and house 3 (money=2). Total = 2+2=4."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 100",
+      "0 <= nums[i] <= 400"
+    ],
+    "realWorldUse": [
+      "Resource allocation with constraints",
+      "Optimization problems with restrictions",
+      "Scheduling problems",
+      "Dynamic programming applications"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "This is a classic dynamic programming problem with a constraint. At each house, we decide whether to rob it or skip it. The decision depends on previous choices due to the adjacent constraint.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem involves making choices with constraints → think dynamic programming",
+      "SIGNAL 2: Cannot select adjacent items → DP with skip/take decision",
+      "SIGNAL 3: Optimal substructure (max up to i depends on max up to i-1 and i-2) → DP pattern"
+    ],
+    "patternRules": [
+      "If problem involves choices with constraints (can't select adjacent) → use DP",
+      "When you see 'maximum with constraints', 'skip or take', or 'adjacent restriction' → consider DP",
+      "If optimal substructure exists → DP with state transitions"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't work - always robbing highest value might force skipping two high values. Need to consider all combinations.",
+      "bruteForce": "Checking all combinations is O(2^n). DP reduces to O(n) by storing subproblem results.",
+      "alternative": "Recursive solution works but has overlapping subproblems. DP memoization or iteration is optimal."
+    }
+  },
+  "coreInvariant": {
+    "statement": "dp[i] represents the maximum money that can be robbed from houses 0 to i, where dp[i] = max(dp[i-1], dp[i-2] + nums[i]).",
+    "explanation": "This invariant holds because at house i, we can either skip it (take dp[i-1]) or rob it (take dp[i-2] + nums[i] to avoid adjacent). We choose the maximum of these two options.",
+    "whyItMatters": "This invariant guarantees correctness: after computing dp[i], it contains the maximum money achievable up to house i. The final answer dp[n-1] is the maximum for all houses."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "dp[i]",
+        "meaning": "Maximum money that can be robbed from houses 0 to i",
+        "indexing": "0-indexed: dp[0] = nums[0], dp[1] = max(nums[0], nums[1])"
+      },
+      {
+        "name": "prev",
+        "meaning": "Maximum money up to previous house (for space optimization)",
+        "indexing": "Starts at dp[0] = nums[0]"
+      },
+      {
+        "name": "curr",
+        "meaning": "Maximum money up to current house (for space optimization)",
+        "indexing": "Starts at dp[1] = max(nums[0], nums[1])"
+      }
+    ],
+    "baseCases": [
+      "dp[0] = nums[0] (only one house, rob it)",
+      "dp[1] = max(nums[0], nums[1]) (two houses, rob the one with more money)"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "For house i from 2 to n-1:",
+        "transition": "dp[i] = max(dp[i-1], dp[i-2] + nums[i])",
+        "explanation": "Skip house i (take dp[i-1]) or rob house i (take dp[i-2] + nums[i] to avoid adjacent). Choose maximum.",
+        "example": "nums=[1,2,3,1], i=2: dp[2] = max(dp[1]=2, dp[0]+3=1+3=4) = 4"
+      },
+      {
+        "condition": "Space-optimized version:",
+        "transition": "next = max(curr, prev + nums[i]), then prev = curr, curr = next",
+        "explanation": "Only need previous two values. Update variables for next iteration.",
+        "example": "For house 2: next = max(2, 1+3) = 4, prev = 2, curr = 4"
+      }
+    ],
+    "decisionTree": {
+      "root": "At each house, decide whether to rob or skip",
+      "branches": [
+        "If skip house i: take dp[i-1] (maximum up to previous house)",
+        "If rob house i: take dp[i-2] + nums[i] (maximum up to two houses ago + current house)",
+        "Choose maximum of these two options",
+        "After all houses: return dp[n-1]"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "nums = [2,7,9,3,1]",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Base cases: dp[0] = 2, dp[1] = max(2, 7) = 7",
+        "state": "dp[0] = 2, dp[1] = 7",
+        "logic": "One house: rob it. Two houses: rob the one with more money.",
+        "result": "Base cases established"
+      },
+      {
+        "step": 2,
+        "description": "i=2: dp[2] = max(dp[1]=7, dp[0]+9=2+9=11) = 11",
+        "state": "dp[2] = 11",
+        "logic": "Skip house 2 (get 7) or rob house 2 (get 2+9=11). Choose 11.",
+        "result": "dp[2] = 11"
+      },
+      {
+        "step": 3,
+        "description": "i=3: dp[3] = max(dp[2]=11, dp[1]+3=7+3=10) = 11",
+        "state": "dp[3] = 11",
+        "logic": "Skip house 3 (get 11) or rob house 3 (get 7+3=10). Choose 11.",
+        "result": "dp[3] = 11"
+      },
+      {
+        "step": 4,
+        "description": "i=4: dp[4] = max(dp[3]=11, dp[2]+1=11+1=12) = 12",
+        "state": "dp[4] = 12",
+        "logic": "Skip house 4 (get 11) or rob house 4 (get 11+1=12). Choose 12.",
+        "result": "dp[4] = 12, return 12"
+      }
+    ],
+    "keyInsight": "At each house, we make a local optimal choice: skip (keep previous maximum) or rob (take two houses ago + current). This greedy choice within DP framework ensures global optimum because we consider all possibilities through the DP state."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Not handling base cases correctly",
+      "symptom": "Wrong answer for n=1 or n=2",
+      "fix": "dp[0] = nums[0], dp[1] = max(nums[0], nums[1])",
+      "example": "If dp[1] = nums[1] only, you miss the option of robbing house 0"
+    },
+    {
+      "mistake": "Using dp[i] = max(nums[i], dp[i-1]) instead of dp[i] = max(dp[i-1], dp[i-2] + nums[i])",
+      "symptom": "Wrong logic - doesn't consider skipping current house properly",
+      "fix": "Compare skipping (dp[i-1]) vs robbing (dp[i-2] + nums[i])",
+      "example": "If you use max(nums[i], dp[i-1]), you might rob adjacent houses"
+    },
+    {
+      "mistake": "Not using space optimization",
+      "symptom": "Uses O(n) space unnecessarily when O(1) is possible",
+      "fix": "Use two variables (prev, curr) instead of entire dp array",
+      "example": "For large n, dp array uses O(n) space, but only need last two values"
+    },
+    {
+      "mistake": "Off-by-one errors in indexing",
+      "symptom": "Wrong answer due to 0-indexed vs 1-indexed confusion",
+      "fix": "Be consistent: dp[i] = max money from houses 0 to i",
+      "example": "If using 1-indexed, adjust base cases and loop accordingly"
+    },
+    {
+      "mistake": "Trying to rob all non-adjacent houses greedily",
+      "symptom": "Wrong answer - greedy doesn't work for this problem",
+      "fix": "Use DP to consider all combinations, not just greedy selection",
+      "example": "Greedy might skip two high values to get one medium value, which is suboptimal"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a dynamic programming problem with a constraint.",
+      "",
+      "I'll use DP with space optimization:",
+      "- Base cases: prev = nums[0], curr = max(nums[0], nums[1])",
+      "- For i from 2 to n-1:",
+      "  - next = max(curr, prev + nums[i])",
+      "  - prev = curr",
+      "  - curr = next",
+      "- Return curr (maximum money)",
+      "",
+      "Time complexity: O(n) - single pass through houses",
+      "Space complexity: O(1) - only using two variables",
+      "",
+      "Edge cases:",
+      "- Single house: return nums[0]",
+      "- Two houses: return max(nums[0], nums[1])",
+      "- The constraint prevents robbing adjacent houses"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "House Robber (no constraint)",
+      "approachChange": "Can rob all houses, just sum all values",
+      "solution": "Return sum of all nums (no constraint, rob everything)"
+    },
+    "harder": {
+      "problem": "House Robber II (circular array)",
+      "approachChange": "Houses arranged in circle, first and last are adjacent. Need to solve twice: exclude first, exclude last.",
+      "solution": "Solve for nums[1..n-1] and nums[0..n-2], return max of the two. Prevents circular adjacency."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "If nums.length == 1: return nums[0]"
+    },
+    {
+      "id": "ps2",
+      "text": "Initialize prev = nums[0], curr = max(nums[0], nums[1])"
+    },
+    {
+      "id": "ps3",
+      "text": "For i from 2 to nums.length - 1:"
+    },
+    {
+      "id": "ps4",
+      "text": "  next = max(curr, prev + nums[i])"
+    },
+    {
+      "id": "ps5",
+      "text": "  prev = curr"
+    },
+    {
+      "id": "ps6",
+      "text": "  curr = next"
+    },
+    {
+      "id": "ps7",
+      "text": "Return curr"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to tackle another dynamic programming challenge? After mastering climbing stairs, we're moving on to the classic \"House Robber\" problem - another perfect example of linear dynamic programming!\n\nIn this lesson, you'll learn how to solve optimization problems where your choices have consequences that affect future decisions. Here are the 3 key skills you'll develop:\n\n1. **Identify overlapping subproblems** - Recognize when the same smaller problems appear multiple times in your solution\n2. **Design state transitions with constraints** - Build relationships between states while respecting problem limitations (like not robbing adjacent houses!)\n3. **Optimize from O(2^n) to O(n)** - Transform an exponential brute force approach into an efficient linear solution\n\nThis pattern shows up everywhere - from resource allocation to game theory problems. You'll see how dynamic programming turns seemingly complex decisions into manageable, step-by-step solutions.\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Dynamic-programming** - Understanding of optimal substructure and overlapping subproblems\n- **Array-traversal** - Ability to iterate through arrays and access elements by index\n- **State-transitions** - Knowledge of how current decisions affect future optimal choices\n- **Max-function** - Using comparison operations to find maximum values between options\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Dynamic-programming** - Understanding of optimal substructure and overlapping subproblems\n- **Array-traversal** - Ability to iterate through arrays and access elements by index\n- **State-transitions** - Knowledge of how current decisions affect future optimal choices\n- **Max-function** - Using comparison operations to find maximum values between options\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Dynamic-programming** - Understanding of optimal substructure and overlapping subproblems\n- **Array-traversal** - Ability to iterate through arrays and access elements by index\n- **State-transitions** - Knowledge of how current decisions affect future optimal choices\n- **Max-function** - Using comparison operations to find maximum values between options\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Dynamic-programming** - Understanding of optimal substructure and overlapping subproblems\n- **Array-traversal** - Ability to iterate through arrays and access elements by index\n- **State-transitions** - Knowledge of how current decisions affect future optimal choices\n- **Max-function** - Using comparison operations to find maximum values between options\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Dynamic-programming** - Understanding of optimal substructure and overlapping subproblems\n- **Array-traversal** - Ability to iterate through arrays and access elements by index\n- **State-transitions** - Knowledge of how current decisions affect future optimal choices\n- **Max-function** - Using comparison operations to find maximum values between options\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the House Robber problem asks for.\n\nThink of walking down a street of houses on Halloween night with limited time, where you can only trick-or-treat at houses that aren't next to each other (to avoid seeming greedy to neighbors). At each house, you can see how much candy they're giving out, and you want to maximize your total candy by strategically choosing which houses to visit while skipping adjacent ones.\n\n# House Robber Problem\n\n**What are we trying to solve?**\n\nYou're a robber planning to rob houses along a street. Each house has a certain amount of money, but here's the catch - you can't rob two adjacent houses because their security systems will alert the police. Given an array representing the money in each house, find the maximum amount you can rob without triggering the alarm.\n\n**Let's walk through an example:**\n\nSay we have houses with money `[2, 1, 1, 2]` and the answer is `4`.\n\n**Why does this work?**\n\nLet's think through our options:\n- We could rob house 0 (gets us $2) and house 2 (gets us $1) = $3 total\n- We could rob house 1 (gets us $1) and house 3 (gets us $2) = $3 total  \n- But wait! We could also rob house 0 (gets us $2) and house 3 (gets us $2) = $4 total\n\nThat last option gives us the maximum of $4, and notice we didn't rob any adjacent houses - we skipped from house 0 directly to house 3.\n\nThe key insight is that for each house, we need to decide: \"Should I rob this house (plus the best I could do up to 2 houses ago) or skip it (and take the best I could do up to the previous house)?\"",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You're a professional thief planning to rob houses along a street, but you cannot rob two adjacent houses (security system will alert police). Given an array representing the money in each house, how would YOU determine the maximum amount you can steal?",
+      "choices": [
+        {
+          "label": "Use greedy approach: always pick the house with maximum money that doesn't violate adjacency rule",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use dynamic programming: at each house, choose max between (previous max) vs (max from 2 houses back + current house)",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This fails because local optimal choices don't guarantee global optimum. For example, with houses [2,7,9,3,1], greedy might pick 9 (index 2), then be forced to skip adjacent houses, missing the optimal combination of 2+9+1=12. Greedy gets stuck in local maxima and can't reconsider previous decisions.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that at each house, you have exactly **two choices**: either **skip** the current house (keeping the maximum from the previous house) or **take** the current house (adding its value to the maximum from two houses back). This works because taking the current house means you cannot take the adjacent previous house due to the constraint, so you must use the best result from `i-2`. The **recurrence relation** `dp[i] = max(dp[i-1], dp[i-2] + nums[i])` captures this optimal substructure, where each decision builds upon the best possible outcomes from previous positions.",
+      "action": "next",
+      "next": "rob-vs-skip-decision-tree"
+    },
+    {
+      "stepId": "rob-vs-skip-decision-tree",
+      "mentorSays": "### Rob vs Skip Decision Tree\n\n**At each house i, you have two choices:**\n\n```\nHouse i: [nums[i] = value]\n         /                    \\\n    SKIP house i          ROB house i\n    (keep dp[i-1])        (dp[i-2] + nums[i])\n```\n\n**Decision tree for [2, 1, 1, 2]:**\n\n```\nHouse 0 ($2):\n  - Rob: $2\n  - Skip: $0\n  → dp[0] = $2\n\nHouse 1 ($1):\n  - Rob: $0 + $1 = $1  (can't rob house 0)\n  - Skip: $2 (keep from house 0)\n  → dp[1] = max($1, $2) = $2\n\nHouse 2 ($1):\n  - Rob: $2 + $1 = $3  (rob house 0 + house 2)\n  - Skip: $2 (keep from house 1)\n  → dp[2] = max($3, $2) = $3\n\nHouse 3 ($2):\n  - Rob: $2 + $2 = $4  (rob house 0 + house 3)\n  - Skip: $3 (keep from house 2)\n  → dp[3] = max($4, $3) = $4\n```\n\n**Key insight:** At each step, choose the maximum between:\n- **Skip:** Best result up to previous house\n- **Rob:** Best result from 2 houses back + current house value\n\n**This decision tree shows the choice structure** - every DP solution considers these two options.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: 1D DP with Choice\n\n**This problem follows the \"1D DP with decision\" pattern:**\n- **State:** dp[i] = maximum money robbed up to house i\n- **Choice at each step:** Rob current house or skip it\n- **Constraint:** Cannot rob adjacent houses\n- **Recurrence:** dp[i] = max(dp[i-1], dp[i-2] + nums[i])\n\n**Similar problems:**\n- House Robber II (circular array variant)\n- Paint House (similar choice-based DP)\n- Maximum Subarray (different but uses DP)\n\n**Key insight:** At each house, we choose between two options: skip (keep previous max) or rob (add current value to max from 2 houses back). The constraint prevents robbing adjacent houses, so robbing house i means we must skip house i-1.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: dp[i] = Maximum Money Robbed Up to House i\n\n**Invariant maintained throughout:**\n- **State definition:** dp[i] = maximum money that can be robbed from houses [0..i]\n- **Base cases:** dp[0] = nums[0], dp[1] = max(nums[0], nums[1])\n- **Recurrence:** dp[i] = max(dp[i-1], dp[i-2] + nums[i])\n- **Optimal substructure:** Optimal solution for i houses uses optimal solution for i-1 or i-2 houses\n\n**Why this works:**\n- To maximize money up to house i, we choose the better of:\n  - Skip house i: keep maximum from houses [0..i-1] = dp[i-1]\n  - Rob house i: take maximum from houses [0..i-2] + nums[i] = dp[i-2] + nums[i]\n- The max of these two choices gives the optimal solution\n\n**Invariant guarantee:** After computing dp[i], it contains the maximum money that can be robbed from houses [0..i] without robbing two adjacent houses. The final answer dp[n-1] is the maximum money.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: House Robber DP State\n\n**State variables:**\n- **`dp`** - Array where dp[i] = max money robbed up to house i (or two variables for space optimization)\n- **`nums`** - Array of money in each house\n- **`prev`** - Max money up to previous house (for space optimization)\n- **`curr`** - Max money up to current house (for space optimization)\n\n**State transitions (space-optimized):**\n1. **Base cases:** prev = nums[0], curr = max(nums[0], nums[1])\n2. **Loop:** For i from 2 to n-1:\n   - next = max(curr, prev + nums[i])\n   - prev = curr\n   - curr = next\n3. **Result:** Return curr (max money up to last house)\n\n**State validity:** After processing house i, curr contains max money up to house i, prev contains max money up to house i-1.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Greedy (Always Pick Maximum)**\n- **Why it fails:** Doesn't guarantee global optimum\n- **Issue:** Local optimal choices may miss better combinations\n- **Example:** [2,7,9,3,1] - greedy picks 9, but optimal is 2+9+1=12\n- **Better:** DP considers all possibilities and finds global optimum\n\n**Approach 2: Try All Combinations**\n- **Why it fails:** Exponential time O(2^n)\n- **Issue:** Too many combinations to try, especially for large n\n- **Better:** DP reduces to O(n) time\n\n**Approach 3: Recursion Without Memoization**\n- **Why it fails:** Exponential time due to overlapping subproblems\n- **Issue:** Recalculates same subproblems many times\n- **Better:** DP stores results, avoiding recalculation\n\n**Our approach wins because:** DP with optimal substructure finds the maximum money in O(n) time with O(1) space (when optimized). The recurrence relation naturally captures the constraint and choice structure.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `[2,1,1,2]`:\n\n- Step 1: Initialize dp array where dp[i] = max money we can rob up to house i\n- Step 2: dp[0] = 2 (rob first house, get $2)\n- Step 3: dp[1] = max(2, 1) = 2 (better to skip second house, keep $2 from first)\n- Step 4: dp[2] = max(2, 2+1) = 3 (rob first and third houses: $2 + $1 = $3)\n- Step 5: dp[3] = max(3, 2+2) = 4 (rob second and fourth houses: $1 + $2 = $3, or first and fourth: $2 + $2 = $4)\n- Final answer: **4**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function signature and handle edge cases\n\n```javascript\nfunction rob(nums) {\n    if (nums.length <= 2) return Math.max(...nums);\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function rob(nums) {\n    if (nums.length <= 2) return Math.max(...nums);\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize DP array with base cases\n\n```javascript\nfunction rob(nums) {\n    if (nums.length <= 2) return Math.max(...nums);\n    const dp = new Array(nums.length);\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    const dp = new Array(nums.length);"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Set first house value (only option is to rob it)\n\n```javascript\nfunction rob(nums) {\n    if (nums.length <= 2) return Math.max(...nums);\n    const dp = new Array(nums.length);\n    dp[0] = nums[0];\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    dp[0] = nums[0];"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Set second house value (max of first or second house)\n\n```javascript\nfunction rob(nums) {\n    if (nums.length <= 2) return Math.max(...nums);\n    const dp = new Array(nums.length);\n    dp[0] = nums[0];\n    dp[1] = Math.max(nums[0], nums[1]);\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    dp[1] = Math.max(nums[0], nums[1]);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Start loop from third house onwards\n\n```javascript\nfunction rob(nums) {\n    if (nums.length <= 2) return Math.max(...nums);\n    const dp = new Array(nums.length);\n    dp[0] = nums[0];\n    dp[1] = Math.max(nums[0], nums[1]);\n    for (let i = 2; i < nums.length; i++) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "    for (let i = 2; i < nums.length; i++) {\n    }"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Apply core DP recurrence: max(skip current, take current + best from i-2)\n\n```javascript\nfunction rob(nums) {\n    if (nums.length <= 2) return Math.max(...nums);\n    const dp = new Array(nums.length);\n    dp[0] = nums[0];\n    dp[1] = Math.max(nums[0], nums[1]);\n    for (let i = 2; i < nums.length; i++) {\n        dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i]);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i]);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Return maximum money from last house (optimal solution)\n\n```javascript\nfunction rob(nums) {\n    if (nums.length <= 2) return Math.max(...nums);\n    const dp = new Array(nums.length);\n    dp[0] = nums[0];\n    dp[1] = Math.max(nums[0], nums[1]);\n    for (let i = 2; i < nums.length; i++) {\n        dp[i] = Math.max(dp[i-1], dp[i-2] + nums[i]);\n    }\n    return dp[nums.length - 1];\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "    return dp[nums.length - 1];"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering linear dynamic programming with House Robber! You've successfully learned how to break down complex optimization problems into simpler subproblems and build solutions efficiently from the ground up. Next, we'll tackle linked-list-cycle, where you'll explore cycle detection algorithms and deepen your understanding of pointer manipulation techniques.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

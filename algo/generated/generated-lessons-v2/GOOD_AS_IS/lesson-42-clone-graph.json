@@ -1,0 +1,448 @@
+{
+  "id": "clone-graph",
+  "title": "Clone Graph",
+  "pattern": "graph traversal + deep copy",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 42,
+    "tier": "ADVANCED",
+    "lessonOrderTag": "ADVANCED-42",
+    "introduces": [
+      "graph-node",
+      "deep-copy-graph",
+      "adjacency-list",
+      "clone-mapping"
+    ],
+    "assumesAlreadyTaught": [
+      "graph-concept",
+      "hash-map",
+      "recursion-concept"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "course-schedule"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Create an empty hash map to store the mapping between original nodes and their cloned counterparts"
+    },
+    {
+      "id": "ps2",
+      "text": "Define a recursive helper function that takes an original node as input"
+    },
+    {
+      "id": "ps3",
+      "text": "In the helper function, check if the current node is null - if so, return null"
+    },
+    {
+      "id": "ps4",
+      "text": "Check if the current node already exists in the hash map - if so, return the existing clone"
+    },
+    {
+      "id": "ps5",
+      "text": "Create a new clone node with the same value as the original node and add it to the hash map"
+    },
+    {
+      "id": "ps6",
+      "text": "Iterate through all neighbors of the original node and recursively clone each neighbor"
+    },
+    {
+      "id": "ps7",
+      "text": "Add each cloned neighbor to the current clone's neighbors list"
+    },
+    {
+      "id": "ps8",
+      "text": "Return the cloned node and call the helper function with the input graph's starting node"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great job conquering Number of Islands! Now that you've mastered graph traversal techniques, let's level up by combining graph traversal with deep copying in the Clone Graph problem.\n\nThis challenge introduces a powerful pattern: **Graph Traversal + Deep Copy**. You'll traverse through a graph (just like you did with the islands), but this time you'll be creating an entirely new copy of the graph as you explore it. It's like drawing a map while you're exploring new territory!\n\nHere are 3 key skills you'll develop:\n\n1. **Master deep copying techniques** - Learn to create independent copies of complex data structures\n2. **Handle node references efficiently** - Use hash maps to track original-to-copy mappings and avoid infinite loops\n3. **Combine traversal with construction** - Build new structures while exploring existing ones seamlessly\n\nThis pattern shows up everywhere in system design, data serialization, and advanced algorithms. You're building some seriously valuable problem-solving muscles here!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Dfs traversal** - Depth-first search algorithm for exploring graph nodes systematically\n- **Node references** - Understanding object references and how to create new instances while maintaining relationships\n- **Visited tracking** - Techniques for marking nodes as processed to avoid infinite loops in cyclic graphs\n- **Graph representation** - Knowledge of adjacency list representation and node structure in graphs\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Dfs traversal** - Depth-first search algorithm for exploring graph nodes systematically\n- **Node references** - Understanding object references and how to create new instances while maintaining relationships\n- **Visited tracking** - Techniques for marking nodes as processed to avoid infinite loops in cyclic graphs\n- **Graph representation** - Knowledge of adjacency list representation and node structure in graphs\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Dfs traversal** - Depth-first search algorithm for exploring graph nodes systematically\n- **Node references** - Understanding object references and how to create new instances while maintaining relationships\n- **Visited tracking** - Techniques for marking nodes as processed to avoid infinite loops in cyclic graphs\n- **Graph representation** - Knowledge of adjacency list representation and node structure in graphs\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Dfs traversal** - Depth-first search algorithm for exploring graph nodes systematically\n- **Node references** - Understanding object references and how to create new instances while maintaining relationships\n- **Visited tracking** - Techniques for marking nodes as processed to avoid infinite loops in cyclic graphs\n- **Graph representation** - Knowledge of adjacency list representation and node structure in graphs\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Dfs traversal** - Depth-first search algorithm for exploring graph nodes systematically\n- **Node references** - Understanding object references and how to create new instances while maintaining relationships\n- **Visited tracking** - Techniques for marking nodes as processed to avoid infinite loops in cyclic graphs\n- **Graph representation** - Knowledge of adjacency list representation and node structure in graphs\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Clone Graph problem asks for.\n\nThink of **copying a recipe network** where each recipe card references other recipes as ingredients (like \"Caesar Salad\" references \"Croutons Recipe\" and \"Caesar Dressing Recipe\"). To clone the entire recipe collection, you visit each original card, create a blank copy, then go through again to fill in all the cross-references using your new copied cards instead of the originals. This two-pass approach (create nodes, then connect edges) ensures every recipe in your copied collection points to other recipes within the same copied set, not back to the original collection.\n\n# Clone Graph - Problem Statement\n\n## What are we trying to do?\n\nYou're given a connected undirected graph, and you need to create a **deep copy** (clone) of it. Think of it like photocopying a network diagram - you want an identical copy where all the connections are preserved, but it's completely separate from the original.\n\nThe graph is represented using an **adjacency list** where each node contains:\n- A unique `val` (typically just 1, 2, 3, etc.)\n- A list of `neighbors` (references to other nodes it's connected to)\n\n## The key challenge\n\nYou can't just copy the node values - you need to create entirely new node objects while preserving all the relationships between them. It's like rebuilding a social network from scratch while keeping all the friendships intact.\n\n## Example walkthrough\n\nLet's say we have `adjList = [[2,4],[1,3],[2,4],[1,3]]`\n\n**What this represents:**\n- Node 1 is connected to nodes 2 and 4\n- Node 2 is connected to nodes 1 and 3  \n- Node 3 is connected to nodes 2 and 4\n- Node 4 is connected to nodes 1 and 3\n\n**Visually, it looks like:**\n```\n1 --- 2\n|     |\n|     |\n4 --- 3\n```\n\n**What we want to create:**\nA completely new set of nodes (let's call them 1', 2', 3', 4') where:\n- Node 1' connects to nodes 2' and 4'\n- Node 2' connects to nodes 1' and 3'\n- Node 3' connects to nodes 2' and 4'\n- Node 4' connects to nodes 1' and 3'\n\nSame structure, but entirely different objects in memory!\n\n## Why this works\n\nThe example works because we maintain the exact same connectivity pattern in our cloned graph. Every relationship that existed in the original graph exists in the clone, but with the new node objects. If you traverse the original graph in any way, you should be able to traverse the cloned graph in exactly the same manner.\n\nThe tricky part is making sure you don't create duplicate nodes when you encounter the same node through different paths - that's where techniques like DFS/BFS with a visited map come in handy!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to create a deep copy of an undirected graph where each node contains a value and a list of neighbors. What's the most effective approach to ensure all nodes and their connections are properly cloned without infinite loops?",
+      "choices": [
+        {
+          "label": "Use BFS to visit all nodes and create new nodes with the same values, then reconstruct all edges in a second pass",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use DFS/BFS with a hash map to track original→clone node mappings, creating clones and their neighbor relationships in a single traversal",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this approach might seem logical, it's problematic because: 1) You'd need to store the original graph structure somehow to reconstruct edges, which is complex, 2) It requires two separate passes which is inefficient, 3) Matching original nodes to cloned nodes in the second pass becomes difficult without additional data structures, and 4) It doesn't naturally handle the mapping between original and cloned nodes during traversal.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Graph Traversal with Clone Mapping\n\n**This problem follows the \"DFS/BFS with visited tracking\" pattern:**\n- **Graph traversal** - DFS or BFS to visit all nodes\n- **Clone mapping** - Hash map tracks original → clone relationships\n- **Cycle handling** - Visited map prevents infinite loops\n- **Edge reconstruction** - Clone neighbors using the mapping\n\n**Similar problems:**\n- Copy List with Random Pointer (similar clone mapping)\n- Clone Binary Tree (tree version)\n- Number of Islands (graph traversal)\n\n**Key insight:** We need to create clones and connect them in a single pass. The hash map serves dual purpose: prevents cycles and provides clone references for edge reconstruction.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Visited Map Contains All Cloned Nodes\n\n**Invariant maintained throughout:**\n- **Visited map:** `visited[originalNode] = clonedNode` for all processed nodes\n- **Clone completeness:** Every original node has exactly one clone\n- **Edge completeness:** All edges in original graph exist in cloned graph\n\n**Why this works:**\n- When we first encounter a node, we create its clone and store the mapping\n- If we encounter it again (through a different path), we use the existing clone\n- This prevents duplicate clones and infinite loops\n- When cloning neighbors, we use the mapping to get the correct clone references\n\n**Invariant guarantee:** After traversal completes, `visited` contains a clone for every node in the original graph, and all edges are correctly replicated in the cloned graph using these clone references.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Clone Graph State\n\n**State variables:**\n- **`visited`** - Hash map: `originalNode → clonedNode`\n- **`node`** - Current original node being processed\n- **Return value** - Cloned node (or null if input is null)\n\n**State transitions:**\n1. **Base case:** If `node === null`, return `null`\n2. **Already cloned:** If `node in visited`, return `visited[node]`\n3. **Create clone:** Create new node with same value, store in `visited[node] = clone`\n4. **Clone neighbors:** For each neighbor, recursively clone it and add to `clone.neighbors`\n\n**State validity:** Graph is fully cloned when all nodes and edges are replicated.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Two-Pass (Create Nodes, Then Connect)**\n- **Why it fails:** Complex and inefficient\n- **Issue:** Need to store graph structure, match nodes in second pass\n- **Better:** Single-pass approach creates and connects simultaneously\n\n**Approach 2: Clone Without Visited Map**\n- **Why it fails:** Infinite loops in cyclic graphs\n- **Issue:** Same node encountered multiple times creates duplicate clones\n- **Better:** Visited map prevents cycles and ensures one clone per node\n\n**Approach 3: Shallow Copy (Copy References)**\n- **Why it fails:** Doesn't create deep copy\n- **Issue:** Cloned nodes still reference original nodes\n- **Better:** Create new node objects and clone neighbors recursively\n\n**Our approach wins because:** DFS/BFS with visited map creates clones and connects edges in a single pass, handles cycles correctly, and ensures a true deep copy of the graph structure.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use a **hash map** to maintain a mapping between **original nodes and their clones** while performing DFS/BFS traversal. This prevents infinite loops in cyclic graphs and ensures each node is cloned exactly once. For example, when cloning node 1 with neighbors [2,4], we first create clone(1), store the mapping, then recursively clone its neighbors - if we encounter node 1 again through another path, we return the existing clone from our hash map instead of creating a duplicate. This approach works because it **breaks the recursion cycle** while preserving the exact graph structure and connections.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `adjList=[[2,4],[1,3],[2,4],[1,3]]`:\n\n- Step 1: Start DFS from node 1, create new node 1, add to visited map {1: Node(1)}\n- Step 2: Process node 1's neighbor 2, create new node 2, add to map {1: Node(1), 2: Node(2)}, connect 1→2\n- Step 3: Process node 2's neighbor 3, create new node 3, add to map {1: Node(1), 2: Node(2), 3: Node(3)}, connect 2→3\n- Step 4: Process node 3's neighbor 4, create new node 4, add to map {1: Node(1), 2: Node(2), 3: Node(3), 4: Node(4)}, connect 3→4\n- Step 5: Process node 4's neighbor 1 (already visited), connect 4→1 using existing clone\n- Step 6: Backtrack and complete remaining connections: 4→3, 3→2, 2→1 using visited map\n- Final: **cloned graph with same structure**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7",
+        "ps8"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create the main function that takes a node parameter and initialize a Map to track original→clone mappings\n\n```javascript\nvar cloneGraph = function(node) {\n    const visited = new Map();\n};\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "var cloneGraph = function(node) {\n    const visited = new Map();\n};"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Add base case - if input node is null, return null immediately\n\n```javascript\nvar cloneGraph = function(node) {\n    const visited = new Map();\n    if (!node) return null;\n};\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    if (!node) return null;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Define recursive helper function that takes original node as parameter\n\n```javascript\nvar cloneGraph = function(node) {\n    const visited = new Map();\n    if (!node) return null;\n    \n    function clone(original) {\n    }\n};\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    function clone(original) {\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Check if current node already exists in our mapping - if so, return the existing clone\n\n```javascript\nvar cloneGraph = function(node) {\n    const visited = new Map();\n    if (!node) return null;\n    \n    function clone(original) {\n        if (visited.has(original)) {\n            return visited.get(original);\n        }\n    }\n};\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        if (visited.has(original)) {\n            return visited.get(original);\n        }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Create new node with same value as original and store mapping immediately to prevent cycles\n\n```javascript\nvar cloneGraph = function(node) {\n    const visited = new Map();\n    if (!node) return null;\n    \n    function clone(original) {\n        if (visited.has(original)) {\n            return visited.get(original);\n        }\n        \n        const newNode = new Node(original.val);\n        visited.set(original, newNode);\n    }\n};\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        const newNode = new Node(original.val);\n        visited.set(original, newNode);"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Iterate through original node's neighbors array to process each connection\n\n```javascript\nvar cloneGraph = function(node) {\n    const visited = new Map();\n    if (!node) return null;\n    \n    function clone(original) {\n        if (visited.has(original)) {\n            return visited.get(original);\n        }\n        \n        const newNode = new Node(original.val);\n        visited.set(original, newNode);\n        \n        for (let neighbor of original.neighbors) {\n        }\n    }\n};\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        for (let neighbor of original.neighbors) {\n        }"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Recursively clone each neighbor and add to current node's neighbors array\n\n```javascript\nvar cloneGraph = function(node) {\n    const visited = new Map();\n    if (!node) return null;\n    \n    function clone(original) {\n        if (visited.has(original)) {\n            return visited.get(original);\n        }\n        \n        const newNode = new Node(original.val);\n        visited.set(original, newNode);\n        \n        for (let neighbor of original.neighbors) {\n            newNode.neighbors.push(clone(neighbor));\n        }\n    }\n};\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "            newNode.neighbors.push(clone(neighbor));"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return the newly created clone node from helper function\n\n```javascript\nvar cloneGraph = function(node) {\n    const visited = new Map();\n    if (!node) return null;\n    \n    function clone(original) {\n        if (visited.has(original)) {\n            return visited.get(original);\n        }\n        \n        const newNode = new Node(original.val);\n        visited.set(original, newNode);\n        \n        for (let neighbor of original.neighbors) {\n            newNode.neighbors.push(clone(neighbor));\n        }\n        \n        return newNode;\n    }\n};\n```",
+      "action": "next",
+      "next": "code-09",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "        return newNode;"
+    },
+    {
+      "stepId": "code-09",
+      "mentorSays": "Call the recursive clone function with input node and return the result\n\n```javascript\nvar cloneGraph = function(node) {\n    const visited = new Map();\n    if (!node) return null;\n    \n    function clone(original) {\n        if (visited.has(original)) {\n            return visited.get(original);\n        }\n        \n        const newNode = new Node(original.val);\n        visited.set(original, newNode);\n        \n        for (let neighbor of original.neighbors) {\n            newNode.neighbors.push(clone(neighbor));\n        }\n        \n        return newNode;\n    }\n    \n    return clone(node);\n};\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps9"
+      ],
+      "example": "    return clone(node);"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering graph traversal with deep copying in Clone Graph! You've successfully navigated the complexity of creating independent copies of connected nodes while preserving all relationships. Next, we'll tackle Course Schedule, where you'll apply topological sorting to detect cycles in directed graphs—a powerful technique for solving dependency problems!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

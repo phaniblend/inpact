@@ -1,0 +1,633 @@
+{
+  "id": "reverse-linked-list",
+  "title": "Reverse Linked List",
+  "pattern": "pointer manipulation",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 18,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-18",
+    "introduces": [
+      "pointer-reversal",
+      "prev-curr-next-pattern",
+      "iterative-list-traversal"
+    ],
+    "assumesAlreadyTaught": [
+      "linked-list-concept",
+      "node-structure"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "merge-two-sorted-lists"
+    ]
+  },
+  "problemStatement": {
+    "description": "Reverse a singly linked list. Return the head of the reversed list.",
+    "inputs": [
+      "head: head node of a linked list (can be null, length 0 to 5000)"
+    ],
+    "outputs": [
+      "Node: head of the reversed linked list"
+    ],
+    "examples": [
+      {
+        "input": "head = [1,2,3,4,5]",
+        "output": "[5,4,3,2,1]",
+        "explanation": "Reverse all links: 1→2→3→4→5 becomes 5→4→3→2→1. Use three pointers: prev, curr, next to reverse each link."
+      },
+      {
+        "input": "head = [1,2]",
+        "output": "[2,1]",
+        "explanation": "Reverse: 1→2 becomes 2→1. Save next, reverse link, advance pointers."
+      },
+      {
+        "input": "head = []",
+        "output": "[]",
+        "explanation": "Empty list, return null."
+      }
+    ],
+    "constraints": [
+      "Number of nodes in list is in range [0, 5000]",
+      "-5000 <= Node.val <= 5000"
+    ],
+    "realWorldUse": [
+      "Linked list manipulation",
+      "Reversing sequences",
+      "Pointer manipulation practice",
+      "Foundation for many linked list problems"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "Reversing a linked list requires reversing each link while preserving the ability to continue traversal. The three-pointer pattern (prev, curr, next) allows us to save the next node before reversing the current link.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Problem asks to reverse linked list → think three-pointer pattern",
+      "SIGNAL 2: Need to reverse links while traversing → prev-curr-next technique",
+      "SIGNAL 3: Pointer manipulation required → save next before modifying links"
+    ],
+    "patternRules": [
+      "If problem involves reversing linked list → use three-pointer pattern",
+      "When you see 'reverse', 'flip', or 'invert' linked list → consider prev-curr-next",
+      "If need to modify links while traversing → save next pointer first"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - we need to systematically reverse all links, not make choices.",
+      "bruteForce": "Creating new list and copying values works but uses O(n) space. In-place reversal uses O(1) space.",
+      "alternative": "Recursive reversal works but uses O(n) stack space. Iterative approach is more space-efficient."
+    }
+  },
+  "coreInvariant": {
+    "statement": "After processing node i, all nodes from head to node i-1 are reversed, with prev pointing to the new head of the reversed portion, and curr pointing to the next node to process.",
+    "explanation": "This invariant holds because we reverse each link one at a time, moving from front to back. After reversing node i's link, nodes 0 to i-1 are fully reversed, and we advance to node i+1.",
+    "whyItMatters": "This invariant guarantees correctness: after processing all nodes, the entire list is reversed, with prev pointing to the new head (originally the tail)."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "prev",
+        "meaning": "Pointer to the head of the reversed portion (starts at null)",
+        "indexing": "Initially null, becomes new head after processing"
+      },
+      {
+        "name": "curr",
+        "meaning": "Pointer to the current node being processed (starts at head)",
+        "indexing": "Moves through list: curr = curr.next"
+      },
+      {
+        "name": "next",
+        "meaning": "Temporary pointer to save the next node before reversing link",
+        "indexing": "Saves curr.next before modifying curr.next"
+      }
+    ],
+    "baseCases": [
+      "If head is null: return null (empty list)",
+      "If head.next is null: return head (single node, already reversed)"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "While curr != null:",
+        "transition": "Save next = curr.next, then reverse link: curr.next = prev",
+        "explanation": "Save next node before reversing link to avoid losing reference. Reverse current node's link to point backward.",
+        "example": "If curr points to node 2, save next = node 3, then set node 2.next = node 1"
+      },
+      {
+        "condition": "After reversing link:",
+        "transition": "prev = curr, curr = next (advance both pointers)",
+        "explanation": "Move prev to current node (new head of reversed portion), move curr to next node to process.",
+        "example": "After reversing node 2, prev = node 2, curr = node 3"
+      }
+    ],
+    "decisionTree": {
+      "root": "For each node, reverse its link and advance pointers",
+      "branches": [
+        "Save next = curr.next",
+        "Reverse link: curr.next = prev",
+        "Advance: prev = curr, curr = next",
+        "After all nodes: return prev (new head)"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "head = [1,2,3,4,5]",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Initialize: prev = null, curr = node 1",
+        "state": "prev = null, curr = 1→2→3→4→5",
+        "logic": "Start with prev at null, curr at head",
+        "result": "Ready to reverse"
+      },
+      {
+        "step": 2,
+        "description": "Iteration 1: next = 2, curr.next = null, prev = 1, curr = 2",
+        "state": "prev = 1→null, curr = 2→3→4→5",
+        "logic": "Save next, reverse link, advance pointers",
+        "result": "Node 1 reversed"
+      },
+      {
+        "step": 3,
+        "description": "Iteration 2: next = 3, curr.next = 1, prev = 2, curr = 3",
+        "state": "prev = 2→1→null, curr = 3→4→5",
+        "logic": "Continue reversing",
+        "result": "Nodes 1-2 reversed"
+      },
+      {
+        "step": 4,
+        "description": "Iteration 3: next = 4, curr.next = 2, prev = 3, curr = 4",
+        "state": "prev = 3→2→1→null, curr = 4→5",
+        "logic": "Continue reversing",
+        "result": "Nodes 1-3 reversed"
+      },
+      {
+        "step": 5,
+        "description": "Iteration 4: next = 5, curr.next = 3, prev = 4, curr = 5",
+        "state": "prev = 4→3→2→1→null, curr = 5",
+        "logic": "Continue reversing",
+        "result": "Nodes 1-4 reversed"
+      },
+      {
+        "step": 6,
+        "description": "Iteration 5: next = null, curr.next = 4, prev = 5, curr = null",
+        "state": "prev = 5→4→3→2→1→null, curr = null",
+        "logic": "Last node reversed, curr is null",
+        "result": "Return prev = node 5 (new head)"
+      }
+    ],
+    "keyInsight": "The three-pointer pattern (prev, curr, next) allows us to reverse each link while preserving the ability to continue traversal. By saving next before modifying curr.next, we never lose the reference to the rest of the list."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Not saving next before reversing link",
+      "symptom": "Lose reference to rest of list, cannot continue traversal",
+      "fix": "Always save next = curr.next before setting curr.next = prev",
+      "example": "If you do curr.next = prev before saving next, you lose the reference to curr.next"
+    },
+    {
+      "mistake": "Returning curr instead of prev",
+      "symptom": "Returns null (curr is null at end) instead of new head",
+      "fix": "Return prev, which points to the new head after processing",
+      "example": "After loop, curr = null, prev = new head, so return prev"
+    },
+    {
+      "mistake": "Not handling empty list",
+      "symptom": "Error when head is null",
+      "fix": "Check if head is null, return null immediately",
+      "example": "If head is null, don't enter loop, return null"
+    },
+    {
+      "mistake": "Reversing links in wrong order",
+      "symptom": "May break list structure or create cycles",
+      "fix": "Always: save next, reverse link, then advance pointers",
+      "example": "Order matters: next = curr.next, curr.next = prev, prev = curr, curr = next"
+    },
+    {
+      "mistake": "Using recursion without considering stack space",
+      "symptom": "O(n) stack space, may cause stack overflow for long lists",
+      "fix": "Use iterative approach for O(1) space, or note recursion uses O(n) space",
+      "example": "Recursive solution works but uses call stack, iterative is more space-efficient"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a three-pointer linked list reversal problem.",
+      "",
+      "I'll use prev, curr, and next pointers:",
+      "- Initialize prev = null, curr = head",
+      "- While curr != null:",
+      "  - Save next = curr.next",
+      "  - Reverse link: curr.next = prev",
+      "  - Advance: prev = curr, curr = next",
+      "- Return prev (new head)",
+      "",
+      "Time complexity: O(n) - single pass through list",
+      "Space complexity: O(1) - only using three pointers",
+      "",
+      "Edge cases:",
+      "- Empty list: return null",
+      "- Single node: return head (already reversed)",
+      "- The key is saving next before modifying curr.next"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Reverse Linked List (return array of values)",
+      "approachChange": "Can traverse list, collect values, reverse array",
+      "solution": "Traverse list, store values in array, reverse array, return. Simpler but uses O(n) space."
+    },
+    "harder": {
+      "problem": "Reverse Linked List II (reverse portion from m to n)",
+      "approachChange": "Reverse only a sublist, not entire list. Need to reconnect reversed portion with rest.",
+      "solution": "Find m-th node, reverse from m to n, reconnect with nodes before m and after n. More complex pointer management."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "If head is null: return null"
+    },
+    {
+      "id": "ps2",
+      "text": "Initialize prev = null, curr = head"
+    },
+    {
+      "id": "ps3",
+      "text": "While curr != null:"
+    },
+    {
+      "id": "ps4",
+      "text": "  Save next = curr.next"
+    },
+    {
+      "id": "ps5",
+      "text": "  Reverse link: curr.next = prev"
+    },
+    {
+      "id": "ps6",
+      "text": "  Advance prev = curr"
+    },
+    {
+      "id": "ps7",
+      "text": "  Advance curr = next"
+    },
+    {
+      "id": "ps8",
+      "text": "Return prev (new head)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Ready to flip things around? After detecting cycles in linked lists, now we're going to master one of the most fundamental pointer manipulation patterns - reversing a linked list!\n\nYou'll learn the art of pointer manipulation, which is like learning to juggle with data structures. It might seem tricky at first, but once you get it, you'll feel like a coding wizard!\n\nHere's what you'll walk away with:\n\n• **Master the three-pointer technique** - Learn to gracefully swap connections without losing track of nodes\n• **Handle edge cases like a pro** - Confidently deal with empty lists, single nodes, and everything in between  \n• **Apply reversal patterns everywhere** - Use this core skill in palindrome checks, list rotations, and countless other problems\n\nThis is one of those skills that makes other linked list problems click into place. Let's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Pointer-manipulation** - Understanding how to modify and reassign pointer/reference variables\n- **Iterative-algorithms** - Knowledge of loop-based problem solving and iteration patterns\n- **Variable-swapping** - Techniques for temporarily storing and exchanging variable values\n- **Linked-list-traversal** - Ability to navigate through linked list nodes sequentially\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Pointer-manipulation** - Understanding how to modify and reassign pointer/reference variables\n- **Iterative-algorithms** - Knowledge of loop-based problem solving and iteration patterns\n- **Variable-swapping** - Techniques for temporarily storing and exchanging variable values\n- **Linked-list-traversal** - Ability to navigate through linked list nodes sequentially\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Pointer-manipulation** - Understanding how to modify and reassign pointer/reference variables\n- **Iterative-algorithms** - Knowledge of loop-based problem solving and iteration patterns\n- **Variable-swapping** - Techniques for temporarily storing and exchanging variable values\n- **Linked-list-traversal** - Ability to navigate through linked list nodes sequentially\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Pointer-manipulation** - Understanding how to modify and reassign pointer/reference variables\n- **Iterative-algorithms** - Knowledge of loop-based problem solving and iteration patterns\n- **Variable-swapping** - Techniques for temporarily storing and exchanging variable values\n- **Linked-list-traversal** - Ability to navigate through linked list nodes sequentially\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Pointer-manipulation** - Understanding how to modify and reassign pointer/reference variables\n- **Iterative-algorithms** - Knowledge of loop-based problem solving and iteration patterns\n- **Variable-swapping** - Techniques for temporarily storing and exchanging variable values\n- **Linked-list-traversal** - Ability to navigate through linked list nodes sequentially\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Reverse Linked List problem asks for.\n\nImagine you're organizing a chain of paper clips where each clip points to the next one in line. To reverse the chain, you go through each clip one by one, carefully unhooking it from the clip it's pointing to and instead making it point backward to the previous clip you just processed, until the entire chain flows in the opposite direction.\n\n# Reverse Linked List\n\n## What the problem asks\n\nYou're given the head of a singly linked list, and you need to reverse it. Basically, you want to flip the direction of all the arrows so that what used to point forward now points backward, and return the new head of the reversed list.\n\nThink of it like having a chain of people holding hands in a line - you want them to turn around and hold the other person's hand instead, so the whole line faces the opposite direction.\n\n## Example\n\nLet's say you start with: **1 → 2 → 3 → 4 → 5**\n\nAfter reversing, you should get: **5 → 4 → 3 → 2 → 1**\n\n## Why this example works\n\nThe reversal flips every connection:\n- Originally, 1 pointed to 2, but now 2 points to 1\n- Originally, 2 pointed to 3, but now 3 points to 2  \n- Originally, 3 pointed to 4, but now 4 points to 3\n- And so on...\n\nThe key insight is that the last node (5) becomes the new head since it's now at the front, while the original head (1) becomes the tail and points to nothing (null). Every node that used to have someone pointing to it now points back to that same node instead.\n\nIt's like reading the same sequence of numbers, but walking through them in the completely opposite direction!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "When reversing a linked list, what's the key challenge you need to solve, and how would you handle the pointer relationships?",
+      "choices": [
+        {
+          "label": "Use recursion to reverse from the tail, then reconnect each node as the call stack unwinds",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Track three pointers (prev, curr, next) and iteratively reverse each link: save next, point curr backwards to prev, then advance all three pointers",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works, recursion uses O(n) space due to call stack depth and is less intuitive. The recursive approach also risks stack overflow for very long lists and doesn't directly teach the fundamental pointer manipulation skills needed for similar problems.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **three pointers** (prev, curr, next) to systematically reverse each link while preserving the ability to continue traversal. At each step, you **reverse the current node's pointer** to point backward (curr.next = prev), but first save the next node to avoid losing the rest of the list. This works because you maintain references to both where you came from (prev) and where you're going (next), allowing you to **advance all three pointers** in lockstep without breaking the chain. The process continues until you've reversed every link in the list.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `1→2→3→4→5`:\n\n- Step 1: Initialize prev=null, curr=1→2→3→4→5\n- Step 2: Store next=2→3→4→5, point 1→null, move prev=1, curr=2→3→4→5\n- Step 3: Store next=3→4→5, point 2→1, move prev=1←2, curr=3→4→5\n- Step 4: Store next=4→5, point 3→1←2, move prev=1←2←3, curr=4→5\n- Step 5: Store next=5, point 4→1←2←3, move prev=1←2←3←4, curr=5\n- Step 6: Store next=null, point 5→1←2←3←4, move prev=1←2←3←4←5, curr=null\n- Step 7: Current is null, return prev pointer\n- Final answer: **5→4→3→2→1**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function with ListNode parameter\n\n```javascript\nfunction reverseList(head) {\n\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function reverseList(head) {\n\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize prev pointer to null (new tail)\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let prev = null;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Initialize curr pointer to head (current node to process)\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let curr = head;"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Start while loop - continue until we've processed all nodes\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n    \n    while (curr !== null) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    while (curr !== null) {\n    }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Store next node before we lose the reference\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n    \n    while (curr !== null) {\n        let next = curr.next;\n    }\n}\n```",
+      "action": "next",
+      "next": "save-next-warning"
+    },
+    {
+      "stepId": "save-next-warning",
+      "mentorSays": "### CRITICAL: Save Next First!\n\n**Why this is essential:**\n\nWhen we do `curr.next = prev` in the next step, we **overwrite** the pointer to the next node. If we haven't saved it first, we lose access to the rest of the list!\n\n**Wrong order (BUG):**\n```javascript\ncurr.next = prev;  // Lost reference to next node!\nlet next = curr.next;  // next is now prev, not the original next!
+```\n\n**Correct order:**\n```javascript\nlet next = curr.next;  // ✅ Save first!\ntemp = curr.next  // Alternative: temp = curr.next\ncurr.next = prev;  // Now safe to overwrite\n```\n\n**Example:**\n```\nList: 1 → 2 → 3\n\nWithout saving:\n  curr.next = prev  // 1 → null (lost 2→3!)\n  // Can't continue - rest of list is gone!\n\nWith saving:\n  next = curr.next  // next = 2→3 (saved!)\n  curr.next = prev  // 1 → null (safe, we have next)\n  curr = next  // Continue with 2→3\n```\n\n**This prevents node loss bugs** - always save `temp = curr.next` before reassigning!",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        let next = curr.next;"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Reverse the current link - point curr back to prev\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n    \n    while (curr !== null) {\n        let next = curr.next;\n        curr.next = prev;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        curr.next = prev;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Advance prev and curr pointers for next iteration\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n    \n    while (curr !== null) {\n        let next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        prev = curr;\n        curr = next;"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return prev - it's now pointing to the new head\n\n```javascript\nfunction reverseList(head) {\n    let prev = null;\n    let curr = head;\n    \n    while (curr !== null) {\n        let next = curr.next;\n        curr.next = prev;\n        prev = curr;\n        curr = next;\n    }\n    \n    return prev;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "    return prev;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering pointer manipulation with linked list reversal! You've learned how to carefully track and redirect node connections while traversing a data structure. Next, we'll tackle merge-two-sorted-lists, where you'll apply similar pointer techniques to combine sorted sequences efficiently.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,447 @@
+{
+  "id": "combination-sum",
+  "title": "Combination Sum",
+  "pattern": "backtracking (subsets)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 49,
+    "tier": "ADVANCED",
+    "lessonOrderTag": "ADVANCED-49",
+    "introduces": [
+      "backtracking-concept",
+      "decision-tree",
+      "explore-backtrack"
+    ],
+    "assumesAlreadyTaught": [
+      "recursion-concept",
+      "arrays",
+      "base-cases"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "permutations"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Define recursive function with parameters: candidates array, target sum, current index, and current combination"
+    },
+    {
+      "id": "ps2",
+      "text": "Base case: if target equals 0, add current combination to results and return"
+    },
+    {
+      "id": "ps3",
+      "text": "Base case: if target is negative or current index exceeds array bounds, return without adding"
+    },
+    {
+      "id": "ps4",
+      "text": "Include current number: add candidates[index] to combination, recurse with same index and reduced target"
+    },
+    {
+      "id": "ps5",
+      "text": "Backtrack: remove the last added number from current combination"
+    },
+    {
+      "id": "ps6",
+      "text": "Skip current number: recurse with next index (index + 1) and same target, keeping combination unchanged"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great work on mastering coin-change! Now we're leveling up to \"Combination Sum\" - another fantastic problem that builds on what you've learned but introduces an exciting new pattern: **backtracking with subsets**. \n\nWhile coin-change focused on finding the minimum number of coins, combination sum is all about exploring and finding ALL possible combinations that add up to our target. Think of it like mapping out every possible path through a decision tree - we'll make choices, explore where they lead, then backtrack and try different options until we've discovered every valid combination.\n\nHere are 3 key skills you'll develop:\n1. **Master backtracking fundamentals** - Learn when to explore deeper and when to step back and try alternatives\n2. **Handle duplicate avoidance** - Build techniques to prevent counting the same combination multiple times\n3. **Optimize pruning strategies** - Identify early when a path won't work and save computational time\n\nThis pattern is incredibly powerful and shows up in tons of interview problems, so you're building some serious problem-solving muscle here! \n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Backtracking** - Ability to explore solution paths and undo choices when they don't lead to valid solutions\n- **Target sum problems** - Understanding how to find combinations of numbers that add up to a specific target value\n- **Duplicate handling** - Knowledge of how to avoid generating duplicate combinations in recursive solutions\n- **Array iteration** - Skills in traversing arrays and making decisions about including/excluding elements\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Backtracking** - Ability to explore solution paths and undo choices when they don't lead to valid solutions\n- **Target sum problems** - Understanding how to find combinations of numbers that add up to a specific target value\n- **Duplicate handling** - Knowledge of how to avoid generating duplicate combinations in recursive solutions\n- **Array iteration** - Skills in traversing arrays and making decisions about including/excluding elements\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Backtracking** - Ability to explore solution paths and undo choices when they don't lead to valid solutions\n- **Target sum problems** - Understanding how to find combinations of numbers that add up to a specific target value\n- **Duplicate handling** - Knowledge of how to avoid generating duplicate combinations in recursive solutions\n- **Array iteration** - Skills in traversing arrays and making decisions about including/excluding elements\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Backtracking** - Ability to explore solution paths and undo choices when they don't lead to valid solutions\n- **Target sum problems** - Understanding how to find combinations of numbers that add up to a specific target value\n- **Duplicate handling** - Knowledge of how to avoid generating duplicate combinations in recursive solutions\n- **Array iteration** - Skills in traversing arrays and making decisions about including/excluding elements\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Backtracking** - Ability to explore solution paths and undo choices when they don't lead to valid solutions\n- **Target sum problems** - Understanding how to find combinations of numbers that add up to a specific target value\n- **Duplicate handling** - Knowledge of how to avoid generating duplicate combinations in recursive solutions\n- **Array iteration** - Skills in traversing arrays and making decisions about including/excluding elements\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Combination Sum problem asks for.\n\nImagine you're at a vending machine with coins in your pocket (which you can use multiple times), trying to find all the different ways to make exact change for a $2.50 snack. You might use five 50-cent coins, or two $1 coins plus one 50-cent coin, or one $1 coin plus three 50-cent coins - the algorithm explores each coin denomination recursively, building up combinations until it hits the target amount exactly.\n\n# Combination Sum Problem\n\nHey! Let me break down this classic problem for you.\n\n## What it's asking for\n\nYou're given an array of **distinct positive integers** (called candidates) and a **target number**. Your job is to find all the unique combinations where the candidates sum up to the target.\n\nHere's the key part: **you can use the same number multiple times** in a combination. So if you have `[2,3,6,7]` as candidates, you could use `2` twice, three times, or however many times you need.\n\n## Example walkthrough\n\nLet's say we have:\n- **Candidates**: `[2, 3, 6, 7]`  \n- **Target**: `7`\n\nThe answer would be: `[[2, 2, 3], [7]]`\n\n## Why this works\n\nLet me trace through how we get these combinations:\n\n**For `[2, 2, 3]`:**\n- We can use `2` twice: `2 + 2 = 4`\n- Then add `3`: `4 + 3 = 7` ✅ Hits our target!\n\n**For `[7]`:**\n- We can use `7` once: `7 = 7` ✅ Perfect match!\n\n**What about other possibilities?**\n- `[2, 3]` gives us `5` (too small)\n- `[3, 3]` gives us `6` (close, but not quite)\n- `[2, 2, 2]` gives us `6` (also too small)\n- `[6]` by itself is `6` (one short)\n\nSo `[2, 2, 3]` and `[7]` are the only two combinations that work!\n\nThe tricky part is making sure you don't miss any valid combinations while also avoiding duplicates. That's where the algorithmic challenge comes in! 🎯",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "In the Combination Sum problem where you can reuse numbers, what is the correct recursive approach when processing each candidate number?",
+      "choices": [
+        {
+          "label": "For each number: include it once (recurse with next index) or skip it (recurse with next index)",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "For each number: include it (recurse with same index to allow reuse) or skip it (recurse with next index)",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach treats it like a standard subset problem where each element can only be used once. However, Combination Sum allows reusing the same number multiple times, so advancing the index after including a number would prevent us from using that number again in the same combination.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Backtracking with Element Reuse\n\n**This problem follows the \"backtracking with reuse\" pattern:**\n- **Decision tree** - At each step, choose to include or skip current candidate\n- **Element reuse** - Can use same candidate multiple times (stay at same index)\n- **Pruning** - Skip candidates that exceed remaining target\n- **Result collection** - Collect all valid combinations\n\n**Similar problems:**\n- Combination Sum II (no reuse, handle duplicates)\n- Subsets (no target, all subsets)\n- Permutations (different - all arrangements)\n\n**Key insight:** Unlike standard subset problems, we can reuse elements. When we include a candidate, we recurse with the same starting index (allowing reuse), not the next index.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Current Combination Sum + Remaining Target = Original Target\n\n**Invariant maintained throughout:**\n- **Target tracking:** `remainingTarget = originalTarget - sum(currentCombination)`\n- **Valid combinations:** When `remainingTarget === 0`, we found a valid combination\n- **Pruning:** If `remainingTarget < 0` or `candidate > remainingTarget`, skip\n- **No duplicates:** We only consider candidates from `startIndex` onwards (maintains order)\n\n**Why this works:**\n- We build combinations incrementally, tracking remaining target\n- When remaining target reaches 0, we have a valid combination\n- We can reuse candidates by staying at the same index\n- Ordering (only forward) prevents duplicate combinations like [2,3] and [3,2]\n\n**Invariant guarantee:** After backtracking completes, `result` contains all unique combinations that sum to target, with each combination in non-decreasing order (prevents duplicates).",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Backtracking State\n\n**State variables:**\n- **`candidates`** - Array of candidate numbers (sorted)\n- **`target`** - Remaining target sum\n- **`startIndex`** - Starting index for candidate selection (allows reuse)\n- **`currentCombination`** - Current combination being built\n- **`result`** - Array collecting all valid combinations\n\n**State transitions:**\n1. **Base case:** If `target === 0`, add `currentCombination` to `result`\n2. **Base case:** If `target < 0` or `startIndex >= candidates.length`, return\n3. **Include candidate:** Add `candidates[startIndex]` to combination, recurse with same `startIndex` (allows reuse)\n4. **Backtrack:** Remove candidate from combination\n5. **Skip candidate:** Recurse with `startIndex + 1` (skip current candidate)\n\n**State validity:** Result contains all valid combinations when backtracking completes.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Standard Subset (Advance Index After Include)**\n- **Why it fails:** Prevents element reuse\n- **Issue:** After including a candidate, advancing index means we can't use it again\n- **Example:** Can't form [2,2,3] if we advance index after including first 2\n- **Better:** Stay at same index to allow reuse\n\n**Approach 2: Try All Combinations with Nested Loops**\n- **Why it fails:** Doesn't know how many times to use each candidate\n- **Issue:** Need to try 0, 1, 2, ... uses of each candidate - complex\n- **Better:** Backtracking naturally explores all possibilities\n\n**Approach 3: Generate All Subsets Then Filter**\n- **Why it fails:** Exponential time, generates many invalid combinations\n- **Issue:** Most subsets won't sum to target\n- **Better:** Backtracking prunes invalid paths early\n\n**Our approach wins because:** Backtracking with element reuse systematically explores all valid combinations, prunes invalid paths early, and naturally handles the reuse constraint by staying at the same index when including a candidate.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **backtracking** with a **choice at each position**: either include the current number (and recurse with the same starting index since numbers can be reused) or skip it (and recurse with the next index). This works because it systematically explores all possible combinations while avoiding duplicates by maintaining a consistent order - we never go backwards in our candidate array. For example, with candidates [2,3,6,7] and target 7, when we're at index 0 (value 2), we can either take another 2 (staying at index 0) or move to consider 3 (index 1), ensuring we find [2,2,3] but never [3,2,2].",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `candidates=[2,3,6,7], target=7`:\n\n- Step 1: Start backtracking with empty combination [], remaining target=7, starting from index 0\n- Step 2: Try candidate 2, add to combination [2], remaining target=5, continue from index 0\n- Step 3: Try candidate 2 again, add to combination [2,2], remaining target=3, continue from index 0\n- Step 4: Try candidate 2 again, add to combination [2,2,2], remaining target=1, continue from index 0\n- Step 5: Candidate 2 > remaining target 1, backtrack and try next candidate 3\n- Step 6: Candidate 3 > remaining target 1, backtrack to [2,2] and try candidate 3\n- Step 7: Add candidate 3 to get [2,2,3], remaining target=0, found valid combination!\n- Step 8: Backtrack to [2,2] and try remaining candidates (6,7 are too large)\n- Step 9: Backtrack to [2] and try candidates 3,6,7 (all too large for target=5)\n- Step 10: Backtrack to [] and try candidate 3, add to combination [3], remaining target=4\n- Step 11: Try candidates from [3] but none work for target=4, backtrack to []\n- Step 12: Try candidate 6, add to combination [6], remaining target=1 (no valid combinations)\n- Step 13: Try candidate 7, add to combination [7], remaining target=0, found valid combination!\n- Final: **[[2,2,3],[7]]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create the main function that takes an array of numbers and returns all unique subsets\n\n```javascript\nfunction subsets(nums) {\n    \n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function subsets(nums) {\n    \n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize result array to store all subsets and sort input to handle duplicates\n\n```javascript\nfunction subsets(nums) {\n    const result = [];\n    nums.sort((a, b) => a - b);\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "const result = [];\nnums.sort((a, b) => a - b);"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Define recursive backtrack function with current subset, start index parameters\n\n```javascript\nfunction subsets(nums) {\n    const result = [];\n    nums.sort((a, b) => a - b);\n    \n    function backtrack(current, start) {\n        \n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "function backtrack(current, start) {\n        \n}"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Add current subset to result (every recursive call represents a valid subset)\n\n```javascript\nfunction subsets(nums) {\n    const result = [];\n    nums.sort((a, b) => a - b);\n    \n    function backtrack(current, start) {\n        result.push([...current]);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "result.push([...current]);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Loop through remaining numbers starting from start index\n\n```javascript\nfunction subsets(nums) {\n    const result = [];\n    nums.sort((a, b) => a - b);\n    \n    function backtrack(current, start) {\n        result.push([...current]);\n        \n        for (let i = start; i < nums.length; i++) {\n            \n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "for (let i = start; i < nums.length; i++) {\n            \n}"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Skip duplicate numbers: if current number equals previous and i > start, continue\n\n```javascript\nfunction subsets(nums) {\n    const result = [];\n    nums.sort((a, b) => a - b);\n    \n    function backtrack(current, start) {\n        result.push([...current]);\n        \n        for (let i = start; i < nums.length; i++) {\n            if (i > start && nums[i] === nums[i-1]) continue;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "if (i > start && nums[i] === nums[i-1]) continue;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "INCLUDE current number: add to current subset\n\n```javascript\nfunction subsets(nums) {\n    const result = [];\n    nums.sort((a, b) => a - b);\n    \n    function backtrack(current, start) {\n        result.push([...current]);\n        \n        for (let i = start; i < nums.length; i++) {\n            if (i > start && nums[i] === nums[i-1]) continue;\n            current.push(nums[i]);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "current.push(nums[i]);"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Recurse with same number available (i+1 as start to avoid reusing same element)\n\n```javascript\nfunction subsets(nums) {\n    const result = [];\n    nums.sort((a, b) => a - b);\n    \n    function backtrack(current, start) {\n        result.push([...current]);\n        \n        for (let i = start; i < nums.length; i++) {\n            if (i > start && nums[i] === nums[i-1]) continue;\n            current.push(nums[i]);\n            backtrack(current, i + 1);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-09",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "backtrack(current, i + 1);"
+    },
+    {
+      "stepId": "code-09",
+      "mentorSays": "SKIP current number: backtrack by removing it from current subset\n\n```javascript\nfunction subsets(nums) {\n    const result = [];\n    nums.sort((a, b) => a - b);\n    \n    function backtrack(current, start) {\n        result.push([...current]);\n        \n        for (let i = start; i < nums.length; i++) {\n            if (i > start && nums[i] === nums[i-1]) continue;\n            current.push(nums[i]);\n            backtrack(current, i + 1);\n            current.pop();\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-10",
+      "pseudocodeLineIds": [
+        "ps9"
+      ],
+      "example": "current.pop();"
+    },
+    {
+      "stepId": "code-10",
+      "mentorSays": "Start the recursion with empty subset and index 0, then return all results\n\n```javascript\nfunction subsets(nums) {\n    const result = [];\n    nums.sort((a, b) => a - b);\n    \n    function backtrack(current, start) {\n        result.push([...current]);\n        \n        for (let i = start; i < nums.length; i++) {\n            if (i > start && nums[i] === nums[i-1]) continue;\n            current.push(nums[i]);\n            backtrack(current, i + 1);\n            current.pop();\n        }\n    }\n    \n    backtrack([], 0);\n    return result;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps10"
+      ],
+      "example": "backtrack([], 0);\nreturn result;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the Combination Sum problem and the backtracking pattern for generating subsets! You've successfully learned how to explore all possible combinations while avoiding duplicates and optimizing with early termination. Next, we'll tackle permutations, where you'll discover how to generate all possible arrangements of elements - another powerful application of backtracking that will expand your problem-solving toolkit even further!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

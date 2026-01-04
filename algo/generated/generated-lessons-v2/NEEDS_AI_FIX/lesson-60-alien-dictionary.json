@@ -1,0 +1,57 @@
+{
+  "id": "alien-dictionary",
+  "title": "Alien Dictionary",
+  "pattern": "topological sort (character ordering)",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-DIRECT",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 60,
+    "tier": "EXPERT",
+    "lessonOrderTag": "EXPERT-60",
+    "introduces": ["character-graph", "ordering-inference", "lexicographic-order"],
+    "assumesAlreadyTaught": ["topological-sort", "graph-concept", "strings"],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["network-delay-time"]
+  },
+  "pseudocode": [
+    {"id": "ps1", "text": "Build graph by comparing adjacent words"},
+    {"id": "ps2", "text": "Find first differing character pair → edge in graph"},
+    {"id": "ps3", "text": "Perform topological sort on character graph"},
+    {"id": "ps4", "text": "Return topological order as string"}
+  ],
+  "flow": [
+    {"stepId": "objectives", "mentorSays": "Hey! **Alien Dictionary** - deducing character order!\n\nThis brilliant problem uses topological sort to infer an alien language's alphabetical order from a sorted word list.\n\nYou'll learn:\n• Building graphs from constraints\n• Character-level topological sort\n• Inferring order from sorted data\n\nLet's dive in!", "action": "continue", "next": "language-selection"},
+    {"stepId": "language-selection", "mentorSays": "Language?", "choices": [{"label": "💛 JavaScript", "next": "prereq-check-js"}, {"label": "🐍 Python", "next": "prereq-check-python"}, {"label": "☕ Java", "next": "prereq-check-java"}, {"label": "⚡ C++", "next": "prereq-check-cpp"}, {"label": "💙 TypeScript", "next": "prereq-check-ts"}]},
+    {"stepId": "prereq-check-js", "mentorSays": "Prerequisites:\n- **Topological sort**\n- **Graph concept**\n- **Strings**\n\nReady?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-js"}, {"label": "Some", "next": "select-prereqs-js"}]},
+    {"stepId": "teach-prereqs-js", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-js", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-python", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-python"}, {"label": "Some", "next": "select-prereqs-python"}]},
+    {"stepId": "teach-prereqs-python", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-python", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-java", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-java"}, {"label": "Some", "next": "select-prereqs-java"}]},
+    {"stepId": "teach-prereqs-java", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-java", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-cpp", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-cpp"}, {"label": "Some", "next": "select-prereqs-cpp"}]},
+    {"stepId": "teach-prereqs-cpp", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-cpp", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "prereq-check-ts", "mentorSays": "Ready?", "choices": [{"label": "Yes", "next": "problem-understanding"}, {"label": "No", "next": "teach-prereqs-ts"}, {"label": "Some", "next": "select-prereqs-ts"}]},
+    {"stepId": "teach-prereqs-ts", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "select-prereqs-ts", "mentorSays": "[Phase 2]", "action": "continue", "next": "problem-understanding"},
+    {"stepId": "problem-understanding", "mentorSays": "**Decoding an alien language!** You have words sorted in this alien alphabet. Can you deduce the alphabetical order?\n\nGiven sorted `words` array, return the lexicographical order of the alien language.\n\nExample:\n```\nwords = [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]\n```\nOutput: `\"wertf\"`\n\nWhy? \"wrt\" < \"wrf\" means t < f. \"wrf\" < \"er\" means w < e, etc.", "action": "continue", "next": "thinking-challenge"},
+    {"stepId": "thinking-challenge", "mentorSays": "How to infer character order?", "choices": [{"label": "Compare all word pairs", "next": "wrong-choice"}, {"label": "Compare adjacent words, build dependency graph, topological sort", "next": "core-idea"}]},
+    {"stepId": "wrong-choice", "mentorSays": "Comparing all pairs gives redundant info!\n\nAdjacent words tell us the minimum needed ordering.", "action": "next", "next": "core-idea"},
+    {"stepId": "core-idea", "mentorSays": "The key: **compare adjacent words to build a character dependency graph**.\n\n1. For each pair of adjacent words:\n   - Find first differing character\n   - Add edge: char1 → char2 (char1 comes before char2)\n2. Perform topological sort on the graph\n3. Result is the alien alphabet order!\n\nIf cycle detected → invalid input.", "action": "next", "next": "walkthrough", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "walkthrough", "mentorSays": "From [\"wrt\",\"wrf\",\"er\",\"ett\",\"rftt\"]:\n\n- \"wrt\" vs \"wrf\": t→f edge\n- \"wrf\" vs \"er\": w→e edge\n- \"er\" vs \"ett\": r→t edge\n- \"ett\" vs \"rftt\": e→r edge\n\nGraph: w→e→r→t→f\n\nTopological sort: **\"wertf\"**", "action": "next", "next": "pseudocode-step", "pseudocodeLineIds": ["ps1", "ps2", "ps3"]},
+    {"stepId": "pseudocode-step", "mentorSays": "Pseudocode:", "action": "next", "next": "coding-intro", "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4"]},
+    {"stepId": "coding-intro", "mentorSays": "Build it!", "action": "next", "next": "code-01"},
+    {"stepId": "code-01", "mentorSays": "Build graph from adjacent words.\n\n```javascript\nfunction alienOrder(words) {\n  const graph = new Map();\n  const inDegree = new Map();\n  \n  for (const word of words) {\n    for (const char of word) {\n      graph.set(char, new Set());\n      inDegree.set(char, 0);\n    }\n  }\n}\n```", "action": "next", "next": "code-02", "pseudocodeLineIds": ["ps1"], "example": "const graph = new Map();\nconst inDegree = new Map();\nfor (const word of words) {\n  for (const char of word) {\n    graph.set(char, new Set());\n    inDegree.set(char, 0);"
+    },
+    {"stepId": "code-02", "mentorSays": "Compare adjacent words and add edges.\n\n```javascript\nfunction alienOrder(words) {\n  const graph = new Map();\n  const inDegree = new Map();\n  \n  for (const word of words) {\n    for (const char of word) {\n      graph.set(char, new Set());\n      inDegree.set(char, 0);\n    }\n  }\n  \n  for (let i = 0; i < words.length - 1; i++) {\n    const w1 = words[i], w2 = words[i+1];\n    const minLen = Math.min(w1.length, w2.length);\n    for (let j = 0; j < minLen; j++) {\n      if (w1[j] !== w2[j]) {\n        if (!graph.get(w1[j]).has(w2[j])) {\n          graph.get(w1[j]).add(w2[j]);\n          inDegree.set(w2[j], inDegree.get(w2[j]) + 1);\n        }\n        break;\n      }\n    }\n  }\n}\n```", "action": "next", "next": "code-03", "pseudocodeLineIds": ["ps2"], "example": "for (let i = 0; i < words.length - 1; i++) {\n  const w1 = words[i], w2 = words[i+1];\n  for (let j = 0; j < Math.min(w1.length, w2.length); j++) {\n    if (w1[j] !== w2[j]) {\n      if (!graph.get(w1[j]).has(w2[j])) {\n        graph.get(w1[j]).add(w2[j]);\n        inDegree.set(w2[j], inDegree.get(w2[j]) + 1);"
+    },
+    {"stepId": "code-03", "mentorSays": "Perform topological sort.\n\n```javascript\nfunction alienOrder(words) {\n  const graph = new Map();\n  const inDegree = new Map();\n  \n  for (const word of words) {\n    for (const char of word) {\n      graph.set(char, new Set());\n      inDegree.set(char, 0);\n    }\n  }\n  \n  for (let i = 0; i < words.length - 1; i++) {\n    const w1 = words[i], w2 = words[i+1];\n    const minLen = Math.min(w1.length, w2.length);\n    for (let j = 0; j < minLen; j++) {\n      if (w1[j] !== w2[j]) {\n        if (!graph.get(w1[j]).has(w2[j])) {\n          graph.get(w1[j]).add(w2[j]);\n          inDegree.set(w2[j], inDegree.get(w2[j]) + 1);\n        }\n        break;\n      }\n    }\n  }\n  \n  const queue = [];\n  for (const [char, deg] of inDegree) {\n    if (deg === 0) queue.push(char);\n  }\n  \n  let result = \"\";\n  while (queue.length > 0) {\n    const char = queue.shift();\n    result += char;\n    for (const next of graph.get(char)) {\n      inDegree.set(next, inDegree.get(next) - 1);\n      if (inDegree.get(next) === 0) queue.push(next);\n    }\n  }\n  \n  return result.length === graph.size ? result : \"\";\n}\n```", "action": "next", "next": "wrap-up", "pseudocodeLineIds": ["ps3", "ps4"], "example": "const queue = [];\nfor (const [char, deg] of inDegree) if (deg === 0) queue.push(char);\nlet result = \"\";\nwhile (queue.length > 0) {\n  const char = queue.shift();\n  result += char;\n  for (const next of graph.get(char)) {\n    inDegree.set(next, inDegree.get(next) - 1);\n    if (inDegree.get(next) === 0) queue.push(next);"
+    },
+    {"stepId": "wrap-up", "mentorSays": "Amazing! **Alien Dictionary** solved!\n\nThis pattern powers:\n• Build systems\n• Package managers\n• Course prerequisites\n• Task scheduling\n\nYou've completed the Expert tier! 🎉", "action": "complete"}
+  ]
+}

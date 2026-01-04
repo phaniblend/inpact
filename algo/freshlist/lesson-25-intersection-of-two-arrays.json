@@ -1,0 +1,206 @@
+{
+  "id": "intersection-of-two-arrays",
+  "title": "Intersection of Two Arrays",
+  "pattern": "hash set",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 25,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-25",
+    "introduces": [
+      "set-from-array",
+      "set-intersection",
+      "Array.from"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "Set-constructor",
+      "set-has-method"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "single-number"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Create an empty hash set called 'set1'"
+    },
+    {
+      "id": "ps2",
+      "text": "Iterate through arr1 and add each element to set1"
+    },
+    {
+      "id": "ps3",
+      "text": "Create an empty hash set called 'resultSet' for storing intersections"
+    },
+    {
+      "id": "ps4",
+      "text": "Iterate through each element in arr2"
+    },
+    {
+      "id": "ps5",
+      "text": "For each element in arr2, check if it exists in set1"
+    },
+    {
+      "id": "ps6",
+      "text": "If element exists in set1, add it to resultSet"
+    },
+    {
+      "id": "ps7",
+      "text": "Convert resultSet to array and return as the intersection result"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work mastering hash maps for character frequency tracking in the first-unique-character problem! Now we'll expand that foundation by learning how hash sets can help us efficiently find common elements between two different collections of data.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given two integer arrays, find the intersection of the two arrays. The result should contain only the unique elements that appear in both arrays, with no duplicates in the output.\n\n**Example:**\n```text\nInput: nums1=[1,2,2,1], nums2=[2,2]\nOutput: [2]\n```\nThe number 2 appears in both arrays, so it's included in the result, but only once since we want unique elements.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) nums1=[1,2,3], nums2=[2,3,4] → [2,3]\n2) nums1=[4,9,5], nums2=[9,4,9,8,4] → [9,4]\n3) nums1=[1,2,3], nums2=[4,5] → []\n4) nums1=[7], nums2=[7,7,7] → [7]\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to find the intersection of two arrays while ensuring no duplicate elements in the result?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Use nested loops to compare each element in arr1 with every element in arr2, adding matches to result array",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Convert arr1 to a set, iterate through arr2 checking membership in the set, and use a result set to store intersections",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This brute force approach has O(n×m) time complexity and doesn't handle duplicates efficiently - you'd need additional checks to avoid adding the same element multiple times to the result.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use **two hash sets** to efficiently find common elements while maintaining uniqueness. First, convert the first array into a **hash set** for O(1) lookup operations, then iterate through the second array and check if each element exists in the first set. Use a **result set** to collect intersecting elements, which automatically handles duplicate removal and ensures each common element appears only once in the final output. This approach achieves O(n + m) time complexity compared to the naive O(n × m) nested loop solution.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `nums1=[1,2,2,1], nums2=[2,2]`:\n- Step 1: Create set from nums1: {1, 2}\n- Step 2: Initialize empty result set: {}\n- Step 3: Check nums2[0]=2 → 2 is in set {1,2}, add to result: {2}\n- Step 4: Check nums2[1]=2 → 2 already in result set, skip\n- Step 5: Convert result set to array: [2]\n- Final answer: **[2]**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Create a Set from the first array to enable O(1) lookup operations.\n\n```javascript\nfunction intersection(nums1, nums2) {\n    const set1 = new Set(nums1);\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function intersection(nums1, nums2) {\n    const set1 = new Set(nums1);\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Create a result Set to store unique intersection elements.\n\n```javascript\nfunction intersection(nums1, nums2) {\n    const set1 = new Set(nums1);\n    const result = new Set();\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2"
+      ],
+      "example": "    const result = new Set();"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Iterate through the second array to check for common elements.\n\n```javascript\nfunction intersection(nums1, nums2) {\n    const set1 = new Set(nums1);\n    const result = new Set();\n    \n    for (const num of nums2) {\n        // Check intersection logic here\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ],
+      "example": "    for (const num of nums2) {\n        // Check intersection logic here\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Add elements to result Set if they exist in the first array's Set.\n\n```javascript\nfunction intersection(nums1, nums2) {\n    const set1 = new Set(nums1);\n    const result = new Set();\n    \n    for (const num of nums2) {\n        if (set1.has(num)) {\n            result.add(num);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4"
+      ],
+      "example": "        if (set1.has(num)) {\n            result.add(num);\n        }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Convert the result Set back to an array and return it as the final intersection.\n\n```javascript\nfunction intersection(nums1, nums2) {\n    const set1 = new Set(nums1);\n    const result = new Set();\n    \n    for (const num of nums2) {\n        if (set1.has(num)) {\n            result.add(num);\n        }\n    }\n    \n    return Array.from(result);\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5"
+      ],
+      "example": "    return Array.from(result);"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering the hash set pattern for finding array intersections! You've learned how to efficiently convert arrays to sets, use set intersection operations, and transform results back to arrays using Array.from(). Next up, we'll tackle the \"single number\" problem, which will build on your set manipulation skills to find unique elements in arrays.",
+      "action": "complete"
+    }
+  ]
+}

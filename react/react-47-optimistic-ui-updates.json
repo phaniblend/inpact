@@ -1,0 +1,84 @@
+{
+  "id": "react-47-optimistic-ui-updates",
+  "title": "Optimistic UI Updates",
+  "technology": "React",
+  "difficulty": "senior",
+  "language": "javascript",
+  "status": "draft",
+  "metadata": {
+    "time_estimate": "25 minutes",
+    "tests": "Optimistic patterns, rollback",
+    "challenge_number": "47"
+  },
+  "flow": [
+    {
+      "stepId": "title",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Optimistic UI Updates in React\n2. Implement the solution using Optimistic patterns, rollback\n3. Apply React best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write clean, maintainable React code",
+      "action": "continue",
+      "next": "problem-illustration"
+    },
+    {
+      "stepId": "problem-illustration",
+      "mentorSays": "Have you ever needed to implement optimistic ui updates in React?\n\n**The Challenge:**\nImplement optimistic updates for todos using API: https://jsonplaceholder.typicode.com/todos\n\n**Requirements:**\n- Add todos optimistically\n- Delete todos optimistically\n- If API call fails, rollback the change\n- Show success/error notifications\n- Handle network errors gracefully\n\n**What We're Building:**\nThis challenge tests your understanding of optimistic ui updates in React. You'll need to create a React component that demonstrates these concepts effectively while following React best practices.\n\n**Why This Matters:**\nOptimistic UI Updates is a fundamental React concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in React teams\n\n**Real-World Applications:**\nTwitter uses optimistic updates to make the app feel instant. When you like a tweet, the heart turns red immediately—even before the server confirms. If the request fails, it reverts to the previous state and shows an error.\n\nThis pattern is essential for building modern, interactive web applications.",
+      "example": "// Implement optimistic updates for todos:\n// API: https://jsonplaceholder.typicode.com/todos\n//\n// Requirements:\n// - Add todos optimistically\n// - Delete todos optimistically\n// - If API call fails, rollback the change\n// - Show success/error notifications\n// - Handle network errors gracefully",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Optimistic UI Updates challenge?\n\nThink about it for a moment. What approach feels natural to you?",
+      "choices": [
+        {
+          "label": "I'll start with the basic approach and build up",
+          "next": "explore-approach-1"
+        },
+        {
+          "label": "I want to see the optimal solution directly",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I need more context about the problem",
+          "next": "problem-illustration"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-approach-1",
+      "mentorSays": "Good! Starting with a basic approach is a solid strategy. Let's build it step by step, then we'll see the complete solution.",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "Perfect! Here's the optimal solution approach:\n\n```javascript\nconst [todos, setTodos] = useState([]);\nconst [error, setError] = useState(null);\n\nconst addTodo = async (text) => {\n  const tempId = Date.now();\n  const newTodo = { id: tempId, title: text, completed: false };\n  \n  // Optimistically add\n  setTodos(prev => [...prev, newTodo]);\n  \n  try {\n    const response = await fetch('/api/todos', {\n      method: 'POST',\n      body: JSON.stringify({ title: text })\n    });\n    const savedTodo = await response.json();\n    // Replace temp with real\n    setTodos(prev => prev.map(t => t.id === tempId ? savedTodo : t));\n  } catch (err) {\n    // Rollback on error\n    setTodos(prev => prev.filter(t => t.id !== tempId));\n    setError('Failed to add todo');\n  }\n};\n```\n\nThis solution demonstrates best practices for React development and shows how to properly implement Optimistic patterns, rollback.",
+      "example": "",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Great! Now let's code this solution in React with JavaScript/JSX.",
+      "action": "continue",
+      "next": "coding-start-ts"
+    },
+    {
+      "stepId": "coding-start-ts",
+      "mentorSays": "Let's implement the solution:\n\nThis step follows React best practices for component structure and organization.\n\n**What We're Doing:**\nImporting the necessary React modules and dependencies. This step is crucial for building a complete, functional React component.\n\n**Why This Matters:**\nWithout proper imports, our React component won't have access to the features we need. This is the foundation that makes everything else possible.\n\n**What's Happening:**\nWe're bringing in React core functionality that we'll use throughout our component. Think of imports as gathering the tools we need before we start building.",
+      "example": "import { useState } from 'react';",
+      "action": "continue",
+      "next": "test-code-ts"
+    },
+    {
+      "stepId": "test-code-ts",
+      "mentorSays": "Perfect! Now test your code. Make sure it works correctly for the Optimistic UI Updates challenge.\n\n**Test Cases:**\n1. Test with basic input\n2. Test with edge cases\n3. Test with empty/null values\n4. Verify the output matches expected behavior\n\nTry running it and verify the solution works as expected.",
+      "example": "// Test cases for Optimistic UI Updates\n// 1. Basic functionality\n// 2. Edge cases\n// 3. Error handling",
+      "action": "continue",
+      "next": "final"
+    },
+    {
+      "stepId": "final",
+      "mentorSays": "Well done! You've completed the Optimistic UI Updates challenge.\n\n**Key Takeaways:**\n- You've mastered Optimistic patterns, rollback\n- You understand how to implement Optimistic UI Updates in React\n- You've applied best practices for React development\n- You can handle this type of interview question confidently\n\n**Time Complexity:** Varies based on implementation\n**Space Complexity:** Varies based on implementation\n\n**Related Challenges:**\n- Practice similar React concepts\n- Try variations of this challenge\n- Explore more advanced React patterns\n\nKeep practicing!",
+      "action": "continue"
+    }
+  ]
+}

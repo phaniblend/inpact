@@ -1,0 +1,459 @@
+{
+  "id": "binary-tree-level-order-traversal",
+  "title": "Binary Tree Level Order Traversal",
+  "pattern": "tree traversal (BFS)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 39,
+    "tier": "INTERMEDIATE",
+    "lessonOrderTag": "INTERMEDIATE-39",
+    "introduces": [
+      "BFS-concept",
+      "queue-for-BFS",
+      "level-by-level",
+      "breadth-first"
+    ],
+    "assumesAlreadyTaught": [
+      "binary-tree-concept",
+      "arrays",
+      "queue-concept"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "validate-binary-search-tree"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize an empty queue and add the root node to it"
+    },
+    {
+      "id": "ps2",
+      "text": "While the queue is not empty, get the current level size (number of nodes in queue)"
+    },
+    {
+      "id": "ps3",
+      "text": "Create an empty list to store values of nodes at the current level"
+    },
+    {
+      "id": "ps4",
+      "text": "Process exactly 'level size' number of nodes by removing each from front of queue"
+    },
+    {
+      "id": "ps5",
+      "text": "For each removed node, add its value to current level list and add its children to queue"
+    },
+    {
+      "id": "ps6",
+      "text": "After processing all nodes at current level, add the level list to final result"
+    },
+    {
+      "id": "ps7",
+      "text": "Return the final result containing all levels as separate arrays"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great job mastering postorder traversal in the last lesson! Now we're switching gears from depth-first exploration to breadth-first - it's time to learn Binary Tree Level Order Traversal. This pattern uses BFS (Breadth-First Search) to visit nodes level by level, from left to right, like reading a book page by page.\n\nThrough this lesson, you'll gain three powerful skills:\n• **Queue-based traversal techniques** - Master using queues to process tree nodes in the correct order\n• **Level-by-level processing** - Learn to group and handle nodes by their depth in the tree\n• **BFS algorithm implementation** - Build a solid foundation in breadth-first search that applies to many tree and graph problems\n\nYou're building an amazing toolkit of tree traversal methods, and this breadth-first approach will give you a completely different perspective on how to explore tree structures. Let's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left/right children, and tree traversal basics\n- **Arrays** - Knowledge of array data structure for storing and accessing elements by index\n- **Queue concept** - Understanding of queue data structure with FIFO operations (enqueue/dequeue)\n- **Breadth first search** - Familiarity with BFS algorithm pattern for exploring nodes level by level\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left/right children, and tree traversal basics\n- **Arrays** - Knowledge of array data structure for storing and accessing elements by index\n- **Queue concept** - Understanding of queue data structure with FIFO operations (enqueue/dequeue)\n- **Breadth first search** - Familiarity with BFS algorithm pattern for exploring nodes level by level\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left/right children, and tree traversal basics\n- **Arrays** - Knowledge of array data structure for storing and accessing elements by index\n- **Queue concept** - Understanding of queue data structure with FIFO operations (enqueue/dequeue)\n- **Breadth first search** - Familiarity with BFS algorithm pattern for exploring nodes level by level\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left/right children, and tree traversal basics\n- **Arrays** - Knowledge of array data structure for storing and accessing elements by index\n- **Queue concept** - Understanding of queue data structure with FIFO operations (enqueue/dequeue)\n- **Breadth first search** - Familiarity with BFS algorithm pattern for exploring nodes level by level\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Binary tree concept** - Understanding of binary tree data structure with nodes, left/right children, and tree traversal basics\n- **Arrays** - Knowledge of array data structure for storing and accessing elements by index\n- **Queue concept** - Understanding of queue data structure with FIFO operations (enqueue/dequeue)\n- **Breadth first search** - Familiarity with BFS algorithm pattern for exploring nodes level by level\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Binary Tree Level Order Traversal problem asks for.\n\nImagine organizing a company's employee hierarchy where you need to notify everyone about a policy change. You'd start with the CEO at the top, then inform all the VPs on the second floor simultaneously, followed by all the directors on the third floor together, and so on - processing each management level completely before moving down to the next level.\n\nThis mirrors how level order traversal uses a queue to visit all nodes at depth 0, then all nodes at depth 1, then depth 2, ensuring you process every \"employee\" at the current level before descending to their \"direct reports.\"\n\n# Binary Tree Level Order Traversal\n\n## What it's asking for\n\nThis problem wants you to traverse a binary tree **level by level**, collecting all the nodes at each depth and returning them as a list of lists. Think of it like reading a book - you read each line from left to right before moving to the next line.\n\nSo instead of going deep into one branch first (like depth-first search), you're going **wide** - visiting all nodes at depth 0, then all nodes at depth 1, then depth 2, and so on.\n\n## Example walkthrough\n\nLet's say we have this tree:\n```\n      3\n     / \\\n    9   20\n       /  \\\n      15   7\n```\n\nWhich corresponds to the array representation: `[3,9,20,null,null,15,7]`\n\nHere's how the level-by-level traversal works:\n\n**Level 0 (depth 0):** Just the root → `[3]`\n**Level 1 (depth 1):** The root's children → `[9, 20]`  \n**Level 2 (depth 2):** The grandchildren → `[15, 7]`\n\nSo our final answer is: `[[3], [9,20], [15,7]]`\n\n## Why this approach works\n\nThe key insight is that we need to process nodes in a **breadth-first** manner. We can't just visit nodes randomly - we need to make sure we visit ALL nodes at level N before moving to level N+1.\n\nThe most natural way to do this is with a **queue**:\n1. Start by putting the root in the queue\n2. For each level, process exactly the number of nodes currently in the queue\n3. As you process each node, add its children to the queue (they'll be processed in the next level)\n4. Keep track of all nodes at the current level and add them to your result\n\nThis works because the queue naturally maintains the left-to-right, level-by-level order we want. When we finish processing level N, the queue contains exactly the nodes for level N+1, ready to go!",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You need to traverse a binary tree level by level, collecting all nodes at each level into separate arrays. Which approach will correctly ensure you process ALL nodes at the current level before moving to the next level?",
+      "choices": [
+        {
+          "label": "Use a queue and process nodes one by one as you encounter them, adding children immediately to the queue",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use a queue and process all nodes currently in the queue (tracking the current level size) before adding any children to the queue",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This approach mixes nodes from different levels in the queue. When you process a node and immediately add its children, those children get mixed with unprocessed nodes from the current level, making it impossible to distinguish which nodes belong to which level.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: BFS with Level Tracking\n\n**This problem follows the \"BFS with level separation\" pattern:**\n- **Queue-based BFS** - Use queue to process nodes level by level\n- **Level size tracking** - Process exactly queue.length nodes per level\n- **Level separation** - Complete one level before starting the next\n- **FIFO ordering** - Queue naturally maintains left-to-right order\n\n**Similar problems:**\n- Binary Tree Zigzag Level Order (BFS with direction alternation)\n- Average of Levels in Binary Tree (BFS with level averaging)\n- N-ary Tree Level Order Traversal (BFS on n-ary tree)\n\n**Key insight:** BFS processes nodes level by level. By tracking the queue size at the start of each level, we know exactly how many nodes to process before moving to the next level. This ensures proper level separation.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Queue Contains All Nodes at Current Level\n\n**Invariant maintained throughout:**\n- **Level completeness:** At start of each level, queue contains exactly all nodes at that level\n- **Processing order:** We process all nodes in queue before adding children\n- **Level separation:** After processing level i, queue contains only nodes from level i+1\n- **Result structure:** Result[i] contains all nodes from level i\n\n**Why this works:**\n- Initially, queue contains root (level 0)\n- For each level, we process queue.length nodes\n- As we process, we add children to queue (for next level)\n- After processing, queue contains next level's nodes\n\n**Invariant guarantee:** After processing level i, result[i] contains all nodes from level i in left-to-right order. The queue contains exactly the nodes for level i+1, ready to be processed.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: BFS Level Order State\n\n**State variables:**\n- **`queue`** - Queue containing nodes to process\n- **`result`** - Array of arrays, where result[i] = nodes at level i\n- **`level`** - Current level being processed\n- **`levelSize`** - Number of nodes at current level\n\n**State transitions:**\n1. **Initialize:** queue = [root], result = []\n2. **Loop:** While queue not empty:\n   - levelSize = queue.length (nodes at current level)\n   - levelNodes = []\n   - For i from 0 to levelSize-1:\n     - Dequeue node, add to levelNodes\n     - Enqueue node's children (if exist)\n   - Add levelNodes to result\n3. **Result:** Return result (array of level arrays)\n\n**State validity:** After processing, result[i] contains all nodes from level i in left-to-right order.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Process Nodes Individually Without Level Tracking**\n- **Why it fails:** Mixes nodes from different levels\n- **Issue:** Can't distinguish which nodes belong to which level\n- **Better:** Tracking queue size ensures level separation\n\n**Approach 2: Use DFS with Depth Tracking**\n- **Why it doesn't fail:** Actually works, but less intuitive\n- **Issue:** DFS doesn't naturally process level by level\n- **Better:** BFS naturally processes level by level\n\n**Approach 3: Recursive with Level Parameter**\n- **Why it doesn't fail:** Works, but uses O(h) space for recursion\n- **Issue:** Recursion stack space, less efficient for wide trees\n- **Better:** BFS uses O(w) space where w is max width\n\n**Our approach wins because:** BFS with level size tracking naturally processes nodes level by level in O(n) time. The queue size at the start of each level tells us exactly how many nodes to process, ensuring proper level separation.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is to use a **queue data structure** to process all nodes at the current level before moving to the next level. This works because queues follow **FIFO (First-In-First-Out)** ordering, which naturally maintains the left-to-right, level-by-level traversal order we need. For example, with tree [3,9,20,null,null,15,7], we start by adding root 3 to the queue, then process it by adding its children 9 and 20, then process those by adding 15 and 7, giving us levels [[3], [9,20], [15,7]]. By tracking the **queue size at each level**, we know exactly how many nodes to process before moving to the next level.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `root=[3,9,20,null,null,15,7]`:\n\n- Step 1: Initialize queue with root [3], result = [], current level = [3]\n- Step 2: Process level 0 - dequeue node 3, add to current level [3], enqueue children 9 and 20\n- Step 3: Add level [3] to result, queue now contains [9,20] for next level\n- Step 4: Process level 1 - dequeue node 9 (no children), dequeue node 20, enqueue children 15 and 7\n- Step 5: Add level [9,20] to result, queue now contains [15,7] for next level\n- Step 6: Process level 2 - dequeue nodes 15 and 7 (both are leaves, no children)\n- Step 7: Add level [15,7] to result, queue is now empty\n- Final: **[[3],[9,20],[15,7]]**",
+      "action": "next",
+      "next": "queue-snapshot"
+    },
+    {
+      "stepId": "queue-snapshot",
+      "mentorSays": "### Queue Snapshot Per Level\n\n**Visualizing the queue at each level:**\n\n```\nTree:\n      3\n     / \\\n    9   20\n       /  \\\n      15   7\n```\n\n**Level 0 (before processing):**\n```\nQueue: [3]\nLevel size: 1\nProcess: 3\nAfter processing: Queue = [9, 20]\nResult: [[3]]\n```\n\n**Level 1 (before processing):**\n```\nQueue: [9, 20]\nLevel size: 2\nProcess: 9 (no children), 20 (children: 15, 7)\nAfter processing: Queue = [15, 7]\nResult: [[3], [9, 20]]\n```\n\n**Level 2 (before processing):**\n```\nQueue: [15, 7]\nLevel size: 2\nProcess: 15 (no children), 7 (no children)\nAfter processing: Queue = []\nResult: [[3], [9, 20], [15, 7]]\n```\n\n**Key insight:**\n- At the start of each level, the queue contains **exactly** the nodes for that level\n- We process `queue.length` nodes (the level size)\n- As we process, we add children to the queue (for the next level)\n- After processing, the queue contains the next level's nodes\n\n**This visualizes queue usage** - seeing the queue state at each level makes BFS clear!",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize result array and handle empty tree edge case\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "if (!root) return [];\nconst result = [];"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Create queue and add root node to start BFS traversal\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n    const queue = [root];\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "const queue = [root];"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Start main loop to process each level while queue has nodes\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n    const queue = [root];\n    \n    while (queue.length > 0) {\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "while (queue.length > 0) {"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Get current level size and initialize current level array\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n    const queue = [root];\n    \n    while (queue.length > 0) {\n        const levelSize = queue.length;\n        const currentLevel = [];\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "const levelSize = queue.length;\nconst currentLevel = [];"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Loop through all nodes at current level using level size\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n    const queue = [root];\n    \n    while (queue.length > 0) {\n        const levelSize = queue.length;\n        const currentLevel = [];\n        \n        for (let i = 0; i < levelSize; i++) {\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "for (let i = 0; i < levelSize; i++) {"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Remove node from front of queue and add its value to current level\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n    const queue = [root];\n    \n    while (queue.length > 0) {\n        const levelSize = queue.length;\n        const currentLevel = [];\n        \n        for (let i = 0; i < levelSize; i++) {\n            const node = queue.shift();\n            currentLevel.push(node.val);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "const node = queue.shift();\ncurrentLevel.push(node.val);"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Add left child to queue if it exists for next level processing\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n    const queue = [root];\n    \n    while (queue.length > 0) {\n        const levelSize = queue.length;\n        const currentLevel = [];\n        \n        for (let i = 0; i < levelSize; i++) {\n            const node = queue.shift();\n            currentLevel.push(node.val);\n            \n            if (node.left) queue.push(node.left);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "if (node.left) queue.push(node.left);"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Add right child to queue if it exists for next level processing\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n    const queue = [root];\n    \n    while (queue.length > 0) {\n        const levelSize = queue.length;\n        const currentLevel = [];\n        \n        for (let i = 0; i < levelSize; i++) {\n            const node = queue.shift();\n            currentLevel.push(node.val);\n            \n            if (node.left) queue.push(node.left);\n            if (node.right) queue.push(node.right);\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-09",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "if (node.right) queue.push(node.right);"
+    },
+    {
+      "stepId": "code-09",
+      "mentorSays": "Add completed current level array to final result\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n    const queue = [root];\n    \n    while (queue.length > 0) {\n        const levelSize = queue.length;\n        const currentLevel = [];\n        \n        for (let i = 0; i < levelSize; i++) {\n            const node = queue.shift();\n            currentLevel.push(node.val);\n            \n            if (node.left) queue.push(node.left);\n            if (node.right) queue.push(node.right);\n        }\n        \n        result.push(currentLevel);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-10",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "result.push(currentLevel);"
+    },
+    {
+      "stepId": "code-10",
+      "mentorSays": "Return the complete level-order traversal result\n\n```javascript\nfunction levelOrder(root) {\n    if (!root) return [];\n    const result = [];\n    const queue = [root];\n    \n    while (queue.length > 0) {\n        const levelSize = queue.length;\n        const currentLevel = [];\n        \n        for (let i = 0; i < levelSize; i++) {\n            const node = queue.shift();\n            currentLevel.push(node.val);\n            \n            if (node.left) queue.push(node.left);\n            if (node.right) queue.push(node.right);\n        }\n        \n        result.push(currentLevel);\n    }\n    \n    return result;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps9"
+      ],
+      "example": "return result;"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering Binary Tree Level Order Traversal! You've successfully implemented breadth-first search (BFS) using a queue to explore tree nodes level by level—a fundamental pattern that opens doors to many other tree problems. Next, we'll tackle validate-binary-search-tree, where you'll apply your tree traversal skills to verify the structural properties that make a BST special!\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}

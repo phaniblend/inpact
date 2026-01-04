@@ -1,0 +1,201 @@
+{
+  "id": "linked-list-cycle",
+  "title": "Linked List Cycle",
+  "pattern": "fast-slow pointers (Floyd's algorithm)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 17,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-17",
+    "introduces": [
+      "linked-list-concept",
+      "node-structure",
+      "next-pointer",
+      "cycle-detection",
+      "floyds-algorithm"
+    ],
+    "assumesAlreadyTaught": [
+      "loops",
+      "pointers-concept"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": [
+      "reverse-linked-list"
+    ]
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize two pointers: slow = head, fast = head"
+    },
+    {
+      "id": "ps2",
+      "text": "While fast is not null and fast.next is not null:"
+    },
+    {
+      "id": "ps3",
+      "text": "Move slow pointer one step forward: slow = slow.next"
+    },
+    {
+      "id": "ps4",
+      "text": "Move fast pointer two steps forward: fast = fast.next.next"
+    },
+    {
+      "id": "ps5",
+      "text": "If slow equals fast, return true (cycle detected)"
+    },
+    {
+      "id": "ps6",
+      "text": "If loop exits without meeting, return false (no cycle)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "Great work mastering the house-robber problem and dynamic programming! Now we're stepping into exciting new territory with linked lists, where we'll discover the elegant \"fast and slow pointer\" technique (also known as Floyd's cycle detection algorithm) to solve problems that would otherwise seem impossible - like detecting if a linked list has a cycle by using two pointers moving at different speeds.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "Given a linked list, determine whether it contains a cycle. A cycle occurs when a node in the list points back to a previous node, creating a loop that would cause infinite traversal. You must detect this cycle without modifying the original linked list structure.\n\n**Example:**\n```text\nInput: 1→2→3→4→2 (cycle back to 2)\nOutput: true\n```\nThe linked list has a cycle because node 4 points back to node 2, creating an infinite loop.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n```text\n1) 1→2→3→null → false\n2) 1→2→1 (cycle back to 1) → true\n3) 5→null → false\n4) 1→2→3→2 (cycle back to 2) → true\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "What is the most efficient approach to detect if a linked list contains a cycle?",
+      "action": "choice",
+      "choices": [
+        {
+          "label": "Use a hash set to store visited nodes and check for duplicates",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use two pointers moving at different speeds - if they meet, a cycle exists",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "While this works correctly, it requires O(n) extra space to store all visited nodes, making it less optimal than the two-pointer approach.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is using **two pointers moving at different speeds** to detect cycles without extra space. The **fast pointer** moves 2 steps while the **slow pointer** moves 1 step per iteration - if a cycle exists, the fast pointer will eventually \"lap\" the slow pointer and they will meet at some node within the cycle. This works because the **relative speed** between pointers is 1 step per iteration, so the fast pointer closes the gap by 1 position each time until they occupy the same node. If no cycle exists, the fast pointer will reach the end (null) first, allowing us to definitively determine the list structure.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `1→2→3→4→2 (cycle back to 2)`:\n- Step 1: Initialize slow=1, fast=1\n- Step 2: slow moves to 2, fast moves to 3\n- Step 3: slow moves to 3, fast moves to 2 (following cycle)\n- Step 4: slow moves to 4, fast moves to 4\n- Step 5: slow and fast both at node 4 - they meet!\n- Final answer: **true**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Define the function structure and handle the base case where the list is empty or has only one node.\n\n```javascript\nfunction hasCycle(head) {\n    // Base case: empty list or single node\n    if (!head || !head.next) {\n        return false;\n    }\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function hasCycle(head) {\n    // Base case: empty list or single node\n    if (!head || !head.next) {\n        return false;\n    }\n}"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Initialize two pointers (slow and fast) both starting at the head of the linked list.\n\n```javascript\nfunction hasCycle(head) {\n    // Base case: empty list or single node\n    if (!head || !head.next) {\n        return false;\n    }\n    \n    // Initialize two pointers\n    let slow = head;\n    let fast = head;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2"
+      ],
+      "example": "    // Initialize two pointers\n    let slow = head;\n    let fast = head;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Create the main loop that continues while the fast pointer and its next node exist.\n\n```javascript\nfunction hasCycle(head) {\n    // Base case: empty list or single node\n    if (!head || !head.next) {\n        return false;\n    }\n    \n    // Initialize two pointers\n    let slow = head;\n    let fast = head;\n    \n    // Move pointers until fast reaches end or they meet\n    while (fast && fast.next) {\n        // Loop body will be added next\n    }\n}\n```",
+      "action": "next",
+      "next": "code-04",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ],
+      "example": "    // Move pointers until fast reaches end or they meet\n    while (fast && fast.next) {\n        // Loop body will be added next\n    }"
+    },
+    {
+      "stepId": "code-04",
+      "mentorSays": "Implement the core Floyd's algorithm logic where slow moves 1 step and fast moves 2 steps, checking if they meet.\n\n```javascript\nfunction hasCycle(head) {\n    // Base case: empty list or single node\n    if (!head || !head.next) {\n        return false;\n    }\n    \n    // Initialize two pointers\n    let slow = head;\n    let fast = head;\n    \n    // Move pointers until fast reaches end or they meet\n    while (fast && fast.next) {\n        slow = slow.next;        // Move slow pointer 1 step\n        fast = fast.next.next;   // Move fast pointer 2 steps\n        \n        // If pointers meet, cycle detected\n        if (slow === fast) {\n            return true;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4"
+      ],
+      "example": "        slow = slow.next;        // Move slow pointer 1 step\n        fast = fast.next.next;   // Move fast pointer 2 steps\n        \n        // If pointers meet, cycle detected\n        if (slow === fast) {\n            return true;\n        }"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Add the final return statement for when no cycle is detected (fast pointer reaches the end).\n\n```javascript\nfunction hasCycle(head) {\n    // Base case: empty list or single node\n    if (!head || !head.next) {\n        return false;\n    }\n    \n    // Initialize two pointers\n    let slow = head;\n    let fast = head;\n    \n    // Move pointers until fast reaches end or they meet\n    while (fast && fast.next) {\n        slow = slow.next;        // Move slow pointer 1 step\n        fast = fast.next.next;   // Move fast pointer 2 steps\n        \n        // If pointers meet, cycle detected\n        if (slow === fast) {\n            return true;\n        }\n    }\n    \n    // No cycle found\n    return false;\n}\n```",
+      "action": "next",
+      "next": "wrap-up",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5"
+      ],
+      "example": "    // No cycle found\n    return false;"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering Floyd's cycle detection algorithm! You've learned how to use the fast-slow pointer technique to efficiently detect cycles in linked lists by having one pointer move twice as fast as the other. Next, we'll build on your linked list skills by tackling how to reverse a linked list, which will give you even more tools for manipulating these fundamental data structures.",
+      "action": "complete"
+    }
+  ]
+}

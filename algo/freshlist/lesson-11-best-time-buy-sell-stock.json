@@ -1,0 +1,183 @@
+{
+  "id": "best-time-buy-sell-stock",
+  "title": "Best Time to Buy and Sell Stock",
+  "pattern": "track minimum + maximum profit",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 11,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-11",
+    "introduces": [
+      "tracking-minimum",
+      "tracking-maximum",
+      "profit-calculation",
+      "Math.min",
+      "Math.max",
+      "Infinity"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "let-keyword",
+      "const-keyword",
+      "arrays",
+      "array-indexing",
+      "loops",
+      "for-loop",
+      "for-of-loop",
+      "functions",
+      "function-parameters",
+      "return-statement",
+      "comparison-operators"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["maximum-subarray"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Initialize minPrice to infinity (very large number)." },
+    { "id": "ps2", "text": "Initialize maxProfit to 0." },
+    { "id": "ps3", "text": "For each price in the array:" },
+    { "id": "ps4", "text": "  Update minPrice if current price is lower." },
+    { "id": "ps5", "text": "  Calculate profit if we sold at current price." },
+    { "id": "ps6", "text": "  Update maxProfit if this profit is higher." },
+    { "id": "ps7", "text": "Return maxProfit." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Best Time to Buy and Sell Stock**.\n\nThis is another classic interview problem! It teaches you how to track the best opportunity as you scan through data.\n\nWe'll learn about tracking minimum values and calculating maximum profit — patterns that appear in many problems.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nYou are given an array `prices` where `prices[i]` is the price of a stock on day `i`.\n\nYou want to maximize profit by choosing **one day to buy** and a **different day in the future to sell**.\n\nReturn the maximum profit. If no profit is possible, return 0.\n\n**Example:**\n```\nprices = [7, 1, 5, 3, 6, 4]\n\nOutput: 5\n\nBuy on day 2 (price = 1), sell on day 5 (price = 6)\nProfit = 6 - 1 = 5\n```",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) prices = [7, 1, 5, 3, 6, 4] → 5 (buy at 1, sell at 6)\n2) prices = [7, 6, 4, 3, 1] → 0 (prices only go down, no profit)\n3) prices = [1, 2] → 1 (buy at 1, sell at 2)\n4) prices = [2, 4, 1] → 2 (buy at 2, sell at 4)\n```",
+      "action": "next",
+      "next": "key-constraint"
+    },
+    {
+      "stepId": "key-constraint",
+      "mentorSays": "### Key Constraint\n\nYou must **buy before you sell**.\n\n```\nprices = [2, 4, 1]\n```\n\nYou might think: buy at 1, sell at 4 for profit of 3.\n\nBut NO! Day with price 1 comes **after** day with price 4.\n\nYou can only sell on days that come after you buy.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you find the maximum profit?",
+      "choices": [
+        { "label": "Check every buy-sell pair", "next": "why-not-brute-force" },
+        { "label": "Track the minimum price seen so far", "next": "core-idea" },
+        { "label": "Find the global minimum and maximum", "next": "why-not-global" }
+      ]
+    },
+    {
+      "stepId": "why-not-brute-force",
+      "mentorSays": "Checking every pair:\n\n```javascript\nfor (let i = 0; i < prices.length; i++) {\n  for (let j = i + 1; j < prices.length; j++) {\n    profit = prices[j] - prices[i];\n    // track max profit\n  }\n}\n```\n\nThis works but is slow — two nested loops!\n\nWe can do it in one pass by tracking the minimum price seen so far.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "why-not-global",
+      "mentorSays": "Finding the global minimum and maximum won't work!\n\n```\nprices = [2, 4, 1]\n\nGlobal min = 1 (day 3)\nGlobal max = 4 (day 2)\n```\n\nBut you can't buy at 1 and sell at 4 — the max comes **before** the min.\n\nWe need to track the minimum **seen so far** at each point.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Key Insight\n\nAt each day, ask: \"If I sell today, what's the best profit I could make?\"\n\nThe best profit = today's price - lowest price **before today**.\n\nSo we track:\n1. **minPrice**: the lowest price seen so far\n2. **maxProfit**: the best profit we could make\n\nAs we scan, we update both!",
+      "action": "next",
+      "next": "infinity-explained"
+    },
+    {
+      "stepId": "infinity-explained",
+      "mentorSays": "### Starting with Infinity\n\nWe initialize `minPrice` to `Infinity` (a very large number).\n\n```javascript\nlet minPrice = Infinity;\n```\n\n**Why?** The first price we see will always be smaller than Infinity, so it becomes our initial minimum.\n\n```javascript\nMath.min(Infinity, 7)  // 7\nMath.min(7, 1)         // 1\n```\n\nThis pattern ensures the first element is handled correctly.",
+      "action": "next",
+      "next": "math-min-max"
+    },
+    {
+      "stepId": "math-min-max",
+      "mentorSays": "### Math.min and Math.max\n\nJavaScript provides built-in functions:\n\n```javascript\nMath.min(5, 3)   // 3 (smaller of the two)\nMath.max(5, 3)   // 5 (larger of the two)\n\nMath.min(10, 2, 8)  // 2 (works with multiple values)\n```\n\nWe'll use these to update our tracking variables cleanly.",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nprices = [7, 1, 5, 3, 6, 4]\nminPrice = Infinity, maxProfit = 0\n```\n\n**price = 7:**\n- minPrice = min(Infinity, 7) = 7\n- profit = 7 - 7 = 0\n- maxProfit = max(0, 0) = 0\n\n**price = 1:**\n- minPrice = min(7, 1) = 1\n- profit = 1 - 1 = 0\n- maxProfit = max(0, 0) = 0\n\n**price = 5:**\n- minPrice = min(1, 5) = 1\n- profit = 5 - 1 = 4\n- maxProfit = max(0, 4) = 4\n\n**price = 3:**\n- minPrice = 1, profit = 2, maxProfit = 4\n\n**price = 6:**\n- minPrice = 1, profit = 5, maxProfit = **5**\n\n**price = 4:**\n- minPrice = 1, profit = 3, maxProfit = 5\n\n**Return 5**",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis is a clean one-pass solution.\n\nLet's build it step by step.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1", "ps2"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function and initialize trackers.\n\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfitSoFar = 0;\n\n}\n```\n\n**Explanation:**\n- `minPrice = Infinity` — starts very high, any price will be lower\n- `maxProfitSoFar = 0` — worst case, we make no profit\n- We use `let` because both will be updated",
+      "example": "function maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfitSoFar = 0;\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "**Step 2:** Loop through each price.\n\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfitSoFar = 0;\n\n  for (const price of prices) {\n\n  }\n}\n```\n\n**Explanation:**\n- `for (const price of prices)` iterates through each price\n- We don't need the index, just the values",
+      "example": "for (const price of prices) {\n\n}",
+      "action": "next",
+      "next": "code-03-min",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-03-min",
+      "mentorSays": "**Step 3:** Update minimum price.\n\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfitSoFar = 0;\n\n  for (const price of prices) {\n    minPrice = Math.min(minPrice, price);\n\n  }\n}\n```\n\n**Explanation:**\n- `Math.min(minPrice, price)` keeps the smaller value\n- If today's price is lower, it becomes the new minimum\n- Otherwise, minPrice stays the same",
+      "example": "minPrice = Math.min(minPrice, price);",
+      "action": "next",
+      "next": "code-04-profit",
+      "pseudocodeLineIds": ["ps5", "ps6"]
+    },
+    {
+      "stepId": "code-04-profit",
+      "mentorSays": "**Step 4:** Calculate profit and update maximum.\n\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfitSoFar = 0;\n\n  for (const price of prices) {\n    minPrice = Math.min(minPrice, price);\n    const profit = price - minPrice;\n    maxProfitSoFar = Math.max(maxProfitSoFar, profit);\n  }\n}\n```\n\n**Explanation:**\n- `price - minPrice` = profit if we sell today\n- `Math.max(maxProfitSoFar, profit)` keeps the best profit seen\n- We update minPrice first, so profit is always valid",
+      "example": "const profit = price - minPrice;\nmaxProfitSoFar = Math.max(maxProfitSoFar, profit);",
+      "action": "next",
+      "next": "code-05-return",
+      "pseudocodeLineIds": ["ps7"]
+    },
+    {
+      "stepId": "code-05-return",
+      "mentorSays": "**Step 5:** Return the maximum profit.\n\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfitSoFar = 0;\n\n  for (const price of prices) {\n    minPrice = Math.min(minPrice, price);\n    const profit = price - minPrice;\n    maxProfitSoFar = Math.max(maxProfitSoFar, profit);\n  }\n\n  return maxProfitSoFar;\n}\n```\n\n**Explanation:**\n- Return the best profit we found\n- If prices only went down, this will be 0 (no profit possible)",
+      "example": "return maxProfitSoFar;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfitSoFar = 0;\n\n  for (const price of prices) {\n    minPrice = Math.min(minPrice, price);\n    const profit = price - minPrice;\n    maxProfitSoFar = Math.max(maxProfitSoFar, profit);\n  }\n\n  return maxProfitSoFar;\n}\n```\n\n**How it works:**\n1. Track the lowest price seen so far\n2. At each price, calculate potential profit\n3. Track the highest profit seen\n4. Return the best profit\n\nOne pass through the array — simple and efficient!",
+      "example": "function maxProfit(prices) {\n  let minPrice = Infinity;\n  let maxProfitSoFar = 0;\n\n  for (const price of prices) {\n    minPrice = Math.min(minPrice, price);\n    const profit = price - minPrice;\n    maxProfitSoFar = Math.max(maxProfitSoFar, profit);\n  }\n\n  return maxProfitSoFar;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Tracking minimum** — keeping the lowest value seen so far\n- **Tracking maximum** — keeping the best result seen so far\n- **Profit calculation** — current value minus minimum\n- **`Math.min` and `Math.max`** — built-in comparison functions\n- **`Infinity`** — useful starting value for finding minimums\n\n**Why this matters:**\n\nThis \"track and update\" pattern appears in many problems:\n- Maximum subarray (Kadane's algorithm)\n- Best time to buy and sell stock II, III, IV\n- Container with most water\n- Trapping rain water\n\nThe key insight: sometimes you don't need to check all pairs — tracking running values is enough!\n\n**Next recommended lesson:** Maximum Subarray",
+      "action": "complete"
+    }
+  ]
+}

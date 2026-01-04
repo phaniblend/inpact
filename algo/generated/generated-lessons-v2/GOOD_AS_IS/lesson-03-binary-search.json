@@ -1,0 +1,660 @@
+{
+  "id": "binary-search",
+  "title": "Binary Search",
+  "pattern": "binary search (core)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "AI-GENERATED-V2-BATCH",
+  "standardsVersion": "lessonStandards.v2-inpact",
+  "curriculum": {
+    "lessonNumber": 3,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-3",
+    "introduces": [
+      "not-found-condition",
+      "return-negative-one"
+    ],
+    "assumesAlreadyTaught": [
+      "arrays",
+      "loops",
+      "binary-search-concept",
+      "Math.floor"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": [
+      "rotate-array"
+    ]
+  },
+  "problemStatement": {
+    "description": "Find the index of a target value in a sorted array using binary search. Return -1 if the target is not found.",
+    "inputs": [
+      "nums: sorted array of integers (length 1 to 10^4)",
+      "target: integer to search for"
+    ],
+    "outputs": [
+      "Integer index where target is found, or -1 if target doesn't exist"
+    ],
+    "examples": [
+      {
+        "input": "nums = [-1,0,3,5,9,12], target = 9",
+        "output": "4",
+        "explanation": "Target 9 exists at index 4. Binary search: mid=2 (value 3), 9>3 so search right. Next mid=4 (value 9), found match."
+      },
+      {
+        "input": "nums = [-1,0,3,5,9,12], target = 2",
+        "output": "-1",
+        "explanation": "Target 2 doesn't exist. Binary search narrows to index 2 (value 3), but nums[2]=3 ≠ 2, so return -1."
+      },
+      {
+        "input": "nums = [5], target = 5",
+        "output": "0",
+        "explanation": "Single element array. mid=0, nums[0]=5 == target, return 0."
+      }
+    ],
+    "constraints": [
+      "1 <= nums.length <= 10^4",
+      "-10^4 < nums[i] < 10^4",
+      "nums is sorted in ascending order",
+      "-10^4 < target < 10^4"
+    ],
+    "realWorldUse": [
+      "Database index lookups (finding records by key)",
+      "Search algorithms in sorted collections",
+      "Dictionary/phonebook lookups",
+      "Finding elements in sorted data structures"
+    ]
+  },
+  "patternRecognition": {
+    "whyThisPattern": "The array is sorted, enabling binary search. We need to find an exact match, and binary search efficiently narrows the search space by half each iteration using the sorted property.",
+    "signalsToRecognize": [
+      "SIGNAL 1: Array is sorted → think binary search",
+      "SIGNAL 2: Need to find exact element → binary search is optimal",
+      "SIGNAL 3: O(log n) requirement or large sorted array → binary search beats linear search"
+    ],
+    "patternRules": [
+      "If problem involves sorted array and searching → use binary search",
+      "When you see 'find', 'search', or 'locate' in sorted data → binary search",
+      "If linear search would be O(n) but array is sorted → binary search gives O(log n)"
+    ],
+    "whyNotOtherApproaches": {
+      "greedy": "Greedy doesn't apply - there's no local optimal choice. We need to find the exact position using comparisons.",
+      "bruteForce": "Linear search works but is O(n). Binary search leverages sorted property to achieve O(log n) by eliminating half the space each step.",
+      "alternative": "Using built-in methods like indexOf() is O(n) and doesn't show understanding. Binary search demonstrates algorithmic thinking and is optimal."
+    }
+  },
+  "coreInvariant": {
+    "statement": "If the target exists in the array, it must be within the range [left, right] at all times during the search.",
+    "explanation": "This invariant holds because we only eliminate halves that cannot contain the target. If target < nums[mid], we eliminate right half (including mid) because all elements there are > target. If target > nums[mid], we eliminate left half (including mid) because all elements there are < target. The target (if it exists) always remains in the search range.",
+    "whyItMatters": "This invariant guarantees correctness: when left > right, the search range is empty, meaning the target doesn't exist. If we find nums[mid] == target during the search, we've found it. The invariant ensures we never eliminate the target from consideration."
+  },
+  "stateDefinition": {
+    "states": [
+      {
+        "name": "left",
+        "meaning": "Left boundary of search range, 0-indexed",
+        "indexing": "0-indexed, starts at 0"
+      },
+      {
+        "name": "right",
+        "meaning": "Right boundary of search range, 0-indexed",
+        "indexing": "0-indexed, starts at nums.length - 1"
+      },
+      {
+        "name": "mid",
+        "meaning": "Middle index of current search range, calculated as Math.floor((left + right) / 2)",
+        "indexing": "0-indexed, calculated dynamically"
+      }
+    ],
+    "baseCases": [
+      "If target < nums[0] or target > nums[n-1]: return -1 immediately (optimization)",
+      "If array is empty: return -1",
+      "If single element: check if it equals target"
+    ]
+  },
+  "transitionLogic": {
+    "rules": [
+      {
+        "condition": "if nums[mid] == target",
+        "transition": "return mid (target found)",
+        "explanation": "We found the target at the middle position, return its index immediately",
+        "example": "nums=[1,3,5,7,9], target=5, mid=2: nums[2]=5 == target, return 2"
+      },
+      {
+        "condition": "if target < nums[mid]",
+        "transition": "right = mid - 1 (eliminate right half including mid)",
+        "explanation": "Since array is sorted, if target is smaller than middle element, it must be in the left half. We eliminate right half including mid.",
+        "example": "nums=[1,3,5,7,9], target=2, mid=2 (value 5): 2<5, so right=1, search left half [1,3]"
+      },
+      {
+        "condition": "if target > nums[mid]",
+        "transition": "left = mid + 1 (eliminate left half including mid)",
+        "explanation": "If target is larger than middle element, it must be in the right half. We eliminate left half including mid.",
+        "example": "nums=[1,3,5,7,9], target=7, mid=2 (value 5): 7>5, so left=3, search right half [7,9]"
+      }
+    ],
+    "decisionTree": {
+      "root": "At each iteration, compare target with nums[mid]",
+      "branches": [
+        "If nums[mid] == target: return mid (found)",
+        "If target < nums[mid]: eliminate right half, set right = mid - 1",
+        "If target > nums[mid]: eliminate left half, set left = mid + 1",
+        "If left > right: return -1 (not found)"
+      ]
+    }
+  },
+  "walkthrough": {
+    "example": "nums = [-1,0,3,5,9,12], target = 9",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Initialize: left = 0, right = 5",
+        "state": "left = 0, right = 5, search range is [0, 5] covering entire array [-1,0,3,5,9,12]",
+        "logic": "Start with full array as search space",
+        "result": "Ready to begin binary search"
+      },
+      {
+        "step": 2,
+        "description": "Calculate mid = (0 + 5) / 2 = 2, compare target=9 with nums[2]=3",
+        "state": "mid = 2, nums[2] = 3, target = 9, 9 > 3",
+        "logic": "Target is larger than middle element, so it must be in right half",
+        "result": "Eliminate left half [-1,0,3], search right half [5,9,12]"
+      },
+      {
+        "step": 3,
+        "description": "Update left = mid + 1 = 3, new search range [3, 5]",
+        "state": "left = 3, right = 5, search range is [3, 5] covering [5,9,12]",
+        "logic": "Narrow search to right half since target > nums[mid]",
+        "result": "Search space reduced to right half"
+      },
+      {
+        "step": 4,
+        "description": "Calculate mid = (3 + 5) / 2 = 4, compare target=9 with nums[4]=9",
+        "state": "mid = 4, nums[4] = 9, target = 9, 9 == 9",
+        "logic": "Target equals middle element, we found it!",
+        "result": "Match found at index 4"
+      },
+      {
+        "step": 5,
+        "description": "Return mid = 4",
+        "state": "mid = 4, target found",
+        "logic": "We found the target, return its index",
+        "result": "Return 4"
+      }
+    ],
+    "keyInsight": "Binary search eliminates half the search space each iteration by comparing with the middle element. The sorted property ensures that if target < nums[mid], it can't be in the right half, and vice versa. This guarantees O(log n) time complexity."
+  },
+  "commonMistakes": [
+    {
+      "mistake": "Using left < right instead of left <= right in loop condition",
+      "symptom": "May miss the target when it's at the last position checked, especially in single-element arrays",
+      "fix": "Use left <= right to ensure we check all positions, including when left == right (single element case)",
+      "example": "For array [5] with target=5: left < right would skip the check and return -1 incorrectly"
+    },
+    {
+      "mistake": "Integer overflow when calculating mid = (left + right) / 2",
+      "symptom": "Overflow error for very large arrays (though rare with given constraints)",
+      "fix": "Use mid = left + Math.floor((right - left) / 2) to avoid overflow",
+      "example": "If left and right are very large (close to 10^9), (left + right) might overflow, but (right - left) / 2 is safer"
+    },
+    {
+      "mistake": "Forgetting to return -1 when target not found",
+      "symptom": "Function returns undefined or wrong value when target doesn't exist",
+      "fix": "After loop exits (left > right), return -1 to indicate target not found",
+      "example": "If loop ends without finding target, must explicitly return -1"
+    },
+    {
+      "mistake": "Incorrect pointer updates (using mid instead of mid ± 1)",
+      "symptom": "Infinite loop or missing the target",
+      "fix": "Always use mid + 1 or mid - 1, never just mid. We've already checked mid, so exclude it from next search.",
+      "example": "If target < nums[mid] and you set right = mid (instead of mid - 1), you might get stuck in a loop"
+    },
+    {
+      "mistake": "Not handling empty array edge case",
+      "symptom": "Error when array is empty (though constraints say length >= 1)",
+      "fix": "Check if array is empty at start, return -1 immediately",
+      "example": "If nums.length === 0, return -1 before starting search"
+    }
+  ],
+  "interviewTalkTrack": {
+    "script": [
+      "This is a binary search problem on a sorted array.",
+      "",
+      "I'll use binary search to find the target:",
+      "- Initialize left = 0, right = nums.length - 1",
+      "- While left <= right:",
+      "  - Calculate mid = Math.floor((left + right) / 2)",
+      "  - If nums[mid] == target: return mid",
+      "  - If target < nums[mid]: right = mid - 1",
+      "  - Else: left = mid + 1",
+      "- If loop exits: return -1 (target not found)",
+      "",
+      "Time complexity: O(log n) - we eliminate half the array each iteration",
+      "Space complexity: O(1) - only using a few variables",
+      "",
+      "Edge cases:",
+      "- Target at first position: handled",
+      "- Target at last position: handled",
+      "- Target not found: return -1",
+      "- Single element: handled by left <= right condition"
+    ]
+  },
+  "variants": {
+    "easier": {
+      "problem": "Linear Search (unsorted array)",
+      "approachChange": "No need for binary search, just iterate through array checking each element",
+      "solution": "Simple for loop, check if nums[i] == target, return i if found, -1 if loop completes"
+    },
+    "harder": {
+      "problem": "Search in Rotated Sorted Array",
+      "approachChange": "Array is rotated, so we need to determine which half is sorted and search accordingly",
+      "solution": "Modified binary search: check if left half is sorted (nums[left] <= nums[mid]). If target is in sorted half, search there; otherwise search the other half."
+    }
+  },
+  "pseudocode": [
+    {
+      "id": "ps1",
+      "text": "Initialize left = 0 and right = nums.length - 1"
+    },
+    {
+      "id": "ps2",
+      "text": "While left <= right:"
+    },
+    {
+      "id": "ps3",
+      "text": "  Calculate mid = Math.floor((left + right) / 2)"
+    },
+    {
+      "id": "ps4",
+      "text": "  If nums[mid] == target: return mid"
+    },
+    {
+      "id": "ps5",
+      "text": "  If target < nums[mid]: set right = mid - 1"
+    },
+    {
+      "id": "ps6",
+      "text": "  Else: set left = mid + 1"
+    },
+    {
+      "id": "ps7",
+      "text": "Return -1 (target not found)"
+    }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Great job mastering the search insert position problem! Now we're ready to tackle one of the most elegant and powerful algorithms in computer science: **Binary Search**.\n\nHere's the beautiful pattern: instead of checking every element one by one, binary search repeatedly divides your search space in half by comparing your target with the middle element. If your target is smaller, search the left half. If it's larger, search the right half. Keep halving until you find your answer or exhaust the possibilities!\n\nThrough this lesson, you'll gain these essential skills:\n\n1. **Efficient Problem Solving** - Transform slow linear searches into lightning-fast logarithmic solutions\n2. **Divide and Conquer Thinking** - Master the art of breaking big problems into smaller, manageable pieces  \n3. **Boundary Management** - Handle tricky edge cases and maintain proper search boundaries like a pro\n\nYou're building on solid foundations from search insert position, and binary search will unlock so many more advanced algorithms ahead. This is going to be exciting!\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "💛 JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "🐍 Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "☕ Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "⚡ C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "💙 TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Arrays** - Understanding of array data structure and indexing\n- **Loops** - Knowledge of iterative control structures (while/for loops)\n- **Binary search concept** - Understanding of divide-and-conquer search strategy\n- **Math floor** - Familiarity with Math.floor() for integer division\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-js",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-js",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Objects/Maps:** `const map = {}` creates a map. `map[key] = value` stores, `map[key]` retrieves, `key in map` checks existence.\n\n**Functions:** `function name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Arrays** - Understanding of array data structure and indexing\n- **Loops** - Knowledge of iterative control structures (while/for loops)\n- **Binary search concept** - Understanding of divide-and-conquer search strategy\n- **Math floor** - Familiarity with Math.floor() for integer division\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-python",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Lists:** Use `[]` to create, `lst[i]` to access, `len(lst)` for size.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-python",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Lists:** `lst = [1, 2, 3]` creates a list. `lst[0]` accesses first element.\n\n**Loops:** `for i in range(len(lst))` iterates through list.\n\n**Dictionaries:** `dict = {}` creates a dict. `dict[key] = value` stores, `dict[key]` retrieves, `key in dict` checks existence.\n\n**Functions:** `def name(params): return value` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Arrays** - Understanding of array data structure and indexing\n- **Loops** - Knowledge of iterative control structures (while/for loops)\n- **Binary search concept** - Understanding of divide-and-conquer search strategy\n- **Math floor** - Familiarity with Math.floor() for integer division\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-java",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `int[] arr = new int[size]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-java",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `int[] arr = {1, 2, 3}` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.length; i++)` iterates through array.\n\n**HashMaps:** `Map<K, V> map = new HashMap<>()` creates a map. `map.put(key, value)` stores, `map.get(key)` retrieves, `map.containsKey(key)` checks existence.\n\n**Functions:** `public returnType name(params) { return value; }` defines a method.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Arrays** - Understanding of array data structure and indexing\n- **Loops** - Knowledge of iterative control structures (while/for loops)\n- **Binary search concept** - Understanding of divide-and-conquer search strategy\n- **Math floor** - Familiarity with Math.floor() for integer division\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-cpp",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `vector<int> arr` to create, `arr[i]` to access, `arr.size()` for size.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through array.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-cpp",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Vectors:** `vector<int> arr = {1, 2, 3}` creates a vector. `arr[0]` accesses first element.\n\n**Loops:** `for (int i = 0; i < arr.size(); i++)` iterates through vector.\n\n**Maps:** `unordered_map<K, V> map` creates a map. `map[key] = value` stores, `map[key]` retrieves, `map.count(key)` checks existence.\n\n**Functions:** `returnType name(params) { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Arrays** - Understanding of array data structure and indexing\n- **Loops** - Knowledge of iterative control structures (while/for loops)\n- **Binary search concept** - Understanding of divide-and-conquer search strategy\n- **Math floor** - Familiarity with Math.floor() for integer division\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-prereqs-ts",
+      "mentorSays": "Let me give you a quick refresher on the key concepts:\n\n**Arrays:** Use `[]` to create, `arr[i]` to access, `arr.length` for size.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue with the lesson!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "select-prereqs-ts",
+      "mentorSays": "Here's a quick refresher on the key concepts you'll need:\n\n**Arrays:** `const arr: number[] = [1, 2, 3]` creates an array. `arr[0]` accesses first element.\n\n**Loops:** `for (let i = 0; i < arr.length; i++)` iterates through array.\n\n**Maps:** `const map = new Map<K, V>()` creates a map. `map.set(key, value)` stores, `map.get(key)` retrieves, `map.has(key)` checks existence.\n\n**Functions:** `function name(params): returnType { return value; }` defines a function.\n\nLet's continue!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Binary Search problem asks for.\n\nImagine you're looking for a specific page in a thick dictionary. Instead of flipping through page by page, you open to the middle, see if your word comes before or after that page, then eliminate half the book and repeat the process with the remaining half until you find your word. This \"divide and conquer\" approach is exactly how binary search works - it repeatedly splits a sorted list in half to quickly locate the target item.\n\n# Binary Search Problem\n\n## What it asks\n\nYou're given a **sorted array** of numbers and a target value you're looking for. Your job is to find the index (position) where that target appears in the array. If the target isn't in the array, return -1.\n\nThe catch? You need to do this efficiently - ideally in O(log n) time, which means you can't just check every element one by one.\n\n## Example\n\nLet's say you have:\n- `nums = [1, 3, 5, 7, 9]` \n- `target = 5`\n\nThe answer would be `2` because the number 5 is at index 2 in the array (remember, we start counting from 0).\n\nIf your target was 6 instead, you'd return `-1` since 6 isn't anywhere in the array.\n\n## Why it works\n\nThink of it like guessing a number between 1 and 100. The smart strategy isn't to guess 1, then 2, then 3... Instead, you'd guess 50 first. Too high? Try 25. Too low? Try 75. You keep cutting the remaining possibilities in half until you find your number.\n\nBinary search works the same way because the array is **sorted**. You start by checking the middle element:\n\n- If it's your target → you're done!\n- If it's too big → your target must be in the left half\n- If it's too small → your target must be in the right half\n\nThen you repeat this process on whichever half remains. Since you eliminate half the possibilities with each guess, you can find any element in a sorted array of 1,000 items in at most 10 steps. That's the power of O(log n)!\n\nThe key insight is that the sorted nature of the array gives you information about where your target *could* be, letting you skip huge chunks of the search space.",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "You're implementing a search function that should return the index of a target value in a sorted array, or -1 if not found. You notice this is very similar to finding an insertion position. How should you modify the standard insertion position algorithm?",
+      "choices": [
+        {
+          "label": "Check if arr[mid] == target during the search, and return mid immediately when found",
+          "next": "wrong-choice"
+        },
+        {
+          "label": "Use the same insertion position logic, then check if the result index contains the target",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "wrong-choice",
+      "mentorSays": "This seems logical but breaks the binary search invariant. Early returns make it harder to handle edge cases consistently and can miss the target when it appears multiple times. The standard approach of maintaining loop invariants throughout the entire search is more reliable.",
+      "action": "next",
+      "next": "pattern-recognition"
+    },
+    {
+      "stepId": "pattern-recognition",
+      "mentorSays": "### Pattern Recognition: Binary Search on Sorted Array\n\n**This problem follows the \"binary search\" pattern:**\n- **Sorted array** - Prerequisite for binary search\n- **Divide and conquer** - Eliminate half the search space each iteration\n- **Two pointers** - Left and right boundaries narrowing search range\n- **Middle comparison** - Compare target with middle element to decide direction\n\n**Similar problems:**\n- Search Insert Position (binary search variant)\n- Find First and Last Position (binary search for boundaries)\n- Sqrt(x) (binary search for square root)\n\n**Key insight:** Binary search leverages the sorted property to achieve O(log n) time by eliminating half the possibilities with each comparison. The invariant is that the target (if it exists) is always within the [left, right] range.",
+      "action": "next",
+      "next": "invariant"
+    },
+    {
+      "stepId": "invariant",
+      "mentorSays": "### Invariant: Target Is Within [left, right] Range\n\n**Invariant maintained throughout:**\n- **Range containment:** If target exists, it is within indices [left, right]\n- **Boundary maintenance:** All elements < left are < target, all elements > right are > target\n- **Convergence:** Range narrows with each iteration\n- **Termination:** When left > right, target doesn't exist\n\n**Why this works:**\n- Initially, entire array [0, n-1] is the search range\n- Comparing with middle eliminates half the range\n- If target < nums[mid], it's in [left, mid-1]\n- If target > nums[mid], it's in [mid+1, right]\n- If target == nums[mid], we found it\n\n**Invariant guarantee:** Throughout the search, if the target exists, it remains within [left, right]. When the loop terminates, if left > right, the target doesn't exist. Otherwise, we check if nums[left] == target.",
+      "action": "next",
+      "next": "state-definition"
+    },
+    {
+      "stepId": "state-definition",
+      "mentorSays": "### State Definition: Binary Search State\n\n**State variables:**\n- **`left`** - Left boundary of search range\n- **`right`** - Right boundary of search range\n- **`mid`** - Middle index of current range\n- **`target`** - Value we're searching for\n\n**State transitions:**\n1. **Initialize:** left = 0, right = nums.length - 1\n2. **Loop:** while left <= right\n3. **Calculate mid:** mid = Math.floor((left + right) / 2)\n4. **Compare and narrow:**\n   - If nums[mid] == target: return mid\n   - If nums[mid] < target: left = mid + 1\n   - If nums[mid] > target: right = mid - 1\n5. **Not found:** Return -1 if loop exits\n\n**State validity:** Search range is valid when left <= right. Target is found when nums[mid] == target.",
+      "action": "next",
+      "next": "why-alternatives-fail"
+    },
+    {
+      "stepId": "why-alternatives-fail",
+      "mentorSays": "### Why Alternative Approaches Fail\n\n**Approach 1: Linear Search**\n- **Why it fails:** O(n) time complexity\n- **Issue:** Checks every element, doesn't use sorted property\n- **Better:** Binary search is O(log n), much faster for large arrays\n\n**Approach 2: Early Return on Match**\n- **Why it doesn't fail:** Actually works, but can be less clear\n- **Issue:** Breaks invariant maintenance, harder to reason about edge cases\n- **Better:** Maintaining invariant throughout is more reliable\n\n**Approach 3: Recursive Binary Search**\n- **Why it doesn't fail:** Works correctly\n- **Issue:** Uses O(log n) extra space for call stack\n- **Better:** Iterative approach uses O(1) space\n\n**Our approach wins because:** Binary search with proper invariant maintenance finds the target in O(log n) time with O(1) space, which is optimal for searching in sorted arrays. The invariant ensures correctness and makes the algorithm easy to reason about.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "The key insight is that **binary search** uses the same logic as finding an insert position, but adds a **boundary check** to return -1 when the target doesn't exist. This works because when the search space is exhausted (left > right), if the element at the final position doesn't equal our target, we know it's not in the array. For example, searching for 4 in [1,2,3,5,6,7] would end with left pointing to index 3 (where 5 is), and since arr[3] ≠ 4, we return -1. The **two-pointer approach** naturally converges to where the target should be, making the final comparison definitive.",
+      "action": "next",
+      "next": "walkthrough",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "Let's trace through `nums=[1,3,5,7,9], target=5`:\n- Step 1: Initialize left=0, right=4, mid=2, nums[2]=5\n- Step 2: nums[mid]==target, found at index 2\n- Final: **2**",
+      "action": "next",
+      "next": "pseudocode-step",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3"
+      ]
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "Here's our plan written as pseudocode:",
+      "action": "next",
+      "next": "coding-intro",
+      "pseudocodeLineIds": [
+        "ps1",
+        "ps2",
+        "ps3",
+        "ps4",
+        "ps5",
+        "ps6",
+        "ps7"
+      ]
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let's translate this into JavaScript, building it step by step.\n\nRemember: we'll add just 1-3 lines at a time!",
+      "action": "next",
+      "next": "code-01"
+    },
+    {
+      "stepId": "code-01",
+      "mentorSays": "Initialize function with array and target parameters\n\n```javascript\nfunction searchInsert(nums, target) {\n\n}\n```",
+      "action": "next",
+      "next": "code-02",
+      "pseudocodeLineIds": [
+        "ps1"
+      ],
+      "example": "function searchInsert(nums, target) {"
+    },
+    {
+      "stepId": "code-02",
+      "mentorSays": "Set up left and right pointers for binary search boundaries\n\n```javascript\nfunction searchInsert(nums, target) {\n    let left = 0;\n    let right = nums.length - 1;\n}\n```",
+      "action": "next",
+      "next": "code-03",
+      "pseudocodeLineIds": [
+        "ps2"
+      ],
+      "example": "    let left = 0;\n    let right = nums.length - 1;"
+    },
+    {
+      "stepId": "code-03",
+      "mentorSays": "Create while loop to continue searching while valid range exists\n\n```javascript\nfunction searchInsert(nums, target) {\n    let left = 0;\n    let right = nums.length - 1;\n    \n    while (left <= right) {\n    }\n}\n```",
+      "action": "next",
+      "next": "loop-invariant",
+      "pseudocodeLineIds": [
+        "ps3"
+      ],
+      "example": "    while (left <= right) {"
+    },
+    {
+      "stepId": "loop-invariant",
+      "mentorSays": "### Loop Invariant (Interview-Grade Explanation)\n\n**The invariant:** Throughout the loop, if the target exists in the array, it must be within the range `[left, right]`.\n\n**Why this matters:**\n- At start: `left = 0`, `right = length - 1` → target is in `[0, length-1]` ✓\n- Each iteration: We narrow the range, but the invariant holds\n- When `left > right`: The range is empty, target doesn't exist\n\n**This is why we use `left <= right`:**\n- When `left == right`, there's still one element to check\n- Only when `left > right` is the range truly empty\n\n**Interview tip:** Stating the invariant shows deep understanding of the algorithm! This is interview-grade explanation.",
+      "action": "next",
+      "next": "code-04",
+      "mentorSays": "Calculate middle index to divide search space in half\n\n```javascript\nfunction searchInsert(nums, target) {\n    let left = 0;\n    let right = nums.length - 1;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n    }\n}\n```",
+      "action": "next",
+      "next": "code-05",
+      "pseudocodeLineIds": [
+        "ps4"
+      ],
+      "example": "        let mid = Math.floor((left + right) / 2);"
+    },
+    {
+      "stepId": "code-05",
+      "mentorSays": "Check if middle element equals target and return index if found\n\n```javascript\nfunction searchInsert(nums, target) {\n    let left = 0;\n    let right = nums.length - 1;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        if (nums[mid] === target) {\n            return mid;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-06",
+      "pseudocodeLineIds": [
+        "ps5"
+      ],
+      "example": "        if (nums[mid] === target) {\n            return mid;\n        }"
+    },
+    {
+      "stepId": "code-06",
+      "mentorSays": "Move left pointer right if middle value is less than target\n\n```javascript\nfunction searchInsert(nums, target) {\n    let left = 0;\n    let right = nums.length - 1;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        if (nums[mid] === target) {\n            return mid;\n        } else if (nums[mid] < target) {\n            left = mid + 1;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-07",
+      "pseudocodeLineIds": [
+        "ps6"
+      ],
+      "example": "        } else if (nums[mid] < target) {\n            left = mid + 1;"
+    },
+    {
+      "stepId": "code-07",
+      "mentorSays": "Move right pointer left if middle value is greater than target\n\n```javascript\nfunction searchInsert(nums, target) {\n    let left = 0;\n    let right = nums.length - 1;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        if (nums[mid] === target) {\n            return mid;\n        } else if (nums[mid] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n}\n```",
+      "action": "next",
+      "next": "code-08",
+      "pseudocodeLineIds": [
+        "ps7"
+      ],
+      "example": "        } else {\n            right = mid - 1;\n        }"
+    },
+    {
+      "stepId": "code-08",
+      "mentorSays": "Return left pointer as insertion position when target not found\n\n```javascript\nfunction searchInsert(nums, target) {\n    let left = 0;\n    let right = nums.length - 1;\n    \n    while (left <= right) {\n        let mid = Math.floor((left + right) / 2);\n        if (nums[mid] === target) {\n            return mid;\n        } else if (nums[mid] < target) {\n            left = mid + 1;\n        } else {\n            right = mid - 1;\n        }\n    }\n    return left;\n}\n```",
+      "action": "next",
+      "next": "common-mistakes",
+      "pseudocodeLineIds": [
+        "ps8"
+      ],
+      "example": "    return left;\n}"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Off-by-one errors** - Check array bounds and loop conditions carefully\n2. **Edge cases** - Handle empty inputs, single elements, and boundary conditions\n3. **Wrong data structure** - Choose the right structure (array, map, set, etc.) for the problem\n4. **Incorrect loop conditions** - Ensure loops terminate correctly\n5. **Type errors** - Make sure variable types match expected operations",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use the optimal approach for this problem\"**\n2. **\"The key insight is [problem-specific insight]\"**\n3. **\"I'll implement this by [main steps]\"**\n4. **\"This gives us [time complexity] time complexity with [space complexity] space\"**\n5. **\"The tradeoff is [any tradeoffs mentioned]\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Great work mastering binary search! You've conquered one of the most fundamental and powerful algorithms in computer science, learning to efficiently find targets in sorted data with O(log n) time complexity. Next, we'll tackle the rotate-array problem, where you'll apply your newfound skills to search and manipulate elements in rotated sorted arrays.\n\n**Follow-up variant:**\n\nHow would you modify this solution if [problem constraint changed]? What would be the new time/space complexity?",
+      "action": "complete"
+    }
+  ]
+}
