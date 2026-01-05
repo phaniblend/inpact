@@ -1,0 +1,1393 @@
+
+================================================================================
+FILE: pow-x-n.json
+================================================================================
+
+{
+  "id": "pow-x-n",
+  "title": "Power Function (xⁿ)",
+  "difficulty": "medium",
+  "pattern": "divide-and-conquer + exponentiation",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a number **x** and an integer **n**.\n\nYour task is to calculate **x raised to the power n** (xⁿ).\n\nYou must do this **without using built-in power functions**.",
+      "example": "x = 2, n = 10",
+      "action": "next"
+    },
+    {
+      "stepId": "what-power-means",
+      "mentorSays": "Important clarification:\n\nxⁿ means:\n• multiply x by itself n times\n\nExamples:\n• 2³ = 2 × 2 × 2\n• 5⁰ = 1",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Example:\n\nx = 3, n = 4\n\n3⁴ = 3 × 3 × 3 × 3 = 81",
+      "action": "next"
+    },
+    {
+      "stepId": "negative-exponent",
+      "mentorSays": "What about negative powers?\n\nExample:\n• 2⁻² = 1 / (2²) = 1 / 4\n\nSo a negative exponent means we invert the result.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf n is very large (for example n = 1,000,000), would multiplying x one million times be efficient?",
+      "choices": [
+        {
+          "label": "Yes, just multiply repeatedly",
+          "next": "bruteforce-logic"
+        },
+        {
+          "label": "No, we need a smarter approach",
+          "next": "bruteforce-logic"
+        }
+      ]
+    },
+    {
+      "stepId": "bruteforce-logic",
+      "mentorSays": "A brute-force approach would:\n\n• start with result = 1\n• multiply by x, n times\n\nThis works, but it is too slow for large n.",
+      "action": "next"
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "Key observation:\n\nWe can reuse work.\n\nExample:\n• x⁸ = (x⁴) × (x⁴)\n• x⁴ = (x²) × (x²)\n\nWe are repeating the same calculations.",
+      "action": "next"
+    },
+    {
+      "stepId": "divide-and-conquer",
+      "mentorSays": "Instead of multiplying one by one, we can:\n\n• split the power in half\n• compute xⁿᐟ² once\n• reuse it\n\nThis reduces the number of multiplications drastically.",
+      "action": "next"
+    },
+    {
+      "stepId": "even-vs-odd",
+      "mentorSays": "Two cases:\n\n• If n is even:\n  xⁿ = (xⁿᐟ²) × (xⁿᐟ²)\n\n• If n is odd:\n  xⁿ = x × (xⁿᐟ²) × (xⁿᐟ²)",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\n\nx = 2, n = 10\n\n2¹⁰ = (2⁵)²\n2⁵ = 2 × (2²)²\n\nWe reduce the problem size at each step.",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Notice the repetition:\n\nTo compute xⁿ, we need to compute xⁿᐟ² the same way.\n\nThis makes **recursion** a natural fit.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "if n is 0, return 1",
+        "if n is negative, invert x and make n positive",
+        "compute half = power(x, n / 2)",
+        "if n is even:",
+        "  return half × half",
+        "else:",
+        "  return x × half × half"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Now translate the logic into JavaScript.",
+      "code": "function myPow(x, n) {\n  if (n === 0) return 1;\n\n  if (n < 0) {\n    x = 1 / x;\n    n = -n;\n  }\n\n  function power(base, exp) {\n    if (exp === 0) return 1;\n\n    const half = power(base, Math.floor(exp / 2));\n\n    if (exp % 2 === 0) {\n      return half * half;\n    } else {\n      return base * half * half;\n    }\n  }\n\n  return power(x, n);\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final checks:\n\nmyPow(2, 10) → 1024\nmyPow(2, -2) → 0.25\nmyPow(5, 0) → 1\n\nThe power function works efficiently for large exponents.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: quick-sort.json
+================================================================================
+
+{
+  "id": "quick-sort",
+  "title": "Quick Sort",
+  "difficulty": "medium",
+  "pattern": "divide-and-conquer + partitioning",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of numbers in random order.\n\nYour task is to sort the list in **ascending order**.\n\nWe will learn a fast and commonly used sorting technique called **Quick Sort**.",
+      "example": "Input: [5,3,8,4,2]",
+      "action": "next"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Quick Sort works by:\n\n• choosing one element as a **pivot**\n• rearranging the list so:\n  - numbers smaller than the pivot go to the left\n  - numbers larger than the pivot go to the right\n\nAfter that, the pivot is already in its final position.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Example:\n\nList: [5,3,8,4,2]\n\nChoose pivot = 4\n\nAfter rearranging:\n[3,2] 4 [5,8]\n\n4 will never move again.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nOnce the pivot is in the correct position, what remains to be done?",
+      "choices": [
+        {
+          "label": "Sort the left and right parts separately",
+          "next": "divide-and-conquer"
+        },
+        {
+          "label": "The list is fully sorted",
+          "next": "divide-and-conquer"
+        }
+      ]
+    },
+    {
+      "stepId": "divide-and-conquer",
+      "mentorSays": "Correct.\n\nAfter placing the pivot correctly:\n\n• the left part still needs sorting\n• the right part still needs sorting\n\nBut they are **smaller problems of the same type**.",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Because we repeat the same steps on smaller sublists:\n\n• choose a pivot\n• partition\n• sort left and right\n\nRecursion naturally fits this pattern.",
+      "action": "next"
+    },
+    {
+      "stepId": "partition-explained",
+      "mentorSays": "Partitioning means:\n\n• scanning the list\n• moving elements smaller than pivot to one side\n• moving larger elements to the other\n\nWe do this **in-place**.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-partition-walkthrough",
+      "mentorSays": "Example partition step:\n\nList: [5,3,8,4,2]\nPivot = 4\n\nAfter partition:\n[3,2,4,5,8]\n\nPivot index = 2",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "if sublist has 0 or 1 elements, return",
+        "choose a pivot",
+        "partition list around pivot",
+        "recursively quick sort left sublist",
+        "recursively quick sort right sublist"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nWe will implement Quick Sort using recursion and in-place partitioning.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function quickSort(nums, left = 0, right = nums.length - 1) {\n  if (left >= right) return;\n\n  const pivotIndex = partition(nums, left, right);\n  quickSort(nums, left, pivotIndex - 1);\n  quickSort(nums, pivotIndex + 1, right);\n}\n\nfunction partition(nums, left, right) {\n  const pivot = nums[right];\n  let i = left;\n\n  for (let j = left; j < right; j++) {\n    if (nums[j] < pivot) {\n      [nums[i], nums[j]] = [nums[j], nums[i]];\n      i++;\n    }\n  }\n\n  [nums[i], nums[right]] = [nums[right], nums[i]];\n  return i;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example check:\n\n[5,3,8,4,2] → [2,3,4,5,8]\n\nQuick Sort correctly sorts the list.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: radix-sort.json
+================================================================================
+
+{
+  "id": "radix-sort",
+  "title": "Radix Sort",
+  "difficulty": "medium",
+  "pattern": "digit-based sorting (non-comparison)",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of **non-negative integers**.\n\nYour task is to sort the list in **ascending order**.\n\nUnlike other sorting algorithms, this method does **not compare numbers directly**.",
+      "example": "Input: [170, 45, 75, 90, 802, 24, 2, 66]",
+      "action": "next"
+    },
+    {
+      "stepId": "why-different",
+      "mentorSays": "Most sorting algorithms work by comparing two numbers.\n\nRadix Sort works differently:\n\n• It sorts numbers **digit by digit**\n• It processes numbers from **least significant digit to most significant digit**",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s start with a tiny example.\n\nNumbers: [21, 13, 12]\n\nLook at the **last digit**:\n• 21 → 1\n• 13 → 3\n• 12 → 2\n\nIf we group by last digit, we can start organizing the numbers.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf we sort numbers by the last digit, will the entire number be sorted?",
+      "choices": [
+        {
+          "label": "No, higher digits still matter",
+          "next": "key-idea"
+        },
+        {
+          "label": "Yes, one pass is enough",
+          "next": "key-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "key-idea",
+      "mentorSays": "Correct.\n\nSorting by one digit is not enough.\n\nBut if we:\n• first sort by the last digit\n• then by the second-last digit\n• then by the third-last digit\n\nWe can gradually build the correct order.",
+      "action": "next"
+    },
+    {
+      "stepId": "stability-idea",
+      "mentorSays": "Important requirement:\n\nWhen sorting by digits, the sorting at each step must be **stable**.\n\nStable means:\n• numbers with the same digit keep their relative order",
+      "action": "next"
+    },
+    {
+      "stepId": "digit-passes",
+      "mentorSays": "Process overview:\n\n1. Find the maximum number to know how many digits we need\n2. Start from the least significant digit (ones place)\n3. Use buckets (0–9) to group numbers\n4. Rebuild the list\n5. Move to the next digit",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example (ones place):\n\n[170, 45, 75, 90]\n\nBuckets:\n0 → 170, 90\n5 → 45, 75\n\nRebuild list:\n[170, 90, 45, 75]\n\nNext, move to tens place.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "find the maximum number",
+        "for digit place = 1; while max / place > 0:",
+        "  create 10 empty buckets (0–9)",
+        "  place each number into bucket based on current digit",
+        "  rebuild list from buckets in order",
+        "  move to next digit place"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nWe will use arrays as buckets to maintain stability.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function radixSort(nums) {\n  const maxNum = Math.max(...nums);\n\n  for (let place = 1; Math.floor(maxNum / place) > 0; place *= 10) {\n    const buckets = Array.from({ length: 10 }, () => []);\n\n    for (const num of nums) {\n      const digit = Math.floor(num / place) % 10;\n      buckets[digit].push(num);\n    }\n\n    nums = [].concat(...buckets);\n  }\n\n  return nums;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final check:\n\n[170,45,75,90,802,24,2,66]\n→ [2,24,45,66,75,90,170,802]\n\nRadix Sort correctly sorts the list without comparisons.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: remove-duplicates-sorted.json
+================================================================================
+
+{
+  "id": "remove-duplicates-sorted",
+  "title": "Remove Duplicates from Sorted Array",
+  "pattern": "two-pointers (slow–fast)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-06",
+    "introduces": ["slow-fast-pointers"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "two-pointers",
+      "comparison"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If array is empty, return 0." },
+    { "id": "ps2", "text": "Set slow = 0 (position of last unique element)." },
+    { "id": "ps3", "text": "For fast from 1 to end:" },
+    { "id": "ps4", "text": "  If nums[fast] != nums[slow]:" },
+    { "id": "ps5", "text": "    Move slow forward and copy nums[fast] to nums[slow]." },
+    { "id": "ps6", "text": "Return slow + 1 as the count of unique elements." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Remove Duplicates from Sorted Array**.\n\nThis lesson builds on two pointers and introduces the **slow–fast pointer** pattern.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a **sorted** array of numbers.\n\nYour task:\n- Remove duplicates **in place**\n- Return the number of **unique** elements\n\nThe first part of the array should contain those unique elements.",
+      "example": "nums = [1,1,2,2,3]",
+      "action": "next",
+      "next": "what-in-place-means"
+    },
+    {
+      "stepId": "what-in-place-means",
+      "mentorSays": "### What does \"in place\" mean here?\n\nWe do NOT create a new array.\n\nWe reuse the same array and overwrite values at the front.\n\nOnly the first part of the array matters after the operation.",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [1,1,2] → unique count = 2, array starts as [1,2]\n2) [0,0,1,1,2] → unique count = 3, array starts as [0,1,2]",
+      "action": "next",
+      "next": "why-sorted-matters"
+    },
+    {
+      "stepId": "why-sorted-matters",
+      "mentorSays": "Because the array is **sorted**, duplicates always appear next to each other.\n\nThis allows us to compare neighboring elements to detect duplicates.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf we scan the array from left to right, how can we keep track of where the next unique value should go?",
+      "choices": [
+        { "label": "Use two positions (pointers)", "next": "core-idea" },
+        { "label": "Create another array", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe use two pointers:\n\n- **slow** → position of the last unique element\n- **fast** → scans ahead to find the next new value",
+      "action": "next",
+      "next": "slow-fast-explained"
+    },
+    {
+      "stepId": "slow-fast-explained",
+      "mentorSays": "### Slow–Fast pointers\n\n- slow starts at index 0\n- fast starts at index 1\n\nWhen nums[fast] is different from nums[slow]:\n- move slow forward\n- copy nums[fast] into nums[slow]",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums = [1,1,2,2,3]\n\n- slow=0 (1)\n- fast=1 (1) → same → skip\n- fast=2 (2) → different\n  - slow=1, nums[1]=2\n- fast=3 (2) → same → skip\n- fast=4 (3) → different\n  - slow=2, nums[2]=3\n\nUnique count = slow + 1 = 3",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself to build muscle memory.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function removeDuplicates(nums) {\n\n}",
+      "action": "next",
+      "next": "code-02-edge",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-edge",
+      "mentorSays": "Step 2: Handle the empty array case.",
+      "example": "if (nums.length === 0) return 0;",
+      "action": "next",
+      "next": "code-03-pointers",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-pointers",
+      "mentorSays": "Step 3: Initialize slow pointer.",
+      "example": "let slow = 0;",
+      "action": "next",
+      "next": "code-04-loop",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-04-loop",
+      "mentorSays": "Step 4: Move fast pointer through the array.",
+      "example": "for (let fast = 1; fast < nums.length; fast++) {\n\n}",
+      "action": "next",
+      "next": "code-05-compare",
+      "pseudocodeLineIds": ["ps3", "ps4"]
+    },
+    {
+      "stepId": "code-05-compare",
+      "mentorSays": "Step 5: When a new value is found, move slow and copy it.",
+      "example": "if (nums[fast] !== nums[slow]) {\n  slow++;\n  nums[slow] = nums[fast];\n}",
+      "action": "next",
+      "next": "final-code",
+      "pseudocodeLineIds": ["ps4", "ps5"]
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function removeDuplicates(nums) {\n  if (nums.length === 0) return 0;\n\n  let slow = 0;\n\n  for (let fast = 1; fast < nums.length; fast++) {\n    if (nums[fast] !== nums[slow]) {\n      slow++;\n      nums[slow] = nums[fast];\n    }\n  }\n\n  return slow + 1;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- the slow–fast pointer pattern\n- how sorted arrays simplify duplicate handling\n- how to modify arrays in place\n\nThis pattern will appear again with variations.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: remove-nth-node.json
+================================================================================
+
+{
+  "id": "remove-nth-node",
+  "title": "Remove Nth Node From End of List",
+  "difficulty": "medium",
+  "pattern": "linked-list + two-pointers",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the head of a singly linked list and a number **n**.\n\nYour task is to remove the **n-th node from the end** of the list and return the head of the modified list.",
+      "example": "List: 1 → 2 → 3 → 4 → 5, n = 2",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-n-from-end",
+      "mentorSays": "Important clarification:\n\n• Counting starts from the **end**, not the beginning\n• n = 1 means remove the **last** node\n• n = length means remove the **first** node",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Example:\n\nList: 1 → 2 → 3 → 4 → 5\nn = 2\n\nCounting from the end:\n• 1st from end → 5\n• 2nd from end → 4\n\nNode to remove is **4**.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you only have the head of the list, how could you find the n-th node from the end?",
+      "choices": [
+        {
+          "label": "First count all nodes, then remove",
+          "next": "two-pass-idea"
+        },
+        {
+          "label": "Try to do it in one pass",
+          "next": "one-pass-intuition"
+        }
+      ]
+    },
+    {
+      "stepId": "two-pass-idea",
+      "mentorSays": "A two-pass approach would:\n\n• traverse the list to count nodes\n• calculate the position to remove from the start\n• traverse again to remove it\n\nThis works, but it takes two passes.",
+      "action": "next"
+    },
+    {
+      "stepId": "one-pass-intuition",
+      "mentorSays": "We can do better.\n\nIf one pointer is **n nodes ahead** of another:\n\n• when the first reaches the end\n• the second will be at the node just before the one to remove",
+      "action": "next"
+    },
+    {
+      "stepId": "dummy-node-idea",
+      "mentorSays": "To handle edge cases (like removing the first node), we use a **dummy node**.\n\nThe dummy node points to the head and simplifies pointer updates.",
+      "action": "next"
+    },
+    {
+      "stepId": "pointer-setup",
+      "mentorSays": "We use two pointers:\n\n• first → moves ahead by n+1 steps\n• second → starts at the dummy node\n\nThen both move together.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\nList: 1 → 2 → 3 → 4 → 5, n = 2\n\nAdd dummy:\n0 → 1 → 2 → 3 → 4 → 5\n\nMove first pointer 3 steps ahead.\nThen move both pointers together until first reaches the end.\n\nSecond pointer now points just before the node to remove.",
+      "action": "next"
+    },
+    {
+      "stepId": "remove-step",
+      "mentorSays": "To remove a node:\n\n• set second.next to second.next.next\n\nThis skips the target node.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "create a dummy node pointing to head",
+        "set first and second to dummy",
+        "move first forward n+1 steps",
+        "while first is not null:",
+        "  move first forward",
+        "  move second forward",
+        "remove second.next by linking to second.next.next",
+        "return dummy.next"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nFocus on pointer movement and edge cases.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function removeNthFromEnd(head, n) {\n  const dummy = { next: head };\n  let first = dummy;\n  let second = dummy;\n\n  for (let i = 0; i <= n; i++) {\n    first = first.next;\n  }\n\n  while (first !== null) {\n    first = first.next;\n    second = second.next;\n  }\n\n  second.next = second.next.next;\n  return dummy.next;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final checks:\n\n1 → 2 → 3 → 4 → 5, n=2 → 1 → 2 → 3 → 5\n1, n=1 → empty list\n\nThe correct node is removed in one pass.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: reverse-linked-list.json
+================================================================================
+
+{
+  "id": "reverse-linked-list",
+  "title": "Reverse Linked List",
+  "difficulty": "easy",
+  "pattern": "linked-list + pointers",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the head of a singly linked list.\n\nYour task is to reverse the list and return the new head.",
+      "action": "next"
+    },
+    {
+      "stepId": "what-is-linked-list",
+      "mentorSays": "Before we solve this, let’s be very clear.\n\nA linked list is NOT an array.\n\nEach element (called a node) contains:\n• a value\n• a reference to the next node",
+      "example": "1 → 2 → 3 → null",
+      "action": "next"
+    },
+    {
+      "stepId": "what-reverse-means",
+      "mentorSays": "Reversing a linked list means:\n\n1 → 2 → 3 → null\nbecomes\n3 → 2 → 1 → null\n\nWe change the **direction of links**, not the values.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s take a very small list:\n\nA → B → C → null\n\nAfter reversing:\nC → B → A → null",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you are standing on one node, what do you need in order to reverse its direction?",
+      "choices": [
+        {
+          "label": "Access to the previous node",
+          "next": "core-idea"
+        },
+        {
+          "label": "Access to all nodes at once",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nTo reverse links safely, we must track:\n• the current node\n• the previous node\n• the next node (temporarily)",
+      "action": "next"
+    },
+    {
+      "stepId": "pointer-setup",
+      "mentorSays": "We will use three pointers:\n\n• prev → starts as null\n• curr → starts at head\n• next → used to store curr.next temporarily",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example walkthrough:\n\nInitial:\nprev = null\ncurr = A\n\nStep 1:\nnext = B\nA.next → null\nprev = A\ncurr = B\n\nStep 2:\nnext = C\nB.next → A\nprev = B\ncurr = C\n\nContinue until curr becomes null.",
+      "action": "next"
+    },
+    {
+      "stepId": "when-to-stop",
+      "mentorSays": "When curr becomes null:\n\n• prev will be pointing to the new head\n• the list is fully reversed",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic step by step.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "set prev = null",
+        "set curr = head",
+        "while curr is not null:",
+        "  store curr.next in next",
+        "  point curr.next to prev",
+        "  move prev to curr",
+        "  move curr to next",
+        "return prev"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Now translate the logic into JavaScript.",
+      "code": "function reverseList(head) {\n  let prev = null;\n  let curr = head;\n\n  while (curr !== null) {\n    let next = curr.next;\n    curr.next = prev;\n    prev = curr;\n    curr = next;\n  }\n\n  return prev;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final check:\n\nInput: 1 → 2 → 3 → null\nOutput: 3 → 2 → 1 → null\n\nThe list is reversed correctly.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: reverse-string.json
+================================================================================
+
+{
+  "id": "reverse-string",
+  "title": "Reverse String",
+  "pattern": "two-pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-04",
+    "introduces": ["two-pointers", "in-place-swap"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left = 0 and right = last index." },
+    { "id": "ps2", "text": "While left < right:" },
+    { "id": "ps3", "text": "  Swap characters at left and right." },
+    { "id": "ps4", "text": "  Move left forward and right backward." },
+    { "id": "ps5", "text": "Stop when pointers meet or cross." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Reverse String**.\n\nThis lesson introduces a simple but powerful idea called **two pointers**, used widely in array and string problems.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array of characters.\n\nYour task is to reverse the array **in place**.\n\nThat means:\n- Do not create a new array\n- Modify the original one",
+      "example": "chars = ['h','e','l','l','o']",
+      "action": "next",
+      "next": "what-in-place-means"
+    },
+    {
+      "stepId": "what-in-place-means",
+      "mentorSays": "### What does \"in place\" mean?\n\nIt means we reuse the same array and do not allocate another one.\n\nSo:\n`['h','e','l','l','o'] → ['o','l','l','e','h']`\n\nThe original array itself changes.",
+      "action": "next",
+      "next": "tiny-example"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Tiny example:\n\n['a','b','c']\n\nAfter reversing:\n['c','b','a']",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nWhich two positions should we swap first?",
+      "choices": [
+        { "label": "First and last", "next": "core-idea" },
+        { "label": "First and second", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe swap the **first and last** characters, then move inward.\n\nThis is the **two-pointer technique**:\n- one pointer starts at the left\n- one pointer starts at the right",
+      "action": "next",
+      "next": "two-pointers-explained"
+    },
+    {
+      "stepId": "two-pointers-explained",
+      "mentorSays": "### Two pointers\n\n- `left` points to the start of the array\n- `right` points to the end of the array\n\nAfter each swap:\n- left moves forward\n- right moves backward",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nchars = ['h','e','l','l','o']\n\n- left=0 ('h'), right=4 ('o') → swap\n- chars = ['o','e','l','l','h']\n- left=1, right=3 → swap\n- chars = ['o','l','l','e','h']\n\nPointers meet → stop",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)\nEach coding step maps to this.",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself for muscle memory.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.\n\nThe function modifies the array directly.",
+      "example": "function reverseString(chars) {\n\n}",
+      "action": "next",
+      "next": "code-02-pointers",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-pointers",
+      "mentorSays": "Step 2: Initialize left and right pointers.",
+      "example": "let left = 0;\nlet right = chars.length - 1;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Loop while left < right.",
+      "example": "while (left < right) {\n\n}",
+      "action": "next",
+      "next": "code-04-swap",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-04-swap",
+      "mentorSays": "Step 4: Swap the characters at left and right.\n\nWe use a temporary variable.",
+      "example": "const temp = chars[left];\nchars[left] = chars[right];\nchars[right] = temp;",
+      "action": "next",
+      "next": "code-05-move",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-05-move",
+      "mentorSays": "Step 5: Move both pointers inward.",
+      "example": "left++;\nright--;",
+      "action": "next",
+      "next": "final-code",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n  while (left < right) {\n    const temp = chars[left];\n    chars[left] = chars[right];\n    chars[right] = temp;\n\n    left++;\n    right--;\n  }\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "pattern-generalization",
+      "mentorSays": "### This Pattern Applies To...\n\nThe two-pointer technique (starting from both ends) is used in many problems:\n\n1. **Reverse array** - Swap elements from both ends\n2. **Valid palindrome** - Compare characters from both ends\n3. **Move zeros to end** - Two pointers moving in same direction\n4. **Container with most water** - Two pointers finding max area\n5. **Two sum (sorted array)** - Two pointers finding pairs\n6. **Trapping rain water** - Two pointers finding boundaries\n\n**Key insight:** When you need to process elements from both ends or find pairs, think two pointers!",
+      "action": "next",
+      "next": "common-mistakes"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Losing the next pointer** - Always save `temp = curr.next` before reassigning\n2. **Wrong loop condition** - Use `left < right` not `left <= right` (avoid swapping middle element twice)\n3. **Forgetting to move pointers** - Must increment left and decrement right after swap\n4. **Array vs string** - Strings are immutable in some languages, need to convert to array first\n5. **Off-by-one errors** - Right pointer should start at `length - 1` not `length`",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I use two pointers starting from both ends of the array\"**\n2. **\"I swap the elements at both pointers\"**\n3. **\"Then I move both pointers inward: left increments, right decrements\"**\n4. **\"I continue until the pointers meet or cross\"**\n5. **\"This gives us O(n) time complexity with O(1) space, reversing in-place\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how two pointers work\n- how to reverse in place\n- how to swap values safely\n- pattern recognition for two-pointer problems\n\nTwo pointers will appear again in upcoming lessons.\n\n**Follow-up variant:**\n\n**Reverse Words in a String:** Given a string, reverse the order of words. How would you use two pointers to solve this?",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: rotate-array.json
+================================================================================
+
+{
+  "id": "rotate-array",
+  "title": "Rotate Array",
+  "pattern": "array-rotation + modulo",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-05",
+    "introduces": ["array-rotation", "modulo-idea"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "two-pointers"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Normalize k using k = k % array length." },
+    { "id": "ps2", "text": "Reverse the entire array." },
+    { "id": "ps3", "text": "Reverse the first k elements." },
+    { "id": "ps4", "text": "Reverse the remaining elements." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Rotate Array**.\n\nThis lesson builds on arrays and introduces **rotation** using a clean, in-place strategy.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array and a number `k`.\n\nRotate the array to the **right** by `k` steps.\n\nRotation means elements move forward and wrap around to the front.",
+      "example": "nums = [1,2,3,4,5,6,7], k = 3",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [1,2,3,4,5], k=1 → [5,1,2,3,4]\n2) [1,2,3,4,5], k=2 → [4,5,1,2,3]",
+      "action": "next",
+      "next": "wrap-around-idea"
+    },
+    {
+      "stepId": "wrap-around-idea",
+      "mentorSays": "Key idea:\n\nWhen elements move past the end of the array, they **wrap around** to the front.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf the array length is 5 and k is 12, how many effective rotations are really needed?",
+      "choices": [
+        { "label": "12", "next": "modulo-explained" },
+        { "label": "12 % 5", "next": "modulo-explained" }
+      ]
+    },
+    {
+      "stepId": "modulo-explained",
+      "mentorSays": "Correct.\n\nRotating 5 times returns the array to its original state.\n\nSo:\n`k = k % length`\n\nThis avoids unnecessary work.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "We will rotate the array **in place** using reversals:\n\n1) Reverse the whole array\n2) Reverse the first `k` elements\n3) Reverse the remaining elements\n\nThis produces the correct rotation.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums = [1,2,3,4,5,6,7], k=3\n\n1) Reverse all → [7,6,5,4,3,2,1]\n2) Reverse first 3 → [5,6,7,4,3,2,1]\n3) Reverse rest → [5,6,7,1,2,3,4]",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nWe reuse the **two-pointer reverse** logic you already learned.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function rotate(nums, k) {\n\n}",
+      "action": "next",
+      "next": "code-02-normalize",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-normalize",
+      "mentorSays": "Step 2: Normalize k using modulo.",
+      "example": "k = k % nums.length;",
+      "action": "next",
+      "next": "code-03-reverse-helper",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-reverse-helper",
+      "mentorSays": "Step 3: Create a helper to reverse a portion of the array.",
+      "example": "function reverse(start, end) {\n  while (start < end) {\n    const temp = nums[start];\n    nums[start] = nums[end];\n    nums[end] = temp;\n    start++;\n    end--;\n  }\n}",
+      "action": "next",
+      "next": "code-04-apply-reversals",
+      "pseudocodeLineIds": ["ps2", "ps3", "ps4"]
+    },
+    {
+      "stepId": "code-04-apply-reversals",
+      "mentorSays": "Step 4: Apply the three reversals in order.",
+      "example": "reverse(0, nums.length - 1);\nreverse(0, k - 1);\nreverse(k, nums.length - 1);",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function rotate(nums, k) {\n  k = k % nums.length;\n\n  function reverse(start, end) {\n    while (start < end) {\n      const temp = nums[start];\n      nums[start] = nums[end];\n      nums[end] = temp;\n      start++;\n      end--;\n    }\n  }\n\n  reverse(0, nums.length - 1);\n  reverse(0, k - 1);\n  reverse(k, nums.length - 1);\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how rotation works\n- why modulo simplifies large k values\n- how to reuse two-pointer reversal\n\nThis pattern appears again in many array problems.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: same-tree.json
+================================================================================
+
+{
+  "id": "same-tree",
+  "title": "Same Tree",
+  "difficulty": "easy",
+  "pattern": "tree-comparison + recursion",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the roots of two binary trees.\n\nYour task is to determine whether the two trees are **exactly the same**.\n\nTwo trees are considered the same if:\n• they have the same structure\n• they have the same values at corresponding positions",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-what-same-means",
+      "mentorSays": "Important clarification:\n\nTrees are NOT considered the same just because they contain the same values.\n\nThey must match:\n• node by node\n• position by position",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-same-example",
+      "mentorSays": "Example of two same trees:\n\nTree A:        Tree B:\n   1              1\n  / \\            / \\\n 2   3          2   3\n\nBoth structure and values match.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-different-example",
+      "mentorSays": "Example of two different trees:\n\nTree A:        Tree B:\n   1              1\n  /                \\\n 2                  2\n\nSame values, different structure → NOT the same tree.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you are given two nodes from the two trees, how would you decide if they match?",
+      "choices": [
+        {
+          "label": "Check value and compare children",
+          "next": "core-logic"
+        },
+        {
+          "label": "Only compare values",
+          "next": "why-values-not-enough"
+        }
+      ]
+    },
+    {
+      "stepId": "why-values-not-enough",
+      "mentorSays": "Comparing only values is not sufficient.\n\nTwo nodes may have the same value but different children.\n\nSo we must compare both **value and structure**.",
+      "action": "next"
+    },
+    {
+      "stepId": "core-logic",
+      "mentorSays": "Two nodes are the same if:\n\n• both are null → same\n• only one is null → different\n• values are equal\n• left children are the same\n• right children are the same",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Notice the repetition:\n\nTo compare two trees, we compare their roots.\n\nTo compare the roots, we must compare their children in the same way.\n\nThis repeating pattern makes **recursion** the natural solution.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "if both nodes are null, return true",
+        "if one node is null and the other is not, return false",
+        "if values are not equal, return false",
+        "return compare(left children) AND compare(right children)"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nFocus on base cases first.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function isSameTree(p, q) {\n  if (p === null && q === null) return true;\n  if (p === null || q === null) return false;\n  if (p.val !== q.val) return false;\n\n  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final checks:\n\nIdentical structure + identical values → true\nAny difference in structure or value → false\n\nThis confirms correct tree comparison.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: search-2d-matrix.json
+================================================================================
+
+{
+  "id": "search-2d-matrix",
+  "title": "Search a 2D Matrix",
+  "pattern": "binary-search (flattened view)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-10",
+    "introduces": ["2d-to-1d-mapping"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "midpoint",
+      "binary-search"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Treat the 2D matrix as a sorted 1D array." },
+    { "id": "ps2", "text": "Set left = 0 and right = rows * cols - 1." },
+    { "id": "ps3", "text": "While left <= right:" },
+    { "id": "ps4", "text": "  mid = floor((left + right) / 2)." },
+    { "id": "ps5", "text": "  Convert mid to row = floor(mid / cols), col = mid % cols." },
+    { "id": "ps6", "text": "  Compare matrix[row][col] with target and move pointers." },
+    { "id": "ps7", "text": "Return true if found, else false." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Search a 2D Matrix**.\n\nThis lesson extends **binary search** to a 2D grid by viewing it as a single sorted list.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a matrix where:\n- each row is sorted\n- the first number of each row is greater than the last number of the previous row\n\nDetermine if a target value exists in the matrix.",
+      "example": "matrix = [[1,3,5],[7,9,11]], target = 9",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [[1,3,5],[7,9,11]], target=9 → true\n2) [[1,3,5],[7,9,11]], target=6 → false",
+      "action": "next",
+      "next": "key-observation"
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "Key observation:\n\nIf we read the matrix row by row, it behaves exactly like a **sorted 1D array**.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf we pretend the matrix is one long list, how could we use binary search on it?",
+      "choices": [
+        { "label": "Map 1D index to row and column", "next": "core-idea" },
+        { "label": "Search each row separately", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe apply **binary search on indices** and convert them back to row and column positions.",
+      "action": "next",
+      "next": "index-mapping"
+    },
+    {
+      "stepId": "index-mapping",
+      "mentorSays": "### Index mapping\n\nIf the matrix has `cols` columns:\n\n- row = floor(index / cols)\n- col = index % cols\n\nThis tells us where the value lives in the matrix.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nmatrix = [[1,3,5],[7,9,11]]\ncols = 3\n\nmid index = 4\nrow = floor(4 / 3) = 1\ncol = 4 % 3 = 1\n\nmatrix[1][1] = 9",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis is binary search with a small index conversion.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function searchMatrix(matrix, target) {\n\n}",
+      "action": "next",
+      "next": "code-02-setup",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-setup",
+      "mentorSays": "Step 2: Set up left, right, rows, and columns.",
+      "example": "const rows = matrix.length;\nconst cols = matrix[0].length;\nlet left = 0;\nlet right = rows * cols - 1;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Binary search loop.",
+      "example": "while (left <= right) {\n\n}",
+      "action": "next",
+      "next": "code-04-mid-map",
+      "pseudocodeLineIds": ["ps4", "ps5"]
+    },
+    {
+      "stepId": "code-04-mid-map",
+      "mentorSays": "Step 4: Compute mid and map it to row and column.",
+      "example": "const mid = Math.floor((left + right) / 2);\nconst row = Math.floor(mid / cols);\nconst col = mid % cols;",
+      "action": "next",
+      "next": "code-05-compare",
+      "pseudocodeLineIds": ["ps6"]
+    },
+    {
+      "stepId": "code-05-compare",
+      "mentorSays": "Step 5: Compare value and move pointers.",
+      "example": "const value = matrix[row][col];\nif (value === target) return true;\nif (value < target) left = mid + 1;\nelse right = mid - 1;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function searchMatrix(matrix, target) {\n  const rows = matrix.length;\n  const cols = matrix[0].length;\n\n  let left = 0;\n  let right = rows * cols - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n    const row = Math.floor(mid / cols);\n    const col = mid % cols;\n\n    const value = matrix[row][col];\n\n    if (value === target) return true;\n    if (value < target) left = mid + 1;\n    else right = mid - 1;\n  }\n\n  return false;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how 2D data can be treated as 1D\n- how to reuse binary search with index mapping\n- a powerful technique used in matrix problems\n\nMore matrix-based problems will build on this idea.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: search-insert-position.json
+================================================================================
+
+{
+  "id": "search-insert-position",
+  "title": "Search Insert Position",
+  "pattern": "binary-search (intro)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-02",
+    "introduces": ["comparison", "midpoint", "binary-search-idea"],
+    "assumesAlreadyTaught": ["variables", "arrays", "indexes", "loops", "functions", "return"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left = 0 and right = last index." },
+    { "id": "ps2", "text": "While left <= right:" },
+    { "id": "ps3", "text": "  Find mid = middle index between left and right." },
+    { "id": "ps4", "text": "  If nums[mid] equals target, return mid." },
+    { "id": "ps5", "text": "  If nums[mid] < target, move left to mid + 1." },
+    { "id": "ps6", "text": "  Else move right to mid - 1." },
+    { "id": "ps7", "text": "When loop ends, return left as insert position." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Search Insert Position**.\n\nThis lesson introduces a **faster way to search** in a sorted list and also tells us **where to insert** a number if it’s missing.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a **sorted** array of numbers and a target number.\n\nYour task:\n- If the target exists, return its index\n- If it does not exist, return the index where it should be inserted to keep the array sorted",
+      "example": "nums = [1,3,5,6], target = 5",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) nums = [1,3,5,6], target = 5 → index 2\n2) nums = [1,3,5,6], target = 2 → index 1\n3) nums = [1,3,5,6], target = 7 → index 4",
+      "action": "next",
+      "next": "why-sorted-matters"
+    },
+    {
+      "stepId": "why-sorted-matters",
+      "mentorSays": "Because the array is **sorted**, we don’t need to check every element.\n\nWe can repeatedly eliminate **half** of the remaining elements.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf the array has 1,000,000 elements, would checking one by one be efficient?",
+      "choices": [
+        { "label": "No, we need a faster approach", "next": "core-idea" },
+        { "label": "Yes, looping is fine", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe use the **binary search idea**:\n\n- Look at the middle element\n- Decide which half can be ignored\n- Repeat on the remaining half",
+      "action": "next",
+      "next": "midpoint-explained"
+    },
+    {
+      "stepId": "midpoint-explained",
+      "mentorSays": "### Midpoint\nIf left = 0 and right = 3:\n\nmid = floor((0 + 3) / 2) = 1\n\n`nums[1]` is the middle element.",
+      "action": "next",
+      "next": "insert-position-intuition"
+    },
+    {
+      "stepId": "insert-position-intuition",
+      "mentorSays": "Key insight:\n\nIf the target is not found, the **left pointer** will stop at the exact position where the number should be inserted.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums = [1,3,5,6], target = 2\n\n- left=0, right=3\n- mid=1 → nums[1]=3 (too big)\n- move right to 0\n- mid=0 → nums[0]=1 (too small)\n- move left to 1\n\nLoop ends → left = 1 → insert position",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)\nEach coding step maps directly to this.",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself for learning retention.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function searchInsert(nums, target) {\n\n}",
+      "action": "next",
+      "next": "code-02-pointers",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-pointers",
+      "mentorSays": "Step 2: Set left and right pointers.",
+      "example": "function searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n}",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Loop while left <= right.",
+      "example": "while (left <= right) {\n\n}",
+      "action": "next",
+      "next": "code-04-mid",
+      "pseudocodeLineIds": ["ps2", "ps3"]
+    },
+    {
+      "stepId": "code-04-mid",
+      "mentorSays": "Step 4: Calculate the middle index.",
+      "example": "const mid = Math.floor((left + right) / 2);",
+      "action": "next",
+      "next": "code-05-compare",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-05-compare",
+      "mentorSays": "Step 5: Compare the middle value with target and adjust pointers.",
+      "example": "if (nums[mid] === target) return mid;\nif (nums[mid] < target) left = mid + 1;\nelse right = mid - 1;",
+      "action": "next",
+      "next": "code-06-return",
+      "pseudocodeLineIds": ["ps4", "ps5", "ps6"]
+    },
+    {
+      "stepId": "code-06-return",
+      "mentorSays": "Step 6: If not found, return left.\n\nLeft now points to the correct insert position.",
+      "example": "return left;",
+      "action": "next",
+      "next": "final-code",
+      "pseudocodeLineIds": ["ps7"]
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function searchInsert(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) return mid;\n    if (nums[mid] < target) left = mid + 1;\n    else right = mid - 1;\n  }\n\n  return left;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how binary search narrows the search space\n- how sorted arrays enable faster search\n- how to find an insert position without extra checks\n\nNext lessons will reuse this binary-search idea.",
+      "action": "complete"
+    }
+  ]
+}
+

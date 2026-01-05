@@ -1,0 +1,131 @@
+{
+  "id": "unique-paths",
+  "title": "Unique Paths",
+  "pattern": "dynamic-programming (grid)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-14",
+    "introduces": ["dynamic-programming", "grid-state"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Create a 2D grid dp with m rows and n columns." },
+    { "id": "ps2", "text": "Set dp[0][0] = 1." },
+    { "id": "ps3", "text": "Fill first row and first column with 1s." },
+    { "id": "ps4", "text": "For each cell dp[i][j], set it to dp[i-1][j] + dp[i][j-1]." },
+    { "id": "ps5", "text": "Return dp[m-1][n-1]." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Unique Paths**.\n\nThis lesson introduces **dynamic programming** using a simple grid problem.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are on the top-left corner of an `m x n` grid.\n\nYou can only move **right** or **down**.\n\nHow many unique paths exist to reach the bottom-right corner?",
+      "example": "m = 3, n = 2",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) m=3, n=2 → 3 paths\n2) m=3, n=3 → 6 paths",
+      "action": "next",
+      "next": "why-bruteforce"
+    },
+    {
+      "stepId": "why-bruteforce",
+      "mentorSays": "A brute-force approach tries all paths.\n\nThe number of possibilities grows very fast.\n\nWe need to **reuse previously computed results**.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nTo reach a cell, where could you have come from?",
+      "choices": [
+        { "label": "From the top or from the left", "next": "core-idea" },
+        { "label": "From any surrounding cell", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nEach cell can only be reached from:\n- the cell above\n- the cell to the left\n\nSo the number of paths to a cell is the **sum of those two**.",
+      "action": "next",
+      "next": "dp-explained"
+    },
+    {
+      "stepId": "dp-explained",
+      "mentorSays": "### Dynamic programming idea\n\nWe store answers for smaller subproblems in a grid called `dp`.\n\n`dp[i][j]` = number of ways to reach cell (i, j).",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nFor a 3x3 grid:\n\n- First row → all 1s\n- First column → all 1s\n- Middle cells → sum of top and left\n\nFinal cell contains the answer.",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis is your first dynamic programming implementation.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function uniquePaths(m, n) {\n\n}",
+      "action": "next",
+      "next": "code-02-grid",
+      "pseudocodeLineIds": ["ps1","ps2"]
+    },
+    {
+      "stepId": "code-02-grid",
+      "mentorSays": "Step 2: Create and initialize the dp grid.",
+      "example": "const dp = Array.from({ length: m }, () => Array(n).fill(1));",
+      "action": "next",
+      "next": "code-03-fill",
+      "pseudocodeLineIds": ["ps3","ps4"]
+    },
+    {
+      "stepId": "code-03-fill",
+      "mentorSays": "Step 3: Fill the grid using previous values.",
+      "example": "for (let i = 1; i < m; i++) {\n  for (let j = 1; j < n; j++) {\n    dp[i][j] = dp[i-1][j] + dp[i][j-1];\n  }\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function uniquePaths(m, n) {\n  const dp = Array.from({ length: m }, () => Array(n).fill(1));\n\n  for (let i = 1; i < m; i++) {\n    for (let j = 1; j < n; j++) {\n      dp[i][j] = dp[i-1][j] + dp[i][j-1];\n    }\n  }\n\n  return dp[m-1][n-1];\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how to break a problem into subproblems\n- how dynamic programming builds solutions bottom-up\n- a foundational DP pattern\n\nMore DP problems will build on this idea.",
+      "action": "complete"
+    }
+  ]
+}

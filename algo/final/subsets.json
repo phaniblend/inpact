@@ -1,0 +1,92 @@
+{
+  "id": "subsets",
+  "title": "Subsets",
+  "difficulty": "medium",
+  "pattern": "backtracking",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of **distinct numbers**.\n\nYour task is to return **all possible subsets**.\n\nA subset:\n• can be empty\n• can contain some or all elements\n• does not care about order",
+      "example": "Input: [1, 2]",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s list all subsets for a tiny input.\n\nInput: [1, 2]\n\nSubsets:\n• []\n• [1]\n• [2]\n• [1, 2]\n\nTotal subsets = 4",
+      "action": "next"
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "Important observation:\n\nFor each number, you always have **two choices**:\n• include it\n• exclude it\n\nEvery subset is built from these choices.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf the list has 3 numbers, and each number has 2 choices, how many total combinations will there be?",
+      "choices": [
+        {
+          "label": "2 × 2 × 2 = 8",
+          "next": "decision-tree-idea"
+        },
+        {
+          "label": "3",
+          "next": "decision-tree-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "decision-tree-idea",
+      "mentorSays": "Correct.\n\nEach number doubles the total possibilities.\n\nThis forms a **decision tree** where:\n• each level is a number\n• each branch is include or exclude",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-decision-tree",
+      "mentorSays": "Example: [1, 2]\n\nChoices:\n• include 1 → include 2 → [1,2]\n• include 1 → exclude 2 → [1]\n• exclude 1 → include 2 → [2]\n• exclude 1 → exclude 2 → []",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Notice the repetition:\n\nAt each step:\n• decide for the current number\n• then solve the rest of the list the same way\n\nThis repeating structure makes **recursion** a natural fit.",
+      "action": "next"
+    },
+    {
+      "stepId": "backtracking-meaning",
+      "mentorSays": "We build subsets **step by step**.\n\nWhen we finish exploring one choice, we **undo the last decision** and try the next one.\n\nThis process is called **backtracking**.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "start with an empty subset",
+        "define a recursive function with current index",
+        "add current subset to result",
+        "for each index starting from current:",
+        "  include the number",
+        "  recurse to next index",
+        "  remove the number (backtrack)",
+        "return result"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, let’s translate it into JavaScript.\n\nType the code yourself and observe how subsets grow and shrink.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function subsets(nums) {\n  const result = [];\n\n  function backtrack(start, current) {\n    result.push([...current]);\n\n    for (let i = start; i < nums.length; i++) {\n      current.push(nums[i]);\n      backtrack(i + 1, current);\n      current.pop();\n    }\n  }\n\n  backtrack(0, []);\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example check:\n\nInput: [1, 2]\n\nOutput:\n[[], [1], [1,2], [2]]\n\nThis confirms all subsets are generated correctly.",
+      "action": "complete"
+    }
+  ]
+}

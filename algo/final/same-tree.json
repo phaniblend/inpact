@@ -1,0 +1,87 @@
+{
+  "id": "same-tree",
+  "title": "Same Tree",
+  "difficulty": "easy",
+  "pattern": "tree-comparison + recursion",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the roots of two binary trees.\n\nYour task is to determine whether the two trees are **exactly the same**.\n\nTwo trees are considered the same if:\n• they have the same structure\n• they have the same values at corresponding positions",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-what-same-means",
+      "mentorSays": "Important clarification:\n\nTrees are NOT considered the same just because they contain the same values.\n\nThey must match:\n• node by node\n• position by position",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-same-example",
+      "mentorSays": "Example of two same trees:\n\nTree A:        Tree B:\n   1              1\n  / \\            / \\\n 2   3          2   3\n\nBoth structure and values match.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-different-example",
+      "mentorSays": "Example of two different trees:\n\nTree A:        Tree B:\n   1              1\n  /                \\\n 2                  2\n\nSame values, different structure → NOT the same tree.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you are given two nodes from the two trees, how would you decide if they match?",
+      "choices": [
+        {
+          "label": "Check value and compare children",
+          "next": "core-logic"
+        },
+        {
+          "label": "Only compare values",
+          "next": "why-values-not-enough"
+        }
+      ]
+    },
+    {
+      "stepId": "why-values-not-enough",
+      "mentorSays": "Comparing only values is not sufficient.\n\nTwo nodes may have the same value but different children.\n\nSo we must compare both **value and structure**.",
+      "action": "next"
+    },
+    {
+      "stepId": "core-logic",
+      "mentorSays": "Two nodes are the same if:\n\n• both are null → same\n• only one is null → different\n• values are equal\n• left children are the same\n• right children are the same",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Notice the repetition:\n\nTo compare two trees, we compare their roots.\n\nTo compare the roots, we must compare their children in the same way.\n\nThis repeating pattern makes **recursion** the natural solution.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "if both nodes are null, return true",
+        "if one node is null and the other is not, return false",
+        "if values are not equal, return false",
+        "return compare(left children) AND compare(right children)"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nFocus on base cases first.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function isSameTree(p, q) {\n  if (p === null && q === null) return true;\n  if (p === null || q === null) return false;\n  if (p.val !== q.val) return false;\n\n  return isSameTree(p.left, q.left) && isSameTree(p.right, q.right);\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final checks:\n\nIdentical structure + identical values → true\nAny difference in structure or value → false\n\nThis confirms correct tree comparison.",
+      "action": "complete"
+    }
+  ]
+}

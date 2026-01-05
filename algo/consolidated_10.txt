@@ -1,0 +1,1410 @@
+
+================================================================================
+FILE: three-sum.json
+================================================================================
+
+{
+  "id": "three-sum",
+  "title": "Three Sum",
+  "pattern": "sorting + two-pointers",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-16",
+    "introduces": ["sort-then-scan", "duplicate-skipping"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "two-pointers",
+      "hash-map-lookup"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Sort the array in ascending order." },
+    { "id": "ps2", "text": "For each index i from 0 to n-3:" },
+    { "id": "ps3", "text": "  If i > 0 and nums[i] == nums[i-1], skip." },
+    { "id": "ps4", "text": "  Set left = i + 1 and right = last index." },
+    { "id": "ps5", "text": "  While left < right:" },
+    { "id": "ps6", "text": "    Compute sum = nums[i] + nums[left] + nums[right]." },
+    { "id": "ps7", "text": "    If sum == 0, record triplet and move both pointers skipping duplicates." },
+    { "id": "ps8", "text": "    If sum < 0, move left forward." },
+    { "id": "ps9", "text": "    If sum > 0, move right backward." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Three Sum**.\n\nThis lesson builds directly on **two pointers**, but requires **sorting first** and careful handling of duplicates.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array of integers.\n\nYour task is to find **all unique triplets** such that the sum of the three numbers is **0**.\n\nThe solution set must not contain duplicate triplets.",
+      "example": "nums = [-1,0,1,2,-1,-4]",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [-1,0,1] → [[-1,0,1]]\n2) [-1,-1,2] → [[-1,-1,2]]",
+      "action": "next",
+      "next": "why-not-bruteforce"
+    },
+    {
+      "stepId": "why-not-bruteforce",
+      "mentorSays": "Brute force checks every triplet.\n\nThat costs **O(n³)** time, which becomes impractical quickly.\n\nWe need to reduce the problem intelligently.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf the array is sorted and one number is fixed, how can we find two others efficiently?",
+      "choices": [
+        { "label": "Use two pointers", "next": "core-idea" },
+        { "label": "Use nested loops only", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe:\n1) Sort the array\n2) Fix one number at index `i`\n3) Use two pointers to find pairs that sum with it to zero",
+      "action": "next",
+      "next": "sorting-explained"
+    },
+    {
+      "stepId": "sorting-explained",
+      "mentorSays": "### Why sorting matters\n\nSorting allows us to:\n- move pointers based on sum\n- skip duplicate values cleanly\n\nWithout sorting, duplicates are hard to manage.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums = [-1,0,1,2,-1,-4]\n\nAfter sort: [-4,-1,-1,0,1,2]\n\nFix i=1 (-1):\n- left=2 (-1), right=5 (2)\n- sum=0 → record [-1,-1,2]\n\nMove pointers, skip duplicates",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5","ps6","ps7","ps8","ps9"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis is a structured combination of patterns you already know.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function and sort the array.",
+      "example": "function threeSum(nums) {\n  nums.sort((a, b) => a - b);\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps2","ps3"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "Step 2: Loop through indices and skip duplicates.",
+      "example": "const result = [];\nfor (let i = 0; i < nums.length - 2; i++) {\n  if (i > 0 && nums[i] === nums[i - 1]) continue;\n\n}",
+      "action": "next",
+      "next": "code-03-pointers",
+      "pseudocodeLineIds": ["ps4","ps5"]
+    },
+    {
+      "stepId": "code-03-pointers",
+      "mentorSays": "Step 3: Use two pointers to find pairs.",
+      "example": "let left = i + 1;\nlet right = nums.length - 1;\n\nwhile (left < right) {\n\n}",
+      "action": "next",
+      "next": "code-04-sum",
+      "pseudocodeLineIds": ["ps6"]
+    },
+    {
+      "stepId": "code-04-sum",
+      "mentorSays": "Step 4: Compute sum and move pointers.",
+      "example": "const sum = nums[i] + nums[left] + nums[right];",
+      "action": "next",
+      "next": "code-05-actions",
+      "pseudocodeLineIds": ["ps7","ps8","ps9"]
+    },
+    {
+      "stepId": "code-05-actions",
+      "mentorSays": "Step 5: Handle three cases.",
+      "example": "if (sum === 0) {\n  result.push([nums[i], nums[left], nums[right]]);\n\n  while (left < right && nums[left] === nums[left + 1]) left++;\n  while (left < right && nums[right] === nums[right - 1]) right--;\n\n  left++;\n  right--;\n} else if (sum < 0) {\n  left++;\n} else {\n  right--;\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function threeSum(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n\n  for (let i = 0; i < nums.length - 2; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) continue;\n\n    let left = i + 1;\n    let right = nums.length - 1;\n\n    while (left < right) {\n      const sum = nums[i] + nums[left] + nums[right];\n\n      if (sum === 0) {\n        result.push([nums[i], nums[left], nums[right]]);\n\n        while (left < right && nums[left] === nums[left + 1]) left++;\n        while (left < right && nums[right] === nums[right - 1]) right--;\n\n        left++;\n        right--;\n      } else if (sum < 0) {\n        left++;\n      } else {\n        right--;\n      }\n    }\n  }\n\n  return result;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how sorting enables pointer movement\n- how to avoid duplicate triplets\n- how to layer known patterns into stronger solutions\n\nThis pattern generalizes to k-sum problems.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: top-k-frequent-elements.json
+================================================================================
+
+{
+  "id": "top-k-frequent-elements",
+  "title": "Top K Frequent Elements",
+  "difficulty": "medium",
+  "pattern": "frequency-count + bucket",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of numbers and a number **k**.\n\nYour task is to return the **k numbers that appear most frequently** in the list.\n\nOrder of the result does not matter.",
+      "example": "Numbers: [1,1,1,2,2,3]\nk = 2",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s start small.\n\nNumbers: [1, 2, 2, 3]\nk = 1\n\nThe number 2 appears the most.\n\nSo the answer is:\n[2]",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nWhat do we need to know first before choosing the top k elements?\n\n• The order of numbers?\n• Or how many times each number appears?",
+      "choices": [
+        {
+          "label": "We need to know how many times each number appears",
+          "next": "frequency-idea"
+        },
+        {
+          "label": "Order matters more",
+          "next": "frequency-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "frequency-idea",
+      "mentorSays": "Correct.\n\nThe key is **frequency** — how often each number appears.\n\nSo the first step is to **count occurrences** of each number.",
+      "action": "next"
+    },
+    {
+      "stepId": "concept-frequency-map",
+      "mentorSays": "To count occurrences, we use an **object**.\n\nAn object stores data as **key → value** pairs.\n\nExample:\nNumbers: [1,1,2]\n\nFrequency map:\n{\n  1: 2,\n  2: 1\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "pain-point",
+      "mentorSays": "Now we know the frequencies.\n\nBut how do we efficiently find the **top k**?\n\nIf we sort all elements by frequency, it works — but sorting does extra work.",
+      "action": "next"
+    },
+    {
+      "stepId": "optimized-idea",
+      "mentorSays": "We can avoid sorting by using **buckets**.\n\nIdea:\n• The maximum frequency is the length of the list\n• Create buckets where index = frequency\n• Place numbers into buckets based on how often they appear",
+      "action": "next"
+    },
+    {
+      "stepId": "bucket-intuition",
+      "mentorSays": "Example:\n\nNumbers: [1,1,1,2,2,3]\n\nFrequencies:\n1 → 3\n2 → 2\n3 → 1\n\nBuckets:\nindex 1: [3]\nindex 2: [2]\nindex 3: [1]\n\nWe collect from the highest index downward.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "create frequency map",
+        "create empty buckets array",
+        "for each number in frequency map:",
+        "  place number into bucket based on its frequency",
+        "initialize empty result list",
+        "iterate buckets from highest frequency down:",
+        "  add numbers to result until k elements collected",
+        "return result"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself to understand how buckets work.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function topKFrequent(nums, k) {\n  const freq = {};\n\n  for (let num of nums) {\n    freq[num] = (freq[num] || 0) + 1;\n  }\n\n  const buckets = Array(nums.length + 1).fill(null).map(() => []);\n\n  for (let num in freq) {\n    const count = freq[num];\n    buckets[count].push(Number(num));\n  }\n\n  const result = [];\n\n  for (let i = buckets.length - 1; i >= 0 && result.length < k; i--) {\n    for (let num of buckets[i]) {\n      result.push(num);\n      if (result.length === k) break;\n    }\n  }\n\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example check:\n\nNumbers: [1,1,1,2,2,3]\nk = 2\n\nOutput:\n[1, 2]\n\nThis confirms the frequency + bucket approach works correctly.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: trapping-rain-water.json
+================================================================================
+
+{
+  "id": "trapping-rain-water",
+  "title": "Trapping Rain Water",
+  "difficulty": "hard",
+  "pattern": "two-pointers + max-tracking",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of non-negative numbers.\n\nEach number represents the **height of a vertical wall**.\n\nImagine rain falls on this structure.\n\nYour task is to calculate **how much water can be trapped** between the walls after the rain.",
+      "example": "Heights: [0,1,0,2]",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-visual-example",
+      "mentorSays": "Let’s visualize a very small example.\n\nHeights: [0, 1, 0, 2]\n\nBetween the walls of height 1 and 2, water can be trapped above the 0.\n\nTotal trapped water = 1 unit.",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-what-matters",
+      "mentorSays": "Important observation:\n\nWater at a position depends on:\n• the **highest wall to its left**\n• the **highest wall to its right**\n\nWater level is limited by the **shorter** of these two walls.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you look at one position in the list, how would you decide how much water sits there?\n\nWould you:\n• scan left and right every time?\n• or try to reuse information?",
+      "choices": [
+        {
+          "label": "Scan left and right for each position",
+          "next": "bruteforce-logic"
+        },
+        {
+          "label": "Reuse previously found maximums",
+          "next": "optimized-intuition"
+        }
+      ]
+    },
+    {
+      "stepId": "bruteforce-logic",
+      "mentorSays": "A brute-force idea is:\n\nFor each position:\n• find the tallest wall to the left\n• find the tallest wall to the right\n• trapped water = min(leftMax, rightMax) - height\n\nThis works, but it repeats the same scans many times.",
+      "action": "next"
+    },
+    {
+      "stepId": "pain-point",
+      "mentorSays": "If the list is long, scanning left and right for every position becomes slow.\n\nWe need a way to track maximums **without re-scanning**.",
+      "action": "next"
+    },
+    {
+      "stepId": "optimized-intuition",
+      "mentorSays": "Here’s the key idea:\n\nIf we process the walls from **both ends inward**, we can keep track of:\n• the highest wall seen so far on the left\n• the highest wall seen so far on the right\n\nThis allows us to calculate trapped water in one pass.",
+      "action": "next"
+    },
+    {
+      "stepId": "two-pointer-idea",
+      "mentorSays": "We use **two pointers**:\n\n• left pointer starts at the beginning\n• right pointer starts at the end\n\nWe also track:\n• leftMax → tallest wall seen from the left\n• rightMax → tallest wall seen from the right",
+      "action": "next"
+    },
+    {
+      "stepId": "why-pointer-moves",
+      "mentorSays": "At each step:\n\n• If left height is smaller than right height:\n  - water depends on leftMax\n  - move left pointer\n\n• Otherwise:\n  - water depends on rightMax\n  - move right pointer",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\nHeights: [0,1,0,2]\n\nStep-by-step:\n• left=0, right=3\n• leftMax=0, rightMax=2\n• move left → trapped = 0\n• move left → trapped = 1\n\nTotal water = 1",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "set left pointer to start, right pointer to end",
+        "initialize leftMax and rightMax to 0",
+        "initialize totalWater to 0",
+        "while left < right:",
+        "  if height[left] < height[right]:",
+        "    update leftMax",
+        "    add leftMax - height[left] to totalWater",
+        "    move left pointer",
+        "  else:",
+        "    update rightMax",
+        "    add rightMax - height[right] to totalWater",
+        "    move right pointer",
+        "return totalWater"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself and track pointer movement carefully.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function trap(height) {\n  let left = 0;\n  let right = height.length - 1;\n  let leftMax = 0;\n  let rightMax = 0;\n  let water = 0;\n\n  while (left < right) {\n    if (height[left] < height[right]) {\n      leftMax = Math.max(leftMax, height[left]);\n      water += leftMax - height[left];\n      left++;\n    } else {\n      rightMax = Math.max(rightMax, height[right]);\n      water += rightMax - height[right];\n      right--;\n    }\n  }\n\n  return water;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example checks:\n\n[0,1,0,2] → 1\n[4,2,0,3,2,5] → 9\n\nThis confirms the two-pointer solution works correctly.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: two-sum.json
+================================================================================
+
+{
+  "id": "two-sum",
+  "title": "Two Sum",
+  "pattern": "hash map lookup",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 1,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-01",
+    "introduces": [
+      "complement-calculation",
+      "index-storage",
+      "one-pass-hash-map",
+      "return-array"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "array-indexing",
+      "loops",
+      "for-loop",
+      "functions",
+      "return-statement",
+      "comparison-operators",
+      "objects",
+      "key-value-pairs",
+      "hash-map-concept"
+    ],
+    "prerequisiteCheckRequired": false,
+    "nextRecommended": ["valid-anagram"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Create an empty map to store number → index." },
+    { "id": "ps2", "text": "For each index i and number in the array:" },
+    { "id": "ps3", "text": "  Calculate complement = target - current number." },
+    { "id": "ps4", "text": "  If complement exists in the map, return [map[complement], i]." },
+    { "id": "ps5", "text": "  Otherwise, store current number → index in the map." },
+    { "id": "ps6", "text": "Return empty array if no solution (problem guarantees one exists)." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Two Sum**.\n\nThis is **THE most famous** coding interview question. It's asked at Google, Amazon, Facebook, and countless other companies.\n\nYou've now learned all the tools needed to solve it elegantly:\n- Arrays and loops\n- Objects (hash maps)\n- The complement concept\n\nLet's put it all together!",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\n\nGiven an array of integers `nums` and an integer `target`, return the **indices** of the two numbers that add up to `target`.\n\n**Assumptions:**\n- Each input has exactly one solution\n- You cannot use the same element twice\n\n**Example:**\n```\nnums = [2, 7, 11, 15], target = 9\n\nOutput: [0, 1]\n\nBecause nums[0] + nums[1] = 2 + 7 = 9\n```",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "**Tiny examples:**\n\n```\n1) nums = [2, 7, 11, 15], target = 9 → [0, 1] (2 + 7 = 9)\n2) nums = [3, 2, 4], target = 6 → [1, 2] (2 + 4 = 6)\n3) nums = [3, 3], target = 6 → [0, 1] (3 + 3 = 6)\n4) nums = [1, 5, 3], target = 4 → [0, 2] (1 + 3 = 4)\n```",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "**Thinking challenge:**\n\nHow would you find two numbers that sum to target?",
+      "choices": [
+        { "label": "Check every pair of numbers", "next": "brute-force" },
+        { "label": "For each number, look for its complement", "next": "complement-insight" },
+        { "label": "Sort the array and use two pointers", "next": "why-not-sort" }
+      ]
+    },
+    {
+      "stepId": "brute-force",
+      "mentorSays": "### Brute Force Approach\n\nChecking every pair:\n\n```\nnums = [2, 7, 11, 15], target = 9\n\nCheck 2 + 7 = 9 ✓ Found!\n```\n\nThis works, but with two nested loops it's slow for large arrays.\n\nWith 10,000 elements, you'd check ~50,000,000 pairs!\n\nCan we find the answer faster?",
+      "action": "next",
+      "next": "why-on2-fails"
+    },
+    {
+      "stepId": "why-on2-fails",
+      "mentorSays": "### Why O(n²) Fails at Scale\n\n**Interview reasoning:**\n\n- With n=10,000 elements, brute force checks ~50 million pairs\n- At 1 million elements, that's ~500 billion checks\n- This doesn't scale for production systems\n\n**We need O(n) time complexity.**\n\n**The tradeoff:** We trade space (O(n) for the hash map) for time (O(n) instead of O(n²)).\n\nThis is a fundamental interview pattern: **space-time tradeoff**.",
+      "action": "next",
+      "next": "complement-insight"
+    },
+    {
+      "stepId": "why-not-sort",
+      "mentorSays": "Sorting and two pointers would work for finding **values**, but:\n\n1. We need to return **indices**\n2. Sorting changes the positions\n3. We'd need extra work to track original indices\n\nThe hash map approach is simpler and doesn't modify the array!",
+      "action": "next",
+      "next": "complement-insight"
+    },
+    {
+      "stepId": "complement-insight",
+      "mentorSays": "### The Key Insight: Complements\n\nIf two numbers add up to target:\n```\na + b = target\n```\n\nThen if we know `a`, we can calculate `b`:\n```\nb = target - a\n```\n\nWe call `b` the **complement** of `a`.\n\n**Example:**\n```\ntarget = 9, current number = 2\ncomplement = 9 - 2 = 7\n\nIf 7 exists in the array, we found our pair!\n```",
+      "action": "next",
+      "next": "why-map-works"
+    },
+    {
+      "stepId": "why-map-works",
+      "mentorSays": "### Why Map Works: The Intuition\n\n**Interview talk track:**\n\n1. **We need O(n) time** - can't check every pair\n2. **We trade space for time** - use a hash map for O(1) lookups\n3. **The map stores \"what we've seen\"** - as we iterate, we remember numbers and their indices\n4. **For each number, we ask: \"Have I seen its complement?\"** - if yes, we found the pair\n5. **Hash maps give instant lookups** - O(1) instead of O(n) linear search\n\n**The magic:** Instead of searching through all previous numbers, the map gives us instant answers.",
+      "action": "next",
+      "next": "core-idea"
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "### The Strategy\n\nFor each number:\n1. Calculate its complement (target - number)\n2. Check if complement exists in our map\n3. If yes, return both indices\n4. If no, store this number and its index in the map\n\nBy storing numbers in a map, we can find complements instantly!",
+      "action": "next",
+      "next": "why-store-index"
+    },
+    {
+      "stepId": "why-store-index",
+      "mentorSays": "### Why Store the Index?\n\nWe need to return **indices**, not values.\n\nSo our map stores: `number → index`\n\n```javascript\nconst map = {};\nmap[2] = 0;   // number 2 is at index 0\nmap[7] = 1;   // number 7 is at index 1\n```\n\nWhen we find a complement, we can look up its index instantly!",
+      "action": "next",
+      "next": "walkthrough"
+    },
+    {
+      "stepId": "walkthrough",
+      "mentorSays": "### Step-by-Step Walkthrough\n\n```\nnums = [2, 7, 11, 15], target = 9\n```\n\n**i = 0, num = 2:**\n- complement = 9 - 2 = 7\n- Is 7 in map? No (map is empty)\n- Store: map[2] = 0\n- Map: {2: 0}\n\n**i = 1, num = 7:**\n- complement = 9 - 7 = 2\n- Is 2 in map? **Yes!** map[2] = 0\n- Return [0, 1]\n\n**Done!** Found in just 2 iterations.",
+      "action": "next",
+      "next": "walkthrough-different"
+    },
+    {
+      "stepId": "walkthrough-different",
+      "mentorSays": "### Another Walkthrough\n\n```\nnums = [3, 2, 4], target = 6\n```\n\n**i = 0, num = 3:**\n- complement = 6 - 3 = 3\n- Is 3 in map? No\n- Map: {3: 0}\n\n**i = 1, num = 2:**\n- complement = 6 - 2 = 4\n- Is 4 in map? No\n- Map: {3: 0, 2: 1}\n\n**i = 2, num = 4:**\n- complement = 6 - 4 = 2\n- Is 2 in map? **Yes!** map[2] = 1\n- Return [1, 2]",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (Logic Plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis solution combines everything you've learned about objects.\n\nLet's build it step by step.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "**Step 1:** Create the function and initialize the map.\n\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n\n}\n```\n\n**Explanation:**\n- `twoSum` — the classic function name\n- `nums` — the array of numbers\n- `target` — the sum we're looking for\n- `map` — stores number → index pairs",
+      "example": "function twoSum(nums, target) {\n  const map = {};\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "**Step 2:** Loop through the array with index.\n\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n\n  for (let i = 0; i < nums.length; i++) {\n\n  }\n}\n```\n\n**Explanation:**\n- We use a traditional `for` loop to get both index `i` and value `nums[i]`\n- We need the index to return the answer",
+      "example": "for (let i = 0; i < nums.length; i++) {\n\n}",
+      "action": "next",
+      "next": "code-03-complement",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-03-complement",
+      "mentorSays": "**Step 3:** Calculate the complement.\n\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n\n  }\n}\n```\n\n**Explanation:**\n- `complement` is the number we need to find\n- If `nums[i]` is 2 and target is 9, complement is 7\n- We're asking: \"Is 7 somewhere we've already seen?\"",
+      "example": "const complement = target - nums[i];",
+      "action": "next",
+      "next": "code-04-check",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-04-check",
+      "mentorSays": "**Step 4:** Check if complement exists in the map.\n\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n\n    if (complement in map) {\n      return [map[complement], i];\n    }\n  }\n}\n```\n\n**Explanation:**\n- `complement in map` checks if complement is a key in the object\n- If found, `map[complement]` gives us the index of the complement\n- Return both indices: the complement's index and current index",
+      "example": "if (complement in map) {\n  return [map[complement], i];\n}",
+      "action": "next",
+      "next": "code-05-store",
+      "pseudocodeLineIds": ["ps5"]
+    },
+    {
+      "stepId": "code-05-store",
+      "mentorSays": "**Step 5:** Store current number and index.\n\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n\n    if (complement in map) {\n      return [map[complement], i];\n    }\n\n    map[nums[i]] = i;\n  }\n}\n```\n\n**Explanation:**\n- `map[nums[i]] = i` stores the number as key, index as value\n- Future iterations can find this number as a complement\n- We store AFTER checking to avoid using the same element twice",
+      "example": "map[nums[i]] = i;",
+      "action": "next",
+      "next": "code-06-return",
+      "pseudocodeLineIds": ["ps6"]
+    },
+    {
+      "stepId": "code-06-return",
+      "mentorSays": "**Step 6:** Return empty array if no solution (safety).\n\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n\n    if (complement in map) {\n      return [map[complement], i];\n    }\n\n    map[nums[i]] = i;\n  }\n\n  return [];\n}\n```\n\n**Explanation:**\n- The problem guarantees exactly one solution exists\n- But good practice to handle the edge case\n- This line may never execute in valid inputs",
+      "example": "return [];",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript Code\n\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n\n    if (complement in map) {\n      return [map[complement], i];\n    }\n\n    map[nums[i]] = i;\n  }\n\n  return [];\n}\n```\n\n**How it works:**\n1. For each number, calculate what we need (complement)\n2. Check if we've seen the complement before\n3. If yes, return both indices\n4. If no, remember this number for later\n5. The hash map gives us instant lookups!",
+      "example": "function twoSum(nums, target) {\n  const map = {};\n\n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n\n    if (complement in map) {\n      return [map[complement], i];\n    }\n\n    map[nums[i]] = i;\n  }\n\n  return [];\n}",
+      "action": "next",
+      "next": "common-mistakes"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Storing before checking** - If you store `map[nums[i]] = i` before checking for complement, you might use the same element twice\n2. **Using `map.has()` instead of `in` operator** - In JavaScript, use `complement in map` or `map[complement] !== undefined`\n3. **Forgetting to return indices** - Make sure to return `[map[complement], i]` not the values\n4. **Off-by-one errors** - Remember array indices start at 0\n5. **Not handling edge cases** - Empty array, single element (though problem guarantees solution exists)",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I'll use a hash map to store numbers I've seen and their indices\"**\n2. **\"For each number, I calculate its complement (target - current) and check if I've seen it\"**\n3. **\"If the complement exists in the map, I return both indices\"**\n4. **\"Otherwise, I store the current number and its index for future lookups\"**\n5. **\"This gives us O(n) time and O(n) space, trading space for time efficiency\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "### Wrap-Up\n\n**What you learned:**\n\n- **Complement calculation** — finding what you need: `target - current`\n- **Index storage** — storing position information in a map\n- **One-pass hash map** — building and querying the map simultaneously\n- **Return array** — returning multiple values as an array\n- **Space-time tradeoff** — using O(n) space to achieve O(n) time instead of O(n²)\n\n**Why this matters:**\n\nTwo Sum teaches the fundamental pattern of \"have I seen this before?\" combined with complements.\n\nThis pattern appears in:\n- Three Sum (more complex version)\n- Four Sum\n- Two Sum II (sorted array)\n- Subarray Sum Equals K\n- And many more!\n\n**Follow-up variant:**\n\n**Two Sum II - Input array is sorted:** How would you solve this if the array is already sorted? (Hint: Two pointers from both ends!)\n\n**Congratulations!** You've mastered the most famous interview question.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: unique-paths.json
+================================================================================
+
+{
+  "id": "unique-paths",
+  "title": "Unique Paths",
+  "pattern": "dynamic-programming (grid)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-14",
+    "introduces": ["dynamic-programming", "grid-state"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Create a 2D grid dp with m rows and n columns." },
+    { "id": "ps2", "text": "Set dp[0][0] = 1." },
+    { "id": "ps3", "text": "Fill first row and first column with 1s." },
+    { "id": "ps4", "text": "For each cell dp[i][j], set it to dp[i-1][j] + dp[i][j-1]." },
+    { "id": "ps5", "text": "Return dp[m-1][n-1]." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Unique Paths**.\n\nThis lesson introduces **dynamic programming** using a simple grid problem.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are on the top-left corner of an `m x n` grid.\n\nYou can only move **right** or **down**.\n\nHow many unique paths exist to reach the bottom-right corner?",
+      "example": "m = 3, n = 2",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) m=3, n=2 → 3 paths\n2) m=3, n=3 → 6 paths",
+      "action": "next",
+      "next": "why-bruteforce"
+    },
+    {
+      "stepId": "why-bruteforce",
+      "mentorSays": "A brute-force approach tries all paths.\n\nThe number of possibilities grows very fast.\n\nWe need to **reuse previously computed results**.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nTo reach a cell, where could you have come from?",
+      "choices": [
+        { "label": "From the top or from the left", "next": "core-idea" },
+        { "label": "From any surrounding cell", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nEach cell can only be reached from:\n- the cell above\n- the cell to the left\n\nSo the number of paths to a cell is the **sum of those two**.",
+      "action": "next",
+      "next": "dp-explained"
+    },
+    {
+      "stepId": "dp-explained",
+      "mentorSays": "### Dynamic programming idea\n\nWe store answers for smaller subproblems in a grid called `dp`.\n\n`dp[i][j]` = number of ways to reach cell (i, j).",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nFor a 3x3 grid:\n\n- First row → all 1s\n- First column → all 1s\n- Middle cells → sum of top and left\n\nFinal cell contains the answer.",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis is your first dynamic programming implementation.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function uniquePaths(m, n) {\n\n}",
+      "action": "next",
+      "next": "code-02-grid",
+      "pseudocodeLineIds": ["ps1","ps2"]
+    },
+    {
+      "stepId": "code-02-grid",
+      "mentorSays": "Step 2: Create and initialize the dp grid.",
+      "example": "const dp = Array.from({ length: m }, () => Array(n).fill(1));",
+      "action": "next",
+      "next": "code-03-fill",
+      "pseudocodeLineIds": ["ps3","ps4"]
+    },
+    {
+      "stepId": "code-03-fill",
+      "mentorSays": "Step 3: Fill the grid using previous values.",
+      "example": "for (let i = 1; i < m; i++) {\n  for (let j = 1; j < n; j++) {\n    dp[i][j] = dp[i-1][j] + dp[i][j-1];\n  }\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function uniquePaths(m, n) {\n  const dp = Array.from({ length: m }, () => Array(n).fill(1));\n\n  for (let i = 1; i < m; i++) {\n    for (let j = 1; j < n; j++) {\n      dp[i][j] = dp[i-1][j] + dp[i][j-1];\n    }\n  }\n\n  return dp[m-1][n-1];\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how to break a problem into subproblems\n- how dynamic programming builds solutions bottom-up\n- a foundational DP pattern\n\nMore DP problems will build on this idea.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: valid-anagram.json
+================================================================================
+
+{
+  "id": "valid-anagram",
+  "title": "Valid Anagram",
+  "pattern": "frequency-map (object)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-08",
+    "introduces": ["objects-as-maps", "frequency-counting"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "strings"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If lengths of the two strings differ, return false." },
+    { "id": "ps2", "text": "Create an empty map to count characters." },
+    { "id": "ps3", "text": "Count each character in the first string." },
+    { "id": "ps4", "text": "For each character in the second string:" },
+    { "id": "ps5", "text": "  If character not in map or count is zero, return false." },
+    { "id": "ps6", "text": "  Decrease the character count." },
+    { "id": "ps7", "text": "If all checks pass, return true." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Valid Anagram**.\n\nThis lesson introduces **objects used as maps** to count frequencies.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given two strings.\n\nYour task is to determine if one string is an **anagram** of the other.\n\nAn anagram uses the same characters with the same counts, just rearranged.",
+      "example": "s = \"anagram\", t = \"nagaram\"",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) \"listen\" & \"silent\" → true\n2) \"rat\" & \"car\" → false",
+      "action": "next",
+      "next": "length-check"
+    },
+    {
+      "stepId": "length-check",
+      "mentorSays": "First observation:\n\nIf the strings have different lengths, they **cannot** be anagrams.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nHow can we make sure both strings contain the same characters the same number of times?",
+      "choices": [
+        { "label": "Count how many times each character appears", "next": "core-idea" },
+        { "label": "Sort both strings", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe will **count characters**.\n\nWe store counts using a JavaScript **object**, where:\n- key = character\n- value = how many times it appears",
+      "action": "next",
+      "next": "object-explained"
+    },
+    {
+      "stepId": "object-explained",
+      "mentorSays": "### Objects as maps (important)\n\nIn JavaScript, objects can store key–value pairs.\n\nExample:\n```\nconst counts = { a: 2, b: 1 }\n```\n\nThis means:\n- character 'a' appeared twice\n- character 'b' appeared once",
+      "action": "next",
+      "next": "visual-frequency-table"
+    },
+    {
+      "stepId": "visual-frequency-table",
+      "mentorSays": "### Visual Frequency Table\n\nLet's see a concrete example with frequency counting:\n\n**s = \"anagram\"**\n\nFrequency table:\n```\ncount['a'] = 3\ncount['n'] = 1\ncount['g'] = 1\ncount['r'] = 1\ncount['m'] = 1\n```\n\n**t = \"nagaram\"**\n\nWe check each character:\n- 'n' → count['n'] = 1, decrease to 0\n- 'a' → count['a'] = 3, decrease to 2\n- 'g' → count['g'] = 1, decrease to 0\n- 'a' → count['a'] = 2, decrease to 1\n- 'r' → count['r'] = 1, decrease to 0\n- 'a' → count['a'] = 1, decrease to 0\n- 'm' → count['m'] = 1, decrease to 0\n\nAll counts reach zero → valid anagram!\n\n**Why this works:** Counting ensures both strings have the exact same character frequencies, just in different orders.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\ns = \"abb\"\nt = \"bab\"\n\nCount s:\n- a → 1\n- b → 2\n\nCheck t:\n- b → reduce to 1\n- a → reduce to 0\n- b → reduce to 0\n\nAll counts valid → anagram",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself for strong retention.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function isAnagram(s, t) {\n\n}",
+      "action": "next",
+      "next": "code-02-length",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-length",
+      "mentorSays": "Step 2: Check lengths.",
+      "example": "if (s.length !== t.length) return false;",
+      "action": "next",
+      "next": "code-03-map",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-map",
+      "mentorSays": "Step 3: Create an empty object for counts.",
+      "example": "const counts = {};",
+      "action": "next",
+      "next": "code-04-count",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-04-count",
+      "mentorSays": "Step 4: Count characters from the first string.",
+      "example": "for (let char of s) {\n  counts[char] = (counts[char] || 0) + 1;\n}",
+      "action": "next",
+      "next": "code-05-check",
+      "pseudocodeLineIds": ["ps4", "ps5", "ps6"]
+    },
+    {
+      "stepId": "code-05-check",
+      "mentorSays": "Step 5: Decrease counts using the second string.",
+      "example": "for (let char of t) {\n  if (!counts[char]) return false;\n  counts[char]--;\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function isAnagram(s, t) {\n  if (s.length !== t.length) return false;\n\n  const counts = {};\n\n  for (let char of s) {\n    counts[char] = (counts[char] || 0) + 1;\n  }\n\n  for (let char of t) {\n    if (!counts[char]) return false;\n    counts[char]--;\n  }\n\n  return true;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Forgetting length check** - Different lengths can't be anagrams, check first\n2. **Using `!counts[char]` incorrectly** - This fails when count is 0 (falsy), use `counts[char] === undefined` or check before decrementing\n3. **Not handling case sensitivity** - The problem usually expects case-insensitive comparison\n4. **Sorting instead of counting** - Sorting works but is O(n log n), counting is O(n)\n5. **Decrementing before checking** - Always check if character exists before decrementing",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"First, I check if the strings have the same length - if not, they can't be anagrams\"**\n2. **\"I use a frequency map to count characters in the first string\"**\n3. **\"Then I iterate through the second string and decrement counts\"**\n4. **\"If any character doesn't exist or count goes negative, it's not an anagram\"**\n5. **\"This gives us O(n) time complexity, better than sorting which is O(n log n)\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how to use objects as frequency maps\n- how counting avoids sorting\n- a core pattern used in many string problems\n- visual frequency table representation\n\nThis pattern is critical for upcoming hash-based problems.\n\n**Follow-up variant:**\n\n**Group Anagrams:** Given an array of strings, group all anagrams together. How would you use frequency maps to solve this?",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: valid-palindrome.json
+================================================================================
+
+{
+  "id": "valid-palindrome",
+  "title": "Valid Palindrome",
+  "pattern": "two-pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-06",
+    "introduces": ["two-pointers-on-strings", "character-filtering"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "strings"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left = 0 and right = last index of string." },
+    { "id": "ps2", "text": "While left < right:" },
+    { "id": "ps3", "text": "  Move left forward if it is not alphanumeric." },
+    { "id": "ps4", "text": "  Move right backward if it is not alphanumeric." },
+    { "id": "ps5", "text": "  If characters at left and right differ (case-insensitive), return false." },
+    { "id": "ps6", "text": "  Move both pointers inward." },
+    { "id": "ps7", "text": "Return true." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Valid Palindrome**.\n\nThis lesson practices the **two-pointer** pattern on strings.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nGiven a string, determine if it is a palindrome.\n\nA palindrome reads the same forward and backward **after removing non-alphanumeric characters** and **ignoring case**.",
+      "example": "s = \"A man, a plan, a canal: Panama\"",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) \"racecar\" → true\n2) \"race a car\" → false",
+      "action": "next",
+      "next": "why-not-reverse"
+    },
+    {
+      "stepId": "why-not-reverse",
+      "mentorSays": "Reversing the string works, but it creates extra space.\n\nWe want a **single-pass**, in-place style solution.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf we compare characters from both ends, how can we skip punctuation and spaces?",
+      "choices": [
+        { "label": "Move pointers inward until valid characters are found", "next": "core-idea" },
+        { "label": "Build a new cleaned string first", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe use **two pointers**:\n- one starts at the beginning\n- one at the end\n\nEach pointer skips non-alphanumeric characters.",
+      "action": "next",
+      "next": "data-cleaning"
+    },
+    {
+      "stepId": "data-cleaning",
+      "mentorSays": "### Data Cleaning Step (Critical!)\n\n**Before using two pointers, we need to normalize the input:**\n\n1. **Convert to lowercase** - \"A\" and \"a\" should be treated the same\n2. **Remove non-alphanumeric characters** - Only keep letters and numbers\n\n**JavaScript example:**\n```javascript\ns = s.toLowerCase().replace(/[^a-z0-9]/g, '');\n```\n\n**What this does:**\n- `toLowerCase()` - Makes all characters lowercase\n- `replace(/[^a-z0-9]/g, '')` - Removes everything that's NOT a-z or 0-9\n\n**Example:**\n```\n\"A man, a plan, a canal: Panama\"\n→ \"amanaplanacanalpanama\"\n```\n\n**Why this matters:** Without cleaning, you'll get wrong answers on LeetCode! Punctuation and spaces must be removed.",
+      "action": "next",
+      "next": "two-pointers-explained"
+    },
+    {
+      "stepId": "two-pointers-explained",
+      "mentorSays": "### Two pointers on a string\n\nAt each step:\n- move left until it points to a valid character\n- move right until it points to a valid character\n- compare the two",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\n\"a!b@a\"\n\nleft → 'a'\nright → 'a'\n\nMove inward → 'b' vs 'b'\n\nAll matched → palindrome",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5","ps6","ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nFocus on pointer movement and comparisons.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function and pointers.",
+      "example": "function isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n}",
+      "action": "next",
+      "next": "code-02-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-loop",
+      "mentorSays": "Step 2: Loop while pointers have not crossed.",
+      "example": "while (left < right) {\n\n}",
+      "action": "next",
+      "next": "code-03-skip",
+      "pseudocodeLineIds": ["ps3","ps4"]
+    },
+    {
+      "stepId": "code-03-skip",
+      "mentorSays": "Step 3: Skip non-alphanumeric characters.",
+      "example": "while (left < right && !isAlphaNumeric(s[left])) left++;\nwhile (left < right && !isAlphaNumeric(s[right])) right--;",
+      "action": "next",
+      "next": "code-04-compare",
+      "pseudocodeLineIds": ["ps5","ps6"]
+    },
+    {
+      "stepId": "code-04-compare",
+      "mentorSays": "Step 4: Compare characters and move inward.",
+      "example": "if (s[left].toLowerCase() !== s[right].toLowerCase()) return false;\nleft++;\nright--;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function isPalindrome(s) {\n  let left = 0;\n  let right = s.length - 1;\n\n  const isAlphaNumeric = (ch) => /[a-z0-9]/i.test(ch);\n\n  while (left < right) {\n    while (left < right && !isAlphaNumeric(s[left])) left++;\n    while (left < right && !isAlphaNumeric(s[right])) right--;\n\n    if (s[left].toLowerCase() !== s[right].toLowerCase()) return false;\n\n    left++;\n    right--;\n  }\n\n  return true;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Forgetting to clean input** - Not removing punctuation/spaces causes wrong answers\n2. **Case sensitivity** - \"A\" != \"a\" unless you convert to lowercase\n3. **Regex pattern errors** - Use `/[^a-z0-9]/g` not `/[a-z0-9]/g` (the ^ means \"not\")\n4. **Pointer movement order** - Must skip non-alphanumeric BEFORE comparing\n5. **Empty string after cleaning** - Edge case: empty string is a palindrome",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"First, I normalize the string by converting to lowercase and removing non-alphanumeric characters\"**\n2. **\"Then I use two pointers starting from both ends\"**\n3. **\"I skip any non-alphanumeric characters by moving pointers inward\"**\n4. **\"I compare characters at both pointers - if they don't match, it's not a palindrome\"**\n5. **\"This gives us O(n) time complexity with O(1) space if we clean in-place, or O(n) space if we create a new string\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou practiced:\n- two pointers on strings\n- skipping unwanted characters\n- case-insensitive comparison\n- data cleaning and normalization\n\nThis pattern applies to many string-validation problems.\n\n**Follow-up variant:**\n\n**Valid Palindrome II:** Can you remove at most one character to make it a palindrome? How would you modify the two-pointer approach?",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: validate-binary-search-tree.json
+================================================================================
+
+{
+  "id": "validate-binary-search-tree",
+  "title": "Validate Binary Search Tree",
+  "difficulty": "medium",
+  "pattern": "tree + constraints",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the **root of a binary tree**.\n\nYour task is to check whether this tree is a **valid Binary Search Tree (BST)**.\n\nYou only need to return **true or false**.",
+      "action": "next"
+    },
+    {
+      "stepId": "concept-binary-search-tree",
+      "mentorSays": "Before validating anything, we must be very clear:\n\nWhat is a **Binary Search Tree**?\n\nA tree is a valid BST if **every node** follows this rule:\n\n• All values in the left subtree are **less than** the node\n• All values in the right subtree are **greater than** the node",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-valid-example",
+      "mentorSays": "Let’s look at a tiny valid BST.\n\n      2\n     / \\\n    1   3\n\nWhy is this valid?\n• 1 < 2\n• 3 > 2\n• Both subtrees follow the same rule",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-invalid-example",
+      "mentorSays": "Now look at this tree.\n\n      5\n     / \\\n    1   4\n       / \\\n      3   6\n\nThis tree is **NOT** a valid BST.\n\nWhy?\n• 3 is in the right subtree of 5\n• But 3 < 5\n\nSo the BST rule is violated.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you only compare each node with its **immediate parent**, would that be enough?\n\nOr do you need to consider **all ancestors**?",
+      "choices": [
+        {
+          "label": "Only the parent matters",
+          "next": "why-parent-check-fails"
+        },
+        {
+          "label": "All ancestor constraints matter",
+          "next": "introduce-range-logic"
+        }
+      ]
+    },
+    {
+      "stepId": "why-parent-check-fails",
+      "mentorSays": "Checking only the parent is **not sufficient**.\n\nIn the previous invalid example:\n• Node 3 is less than its parent 4\n• But it is still invalid because it violates the rule of ancestor 5\n\nSo we must track more than just the parent.",
+      "action": "next"
+    },
+    {
+      "stepId": "introduce-range-logic",
+      "mentorSays": "The correct way to think is:\n\nEach node must lie within a **valid range**.\n\n• Left child must be less than the parent\n• Right child must be greater than the parent\n• These limits come from **all ancestors**, not just one",
+      "action": "next"
+    },
+    {
+      "stepId": "logic-walkthrough",
+      "mentorSays": "Let’s walk through the idea.\n\n• Start with an initial range: (-∞, +∞)\n• For the left child, update the upper bound\n• For the right child, update the lower bound\n• Every node must stay within its allowed range",
+      "example": "Root 5 → allowed range (-∞, +∞)\nLeft child 1 → (-∞, 5)\nRight child 4 → (5, +∞)",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Each subtree has the **same validation problem**, just with tighter limits.\n\nThis makes **recursion** a natural solution.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "define a recursive function with node, min, max",
+        "if node is null, return true",
+        "if node value <= min or >= max, return false",
+        "validate left subtree with updated max",
+        "validate right subtree with updated min",
+        "return true if both subtrees are valid"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself and focus on how the range changes.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function isValidBST(root) {\n  function validate(node, min, max) {\n    if (node === null) return true;\n\n    if (node.val <= min || node.val >= max) {\n      return false;\n    }\n\n    return (\n      validate(node.left, min, node.val) &&\n      validate(node.right, node.val, max)\n    );\n  }\n\n  return validate(root, -Infinity, Infinity);\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "If the tree is:\n\n      2\n     / \\\n    1   3\n\nThe result is true.\n\nIf the tree violates any ancestor constraint, the result is false.\n\nThis confirms correct BST validation.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: word-pattern.json
+================================================================================
+
+{
+  "id": "word-pattern",
+  "title": "Word Pattern",
+  "pattern": "bijection using two maps",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-11",
+    "introduces": ["bijection", "two-way-mapping"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "strings",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "objects-as-maps",
+      "comparison"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Split the string into words." },
+    { "id": "ps2", "text": "If pattern length != number of words, return false." },
+    { "id": "ps3", "text": "Create two empty maps: char→word and word→char." },
+    { "id": "ps4", "text": "For each index i:" },
+    { "id": "ps5", "text": "  If either mapping conflicts, return false." },
+    { "id": "ps6", "text": "  Store both mappings." },
+    { "id": "ps7", "text": "Return true if all pairs match." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Word Pattern**.\n\nThis lesson introduces **two-way mapping** (bijection) using objects as maps.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a pattern string and a sentence.\n\nEach character in the pattern must map to **exactly one word**, and each word must map to **exactly one character**.",
+      "example": "pattern = \"abba\", s = \"dog cat cat dog\"",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) abba / dog cat cat dog → true\n2) abba / dog cat cat fish → false\n3) aaaa / dog cat cat dog → false",
+      "action": "next",
+      "next": "why-one-map-not-enough"
+    },
+    {
+      "stepId": "why-one-map-not-enough",
+      "mentorSays": "Why one map is not enough:\n\nIf we only map character → word, two characters could still point to the same word.\n\nWe must enforce mapping in **both directions**.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nHow do we guarantee one-to-one mapping between characters and words?",
+      "choices": [
+        { "label": "Use two maps (both directions)", "next": "core-idea" },
+        { "label": "Only check character → word", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe use:\n- map1: character → word\n- map2: word → character\n\nBoth must agree for every pair.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\npattern = \"ab\"\ns = \"dog cat\"\n\n- 'a' → 'dog'\n- 'b' → 'cat'\n\nNo conflicts in either direction → valid pattern",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself for stronger retention.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function wordPattern(pattern, s) {\n\n}",
+      "action": "next",
+      "next": "code-02-split",
+      "pseudocodeLineIds": ["ps1", "ps2"]
+    },
+    {
+      "stepId": "code-02-split",
+      "mentorSays": "Step 2: Split the string and check lengths.",
+      "example": "const words = s.split(' ');\nif (pattern.length !== words.length) return false;",
+      "action": "next",
+      "next": "code-03-maps",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-03-maps",
+      "mentorSays": "Step 3: Create two empty maps.",
+      "example": "const charToWord = {};\nconst wordToChar = {};",
+      "action": "next",
+      "next": "code-04-loop",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-04-loop",
+      "mentorSays": "Step 4: Loop and validate mappings.",
+      "example": "for (let i = 0; i < pattern.length; i++) {\n  const ch = pattern[i];\n  const word = words[i];\n\n  if ((charToWord[ch] && charToWord[ch] !== word) ||\n      (wordToChar[word] && wordToChar[word] !== ch)) {\n    return false;\n  }\n\n  charToWord[ch] = word;\n  wordToChar[word] = ch;\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function wordPattern(pattern, s) {\n  const words = s.split(' ');\n  if (pattern.length !== words.length) return false;\n\n  const charToWord = {};\n  const wordToChar = {};\n\n  for (let i = 0; i < pattern.length; i++) {\n    const ch = pattern[i];\n    const word = words[i];\n\n    if ((charToWord[ch] && charToWord[ch] !== word) ||\n        (wordToChar[word] && wordToChar[word] !== ch)) {\n      return false;\n    }\n\n    charToWord[ch] = word;\n    wordToChar[word] = ch;\n  }\n\n  return true;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- what bijection means\n- how to enforce one-to-one relationships\n- why two maps are sometimes necessary\n\nThis idea reappears in many constraint problems.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: word-search.json
+================================================================================
+
+{
+  "id": "word-search",
+  "title": "Word Search",
+  "difficulty": "medium",
+  "pattern": "backtracking",
+  "language": "javascript",
+  "status": "PERFECT",
+  "teachingVersion": "v1.0",
+  "flow": [
+    {
+      "stepId": "problem-intro",
+      "mentorSays": "You are given a grid of letters and a word.\n\nYour task is to check whether the word exists in the grid.\n\nYou may start from any cell. From a cell, you may move:\n- up\n- down\n- left\n- right\n\nEach cell can be used only once for a single word.",
+      "example": "Grid:\n[\n  [A, B, C],\n  [D, E, F],\n  [G, H, I]\n]\n\nWord: \"BEH\"",
+      "action": "next"
+    },
+
+    {
+      "stepId": "tiny-clarification",
+      "mentorSays": "Important clarifications:\n\n• You cannot jump diagonally\n• You cannot reuse the same cell twice\n• You are only checking if the word exists (true / false)\n\nWe are NOT trying to return the path.",
+      "action": "next"
+    },
+
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf the grid were very small, how would you manually check whether the word exists?",
+      "choices": [
+        {
+          "label": "Start from each cell and try matching letters",
+          "next": "bruteforce-logic"
+        },
+        {
+          "label": "I am not sure",
+          "next": "bruteforce-logic"
+        }
+      ]
+    },
+
+    {
+      "stepId": "bruteforce-logic",
+      "mentorSays": "A natural idea is:\n\n1. Pick a starting cell\n2. If the letter matches the first character of the word:\n   - try moving in all 4 directions\n3. Continue matching the next character\n4. If a path fails, backtrack and try another direction\n\nThis guarantees correctness.",
+      "example": "Word: \"AB\"\nStart at cell A → try neighbors for B",
+      "action": "next"
+    },
+
+    {
+      "stepId": "pain-point",
+      "mentorSays": "But there is a problem.\n\nIf you do not track visited cells:\n• you may reuse the same cell\n• you may loop infinitely\n\nSo we need a way to remember:\n\"Have I already used this cell in the current path?\"",
+      "action": "next"
+    },
+
+    {
+      "stepId": "core-idea",
+      "mentorSays": "This is where a **recursive exploration with backtracking** is useful.\n\nAt each step:\n• mark the cell as visited\n• explore neighbors\n• undo the mark when backing out",
+      "action": "next"
+    },
+
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Here is the idea written as steps (not code):",
+      "example": [
+        "For each cell in the grid:",
+        "  If cell matches first letter:",
+        "    Try to build the word from here",
+        "",
+        "To build the word from a cell:",
+        "  If all letters are matched → success",
+        "  If out of bounds or mismatch → stop",
+        "  Mark current cell as visited",
+        "  Try all 4 directions",
+        "  Unmark current cell (backtrack)"
+      ],
+      "action": "next"
+    },
+
+    {
+      "stepId": "concept-check",
+      "mentorSays": "Key idea to remember:\n\nWe explore possibilities, but we always clean up after ourselves.\n\nThis pattern is called **backtracking**.",
+      "action": "next"
+    },
+
+    {
+      "stepId": "coding-start",
+      "mentorSays": "Now that the logic is clear, we can write code.\n\nWe will:\n• loop through the grid\n• use a recursive helper\n• mark cells temporarily\n\nType the code yourself. Do not copy.",
+      "example": "function exist(board, word) {\n  // implementation\n}",
+      "action": "start-coding"
+    }
+  ],
+
+  "qualityChecklist": {
+    "no-assumptions": true,
+    "tiny-examples-only": true,
+    "logic-before-code": true,
+    "explicit-backtracking": true,
+    "jargon-explained": true
+  }
+}
+

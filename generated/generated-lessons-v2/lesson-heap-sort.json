@@ -1,0 +1,289 @@
+{
+  "id": "heap-sort",
+  "title": "Heap sort",
+  "pattern": "sorting",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Heap sort lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Heap sort problem\n- Recognize the sorting pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Let me explain the JavaScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand how heap sort works using a binary heap\n2. Build a max heap from an array\n3. Extract maximum elements and maintain heap property\n4. Implement heap sort step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement heap sort in JavaScript. We'll need three functions:\n1. `heapSort` - the main function\n2. `buildHeap` - builds a max heap from the array\n3. `heapify` - maintains heap property by sinking a node down\n\nLet's start with the heapSort function.",
+      "example": "function heapSort(arr) {\n  // Your code here\n}\n\nfunction buildHeap(arr, n) {\n  // Build max heap\n}\n\nfunction heapify(arr, n, i) {\n  // Maintain heap property\n}",
+      "action": "continue",
+      "next": "coding-build-heap-js"
+    },
+    {
+      "stepId": "coding-build-heap-js",
+      "mentorSays": "First, let's build a max heap. Start from the last parent node (at index Math.floor(n/2) - 1) and heapify upwards.",
+      "example": "function heapSort(arr) {\n  const n = arr.length;\n  \n  // Build max heap\n  buildHeap(arr, n);\n}",
+      "action": "continue",
+      "next": "coding-extract-loop-js"
+    },
+    {
+      "stepId": "coding-extract-loop-js",
+      "mentorSays": "Now, extract the maximum element (root) one by one. Swap root with the last element, reduce heap size, and heapify the root.",
+      "example": "function heapSort(arr) {\n  const n = arr.length;\n  \n  buildHeap(arr, n);\n  \n  // Extract elements one by one\n  for (let i = n - 1; i > 0; i--) {\n    // Swap root with last element\n    [arr[0], arr[i]] = [arr[i], arr[0]];\n    // Heapify root with reduced heap size\n    heapify(arr, i, 0);\n  }\n}",
+      "action": "continue",
+      "next": "coding-build-heap-impl-js"
+    },
+    {
+      "stepId": "coding-build-heap-impl-js",
+      "mentorSays": "Now let's implement buildHeap. Start from the last parent and heapify each node upwards.",
+      "example": "function buildHeap(arr, n) {\n  // Start from last parent node\n  for (let i = Math.floor(n / 2) - 1; i >= 0; i--) {\n    heapify(arr, n, i);\n  }\n}",
+      "action": "continue",
+      "next": "coding-heapify-start-js"
+    },
+    {
+      "stepId": "coding-heapify-start-js",
+      "mentorSays": "Now let's implement the heapify function. This maintains the max heap property by comparing a node with its children and swapping if needed.",
+      "example": "function heapify(arr, n, i) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-heapify-find-children-js"
+    },
+    {
+      "stepId": "coding-heapify-find-children-js",
+      "mentorSays": "Find the indices of the left and right children of node i.",
+      "example": "function heapify(arr, n, i) {\n  let largest = i;  // Initialize largest as root\n  const left = 2 * i + 1;  // Left child\n  const right = 2 * i + 2;  // Right child\n}",
+      "action": "continue",
+      "next": "coding-heapify-compare-js"
+    },
+    {
+      "stepId": "coding-heapify-compare-js",
+      "mentorSays": "Compare the root with left and right children. If a child is larger, mark it as the largest.",
+      "example": "function heapify(arr, n, i) {\n  let largest = i;\n  const left = 2 * i + 1;\n  const right = 2 * i + 2;\n  \n  // Compare with left child\n  if (left < n && arr[left] > arr[largest]) {\n    largest = left;\n  }\n  \n  // Compare with right child\n  if (right < n && arr[right] > arr[largest]) {\n    largest = right;\n  }\n}",
+      "action": "continue",
+      "next": "coding-heapify-swap-js"
+    },
+    {
+      "stepId": "coding-heapify-swap-js",
+      "mentorSays": "If the largest is not the root, swap and recursively heapify the affected subtree.",
+      "example": "function heapify(arr, n, i) {\n  let largest = i;\n  const left = 2 * i + 1;\n  const right = 2 * i + 2;\n  \n  if (left < n && arr[left] > arr[largest]) {\n    largest = left;\n  }\n  \n  if (right < n && arr[right] > arr[largest]) {\n    largest = right;\n  }\n  \n  // If largest is not root, swap and heapify\n  if (largest !== i) {\n    [arr[i], arr[largest]] = [arr[largest], arr[i]];\n    heapify(arr, n, largest);\n  }\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Heap sort!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

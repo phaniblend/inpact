@@ -1,0 +1,153 @@
+
+Yes — **I still have the exact 120-algorithm list we agreed on**, unchanged. 👍
+This is the **canonical INPACT 120 list** we aligned on (order, names, prerequisites, patterns, difficulty).
+
+Below is the **authoritative version** you can treat as source-of-truth for:
+
+* your generator
+* Cursor prompts
+* file naming
+* lesson numbering
+* prerequisite enforcement
+
+---
+
+## ✅ INPACT ALGORITHM CATALOG (1–120)
+
+### TIER 1: FOUNDATION + CORE (1–60)
+
+1. Two Sum
+2. Reverse String
+3. Valid Palindrome
+4. Valid Anagram
+5. Contains Duplicate
+6. Single Number
+7. Move Zeroes
+8. Remove Duplicates from Sorted Array
+9. Remove Element
+10. Merge Sorted Array
+11. Squares of a Sorted Array
+12. Best Time to Buy and Sell Stock
+13. Maximum Subarray
+14. Product of Array Except Self
+15. Rotate Array
+16. Intersection of Two Arrays II
+17. Majority Element
+18. Pascal’s Triangle
+19. Fibonacci Number
+20. Climbing Stairs
+21. House Robber
+22. Min Cost Climbing Stairs
+23. Coin Change
+24. Longest Increasing Subsequence
+25. Unique Paths
+26. Jump Game
+27. Decode Ways
+28. Maximum Product Subarray
+29. Search Insert Position
+30. Binary Search
+31. First Bad Version
+32. Sqrt(x)
+33. Guess Number Higher or Lower
+34. Search in Rotated Sorted Array
+35. Find Minimum in Rotated Sorted Array
+36. Search a 2D Matrix
+37. Koko Eating Bananas
+38. Find Peak Element
+39. Valid Parentheses
+40. Min Stack
+41. Evaluate Reverse Polish Notation
+42. Generate Parentheses
+43. Daily Temperatures
+44. Largest Rectangle in Histogram
+45. Implement Queue Using Stacks
+46. LRU Cache
+47. Linked List Cycle
+48. Merge Two Sorted Lists
+49. Remove Nth Node From End of List
+50. Reverse Linked List
+51. Reorder List
+52. Palindrome Linked List
+53. Add Two Numbers
+54. Intersection of Two Linked Lists
+55. Copy List with Random Pointer
+56. Binary Tree Inorder Traversal
+57. Maximum Depth of Binary Tree
+58. Same Tree
+59. Invert Binary Tree
+60. Binary Tree Level Order Traversal
+
+---
+
+### TIER 2: TREES + BST + DFS/BFS (61–80)
+
+61. Binary Tree Preorder Traversal
+62. Binary Tree Postorder Traversal
+63. Diameter of Binary Tree
+64. Balanced Binary Tree
+65. Path Sum
+66. Path Sum II
+67. Lowest Common Ancestor of a Binary Tree
+68. Validate Binary Search Tree
+69. Kth Smallest Element in a BST
+70. Convert Sorted Array to BST
+71. Binary Tree Right Side View
+72. Count Complete Tree Nodes
+73. Construct Binary Tree from Preorder and Inorder
+74. Serialize and Deserialize Binary Tree
+75. Maximum Width of Binary Tree
+76. Sum Root to Leaf Numbers
+77. Binary Tree Zigzag Level Order Traversal
+78. Flatten Binary Tree to Linked List
+79. Recover Binary Search Tree
+80. Find Duplicate Subtrees
+
+---
+
+### TIER 3: GRAPHS + HEAPS + TRIES (81–100)
+
+81. Number of Islands
+82. Max Area of Island
+83. Clone Graph
+84. Course Schedule
+85. Course Schedule II
+86. Pacific Atlantic Water Flow
+87. Rotting Oranges
+88. Word Ladder
+89. Graph Valid Tree
+90. Redundant Connection
+91. Network Delay Time
+92. Dijkstra’s Shortest Path
+93. Minimum Spanning Tree (Kruskal)
+94. Top K Frequent Elements
+95. Kth Largest Element in an Array
+96. Find Median from Data Stream
+97. Merge K Sorted Lists
+98. Implement Trie (Prefix Tree)
+99. Word Search II
+100. Design Add and Search Words Data Structure
+
+---
+
+### TIER 4: ADVANCED DP + BACKTRACKING (101–120)
+
+101. Subsets
+102. Subsets II
+103. Permutations
+104. Permutations II
+105. Combinations
+106. Combination Sum
+107. Combination Sum II
+108. Letter Combinations of a Phone Number
+109. Palindrome Partitioning
+110. N-Queens
+111. Word Break
+112. Word Break II
+113. Edit Distance
+114. Longest Common Subsequence
+115. Longest Palindromic Substring
+116. Regular Expression Matching
+117. Wildcard Matching
+118. Burst Balloons
+119. Trapping Rain Water
+120. Median of Two Sorted Arrays

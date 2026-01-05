@@ -11,7 +11,10 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:5173'],
+  credentials: true
+}));
 app.use(express.json());
 
 // Health check
@@ -24,17 +27,38 @@ app.get('/api/lessons/algorithms', async (req, res) => {
   try {
     // Point to the generated-lessons-v2 directory
     const algoDir = path.join(__dirname, '../../algo/generated/generated-lessons-v2');
+    console.log(`Reading lessons from: ${algoDir}`);
+    
     const files = await fs.readdir(algoDir);
+    console.log(`Found ${files.length} files in directory`);
+    
     const jsonFiles = files.filter(f => f.endsWith('.json') && f.startsWith('lesson-'));
+    console.log(`Found ${jsonFiles.length} lesson JSON files`);
+    
+    if (jsonFiles.length === 0) {
+      console.warn('No lesson files found! Checking all JSON files...');
+      const allJsonFiles = files.filter(f => f.endsWith('.json'));
+      console.log(`Total JSON files: ${allJsonFiles.length}`);
+      if (allJsonFiles.length > 0) {
+        console.log('Sample files:', allJsonFiles.slice(0, 5));
+      }
+    }
     
     const lessons = await Promise.all(
       jsonFiles.map(async (file) => {
         try {
           const content = await fs.readFile(path.join(algoDir, file), 'utf-8');
           const lesson = JSON.parse(content);
+          // Extract slug from lesson.id or filename
+          let slug = lesson.id || file.replace('.json', '');
+          // Remove 'lesson-' prefix and lesson number if present
+          if (slug.startsWith('lesson-')) {
+            slug = slug.replace(/^lesson-\d+-?/, '').replace(/^lesson-/, '');
+          }
+          
           return {
             id: lesson.curriculum?.lessonNumber || parseInt(file.match(/\d+/)?.[0] || '0'),
-            slug: lesson.id || file.replace('.json', ''),
+            slug: slug,
             title: lesson.title || file.replace('.json', '').replace(/-/g, ' '),
             difficulty: lesson.difficulty || 'medium',
             pattern: lesson.pattern || 'general',
@@ -49,10 +73,11 @@ app.get('/api/lessons/algorithms', async (req, res) => {
     );
     
     const validLessons = lessons.filter(l => l !== null).sort((a, b) => a.id - b.id);
+    console.log(`Returning ${validLessons.length} valid lessons`);
     res.json({ success: true, data: validLessons });
   } catch (error) {
     console.error('Error getting algorithms:', error);
-    res.status(500).json({ success: false, message: error.message });
+    res.status(500).json({ success: false, message: error.message, stack: error.stack });
   }
 });
 
@@ -62,29 +87,46 @@ app.get('/api/lessons/algorithms/:slug', async (req, res) => {
     const { slug } = req.params;
     const algoDir = path.join(__dirname, '../../algo/generated/generated-lessons-v2');
     
-    // Try to find the file - check main directory first, then subdirectories
-    let filePath = path.join(algoDir, `${slug}.json`);
+    // Try multiple filename patterns
+    const possibleFilenames = [
+      `${slug}.json`,                    // binary-search.json
+      `lesson-${slug}.json`,             // lesson-binary-search.json
+      `lesson-${slug.replace(/-/g, '-')}.json`  // Handle any dashes
+    ];
     
-    // If not found in main dir, check subdirectories (GOOD_AS_IS, etc.)
-    if (!await fileExists(filePath)) {
+    let filePath = null;
+    
+    // First, try direct filename matches in main directory
+    for (const filename of possibleFilenames) {
+      const testPath = path.join(algoDir, filename);
+      if (await fileExists(testPath)) {
+        filePath = testPath;
+        break;
+      }
+    }
+    
+    // If not found, check subdirectories
+    if (!filePath) {
       const subdirs = ['GOOD_AS_IS', 'NEEDS_AI_FIX', 'FIXED_BY_AI'];
       for (const subdir of subdirs) {
         const subdirPath = path.join(algoDir, subdir);
         try {
-          const testPath = path.join(subdirPath, `${slug}.json`);
-          if (await fileExists(testPath)) {
-            filePath = testPath;
-            break;
+          for (const filename of possibleFilenames) {
+            const testPath = path.join(subdirPath, filename);
+            if (await fileExists(testPath)) {
+              filePath = testPath;
+              break;
+            }
           }
+          if (filePath) break;
         } catch (e) {
           // Subdirectory doesn't exist, continue
         }
       }
     }
     
-    // If still not found, try to find by matching slug in lesson files
-    if (!await fileExists(filePath)) {
-      // Check main directory
+    // If still not found, search all files for matching slug
+    if (!filePath) {
       let files = [];
       try {
         files = await fs.readdir(algoDir);
@@ -104,10 +146,18 @@ app.get('/api/lessons/algorithms/:slug', async (req, res) => {
         }
       }
       
+      // Try to match by slug in filename or by lesson ID
       const matchingFile = files.find(f => {
         const fileName = path.basename(f);
-        return fileName.endsWith('.json') && 
-               (fileName.includes(slug) || fileName.replace('lesson-', '').replace('.json', '').includes(slug));
+        if (!fileName.endsWith('.json')) return false;
+        
+        // Remove 'lesson-' prefix and '.json' suffix for comparison
+        const baseName = fileName.replace(/^lesson-/, '').replace(/\.json$/, '');
+        
+        // Check if slug matches the base name or is contained in it
+        return baseName === slug || 
+               baseName.includes(slug) || 
+               fileName.includes(slug);
       });
       
       if (matchingFile) {
@@ -115,17 +165,19 @@ app.get('/api/lessons/algorithms/:slug', async (req, res) => {
       }
     }
     
-    if (!await fileExists(filePath)) {
-      return res.status(404).json({ success: false, message: 'Lesson not found' });
+    if (!filePath || !await fileExists(filePath)) {
+      console.error(`Lesson not found: ${slug}. Searched in ${algoDir}`);
+      return res.status(404).json({ success: false, message: `Lesson not found: ${slug}` });
     }
     
     const content = await fs.readFile(filePath, 'utf-8');
     const lesson = JSON.parse(content);
     
+    console.log(`Found lesson: ${slug} -> ${path.basename(filePath)}`);
     res.json({ success: true, data: lesson });
   } catch (error) {
     console.error('Error getting lesson:', error);
-    res.status(404).json({ success: false, message: 'Lesson not found' });
+    res.status(404).json({ success: false, message: 'Lesson not found', error: error.message });
   }
 });
 
@@ -139,8 +191,26 @@ async function fileExists(filePath) {
   }
 }
 
+// Serve frontend static files in production
+const frontendBuildPath = path.join(__dirname, '../../frontend/dist');
+try {
+  if (await fileExists(frontendBuildPath)) {
+    app.use(express.static(frontendBuildPath));
+    // Serve React app for all non-API routes
+    app.get('*', (req, res) => {
+      if (!req.path.startsWith('/api')) {
+        res.sendFile(path.join(frontendBuildPath, 'index.html'));
+      }
+    });
+    console.log('📦 Serving frontend from:', frontendBuildPath);
+  }
+} catch (e) {
+  console.log('⚠️  Frontend build not found, API-only mode');
+}
+
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 INPACT Backend Server running on http://localhost:${PORT}`);
   console.log(`📚 Serving lessons from: ${path.join(__dirname, '../../algo/generated/generated-lessons-v2')}`);
+  console.log(`💡 Access frontend at: http://localhost:${PORT} (if built) or http://localhost:5173 (dev server)`);
 });

@@ -1,0 +1,137 @@
+{
+  "id": "word-pattern",
+  "title": "Word Pattern",
+  "pattern": "bijection using two maps",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-11",
+    "introduces": ["bijection", "two-way-mapping"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "strings",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "objects-as-maps",
+      "comparison"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Split the string into words." },
+    { "id": "ps2", "text": "If pattern length != number of words, return false." },
+    { "id": "ps3", "text": "Create two empty maps: char→word and word→char." },
+    { "id": "ps4", "text": "For each index i:" },
+    { "id": "ps5", "text": "  If either mapping conflicts, return false." },
+    { "id": "ps6", "text": "  Store both mappings." },
+    { "id": "ps7", "text": "Return true if all pairs match." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Word Pattern**.\n\nThis lesson introduces **two-way mapping** (bijection) using objects as maps.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a pattern string and a sentence.\n\nEach character in the pattern must map to **exactly one word**, and each word must map to **exactly one character**.",
+      "example": "pattern = \"abba\", s = \"dog cat cat dog\"",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) abba / dog cat cat dog → true\n2) abba / dog cat cat fish → false\n3) aaaa / dog cat cat dog → false",
+      "action": "next",
+      "next": "why-one-map-not-enough"
+    },
+    {
+      "stepId": "why-one-map-not-enough",
+      "mentorSays": "Why one map is not enough:\n\nIf we only map character → word, two characters could still point to the same word.\n\nWe must enforce mapping in **both directions**.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nHow do we guarantee one-to-one mapping between characters and words?",
+      "choices": [
+        { "label": "Use two maps (both directions)", "next": "core-idea" },
+        { "label": "Only check character → word", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe use:\n- map1: character → word\n- map2: word → character\n\nBoth must agree for every pair.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\npattern = \"ab\"\ns = \"dog cat\"\n\n- 'a' → 'dog'\n- 'b' → 'cat'\n\nNo conflicts in either direction → valid pattern",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself for stronger retention.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function wordPattern(pattern, s) {\n\n}",
+      "action": "next",
+      "next": "code-02-split",
+      "pseudocodeLineIds": ["ps1", "ps2"]
+    },
+    {
+      "stepId": "code-02-split",
+      "mentorSays": "Step 2: Split the string and check lengths.",
+      "example": "const words = s.split(' ');\nif (pattern.length !== words.length) return false;",
+      "action": "next",
+      "next": "code-03-maps",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-03-maps",
+      "mentorSays": "Step 3: Create two empty maps.",
+      "example": "const charToWord = {};\nconst wordToChar = {};",
+      "action": "next",
+      "next": "code-04-loop",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-04-loop",
+      "mentorSays": "Step 4: Loop and validate mappings.",
+      "example": "for (let i = 0; i < pattern.length; i++) {\n  const ch = pattern[i];\n  const word = words[i];\n\n  if ((charToWord[ch] && charToWord[ch] !== word) ||\n      (wordToChar[word] && wordToChar[word] !== ch)) {\n    return false;\n  }\n\n  charToWord[ch] = word;\n  wordToChar[word] = ch;\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function wordPattern(pattern, s) {\n  const words = s.split(' ');\n  if (pattern.length !== words.length) return false;\n\n  const charToWord = {};\n  const wordToChar = {};\n\n  for (let i = 0; i < pattern.length; i++) {\n    const ch = pattern[i];\n    const word = words[i];\n\n    if ((charToWord[ch] && charToWord[ch] !== word) ||\n        (wordToChar[word] && wordToChar[word] !== ch)) {\n      return false;\n    }\n\n    charToWord[ch] = word;\n    wordToChar[word] = ch;\n  }\n\n  return true;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- what bijection means\n- how to enforce one-to-one relationships\n- why two maps are sometimes necessary\n\nThis idea reappears in many constraint problems.",
+      "action": "complete"
+    }
+  ]
+}

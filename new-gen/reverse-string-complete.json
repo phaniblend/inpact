@@ -1,0 +1,325 @@
+{
+  "id": "reverse-string-complete",
+  "title": "Reverse String",
+  "pattern": "two-pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "COMPLETE",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 2,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-02",
+    "introduces": [
+      "two-pointers",
+      "in-place-swap",
+      "symmetric-iteration"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "array-indexing",
+      "loops",
+      "for-loop",
+      "functions",
+      "temporary-variables"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["valid-palindrome", "two-sum"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left = 0 and right = last index (length - 1)." },
+    { "id": "ps2", "text": "While left < right:" },
+    { "id": "ps3", "text": "  Swap characters at left and right positions." },
+    { "id": "ps4", "text": "  Move left pointer forward (left++)." },
+    { "id": "ps5", "text": "  Move right pointer backward (right--)." },
+    { "id": "ps6", "text": "Stop when pointers meet or cross." }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Welcome to **Reverse String**!\n\nThis lesson introduces a powerful pattern called **two pointers** that appears in many array and string problems.\n\n**What you'll learn:**\n- How to use two pointers to traverse from both ends\n- How to swap elements in place\n- The symmetric iteration pattern\n- O(n) time with O(1) extra space\n\n**By the end, you'll be able to:**\n- Reverse arrays and strings efficiently\n- Use two pointers for symmetric operations\n- Explain why this is better than creating a new array\n- Apply this pattern to other problems\n\nReady to master two pointers?",
+      "action": "next",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "First, choose your programming language.\n\nThis lesson is available in:\n- JavaScript\n- Python\n- Java\n- C++\n- TypeScript\n\nWhich language would you like to use?",
+      "choices": [
+        { "label": "JavaScript", "next": "prereq-check-js" },
+        { "label": "Python", "next": "prereq-check-python" },
+        { "label": "Java", "next": "prereq-check-java" },
+        { "label": "C++", "next": "prereq-check-cpp" },
+        { "label": "TypeScript", "next": "prereq-check-ts" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Reverse String, let's make sure you're comfortable with the JavaScript constructs we'll use:\n\n**1. Arrays and String Conversion**\n- Strings are immutable in JavaScript, so we'll convert to array first\n- We'll use: `s.split('')` to convert string to array\n- We'll use: `arr.join('')` to convert array back to string\n\n**2. Array Indexing**\n- Access elements by index: `arr[i]`\n- Last index: `arr.length - 1`\n\n**3. Variables**\n- We'll use `left` and `right` to track positions\n- We'll use a temporary variable `temp` for swapping\n\n**4. While Loops**\n- We'll use: `while (left < right)`\n- Condition: continue until pointers meet\n\n**5. Increment/Decrement Operators**\n- `left++` moves left pointer forward\n- `right--` moves right pointer backward\n\n**6. Swapping Values**\n- Using temporary variable: `temp = arr[left]; arr[left] = arr[right]; arr[right] = temp;`\n- Or using destructuring: `[arr[left], arr[right]] = [arr[right], arr[left]]`\n\n**7. Functions**\n- We'll write a function that modifies the array in place\n\nDo you feel comfortable with these JavaScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-js" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Reverse String, let's make sure you're comfortable with the Python constructs we'll use:\n\n**1. Lists**\n- We'll convert string to list: `s = list(s)`\n- Lists are mutable, so we can modify in place\n\n**2. List Indexing**\n- Access elements by index: `s[i]`\n- Last index: `len(s) - 1`\n\n**3. Variables**\n- We'll use `left` and `right` to track positions\n- We'll use a temporary variable for swapping\n\n**4. While Loops**\n- We'll use: `while left < right:`\n- Condition: continue until pointers meet\n\n**5. Increment/Decrement**\n- `left += 1` moves left pointer forward\n- `right -= 1` moves right pointer backward\n\n**6. Swapping Values**\n- Using temporary variable: `temp = s[left]; s[left] = s[right]; s[right] = temp`\n- Or using tuple unpacking: `s[left], s[right] = s[right], s[left]`\n\n**7. Functions**\n- We'll write a function that modifies the list in place\n\nDo you feel comfortable with these Python constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-python" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Reverse String, let's make sure you're comfortable with the Java constructs we'll use:\n\n**1. Character Arrays**\n- We'll convert string to char array: `char[] chars = s.toCharArray()`\n- Char arrays are mutable\n\n**2. Array Indexing**\n- Access elements by index: `chars[i]`\n- Last index: `chars.length - 1`\n\n**3. Variables**\n- We'll use `int left` and `int right` to track positions\n- We'll use a temporary `char temp` for swapping\n\n**4. While Loops**\n- We'll use: `while (left < right)`\n- Condition: continue until pointers meet\n\n**5. Increment/Decrement Operators**\n- `left++` moves left pointer forward\n- `right--` moves right pointer backward\n\n**6. Swapping Values**\n- Using temporary variable: `char temp = chars[left]; chars[left] = chars[right]; chars[right] = temp;`\n\n**7. Methods**\n- We'll write a method that modifies the char array in place\n- Return type: `void` (modifies input)\n\nDo you feel comfortable with these Java constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-java" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Reverse String, let's make sure you're comfortable with the C++ constructs we'll use:\n\n**1. Vectors**\n- We'll use `vector<char>` or modify string directly (strings are mutable in C++)\n- Access: `s[i]`\n\n**2. Array/Vector Indexing**\n- Access elements by index: `s[i]`\n- Last index: `s.length() - 1` or `s.size() - 1`\n\n**3. Variables**\n- We'll use `int left` and `int right` to track positions\n- We'll use a temporary `char temp` for swapping\n\n**4. While Loops**\n- We'll use: `while (left < right)`\n- Condition: continue until pointers meet\n\n**5. Increment/Decrement Operators**\n- `left++` moves left pointer forward\n- `right--` moves right pointer backward\n\n**6. Swapping Values**\n- Using temporary variable: `char temp = s[left]; s[left] = s[right]; s[right] = temp;`\n- Or using `swap()`: `swap(s[left], s[right])`\n\n**7. Functions**\n- We'll write a function that modifies the string/vector in place\n- Parameter: `vector<char>& s` (reference)\n\nDo you feel comfortable with these C++ constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-cpp" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Reverse String, let's make sure you're comfortable with the TypeScript constructs we'll use:\n\n**1. Arrays and String Conversion**\n- Strings are immutable, so we'll convert to array first\n- We'll use: `s.split('')` to convert string to array\n- We'll use: `arr.join('')` to convert array back to string\n\n**2. Array Indexing with Types**\n- Access elements by index: `arr[i]`\n- Last index: `arr.length - 1`\n\n**3. Variables with Types**\n- We'll use `let left: number` and `let right: number` to track positions\n- We'll use a temporary variable for swapping\n\n**4. While Loops**\n- We'll use: `while (left < right)`\n- Condition: continue until pointers meet\n\n**5. Increment/Decrement Operators**\n- `left++` moves left pointer forward\n- `right--` moves right pointer backward\n\n**6. Swapping Values**\n- Using temporary variable: `const temp = arr[left]; arr[left] = arr[right]; arr[right] = temp;`\n- Or using destructuring: `[arr[left], arr[right]] = [arr[right], arr[left]]`\n\n**7. Functions with Types**\n- We'll write a function: `function reverseString(s: string[]): void`\n\nDo you feel comfortable with these TypeScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-ts" }
+      ]
+    },
+    {
+      "stepId": "algorithm-prereq-check",
+      "mentorSays": "### PHASE 2: Algorithm Prerequisites\n\n**Prerequisites for Reverse String:**\n\n**Required Concepts:**\n1. **Arrays and Indexing** - You need to understand how to access array elements by index\n2. **Swapping Values** - You need to understand how to swap two values using a temporary variable\n3. **Loops** - You need to iterate and control loop flow\n4. **Basic Math** - You need to understand incrementing and decrementing\n\n**No Advanced Prerequisites:**\n- You don't need to know hash maps\n- You don't need to know sorting algorithms\n- You don't need to know dynamic programming\n- You don't need to know recursion\n\nThis is a **foundation-level** problem. If you understand arrays, loops, and swapping, you're ready!\n\nDo you feel ready to proceed?",
+      "choices": [
+        { "label": "Yes, I'm ready!", "next": "problem-statement" },
+        { "label": "I need to review prerequisites", "next": "review-prerequisites" }
+      ]
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### PHASE 3: Problem Statement\n\n**Problem:**\n\nWrite a function that reverses a string **in place**.\n\nThe input is an array of characters `s`.\n\n**Constraints:**\n- You must modify the input array **in place** with O(1) extra memory\n- You cannot create a new array\n- The array contains printable ASCII characters\n\n**Example:**\n```\nInput: s = [\"h\",\"e\",\"l\",\"l\",\"o\"]\nOutput: [\"o\",\"l\",\"l\",\"e\",\"h\"]\n```\n\n**Understanding the Variables:**\n- `left`: Pointer starting at the beginning (index 0)\n- `right`: Pointer starting at the end (index length - 1)\n- `s[left]`: Character at the left position\n- `s[right]`: Character at the right position\n- `temp`: Temporary variable used for swapping\n\n**Comprehension Check:**\n\nFor `s = [\"a\", \"b\", \"c\"]`, what should the result be?",
+      "choices": [
+        { "label": "[\"c\", \"b\", \"a\"]", "next": "correct-reverse" },
+        { "label": "[\"a\", \"b\", \"c\"]", "next": "wrong-no-change" },
+        { "label": "[\"c\", \"a\", \"b\"]", "next": "wrong-partial" }
+      ]
+    },
+    {
+      "stepId": "wrong-no-change",
+      "mentorSays": "Not quite! If we don't change anything, the array stays [\"a\", \"b\", \"c\"].\n\nBut we need to **reverse** it, so:\n- First character \"a\" should move to last position\n- Last character \"c\" should move to first position\n- Middle character \"b\" stays in the middle\n\nResult: [\"c\", \"b\", \"a\"]",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "wrong-partial",
+      "mentorSays": "Not quite! [\"c\", \"a\", \"b\"] is not a complete reversal.\n\nTo reverse [\"a\", \"b\", \"c\"]:\n- Position 0 (\"a\") ↔ Position 2 (\"c\") should swap\n- Position 1 (\"b\") stays in the middle\n\nResult: [\"c\", \"b\", \"a\"]",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "correct-reverse",
+      "mentorSays": "Perfect! [\"c\", \"b\", \"a\"] is the correct reversal.\n\nYou've got the problem! Now let's think about how to solve it.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "how-would-you-solve",
+      "mentorSays": "### PHASE 4: How Would You Solve It?\n\nBefore I show you the solution, let's think about different approaches.\n\nHere are three ways we could solve this:\n\n**Approach A: Create a New Array**\n- Create a new array of the same size\n- Copy characters from end to beginning into the new array\n- Return or assign the new array\n- This works but uses O(n) extra space\n\n**Approach B: Use Built-in Reverse Function**\n- Use language's built-in reverse function (e.g., `s.reverse()`)\n- Simple one-liner\n- But we want to understand the algorithm, not just use a library\n\n**Approach C: Two Pointers with Swapping**\n- Use two pointers: one at start, one at end\n- Swap the characters at these positions\n- Move pointers toward each other\n- Continue until they meet\n- This uses O(1) extra space!\n\nWhich approach would you like to explore first?",
+      "choices": [
+        { "label": "Approach A: Create a New Array", "next": "walkthrough-new-array" },
+        { "label": "Approach B: Use Built-in Function", "next": "walkthrough-builtin" },
+        { "label": "Approach C: Two Pointers", "next": "walkthrough-optimal" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-new-array",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Approach A (New Array)\n\nLet's walk through creating a new array step by step.\n\n**Example:** `s = [\"h\", \"e\", \"l\", \"l\", \"o\"]`\n\n**Step 1: Create new array**\n```\nOriginal: [\"h\", \"e\", \"l\", \"l\", \"o\"]\nNew:      [_, _, _, _, _]\n```\n\n**Step 2: Copy from end to beginning**\n\n**Decision Point 1:** Where should we start copying?\n[A] Start from index 0 of original, copy to index 0 of new\n[B] Start from last index of original, copy to index 0 of new\n[C] Start from middle, copy outward",
+      "choices": [
+        { "label": "[A] Start from index 0", "next": "wrong-same-order" },
+        { "label": "[B] Start from last index", "next": "correct-reverse-copy" },
+        { "label": "[C] Start from middle", "next": "wrong-middle" }
+      ]
+    },
+    {
+      "stepId": "wrong-same-order",
+      "mentorSays": "If we copy from index 0 to index 0, we get the same order, not reversed!\n\nWe need to copy the **last** character of original to the **first** position of new.\n\nLet's try the correct approach.",
+      "action": "next",
+      "next": "new-array-continued"
+    },
+    {
+      "stepId": "wrong-middle",
+      "mentorSays": "Starting from middle would be complicated and inefficient.\n\nThe straightforward approach: copy from the end of original to the beginning of new.",
+      "action": "next",
+      "next": "new-array-continued"
+    },
+    {
+      "stepId": "correct-reverse-copy",
+      "mentorSays": "Perfect! We copy from the end of original to the beginning of new.\n\n**Step-by-step:**\n```\nOriginal: [\"h\", \"e\", \"l\", \"l\", \"o\"]\n          0    1    2    3    4\nNew:      [_, _, _, _, _]\n          0  1  2  3  4\n\nCopy s[4]=\"o\" to new[0]: [\"o\", _, _, _, _]\nCopy s[3]=\"l\" to new[1]: [\"o\", \"l\", _, _, _]\nCopy s[2]=\"l\" to new[2]: [\"o\", \"l\", \"l\", _, _]\nCopy s[1]=\"e\" to new[3]: [\"o\", \"l\", \"l\", \"e\", _]\nCopy s[0]=\"h\" to new[4]: [\"o\", \"l\", \"l\", \"e\", \"h\"]\n```\n\n**Operation Count:**\n- We iterate through the array once: n iterations\n- Each iteration: one copy operation\n- Total: n operations\n\n**Space Complexity:** O(n) - we create a new array\n\n**Time Complexity:** O(n)\n\nThis works, but uses extra space. Can we do it without creating a new array?",
+      "action": "next",
+      "next": "want-in-place"
+    },
+    {
+      "stepId": "want-in-place",
+      "mentorSays": "**Want to learn the in-place approach that uses O(1) extra space?**\n\nThe two-pointer approach modifies the original array directly, swapping characters from both ends until they meet in the middle.\n\nThis is more memory-efficient and is the preferred solution in interviews!",
+      "choices": [
+        { "label": "Yes, show me the in-place approach!", "next": "walkthrough-optimal" },
+        { "label": "I want to see the code for new array first", "next": "new-array-code" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-builtin",
+      "mentorSays": "### Approach B: Built-in Reverse\n\n**JavaScript:** `s.reverse()`\n**Python:** `s.reverse()` or `s[::-1]`\n**Java:** `Collections.reverse(Arrays.asList(s))`\n**C++:** `reverse(s.begin(), s.end())`\n\n**Why we don't use this:**\n- In interviews, they want to see you understand the algorithm\n- You need to implement it yourself\n- Understanding two pointers helps with many other problems\n\nLet's learn the two-pointer approach instead!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-optimal",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Optimal Approach (Two Pointers)\n\n**The Key Insight:**\n\nTo reverse in place, we swap characters from both ends, moving toward the center.\n\n**Strategy:**\n1. Start with `left = 0` and `right = length - 1`\n2. Swap `s[left]` and `s[right]`\n3. Move `left` forward and `right` backward\n4. Continue until `left >= right`\n\n**Example:** `s = [\"h\", \"e\", \"l\", \"l\", \"o\"]`\n\n**Initial State:**\n```\nArray: [\"h\", \"e\", \"l\", \"l\", \"o\"]\n        ↑                    ↑\n      left=0              right=4\n```\n\n**Decision Point 1:** Should we swap now?\n[A] Yes, swap s[0] and s[4]\n[B] No, check something first\n[C] Move pointers first",
+      "choices": [
+        { "label": "[A] Yes, swap s[0] and s[4]", "next": "correct-first-swap" },
+        { "label": "[B] No, check something first", "next": "wrong-check-first" },
+        { "label": "[C] Move pointers first", "next": "wrong-move-first" }
+      ]
+    },
+    {
+      "stepId": "wrong-check-first",
+      "mentorSays": "There's nothing to check! We know we need to swap the first and last characters.\n\nLet's proceed with the swap.",
+      "action": "next",
+      "next": "correct-first-swap"
+    },
+    {
+      "stepId": "wrong-move-first",
+      "mentorSays": "If we move pointers first, we'll skip the first swap!\n\n**Correct order:**\n1. Swap first\n2. Then move pointers\n\nLet's do the swap.",
+      "action": "next",
+      "next": "correct-first-swap"
+    },
+    {
+      "stepId": "correct-first-swap",
+      "mentorSays": "Perfect! We swap s[0]=\"h\" and s[4]=\"o\"\n\n**After swap:**\n```\nArray: [\"o\", \"e\", \"l\", \"l\", \"h\"]\n        ↑                    ↑\n      left=0              right=4\n```\n\n**Decision Point 2:** What should we do next?\n[A] Move left forward and right backward\n[B] Swap again at the same positions\n[C] We're done",
+      "choices": [
+        { "label": "[A] Move left forward and right backward", "next": "correct-move-pointers" },
+        { "label": "[B] Swap again", "next": "wrong-swap-again" },
+        { "label": "[C] We're done", "next": "wrong-not-done" }
+      ]
+    },
+    {
+      "stepId": "wrong-swap-again",
+      "mentorSays": "If we swap again at the same positions, we'll undo our work! We'd swap \"o\" and \"h\" back, getting [\"h\", \"e\", \"l\", \"l\", \"o\"] again.\n\nWe need to move the pointers to the next pair.",
+      "action": "next",
+      "next": "correct-move-pointers"
+    },
+    {
+      "stepId": "wrong-not-done",
+      "mentorSays": "We're not done yet! We've only swapped the outer pair. We still need to swap:\n- s[1]=\"e\" and s[3]=\"l\"\n\nLet's continue.",
+      "action": "next",
+      "next": "correct-move-pointers"
+    },
+    {
+      "stepId": "correct-move-pointers",
+      "mentorSays": "Correct! We move:\n- `left++` → left = 1\n- `right--` → right = 3\n\n**State after moving:**\n```\nArray: [\"o\", \"e\", \"l\", \"l\", \"h\"]\n           ↑        ↑\n        left=1   right=3\n```\n\n**Decision Point 3:** Should we continue?\n[A] Yes, swap s[1] and s[3]\n[B] No, check if left < right first\n[C] We're done",
+      "choices": [
+        { "label": "[A] Yes, swap s[1] and s[3]", "next": "correct-second-swap" },
+        { "label": "[B] No, check if left < right first", "next": "correct-check-condition" },
+        { "label": "[C] We're done", "next": "wrong-still-more" }
+      ]
+    },
+    {
+      "stepId": "wrong-still-more",
+      "mentorSays": "We're not done! We still have:\n- s[1]=\"e\" and s[3]=\"l\" to swap\n\nLet's continue.",
+      "action": "next",
+      "next": "correct-check-condition"
+    },
+    {
+      "stepId": "correct-check-condition",
+      "mentorSays": "Good thinking! We should check the condition: `left < right`?\n\nleft = 1, right = 3\n1 < 3? **Yes!** So we continue.\n\nNow we swap s[1]=\"e\" and s[3]=\"l\"",
+      "action": "next",
+      "next": "correct-second-swap"
+    },
+    {
+      "stepId": "correct-second-swap",
+      "mentorSays": "Perfect! We swap s[1]=\"e\" and s[3]=\"l\"\n\n**After swap:**\n```\nArray: [\"o\", \"l\", \"l\", \"e\", \"h\"]\n           ↑        ↑\n        left=1   right=3\n```\n\n**Decision Point 4:** What next?\n[A] Move pointers: left=2, right=2\n[B] Swap again\n[C] Check condition",
+      "choices": [
+        { "label": "[A] Move pointers: left=2, right=2", "next": "correct-final-move" },
+        { "label": "[B] Swap again", "next": "wrong-swap-same" },
+        { "label": "[C] Check condition", "next": "correct-final-check" }
+      ]
+    },
+    {
+      "stepId": "wrong-swap-same",
+      "mentorSays": "Swapping s[1] and s[3] again would undo our work!\n\nWe need to move the pointers.",
+      "action": "next",
+      "next": "correct-final-move"
+    },
+    {
+      "stepId": "correct-final-check",
+      "mentorSays": "Good! Let's check: left=1, right=3, so 1 < 3 is true. We swap, then move pointers.",
+      "action": "next",
+      "next": "correct-final-move"
+    },
+    {
+      "stepId": "correct-final-move",
+      "mentorSays": "We move:\n- `left++` → left = 2\n- `right--` → right = 2\n\n**State after moving:**\n```\nArray: [\"o\", \"l\", \"l\", \"e\", \"h\"]\n              ↑\n          left=2, right=2\n```\n\n**Decision Point 5:** What should we do?\n[A] Swap s[2] with itself\n[B] Check condition: left < right?\n[C] We're done",
+      "choices": [
+        { "label": "[A] Swap s[2] with itself", "next": "wrong-swap-self" },
+        { "label": "[B] Check condition: left < right?", "next": "correct-stop-condition" },
+        { "label": "[C] We're done", "next": "correct-done" }
+      ]
+    },
+    {
+      "stepId": "wrong-swap-self",
+      "mentorSays": "Swapping an element with itself does nothing! It's unnecessary.\n\nWhen left == right, we're at the middle element. For odd-length arrays, the middle element stays in place.\n\nWe should stop when left >= right.",
+      "action": "next",
+      "next": "correct-stop-condition"
+    },
+    {
+      "stepId": "correct-stop-condition",
+      "mentorSays": "Perfect! We check: left < right?\n\nleft = 2, right = 2\n2 < 2? **No!**\n\nSo we stop! The condition `left < right` is false, so we exit the loop.\n\n**Final Result:**\n```\n[\"o\", \"l\", \"l\", \"e\", \"h\"]\n```\n\nThis is the reversed string!",
+      "action": "next",
+      "next": "pseudocode-phase"
+    },
+    {
+      "stepId": "correct-done",
+      "mentorSays": "Exactly! When left == right, we're done.\n\n**Final Result:**\n```\n[\"o\", \"l\", \"l\", \"e\", \"h\"]\n```\n\n**Why This Works:**\n- We swap pairs from the outside in\n- Each swap puts one character in its final position\n- When pointers meet, all characters are in place\n- Total swaps: n/2 (for even length) or (n-1)/2 (for odd length)\n\n**Operation Count:**\n- For array of size n: n/2 swaps\n- Each swap: 3 operations (temp assignment, two swaps)\n- Total: O(n) time\n- Space: O(1) - only a few variables!",
+      "action": "next",
+      "next": "pseudocode-phase"
+    },
+    {
+      "stepId": "pseudocode-phase",
+      "mentorSays": "### PHASE 6: Pseudocode\n\nNow let's write the logic in plain English (pseudocode):\n\n**Step 1:** Set left = 0 and right = last index (length - 1).\n\n**Step 2:** While left < right:\n\n**Step 3:** Swap characters at left and right positions.\n\n**Step 4:** Move left pointer forward (left++).\n\n**Step 5:** Move right pointer backward (right--).\n\n**Step 6:** Stop when pointers meet or cross (when left >= right).\n\nThis pseudocode matches exactly what we walked through!",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "code-implementation"
+    },
+    {
+      "stepId": "code-implementation",
+      "mentorSays": "### PHASE 7: Code Implementation\n\nNow let's translate the pseudocode into JavaScript code.\n\n**Step 1: Convert string to array and initialize pointers**\n```javascript\nfunction reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n}\n```\nThis matches pseudocode Step 1: \"Set left = 0 and right = last index\"\n\n**Step 2: While loop**\n```javascript\nfunction reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n  \n  while (left < right) {\n    \n  }\n}\n```\nThis matches pseudocode Step 2: \"While left < right\"\n\n**Step 3: Swap characters**\n```javascript\nfunction reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n  \n  while (left < right) {\n    // Swap using destructuring\n    [s[left], s[right]] = [s[right], s[left]];\n  }\n}\n```\nThis matches pseudocode Step 3: \"Swap characters\"\n\n**Step 4 & 5: Move pointers**\n```javascript\nfunction reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n  \n  while (left < right) {\n    [s[left], s[right]] = [s[right], s[left]];\n    left++;\n    right--;\n  }\n}\n```\nThis matches pseudocode Steps 4 & 5: \"Move pointers\"\n\n**Final Code:**\n```javascript\nfunction reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n  \n  while (left < right) {\n    [s[left], s[right]] = [s[right], s[left]];\n    left++;\n    right--;\n  }\n}\n```\n\n**Alternative using temp variable:**\n```javascript\nfunction reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n  \n  while (left < right) {\n    const temp = s[left];\n    s[left] = s[right];\n    s[right] = temp;\n    left++;\n    right--;\n  }\n}\n```",
+      "example": "function reverseString(s) {\n  let left = 0;\n  let right = s.length - 1;\n  \n  while (left < right) {\n    [s[left], s[right]] = [s[right], s[left]];\n    left++;\n    right--;\n  }\n}",
+      "action": "next",
+      "next": "complexity-analysis"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "### PHASE 8: Complexity Analysis\n\n**Time Complexity Analysis:**\n\n**Step-by-step breakdown:**\n1. Initialize pointers: O(1)\n2. While loop: How many iterations?\n   - We swap pairs from outside in\n   - For array of length n: n/2 iterations (for even) or (n-1)/2 (for odd)\n   - In big-O: O(n/2) = O(n)\n3. Each iteration:\n   - Swap operation: O(1)\n   - Pointer updates: O(1)\n\n**Total Time: O(n)**\n\n**Space Complexity Analysis:**\n\n**What we store:**\n- `left` variable: O(1)\n- `right` variable: O(1)\n- Temporary variable (if used): O(1)\n- No additional arrays or data structures\n\n**Total Space: O(1)**\n\n**Comparison Table:**\n\n| Approach | Time | Space | Notes |\n|----------|------|-------|-------|\n| New Array | O(n) | O(n) | Creates copy |\n| Two Pointers | O(n) | O(1) | Modifies in place |\n\n**Why Optimal is Better:**\n\n- **Space efficiency:** O(1) vs O(n) - no extra memory needed\n- **In-place modification:** Meets the problem requirement\n- **Same time complexity:** Both are O(n), but two pointers is more memory-efficient\n\n**For large arrays (n = 1,000,000):**\n- New array approach: Uses 1 million extra character slots\n- Two pointers: Uses only 3 variables (left, right, temp)\n\nThis is the preferred solution in interviews!",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "### PHASE 9: Edge Cases\n\n**Edge Case 1: Empty array**\n```\ns = []\n```\n**Why it matters:** Tests if algorithm handles zero-length input.\n**How algorithm handles it:**\n- left = 0, right = -1\n- Condition: 0 < -1? False\n- Loop doesn't execute, returns empty array ✓\n\n**Edge Case 2: Single character**\n```\ns = [\"a\"]\n```\n**Why it matters:** Tests if algorithm handles minimum valid input.\n**How algorithm handles it:**\n- left = 0, right = 0\n- Condition: 0 < 0? False\n- Loop doesn't execute, character stays in place ✓\n\n**Edge Case 3: Two characters**\n```\ns = [\"a\", \"b\"]\n```\n**Why it matters:** Tests the simplest swap case.\n**How algorithm handles it:**\n- left = 0, right = 1\n- Swap s[0] and s[1]: [\"b\", \"a\"]\n- Move: left = 1, right = 0\n- Condition: 1 < 0? False, stop ✓\n\n**Edge Case 4: Odd length (middle stays)**\n```\ns = [\"a\", \"b\", \"c\"]\n```\n**Why it matters:** Tests if middle element is handled correctly.\n**How algorithm handles it:**\n- Swap s[0] and s[2]: [\"c\", \"b\", \"a\"]\n- Move: left = 1, right = 1\n- Condition: 1 < 1? False, stop\n- Middle element \"b\" stays in place ✓\n\n**Edge Case 5: Even length (all swap)**\n```\ns = [\"a\", \"b\", \"c\", \"d\"]\n```\n**Why it matters:** Tests if all elements get swapped.\n**How algorithm handles it:**\n- Swap s[0] and s[3]: [\"d\", \"b\", \"c\", \"a\"]\n- Swap s[1] and s[2]: [\"d\", \"c\", \"b\", \"a\"]\n- Move: left = 2, right = 1\n- Condition: 2 < 1? False, stop ✓\n\n**Edge Case 6: Already reversed**\n```\ns = [\"o\", \"l\", \"l\", \"e\", \"h\"]\n```\n**Why it matters:** Tests if algorithm correctly reverses back.\n**How algorithm handles it:**\n- Works correctly, reverses to [\"h\", \"e\", \"l\", \"l\", \"o\"] ✓",
+      "action": "next",
+      "next": "lesson-complete"
+    },
+    {
+      "stepId": "lesson-complete",
+      "mentorSays": "### PHASE 10: Lesson Complete\n\n**Summary:**\n\n**Problem:** Reverse a string in place using O(1) extra memory.\n\n**Key Insight:** Use two pointers starting from both ends, swapping characters and moving toward the center.\n\n**Non-optimal vs Optimal:**\n- New array: O(n) time, O(n) space - creates a copy\n- Two pointers: O(n) time, O(1) space - modifies in place\n\n**Techniques Learned:**\n1. Two-pointer pattern for symmetric operations\n2. In-place modification\n3. Swapping values using temporary variable or destructuring\n4. Loop termination condition (when pointers meet)\n\n**Edge Cases Covered:**\n- Empty array\n- Single character\n- Two characters\n- Odd length (middle stays)\n- Even length (all swap)\n- Already reversed\n\n**Related Problems:**\n1. **Valid Palindrome** - Uses two pointers to check symmetry\n2. **Reverse Words in a String** - Extends reversal to words\n3. **Reverse Linked List** - Similar pattern for linked lists\n4. **Container With Most Water** - Two pointers for optimization\n5. **Two Sum (Sorted Array)** - Two pointers from both ends\n\n**Congratulations!** You've mastered the two-pointer pattern. This technique appears in many array and string problems!\n\n**Next Steps:**\n- Try solving \"Valid Palindrome\" to practice two pointers\n- Review the in-place modification concept\n- Practice explaining your solution clearly",
+      "action": "complete"
+    }
+  ]
+}
+

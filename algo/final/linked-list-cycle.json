@@ -1,0 +1,307 @@
+{
+  "id": "linked-list-cycle",
+  "title": "Linked List Cycle",
+  "pattern": "linked-list",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Linked List Cycle lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Linked List Cycle problem\n- Recognize the linked-list pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'while' loop runs code repeatedly as long as a condition is true.\n\nFor example, 'while (fast && fast.next)' means: keep running the code as long as fast exists and fast.next exists.",
+      "example": "let i = 0;\nwhile (i < 3) {\n  console.log(i);\n  i++;\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n**Linked lists in Python:** Use a class to represent nodes:\n```python\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n```\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n**Linked lists in Java:** Use a class to represent nodes:\n```java\nclass ListNode {\n    int val;\n    ListNode next;\n    ListNode(int x) { val = x; }\n}\n```\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n**Linked lists in C++:** Use a struct to represent nodes:\n```cpp\nstruct ListNode {\n    int val;\n    ListNode *next;\n    ListNode(int x) : val(x), next(nullptr) {}\n};\n```\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n**Linked lists in TypeScript:** Use a class or interface:\n```typescript\nclass ListNode {\n    val: number;\n    next: ListNode | null;\n    constructor(val?: number, next?: ListNode | null) {\n        this.val = val === undefined ? 0 : val;\n        this.next = next === undefined ? null : next;\n    }\n}\n```\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what a cycle in a linked list means\n2. Use Floyd's cycle detection (tortoise and hare) algorithm\n3. Detect cycles using two pointers moving at different speeds\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses **Floyd's Cycle Detection Algorithm** (also called \"tortoise and hare\").\n\n**The idea:** Use two pointers moving at different speeds. If there's a cycle, the fast pointer will eventually catch up to the slow pointer.",
+      "action": "continue",
+      "next": "circular-track-analogy"
+    },
+    {
+      "stepId": "circular-track-analogy",
+      "mentorSays": "### Circular Track Analogy (Floyd's Algorithm)\n\n**Imagine two runners on a circular track:**\n\n- **Slow runner (tortoise):** Moves 1 step at a time\n- **Fast runner (hare):** Moves 2 steps at a time\n\n**If there's a cycle:**\n- The fast runner will eventually \"lap\" the slow runner\n- They'll meet at the same node → cycle detected!\n\n**If there's no cycle:**\n- The fast runner reaches the end (null) first\n- They never meet → no cycle\n\n**Why this works:**\n- In a cycle, the fast pointer gains 1 step per iteration on the slow pointer\n- Eventually, the gap closes and they meet\n- This is guaranteed to happen within O(n) time\n\n**Example:**\n```\nList: 1 → 2 → 3 → 4 → 5 → 3 (cycle back to 3)\n\nSlow: 1 → 2 → 3 → 4 → 5 → 3\nFast: 1 → 3 → 5 → 3 → 5 → 3\n\nThey meet at node 3 → cycle detected!\n```",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the linked list cycle detection solution in JavaScript. We'll create a function that takes the head of a linked list and returns true if it has a cycle, false otherwise.",
+      "example": "function hasCycle(head) {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-pointers-js"
+    },
+    {
+      "stepId": "coding-init-pointers-js",
+      "mentorSays": "First, let's initialize our two pointers: slow and fast both start at head.",
+      "example": "function hasCycle(head) {\n  // Handle empty list\n  if (!head) return false;\n  \n  // Initialize two pointers\n  let slow = head;\n  let fast = head;\n}",
+      "action": "continue",
+      "next": "coding-while-loop-js"
+    },
+    {
+      "stepId": "coding-while-loop-js",
+      "mentorSays": "Now, create a while loop that continues as long as fast and fast.next are not null (so we can safely move fast two steps).",
+      "example": "function hasCycle(head) {\n  if (!head) return false;\n  \n  let slow = head;\n  let fast = head;\n  \n  // Continue while we can move fast pointer\n  while (fast && fast.next) {\n    // Move pointers\n  }\n}",
+      "action": "continue",
+      "next": "coding-move-pointers-js"
+    },
+    {
+      "stepId": "coding-move-pointers-js",
+      "mentorSays": "Inside the loop, move slow one step and fast two steps. Then check if they meet.",
+      "example": "function hasCycle(head) {\n  if (!head) return false;\n  \n  let slow = head;\n  let fast = head;\n  \n  while (fast && fast.next) {\n    // Move slow one step\n    slow = slow.next;\n    // Move fast two steps\n    fast = fast.next.next;\n    \n    // Check if they meet\n    if (slow === fast) {\n      return true;  // Cycle detected!\n    }\n  }\n  \n  return false;  // No cycle\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Null pointer errors** - Always check `fast && fast.next` before accessing `fast.next.next`\n2. **Starting both pointers at head** - Both should start at head, not head.next\n3. **Wrong movement speeds** - Slow moves 1 step (`slow = slow.next`), fast moves 2 steps (`fast = fast.next.next`)\n4. **Infinite loop** - If you forget to check for null, you'll get infinite loop in a cycle\n5. **Comparing values instead of nodes** - Must compare node references (`slow === fast`), not values",
+      "action": "continue",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I use Floyd's cycle detection algorithm with two pointers: slow and fast\"**\n2. **\"Slow pointer moves one step, fast pointer moves two steps per iteration\"**\n3. **\"If there's a cycle, the fast pointer will eventually catch up to the slow pointer\"**\n4. **\"If there's no cycle, the fast pointer reaches null first\"**\n5. **\"This gives us O(n) time complexity with O(1) space, much better than using a Set\"**",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Linked List Cycle!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n✓ Floyd's cycle detection algorithm (tortoise and hare)\n✓ Circular track analogy for understanding\n\n**Follow-up variant:**\n\n**Linked List Cycle II:** Find the node where the cycle begins. How would you modify Floyd's algorithm to find the cycle start?\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

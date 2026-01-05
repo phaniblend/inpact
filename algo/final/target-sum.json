@@ -1,0 +1,137 @@
+{
+  "id": "target-sum",
+  "title": "Target Sum",
+  "pattern": "dynamic-programming (subset-sum transform)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-15",
+    "introduces": ["state-transformation", "subset-sum-dp"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "dynamic-programming"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Let total = sum of all numbers." },
+    { "id": "ps2", "text": "If (total + target) is odd or abs(target) > total, return 0." },
+    { "id": "ps3", "text": "Compute subsetSum = (total + target) / 2." },
+    { "id": "ps4", "text": "Create dp array where dp[s] = number of ways to reach sum s." },
+    { "id": "ps5", "text": "Initialize dp[0] = 1." },
+    { "id": "ps6", "text": "For each number n:" },
+    { "id": "ps7", "text": "  For s from subsetSum down to n: dp[s] += dp[s - n]." },
+    { "id": "ps8", "text": "Return dp[subsetSum]." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Target Sum**.\n\nThis lesson deepens **dynamic programming** by transforming the problem into a **subset-sum** question.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array of numbers.\n\nYou may assign a **+** or **−** sign to each number.\n\nHow many different expressions evaluate to the target value?",
+      "example": "nums = [1,1,1,1,1], target = 3",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n[1,1], target=0 → 2 ways (+1−1, −1+1)\n[1,2], target=1 → 1 way (+1−2)",
+      "action": "next",
+      "next": "why-bruteforce"
+    },
+    {
+      "stepId": "why-bruteforce",
+      "mentorSays": "Brute force tries all sign combinations.\n\nThat creates **2ⁿ possibilities**, which grows too fast.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf we split numbers into `+` and `−` groups, what does their difference equal?",
+      "choices": [
+        { "label": "target", "next": "core-idea" },
+        { "label": "total sum", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nLet:\n- P = sum of numbers with + sign\n- N = sum of numbers with − sign\n\nThen:\nP − N = target\nP + N = total\n\nSolving gives:\nP = (total + target) / 2",
+      "action": "next",
+      "next": "subset-sum-intuition"
+    },
+    {
+      "stepId": "subset-sum-intuition",
+      "mentorSays": "So the problem becomes:\n\n> How many subsets sum to `(total + target) / 2`?\n\nThis is a classic **subset-sum DP** problem.",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5","ps6","ps7","ps8"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis DP counts **number of ways**, not just possibility.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function and compute total sum.",
+      "example": "function findTargetSumWays(nums, target) {\n  const total = nums.reduce((a,b) => a + b, 0);\n\n}",
+      "action": "next",
+      "next": "code-02-checks",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-checks",
+      "mentorSays": "Step 2: Handle impossible cases.",
+      "example": "if (Math.abs(target) > total || (total + target) % 2 !== 0) return 0;",
+      "action": "next",
+      "next": "code-03-dp-setup",
+      "pseudocodeLineIds": ["ps3","ps4","ps5"]
+    },
+    {
+      "stepId": "code-03-dp-setup",
+      "mentorSays": "Step 3: Initialize DP array.",
+      "example": "const subsetSum = (total + target) / 2;\nconst dp = Array(subsetSum + 1).fill(0);\ndp[0] = 1;",
+      "action": "next",
+      "next": "code-04-fill",
+      "pseudocodeLineIds": ["ps6","ps7"]
+    },
+    {
+      "stepId": "code-04-fill",
+      "mentorSays": "Step 4: Update DP counts.",
+      "example": "for (const num of nums) {\n  for (let s = subsetSum; s >= num; s--) {\n    dp[s] += dp[s - num];\n  }\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function findTargetSumWays(nums, target) {\n  const total = nums.reduce((a,b) => a + b, 0);\n\n  if (Math.abs(target) > total || (total + target) % 2 !== 0) return 0;\n\n  const subsetSum = (total + target) / 2;\n  const dp = Array(subsetSum + 1).fill(0);\n  dp[0] = 1;\n\n  for (const num of nums) {\n    for (let s = subsetSum; s >= num; s--) {\n      dp[s] += dp[s - num];\n    }\n  }\n\n  return dp[subsetSum];\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how to transform problems into DP-friendly forms\n- how counting DP differs from boolean DP\n- a core technique behind many partition problems\n\nThis unlocks a whole class of advanced problems.",
+      "action": "complete"
+    }
+  ]
+}

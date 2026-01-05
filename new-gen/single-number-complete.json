@@ -1,0 +1,232 @@
+{
+  "id": "single-number-complete",
+  "title": "Single Number",
+  "pattern": "bitwise XOR",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "COMPLETE",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 6,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-06",
+    "introduces": [
+      "bitwise-xor",
+      "xor-properties",
+      "cancellation-pattern"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "loops",
+      "for-loop",
+      "functions",
+      "return-statement",
+      "bitwise-operators"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["contains-duplicate", "single-number-ii"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Initialize result = 0." },
+    { "id": "ps2", "text": "For each number in the array:" },
+    { "id": "ps3", "text": "  XOR the number with result: result = result XOR number." },
+    { "id": "ps4", "text": "After processing all numbers, result contains the single number." },
+    { "id": "ps5", "text": "Return result." }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Welcome to **Single Number**!\n\nThis lesson introduces a powerful bitwise operation called XOR that has a magical cancellation property.\n\n**What you'll learn:**\n- How XOR works and its properties\n- The cancellation pattern (X XOR X = 0)\n- O(n) time, O(1) space solution\n- Bitwise operations for optimization\n\n**By the end, you'll be able to:**\n- Use XOR to find the unique element\n- Explain why XOR cancels duplicates\n- Apply this pattern to other problems\n- Understand bitwise operations better\n\nReady to master XOR?",
+      "action": "next",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "First, choose your programming language.\n\nThis lesson is available in:\n- JavaScript\n- Python\n- Java\n- C++\n- TypeScript\n\nWhich language would you like to use?",
+      "choices": [
+        { "label": "JavaScript", "next": "prereq-check-js" },
+        { "label": "Python", "next": "prereq-check-python" },
+        { "label": "Java", "next": "prereq-check-java" },
+        { "label": "C++", "next": "prereq-check-cpp" },
+        { "label": "TypeScript", "next": "prereq-check-ts" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Single Number, let's make sure you're comfortable with the JavaScript constructs we'll use:\n\n**1. Bitwise XOR Operator (^)**\n- XOR operation: `a ^ b`\n- Properties: `a ^ a = 0`, `a ^ 0 = a`\n- Example: `5 ^ 5 = 0`, `5 ^ 0 = 5`\n\n**2. Arrays**\n- Access: `nums[i]`\n- Length: `nums.length`\n- Iterate: `for (let i = 0; i < nums.length; i++)`\n\n**3. Variables**\n- We'll use a variable to accumulate XOR result\n\n**4. For Loops**\n- Iterate through array\n\n**5. Assignment Operators**\n- XOR assignment: `result ^= nums[i]` (same as `result = result ^ nums[i]`)\n\n**6. Functions**\n- Function that takes array, returns number\n\nDo you feel comfortable with these JavaScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-js" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Single Number, let's make sure you're comfortable with the Python constructs we'll use:\n\n**1. Bitwise XOR Operator (^)**\n- XOR operation: `a ^ b`\n- Properties: `a ^ a = 0`, `a ^ 0 = a`\n- Example: `5 ^ 5 = 0`, `5 ^ 0 = 5`\n\n**2. Lists**\n- Access: `nums[i]`\n- Length: `len(nums)`\n- Iterate: `for num in nums:`\n\n**3. Variables**\n- We'll use a variable to accumulate XOR result\n\n**4. For Loops**\n- Iterate through list\n\n**5. Assignment Operators**\n- XOR assignment: `result ^= num` (same as `result = result ^ num`)\n\n**6. Functions**\n- Function that takes list, returns int\n\nDo you feel comfortable with these Python constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-python" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Single Number, let's make sure you're comfortable with the Java constructs we'll use:\n\n**1. Bitwise XOR Operator (^)**\n- XOR operation: `a ^ b`\n- Properties: `a ^ a = 0`, `a ^ 0 = a`\n- Example: `5 ^ 5 = 0`, `5 ^ 0 = 5`\n\n**2. Arrays**\n- Access: `nums[i]`\n- Length: `nums.length`\n- Iterate: `for (int i = 0; i < nums.length; i++)`\n\n**3. Variables**\n- We'll use an int variable to accumulate XOR result\n\n**4. For Loops**\n- Iterate through array\n\n**5. Assignment Operators**\n- XOR assignment: `result ^= nums[i]` (same as `result = result ^ nums[i]`)\n\n**6. Methods**\n- Method that takes array, returns int\n\nDo you feel comfortable with these Java constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-java" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Single Number, let's make sure you're comfortable with the C++ constructs we'll use:\n\n**1. Bitwise XOR Operator (^)**\n- XOR operation: `a ^ b`\n- Properties: `a ^ a = 0`, `a ^ 0 = a`\n- Example: `5 ^ 5 = 0`, `5 ^ 0 = 5`\n\n**2. Vectors/Arrays**\n- Access: `nums[i]`\n- Length: `nums.size()`\n- Iterate: `for (int i = 0; i < nums.size(); i++)`\n\n**3. Variables**\n- We'll use an int variable to accumulate XOR result\n\n**4. For Loops**\n- Iterate through vector\n\n**5. Assignment Operators**\n- XOR assignment: `result ^= nums[i]` (same as `result = result ^ nums[i]`)\n\n**6. Functions**\n- Function that takes vector, returns int\n\nDo you feel comfortable with these C++ constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-cpp" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Single Number, let's make sure you're comfortable with the TypeScript constructs we'll use:\n\n**1. Bitwise XOR Operator (^)**\n- XOR operation: `a ^ b`\n- Properties: `a ^ a = 0`, `a ^ 0 = a`\n- Example: `5 ^ 5 = 0`, `5 ^ 0 = 5`\n\n**2. Arrays with Types**\n- Access: `nums[i]`\n- Length: `nums.length`\n- Iterate: `for (let i = 0; i < nums.length; i++)`\n\n**3. Variables with Types**\n- We'll use `let result: number` to accumulate XOR result\n\n**4. For Loops**\n- Iterate through array\n\n**5. Assignment Operators**\n- XOR assignment: `result ^= nums[i]` (same as `result = result ^ nums[i]`)\n\n**6. Functions with Types**\n- `function singleNumber(nums: number[]): number`\n\nDo you feel comfortable with these TypeScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-ts" }
+      ]
+    },
+    {
+      "stepId": "algorithm-prereq-check",
+      "mentorSays": "### PHASE 2: Algorithm Prerequisites\n\n**Prerequisites for Single Number:**\n\n**Required Concepts:**\n1. **Bitwise Operations** - Understanding XOR (exclusive OR)\n2. **XOR Properties** - Knowing that a ^ a = 0 and a ^ 0 = a\n3. **Arrays** - Iterating through arrays\n\n**No Advanced Prerequisites:**\n- You don't need to know hash maps\n- You don't need to know sorting\n\nThis is a **foundation-level** problem. If you understand XOR operations, you're ready!\n\nDo you feel ready to proceed?",
+      "choices": [
+        { "label": "Yes, I'm ready!", "next": "problem-statement" },
+        { "label": "I need to review prerequisites", "next": "review-prerequisites" }
+      ]
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### PHASE 3: Problem Statement\n\n**Problem:**\n\nGiven a **non-empty** array of integers `nums`, every element appears **twice** except for one. Find that single one.\n\nYou must implement a solution with a **linear runtime complexity** and use only **constant extra space**.\n\n**Input:**\n- `nums`: An array of integers where every element appears twice except one (e.g., `[2, 2, 1]`)\n\n**Output:**\n- The single number that appears only once\n\n**Constraints:**\n- 1 <= nums.length <= 3 * 10^4\n- -3 * 10^4 <= nums[i] <= 3 * 10^4\n- Each element in the array appears twice except for one element which appears only once\n\n**Example 1:**\n```\nInput: nums = [2, 2, 1]\nOutput: 1\n\nExplanation: 1 appears once, 2 appears twice.\n```\n\n**Example 2:**\n```\nInput: nums = [4, 1, 2, 1, 2]\nOutput: 4\n\nExplanation: 4 appears once, 1 and 2 appear twice.\n```\n\n**Understanding the Variables:**\n- `nums`: The input array\n- `result`: Accumulator that stores XOR of all numbers\n- `num`: Current number being processed\n- `i`: Current index\n\n**Comprehension Check:**\n\nFor `nums = [1, 1, 2, 3, 3]`, what is the single number?",
+      "choices": [
+        { "label": "1", "next": "wrong-1-appears-twice" },
+        { "label": "2", "next": "correct-single-2" },
+        { "label": "3", "next": "wrong-3-appears-twice" }
+      ]
+    },
+    {
+      "stepId": "wrong-1-appears-twice",
+      "mentorSays": "Let's count: [1, 1, 2, 3, 3]\n- 1 appears 2 times (not single!)\n- 2 appears 1 time (this is the single one!)\n- 3 appears 2 times (not single!)\n\nSo the answer is 2!",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "wrong-3-appears-twice",
+      "mentorSays": "Let's count: [1, 1, 2, 3, 3]\n- 1 appears 2 times (not single!)\n- 2 appears 1 time (this is the single one!)\n- 3 appears 2 times (not single!)\n\nSo the answer is 2!",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "correct-single-2",
+      "mentorSays": "Perfect! 2 appears only once, while 1 and 3 appear twice.\n\nYou've got the problem! Now let's think about how to solve it efficiently.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "how-would-you-solve",
+      "mentorSays": "### PHASE 4: How Would You Solve It?\n\nBefore I show you the solution, let's think about different approaches.\n\nHere are three ways we could solve this:\n\n**Approach A: Hash Map Counting**\n- Count frequency of each number\n- Find the number with count = 1\n- O(n) time, O(n) space\n- But problem asks for O(1) space!\n\n**Approach B: Sort Then Check Adjacent**\n- Sort the array\n- Check adjacent pairs\n- The single number won't have a pair\n- O(n log n) time, O(1) space\n- But problem asks for O(n) time!\n\n**Approach C: XOR (Bitwise Magic)**\n- Use XOR to cancel duplicates\n- XOR all numbers together\n- Duplicates cancel out (a ^ a = 0)\n- Only the single number remains\n- O(n) time, O(1) space - perfect!\n\nWhich approach would you like to explore first?",
+      "choices": [
+        { "label": "Approach A: Hash Map", "next": "walkthrough-hashmap" },
+        { "label": "Approach B: Sort", "next": "walkthrough-sort" },
+        { "label": "Approach C: XOR", "next": "walkthrough-optimal" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-hashmap",
+      "mentorSays": "### Approach A: Hash Map Counting\n\n**Step 1: Count frequencies**\n```\nnums = [4, 1, 2, 1, 2]\nMap: {4:1, 1:2, 2:2}\n```\n\n**Step 2: Find count = 1**\n```\n4 has count 1 → return 4\n```\n\n**Time Complexity:** O(n)\n**Space Complexity:** O(n) - violates the O(1) space requirement!\n\n**Better approach:** Use XOR for O(1) space!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-sort",
+      "mentorSays": "### Approach B: Sort Then Check Adjacent\n\n**Step 1: Sort array**\n```\nOriginal: [4, 1, 2, 1, 2]\nSorted:   [1, 1, 2, 2, 4]\n```\n\n**Step 2: Check adjacent pairs**\n```\nCompare nums[0] and nums[1]: 1 == 1? Yes, skip\nCompare nums[2] and nums[3]: 2 == 2? Yes, skip\nnums[4] = 4 has no pair → return 4\n```\n\n**Time Complexity:** O(n log n) - violates the O(n) time requirement!\n**Space Complexity:** O(1)\n\n**Better approach:** Use XOR for O(n) time!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-optimal",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Optimal Approach (XOR)\n\n**The Key Insight: XOR Properties**\n\n**XOR (Exclusive OR) Properties:**\n1. `a ^ a = 0` (same number cancels out)\n2. `a ^ 0 = a` (XOR with 0 gives the number)\n3. `a ^ b = b ^ a` (commutative)\n4. `(a ^ b) ^ c = a ^ (b ^ c)` (associative)\n\n**Strategy:**\n1. Initialize result = 0\n2. XOR all numbers together\n3. Duplicates cancel out (a ^ a = 0)\n4. Only the single number remains\n\n**Example:** `nums = [4, 1, 2, 1, 2]`\n\n**Initial State:**\n```\nArray: [4, 1, 2, 1, 2]\nResult: 0\n```\n\n**Decision Point 1:** What should we do with the first number 4?\n[A] result = 0 ^ 4\n[B] result = 4\n[C] Skip 4",
+      "choices": [
+        { "label": "[A] result = 0 ^ 4", "next": "correct-xor-4" },
+        { "label": "[B] result = 4", "next": "correct-direct-assign" },
+        { "label": "[C] Skip 4", "next": "wrong-skip" }
+      ]
+    },
+    {
+      "stepId": "wrong-skip",
+      "mentorSays": "We can't skip numbers! We need to XOR all of them together.\n\nLet's XOR 0 with 4.",
+      "action": "next",
+      "next": "correct-xor-4"
+    },
+    {
+      "stepId": "correct-direct-assign",
+      "mentorSays": "For the first number, `result = 4` works, but it's better to use XOR consistently:\n\n`result = 0 ^ 4 = 4` (same result, but consistent pattern)\n\nLet's use XOR: result = 0 ^ 4 = 4",
+      "action": "next",
+      "next": "correct-xor-4"
+    },
+    {
+      "stepId": "correct-xor-4",
+      "mentorSays": "Perfect! result = 0 ^ 4 = 4\n\n**State after first number:**\n```\nResult: 4\n```\n\n**Decision Point 2:** What should we do with the next number 1?\n[A] result = 4 ^ 1\n[B] result = 1\n[C] Check if 1 equals 4",
+      "choices": [
+        { "label": "[A] result = 4 ^ 1", "next": "correct-xor-1" },
+        { "label": "[B] result = 1", "next": "wrong-overwrite" },
+        { "label": "[C] Check if 1 equals 4", "next": "wrong-compare" }
+      ]
+    },
+    {
+      "stepId": "wrong-overwrite",
+      "mentorSays": "If we set result = 1, we'd lose the value 4! We need to XOR with the current result to combine them.\n\nLet's XOR: result = 4 ^ 1",
+      "action": "next",
+      "next": "correct-xor-1"
+    },
+    {
+      "stepId": "wrong-compare",
+      "mentorSays": "We don't need to compare! We just XOR all numbers together. The XOR operation itself will handle the cancellation.\n\nLet's XOR: result = 4 ^ 1",
+      "action": "next",
+      "next": "correct-xor-1"
+    },
+    {
+      "stepId": "correct-xor-1",
+      "mentorSays": "Perfect! result = 4 ^ 1 = 5\n\n**State after second number:**\n```\nResult: 5 (binary: 101)\n```\n\n**Continue:**\n- result = 5 ^ 2 = 7\n- result = 7 ^ 1 = 6 (1 cancels with previous 1!)\n- result = 6 ^ 2 = 4 (2 cancels with previous 2!)\n\n**Final Result: 4**\n\n**Why This Works:**\n```\n0 ^ 4 ^ 1 ^ 2 ^ 1 ^ 2\n= 4 ^ (1 ^ 1) ^ (2 ^ 2)  (rearrange using associativity)\n= 4 ^ 0 ^ 0              (1^1=0, 2^2=0)\n= 4 ^ 0                  (0^0=0)\n= 4                       (a^0=a)\n```\n\n**The Magic:** Duplicates cancel out, leaving only the single number!",
+      "action": "next",
+      "next": "pseudocode-phase"
+    },
+    {
+      "stepId": "pseudocode-phase",
+      "mentorSays": "### PHASE 6: Pseudocode\n\nNow let's write the logic in plain English (pseudocode):\n\n**Step 1:** Initialize result = 0.\n\n**Step 2:** For each number in the array:\n\n**Step 3:** XOR the number with result: result = result XOR number.\n\n**Step 4:** After processing all numbers, result contains the single number.\n\n**Step 5:** Return result.\n\nThis pseudocode matches exactly what we walked through!",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5"],
+      "action": "next",
+      "next": "code-implementation"
+    },
+    {
+      "stepId": "code-implementation",
+      "mentorSays": "### PHASE 7: Code Implementation\n\nNow let's translate the pseudocode into JavaScript code.\n\n**Step 1: Initialize result**\n```javascript\nfunction singleNumber(nums) {\n  let result = 0;\n}\n```\nThis matches pseudocode Step 1\n\n**Step 2: Loop through array**\n```javascript\nfunction singleNumber(nums) {\n  let result = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    \n  }\n}\n```\nThis matches pseudocode Step 2\n\n**Step 3: XOR with result**\n```javascript\nfunction singleNumber(nums) {\n  let result = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    result ^= nums[i];\n  }\n}\n```\nThis matches pseudocode Step 3\n\n**Step 4 & 5: Return result**\n```javascript\nfunction singleNumber(nums) {\n  let result = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    result ^= nums[i];\n  }\n  \n  return result;\n}\n```\nThis matches pseudocode Steps 4 & 5\n\n**Final Code:**\n```javascript\nfunction singleNumber(nums) {\n  let result = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    result ^= nums[i];\n  }\n  \n  return result;\n}\n```\n\n**Alternative using for...of:**\n```javascript\nfunction singleNumber(nums) {\n  let result = 0;\n  \n  for (const num of nums) {\n    result ^= num;\n  }\n  \n  return result;\n}\n```",
+      "example": "function singleNumber(nums) {\n  let result = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    result ^= nums[i];\n  }\n  \n  return result;\n}",
+      "action": "next",
+      "next": "complexity-analysis"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "### PHASE 8: Complexity Analysis\n\n**Time Complexity Analysis:**\n\n**Step-by-step breakdown:**\n1. Initialize result: O(1)\n2. Loop through array: n iterations\n3. Each iteration: XOR operation is O(1)\n4. Return: O(1)\n\n**Total Time: O(n)**\n\n**Space Complexity Analysis:**\n\n**What we store:**\n- `result` variable: O(1)\n- No additional data structures\n- No extra arrays or maps\n\n**Total Space: O(1)**\n\n**Comparison Table:**\n\n| Approach | Time | Space | Notes |\n|----------|------|-------|-------|\n| Hash Map | O(n) | O(n) | Uses extra space |\n| Sort | O(n log n) | O(1) | Slow due to sorting |\n| XOR | O(n) | O(1) | Perfect! |\n\n**Why Optimal is Better:**\n\n- **Time efficiency:** O(n) - linear time\n- **Space efficiency:** O(1) - constant space\n- **Elegant solution:** Simple one-liner in the loop\n- **Meets all requirements:** Linear time AND constant space\n\n**For n = 30,000:**\n- Hash map: 30,000 iterations + 30,000 map entries\n- XOR: 30,000 iterations + 1 variable\n- **Much more space-efficient!**",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "### PHASE 9: Edge Cases\n\n**Edge Case 1: Single element**\n```\nnums = [1]\n```\n**Why it matters:** Tests minimum valid input.\n**How algorithm handles it:**\n- result = 0 ^ 1 = 1\n- Return 1 ✓\n\n**Edge Case 2: Single number at beginning**\n```\nnums = [1, 2, 2]\n```\n**Why it matters:** Tests if single number is preserved.\n**How algorithm handles it:**\n- result = 0 ^ 1 ^ 2 ^ 2 = 1 ^ (2 ^ 2) = 1 ^ 0 = 1\n- Return 1 ✓\n\n**Edge Case 3: Single number at end**\n```\nnums = [2, 2, 1]\n```\n**Why it matters:** Tests if order matters (it doesn't!).\n**How algorithm handles it:**\n- result = 0 ^ 2 ^ 2 ^ 1 = (2 ^ 2) ^ 1 = 0 ^ 1 = 1\n- Return 1 ✓\n\n**Edge Case 4: Single number in middle**\n```\nnums = [2, 1, 2]\n```\n**Why it matters:** Tests if position matters (it doesn't!).\n**How algorithm handles it:**\n- result = 0 ^ 2 ^ 1 ^ 2 = (2 ^ 2) ^ 1 = 0 ^ 1 = 1\n- Return 1 ✓\n\n**Edge Case 5: Negative numbers**\n```\nnums = [-1, -1, -2]\n```\n**Why it matters:** Tests if XOR works with negatives.\n**How algorithm handles it:**\n- XOR works with negative numbers (uses two's complement)\n- result = 0 ^ (-1) ^ (-1) ^ (-2) = -2\n- Return -2 ✓\n\n**Edge Case 6: Large numbers**\n```\nnums = [1000000, 2000000, 1000000]\n```\n**Why it matters:** Tests large integer handling.\n**How algorithm handles it:**\n- XOR works with any integers\n- Return 2000000 ✓\n\n**Edge Case 7: Zero in array**\n```\nnums = [0, 1, 1]\n```\n**Why it matters:** Tests if zero is handled correctly.\n**How algorithm handles it:**\n- result = 0 ^ 0 ^ 1 ^ 1 = (0 ^ 0) ^ (1 ^ 1) = 0 ^ 0 = 0\n- But wait, 0 appears twice, so single number is... actually 0 is the single one here!\n- Correction: nums = [0, 1, 1] means 0 appears once, 1 appears twice\n- result = 0 ^ 1 ^ 1 = 0 ^ (1 ^ 1) = 0 ^ 0 = 0 ✓",
+      "action": "next",
+      "next": "lesson-complete"
+    },
+    {
+      "stepId": "lesson-complete",
+      "mentorSays": "### PHASE 10: Lesson Complete\n\n**Summary:**\n\n**Problem:** Find the single number that appears once in an array where all other numbers appear twice.\n\n**Key Insight:** Use XOR's cancellation property - duplicates cancel out (a ^ a = 0), leaving only the single number.\n\n**Non-optimal vs Optimal:**\n- Hash map: O(n) time, O(n) space - uses extra memory\n- Sort: O(n log n) time, O(1) space - slow due to sorting\n- XOR: O(n) time, O(1) space - perfect solution!\n\n**Techniques Learned:**\n1. Bitwise XOR operation\n2. Cancellation pattern (a ^ a = 0)\n3. Constant space solution\n4. Associative property of XOR\n\n**Edge Cases Covered:**\n- Single element\n- Single number at different positions\n- Negative numbers\n- Large numbers\n- Zero in array\n\n**Related Problems:**\n1. **Single Number II** - Every element appears three times except one\n2. **Single Number III** - Two numbers appear once, rest appear twice\n3. **Missing Number** - Find missing number using XOR\n4. **Find the Duplicate Number** - Similar cancellation patterns\n\n**Congratulations!** You've mastered the XOR cancellation pattern. This technique is powerful for many bitwise problems!\n\n**Next Steps:**\n- Try solving \"Single Number II\" to extend this pattern\n- Review XOR properties and bitwise operations\n- Practice explaining your solution clearly",
+      "action": "complete"
+    }
+  ]
+}
+

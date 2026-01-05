@@ -1,0 +1,296 @@
+{
+  "id": "house-robber",
+  "title": "House robber",
+  "pattern": "dynamic-programming",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the House robber lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the House robber problem\n- Recognize the dynamic-programming pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the House Robber problem asks for\n2. Use dynamic programming to find maximum money\n3. Build the solution by deciding whether to rob each house\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement house robber using dynamic programming in JavaScript.",
+      "example": "function rob(nums) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-base-js"
+    },
+    {
+      "stepId": "coding-base-js",
+      "mentorSays": "First, handle edge cases: if array is empty, return 0. If it has one house, return that house's money. If it has two houses, return the maximum.",
+      "example": "function rob(nums) {\n  if (nums.length === 0) return 0;\n  if (nums.length === 1) return nums[0];\n  if (nums.length === 2) return Math.max(nums[0], nums[1]);",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Now, create a DP array and initialize base cases: dp[0] = nums[0], dp[1] = max(nums[0], nums[1]).",
+      "example": "function rob(nums) {\n  if (nums.length === 0) return 0;\n  if (nums.length === 1) return nums[0];\n  if (nums.length === 2) return Math.max(nums[0], nums[1]);\n  \n  const dp = new Array(nums.length);\n  dp[0] = nums[0];\n  dp[1] = Math.max(nums[0], nums[1]);",
+      "action": "continue",
+      "next": "coding-fill-js"
+    },
+    {
+      "stepId": "coding-fill-js",
+      "mentorSays": "Now, fill the DP array: for each house i >= 2, choose the maximum between robbing house i (nums[i] + dp[i-2]) or skipping it (dp[i-1]).",
+      "example": "function rob(nums) {\n  if (nums.length === 0) return 0;\n  if (nums.length === 1) return nums[0];\n  if (nums.length === 2) return Math.max(nums[0], nums[1]);\n  \n  const dp = new Array(nums.length);\n  dp[0] = nums[0];\n  dp[1] = Math.max(nums[0], nums[1]);\n  \n  for (let i = 2; i < nums.length; i++) {\n    dp[i] = Math.max(nums[i] + dp[i-2], dp[i-1]);\n  }",
+      "action": "continue",
+      "next": "coding-recursive-relation-js"
+    },
+    {
+      "stepId": "coding-recursive-relation-js",
+      "mentorSays": "Let's define the recursive relation.\n\nTo reach house i, we have two choices:\n- Skip house i: rob[i] = rob[i-1]\n- Rob house i: rob[i] = nums[i] + rob[i-2]\n\nSo: rob[i] = max(rob[i-1], nums[i] + rob[i-2])\n\nThis captures the 'take or skip' decision!",
+      "example": "// Recursive relation:\n// rob[i] = max(rob[i-1], nums[i] + rob[i-2])\n\nfor (let i = 2; i < nums.length; i++) {\n  rob[i] = Math.max(rob[i-1], nums[i] + rob[i-2]);\n}",
+      "action": "continue",
+      "next": "coding-space-optimization-js"
+    },
+    {
+      "stepId": "coding-space-optimization-js",
+      "mentorSays": "We can optimize space from O(n) to O(1).\n\nNotice: we only need the previous 2 values!\n\nInstead of:\nlet rob = [2, 7, 11, 11, 12]\n\nWe can use:\nlet prev2 = 0;  // rob[i-2]\nlet prev1 = 0;  // rob[i-1]\n\nfor (let i = 0; i < nums.length; i++) {\n  let current = Math.max(prev1, nums[i] + prev2);\n  prev2 = prev1;\n  prev1 = current;\n}\n\nSpace: O(n) → O(1)\nTime: still O(n)",
+      "example": "// Space optimized version:\nlet prev2 = 0, prev1 = 0;\nfor (let i = 0; i < nums.length; i++) {\n  let current = Math.max(prev1, nums[i] + prev2);\n  prev2 = prev1;\n  prev1 = current;\n}\nreturn prev1;",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return dp[nums.length - 1], which contains the maximum money that can be robbed.",
+      "example": "function rob(nums) {\n  if (nums.length === 0) return 0;\n  if (nums.length === 1) return nums[0];\n  if (nums.length === 2) return Math.max(nums[0], nums[1]);\n  \n  const dp = new Array(nums.length);\n  dp[0] = nums[0];\n  dp[1] = Math.max(nums[0], nums[1]);\n  \n  for (let i = 2; i < nums.length; i++) {\n    dp[i] = Math.max(nums[i] + dp[i-2], dp[i-1]);\n  }\n  \n  return dp[nums.length - 1];\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved House robber!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

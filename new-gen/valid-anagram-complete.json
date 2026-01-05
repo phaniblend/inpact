@@ -1,0 +1,259 @@
+{
+  "id": "valid-anagram-complete",
+  "title": "Valid Anagram",
+  "pattern": "hash map counting",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "COMPLETE",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 4,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-04",
+    "introduces": [
+      "character-frequency-counting",
+      "hash-map-counting",
+      "decrement-pattern",
+      "frequency-comparison"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "loops",
+      "for-loop",
+      "functions",
+      "return-statement",
+      "objects",
+      "hash-maps",
+      "character-manipulation"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["two-sum", "group-anagrams"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If strings have different lengths, return false." },
+    { "id": "ps2", "text": "Create a map to count character frequencies in first string." },
+    { "id": "ps3", "text": "For each character in first string, increment its count in map." },
+    { "id": "ps4", "text": "For each character in second string, decrement its count in map." },
+    { "id": "ps5", "text": "If any count becomes negative or remains positive, return false." },
+    { "id": "ps6", "text": "If all counts are zero, return true (strings are anagrams)." }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Welcome to **Valid Anagram**!\n\nThis lesson teaches you how to compare character frequencies using hash maps - a fundamental pattern for string problems.\n\n**What you'll learn:**\n- How to count character frequencies\n- The increment-decrement pattern for comparison\n- Hash map counting technique\n- O(n) time solution with hash maps\n\n**By the end, you'll be able to:**\n- Check if two strings are anagrams efficiently\n- Use hash maps for frequency counting\n- Explain the increment-decrement pattern\n- Apply this to other frequency-based problems\n\nReady to master anagram checking?",
+      "action": "next",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "First, choose your programming language.\n\nThis lesson is available in:\n- JavaScript\n- Python\n- Java\n- C++\n- TypeScript\n\nWhich language would you like to use?",
+      "choices": [
+        { "label": "JavaScript", "next": "prereq-check-js" },
+        { "label": "Python", "next": "prereq-check-python" },
+        { "label": "Java", "next": "prereq-check-java" },
+        { "label": "C++", "next": "prereq-check-cpp" },
+        { "label": "TypeScript", "next": "prereq-check-ts" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Valid Anagram, let's make sure you're comfortable with the JavaScript constructs we'll use:\n\n**1. Objects (Hash Maps)**\n- Create empty map: `const map = {}`\n- Access/Set: `map[char] = value`\n- Check existence: `char in map` or `map[char] !== undefined`\n- Increment: `map[char] = (map[char] || 0) + 1`\n- Decrement: `map[char] = (map[char] || 0) - 1`\n\n**2. String Methods**\n- Get length: `s.length`\n- Access character: `s[i]`\n- Iterate: `for (let i = 0; i < s.length; i++)`\n\n**3. Variables**\n- We'll use a map to count frequencies\n\n**4. For Loops**\n- Iterate through strings to count characters\n\n**5. Conditional Statements**\n- Check if lengths are equal\n- Check if counts match\n- Return true/false\n\n**6. Functions**\n- Function that takes two strings, returns boolean\n\nDo you feel comfortable with these JavaScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-js" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Valid Anagram, let's make sure you're comfortable with the Python constructs we'll use:\n\n**1. Dictionaries (Hash Maps)**\n- Create empty dict: `count = {}`\n- Access/Set: `count[char] = value`\n- Check existence: `char in count`\n- Increment: `count[char] = count.get(char, 0) + 1`\n- Decrement: `count[char] = count.get(char, 0) - 1`\n\n**2. String Methods**\n- Get length: `len(s)`\n- Access character: `s[i]`\n- Iterate: `for char in s:`\n\n**3. Variables**\n- We'll use a dictionary to count frequencies\n\n**4. For Loops**\n- Iterate through strings to count characters\n\n**5. Conditional Statements**\n- Check if lengths are equal\n- Check if counts match\n- Return True/False\n\n**6. Functions**\n- Function that takes two strings, returns boolean\n\nDo you feel comfortable with these Python constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-python" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Valid Anagram, let's make sure you're comfortable with the Java constructs we'll use:\n\n**1. HashMap**\n- Create: `HashMap<Character, Integer> map = new HashMap<>()`\n- Put: `map.put(char, value)`\n- Get: `map.getOrDefault(char, 0)`\n- Contains: `map.containsKey(char)`\n\n**2. String Methods**\n- Get length: `s.length()`\n- Access character: `s.charAt(i)`\n- Iterate: `for (int i = 0; i < s.length(); i++)`\n\n**3. Variables**\n- We'll use a HashMap to count frequencies\n\n**4. For Loops**\n- Iterate through strings to count characters\n\n**5. Conditional Statements**\n- Check if lengths are equal\n- Check if counts match\n- Return true/false\n\n**6. Methods**\n- Method that takes two strings, returns boolean\n\nDo you feel comfortable with these Java constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-java" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Valid Anagram, let's make sure you're comfortable with the C++ constructs we'll use:\n\n**1. unordered_map**\n- Create: `unordered_map<char, int> map`\n- Access/Set: `map[char] = value`\n- Get: `map[char]` (returns 0 if not found)\n\n**2. String Methods**\n- Get length: `s.length()`\n- Access character: `s[i]`\n- Iterate: `for (int i = 0; i < s.length(); i++)`\n\n**3. Variables**\n- We'll use an unordered_map to count frequencies\n\n**4. For Loops**\n- Iterate through strings to count characters\n\n**5. Conditional Statements**\n- Check if lengths are equal\n- Check if counts match\n- Return true/false\n\n**6. Functions**\n- Function that takes two strings, returns bool\n\nDo you feel comfortable with these C++ constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-cpp" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Valid Anagram, let's make sure you're comfortable with the TypeScript constructs we'll use:\n\n**1. Objects with Types (Hash Maps)**\n- Create: `const map: { [key: string]: number } = {}`\n- Access/Set: `map[char] = value`\n- Check existence: `char in map`\n- Increment: `map[char] = (map[char] || 0) + 1`\n\n**2. String Methods**\n- Get length: `s.length`\n- Access character: `s[i]`\n- Iterate: `for (let i = 0; i < s.length; i++)`\n\n**3. Variables with Types**\n- We'll use a typed map to count frequencies\n\n**4. For Loops**\n- Iterate through strings to count characters\n\n**5. Conditional Statements**\n- Check if lengths are equal\n- Check if counts match\n- Return boolean\n\n**6. Functions with Types**\n- `function isAnagram(s: string, t: string): boolean`\n\nDo you feel comfortable with these TypeScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-ts" }
+      ]
+    },
+    {
+      "stepId": "algorithm-prereq-check",
+      "mentorSays": "### PHASE 2: Algorithm Prerequisites\n\n**Prerequisites for Valid Anagram:**\n\n**Required Concepts:**\n1. **Hash Maps** - You should understand how to use hash maps (from Two Sum)\n2. **Character Frequency** - Understanding that anagrams have the same character counts\n3. **String Iteration** - Looping through strings\n4. **Basic Counting** - Incrementing and decrementing values\n\n**No Advanced Prerequisites:**\n- You don't need to know sorting\n- You don't need to know advanced data structures\n\nThis is a **foundation-level** problem. If you understand hash maps and basic counting, you're ready!\n\nDo you feel ready to proceed?",
+      "choices": [
+        { "label": "Yes, I'm ready!", "next": "problem-statement" },
+        { "label": "I need to review prerequisites", "next": "review-prerequisites" }
+      ]
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### PHASE 3: Problem Statement\n\n**Problem:**\n\nGiven two strings `s` and `t`, return `true` if `t` is an anagram of `s`, and `false` otherwise.\n\nAn **anagram** is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.\n\n**Input:**\n- `s`: First string (e.g., \"anagram\")\n- `t`: Second string (e.g., \"nagaram\")\n\n**Output:**\n- `true` if strings are anagrams, `false` otherwise\n\n**Constraints:**\n- 1 <= s.length, t.length <= 5 * 10^4\n- `s` and `t` consist of lowercase English letters\n\n**Example 1:**\n```\nInput: s = \"anagram\", t = \"nagaram\"\nOutput: true\n\nExplanation: Both strings contain the same characters with the same frequencies.\n```\n\n**Example 2:**\n```\nInput: s = \"rat\", t = \"car\"\nOutput: false\n\nExplanation: 'r' and 't' in s are not in t.\n```\n\n**Understanding the Variables:**\n- `s`: First string to compare\n- `t`: Second string to compare\n- `map`: Hash map storing character → frequency count\n- `char`: Current character being processed\n- `count`: Frequency count for a character\n\n**Comprehension Check:**\n\nFor `s = \"listen\"` and `t = \"silent\"`, are they anagrams?",
+      "choices": [
+        { "label": "Yes, they are anagrams", "next": "correct-anagram" },
+        { "label": "No, they have different letters", "next": "wrong-different-letters" },
+        { "label": "No, they have different lengths", "next": "wrong-different-lengths" }
+      ]
+    },
+    {
+      "stepId": "wrong-different-letters",
+      "mentorSays": "Actually, they DO have the same letters! Let's check:\n\ns = \"listen\" has: l, i, s, t, e, n\nt = \"silent\" has: s, i, l, e, n, t\n\nBoth have: l, i, s, t, e, n (same characters!)\n\nThey're anagrams because you can rearrange \"listen\" to get \"silent\"!",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "wrong-different-lengths",
+      "mentorSays": "Let's check the lengths:\n\ns = \"listen\" has length 6\nt = \"silent\" has length 6\n\nThey have the same length! For two strings to be anagrams, they must have the same length (same number of characters).\n\nSince they have the same length AND the same characters (just rearranged), they ARE anagrams!",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "correct-anagram",
+      "mentorSays": "Perfect! \"listen\" and \"silent\" are anagrams.\n\nBoth contain: l, i, s, t, e, n (same characters, same counts, just rearranged).\n\nYou've got the problem! Now let's think about how to solve it.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "how-would-you-solve",
+      "mentorSays": "### PHASE 4: How Would You Solve It?\n\nBefore I show you the solution, let's think about different approaches.\n\nHere are three ways we could solve this:\n\n**Approach A: Sort Both Strings**\n- Sort string s: \"anagram\" → \"aaagmnr\"\n- Sort string t: \"nagaram\" → \"aaagmnr\"\n- Compare sorted strings\n- If equal, they're anagrams\n- Simple but O(n log n) time due to sorting\n\n**Approach B: Count Frequencies Separately**\n- Count frequencies in s: {a:3, n:1, g:1, r:1, m:1}\n- Count frequencies in t: {a:3, n:1, g:1, r:1, m:1}\n- Compare the two frequency maps\n- If maps are equal, they're anagrams\n- O(n) time but uses two maps\n\n**Approach C: Increment-Decrement Pattern**\n- Count frequencies in s (increment)\n- For each char in t, decrement the count\n- If any count becomes negative, return false\n- If all counts are zero, return true\n- O(n) time, single map, elegant!\n\nWhich approach would you like to explore first?",
+      "choices": [
+        { "label": "Approach A: Sort Both Strings", "next": "walkthrough-sort" },
+        { "label": "Approach B: Count Separately", "next": "walkthrough-separate-count" },
+        { "label": "Approach C: Increment-Decrement", "next": "walkthrough-optimal" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-sort",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Approach A (Sorting)\n\nLet's walk through sorting both strings.\n\n**Example:** `s = \"anagram\"`, `t = \"nagaram\"`\n\n**Step 1: Sort string s**\n```\nOriginal: \"anagram\"\nSorted:   \"aaagmnr\"\n```\n\n**Step 2: Sort string t**\n```\nOriginal: \"nagaram\"\nSorted:   \"aaagmnr\"\n```\n\n**Step 3: Compare sorted strings**\n```\n\"aaagmnr\" == \"aaagmnr\"? Yes! ✓\n```\n\n**Operation Count:**\n- Sorting s: O(n log n)\n- Sorting t: O(n log n)\n- Comparison: O(n)\n- Total: O(n log n)\n\n**Space Complexity:** O(n) - need space for sorted strings\n\nThis works, but sorting is slow. Can we do it faster?\n\n**Want to learn the O(n) approach?**",
+      "choices": [
+        { "label": "Yes, show me the O(n) approach!", "next": "walkthrough-optimal" },
+        { "label": "I want to see the code for sorting first", "next": "sort-code" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-separate-count",
+      "mentorSays": "### Approach B: Count Frequencies Separately\n\n**Step 1: Count frequencies in s**\n```\ns = \"anagram\"\nMap1: {a:3, n:1, g:1, r:1, m:1}\n```\n\n**Step 2: Count frequencies in t**\n```\nt = \"nagaram\"\nMap2: {a:3, n:1, g:1, r:1, m:1}\n```\n\n**Step 3: Compare maps**\n- Check if Map1 and Map2 have same keys\n- Check if values match for each key\n- If all match, return true\n\n**Time Complexity:** O(n) - two passes\n**Space Complexity:** O(n) - two maps\n\n**Better approach:** Use one map with increment-decrement pattern!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-optimal",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Optimal Approach (Increment-Decrement)\n\n**The Key Insight:**\n\nIf two strings are anagrams, they have the same character frequencies.\n\n**Strategy:**\n1. If lengths differ, return false immediately\n2. Count frequencies in s (increment)\n3. For each char in t, decrement the count\n4. If any count becomes negative, return false (t has more of that char)\n5. After processing t, check if all counts are zero\n\n**Example:** `s = \"anagram\"`, `t = \"nagaram\"`\n\n**Step 1: Check lengths**\n```\ns.length = 7\nt.length = 7\n7 == 7? Yes, continue\n```\n\n**Step 2: Initialize map**\n```\nMap: {}\n```\n\n**Step 3: Count frequencies in s (increment)**\n\n**Decision Point 1:** For char 'a' in s, what should we do?\n[A] Set map['a'] = 1\n[B] Increment: map['a'] = (map['a'] || 0) + 1\n[C] Check if 'a' exists first",
+      "choices": [
+        { "label": "[A] Set map['a'] = 1", "next": "wrong-set-directly" },
+        { "label": "[B] Increment: map['a'] = (map['a'] || 0) + 1", "next": "correct-increment" },
+        { "label": "[C] Check if 'a' exists first", "next": "correct-check-then-increment" }
+      ]
+    },
+    {
+      "stepId": "wrong-set-directly",
+      "mentorSays": "If we set map['a'] = 1 directly, what happens when we see 'a' again?\n\nWe'd overwrite the count! We need to **increment** the count each time we see the character.\n\nLet's use the increment pattern.",
+      "action": "next",
+      "next": "correct-increment"
+    },
+    {
+      "stepId": "correct-check-then-increment",
+      "mentorSays": "Good thinking! We can check first, but there's a simpler way:\n\n`map['a'] = (map['a'] || 0) + 1`\n\nThis handles both cases:\n- If 'a' doesn't exist: map['a'] = 0 + 1 = 1\n- If 'a' exists: map['a'] = current_value + 1\n\nLet's use this pattern.",
+      "action": "next",
+      "next": "correct-increment"
+    },
+    {
+      "stepId": "correct-increment",
+      "mentorSays": "Perfect! We increment: map['a'] = (map['a'] || 0) + 1\n\n**After processing s = \"anagram\":**\n```\nMap: {a:3, n:1, g:1, r:1, m:1}\n```\n\n**Step 4: Process t and decrement**\n\nFor each character in t = \"nagaram\", we decrement its count.\n\n**Decision Point 2:** For char 'n' in t, what should we do?\n[A] Decrement: map['n'] = map['n'] - 1\n[B] Check if map['n'] exists first\n[C] Set map['n'] = -1",
+      "choices": [
+        { "label": "[A] Decrement: map['n'] = map['n'] - 1", "next": "correct-decrement" },
+        { "label": "[B] Check if map['n'] exists first", "next": "correct-check-before-decrement" },
+        { "label": "[C] Set map['n'] = -1", "next": "wrong-set-negative" }
+      ]
+    },
+    {
+      "stepId": "wrong-set-negative",
+      "mentorSays": "We shouldn't set it to -1 directly! We need to decrement from the existing count.\n\nIf map['n'] = 1 (from s), then after decrementing: map['n'] = 0\n\nLet's decrement properly.",
+      "action": "next",
+      "next": "correct-decrement"
+    },
+    {
+      "stepId": "correct-check-before-decrement",
+      "mentorSays": "Good! We should check, but we can also use:\n\n`map['n'] = (map['n'] || 0) - 1`\n\nHowever, if a character in t doesn't exist in s, the count becomes negative, which tells us it's NOT an anagram!\n\nLet's decrement and check for negative values.",
+      "action": "next",
+      "next": "correct-decrement"
+    },
+    {
+      "stepId": "correct-decrement",
+      "mentorSays": "Perfect! We decrement: map['n'] = map['n'] - 1\n\n**After processing 'n' from t:**\n```\nMap: {a:3, n:0, g:1, r:1, m:1}\n```\n\n**Continue processing t:**\n- 'a': map['a'] = 3 - 1 = 2\n- 'g': map['g'] = 1 - 1 = 0\n- 'a': map['a'] = 2 - 1 = 1\n- 'r': map['r'] = 1 - 1 = 0\n- 'a': map['a'] = 1 - 1 = 0\n- 'm': map['m'] = 1 - 1 = 0\n\n**Final Map:**\n```\nMap: {a:0, n:0, g:0, r:0, m:0}\n```\n\n**Decision Point 3:** What does this tell us?\n[A] All counts are zero, so they're anagrams!\n[B] Some counts are zero, need to check more\n[C] Return false",
+      "choices": [
+        { "label": "[A] All counts are zero, so they're anagrams!", "next": "correct-all-zero" },
+        { "label": "[B] Some counts are zero, need to check more", "next": "wrong-check-more" },
+        { "label": "[C] Return false", "next": "wrong-return-false" }
+      ]
+    },
+    {
+      "stepId": "wrong-check-more",
+      "mentorSays": "If all counts are zero, that means:\n- Every character in s was matched by a character in t\n- No character in t was extra\n- The strings have the same character frequencies\n\nThis means they ARE anagrams! We don't need to check more.",
+      "action": "next",
+      "next": "correct-all-zero"
+    },
+    {
+      "stepId": "wrong-return-false",
+      "mentorSays": "All counts being zero is actually GOOD! It means:\n- s had 3 'a's, t had 3 'a's → balanced (0)\n- s had 1 'n', t had 1 'n' → balanced (0)\n- etc.\n\nIf counts are zero, the frequencies match perfectly - they're anagrams!",
+      "action": "next",
+      "next": "correct-all-zero"
+    },
+    {
+      "stepId": "correct-all-zero",
+      "mentorSays": "Exactly! All counts being zero means:\n- Every character in s was \"used up\" by characters in t\n- No extra characters in either string\n- Perfect match → they're anagrams!\n\n**Return true!**\n\n**What if a count becomes negative?**\n\nExample: s = \"rat\", t = \"car\"\n\nAfter counting s: {r:1, a:1, t:1}\nAfter processing 'c' from t: map['c'] = (map['c'] || 0) - 1 = -1\n\n**Negative count means:** t has a character that s doesn't have (or t has more of it).\n\n**Return false immediately!**",
+      "action": "next",
+      "next": "pseudocode-phase"
+    },
+    {
+      "stepId": "pseudocode-phase",
+      "mentorSays": "### PHASE 6: Pseudocode\n\nNow let's write the logic in plain English (pseudocode):\n\n**Step 1:** If strings have different lengths, return false.\n\n**Step 2:** Create a map to count character frequencies in first string.\n\n**Step 3:** For each character in first string, increment its count in map.\n\n**Step 4:** For each character in second string, decrement its count in map.\n\n**Step 5:** If any count becomes negative or remains positive, return false.\n\n**Step 6:** If all counts are zero, return true (strings are anagrams).\n\nThis pseudocode matches exactly what we walked through!",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "code-implementation"
+    },
+    {
+      "stepId": "code-implementation",
+      "mentorSays": "### PHASE 7: Code Implementation\n\nNow let's translate the pseudocode into JavaScript code.\n\n**Step 1: Check lengths**\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n}\n```\nThis matches pseudocode Step 1\n\n**Step 2: Create map**\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n  \n  const map = {};\n}\n```\nThis matches pseudocode Step 2\n\n**Step 3: Count frequencies in s (increment)**\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n  \n  const map = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    map[s[i]] = (map[s[i]] || 0) + 1;\n  }\n}\n```\nThis matches pseudocode Step 3\n\n**Step 4: Decrement for characters in t**\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n  \n  const map = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    map[s[i]] = (map[s[i]] || 0) + 1;\n  }\n  \n  for (let i = 0; i < t.length; i++) {\n    map[t[i]] = (map[t[i]] || 0) - 1;\n  }\n}\n```\nThis matches pseudocode Step 4\n\n**Step 5 & 6: Check if all counts are zero**\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n  \n  const map = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    map[s[i]] = (map[s[i]] || 0) + 1;\n  }\n  \n  for (let i = 0; i < t.length; i++) {\n    map[t[i]] = (map[t[i]] || 0) - 1;\n    \n    if (map[t[i]] < 0) {\n      return false;\n    }\n  }\n  \n  return true;\n}\n```\nThis matches pseudocode Steps 5 & 6\n\n**Final Code:**\n```javascript\nfunction isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n  \n  const map = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    map[s[i]] = (map[s[i]] || 0) + 1;\n  }\n  \n  for (let i = 0; i < t.length; i++) {\n    map[t[i]] = (map[t[i]] || 0) - 1;\n    \n    if (map[t[i]] < 0) {\n      return false;\n    }\n  }\n  \n  return true;\n}\n```",
+      "example": "function isAnagram(s, t) {\n  if (s.length !== t.length) {\n    return false;\n  }\n  \n  const map = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    map[s[i]] = (map[s[i]] || 0) + 1;\n  }\n  \n  for (let i = 0; i < t.length; i++) {\n    map[t[i]] = (map[t[i]] || 0) - 1;\n    \n    if (map[t[i]] < 0) {\n      return false;\n    }\n  }\n  \n  return true;\n}",
+      "action": "next",
+      "next": "complexity-analysis"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "### PHASE 8: Complexity Analysis\n\n**Time Complexity Analysis:**\n\n**Step-by-step breakdown:**\n1. Length check: O(1)\n2. First loop (count s): n iterations, each O(1) → O(n)\n3. Second loop (decrement t): n iterations, each O(1) → O(n)\n4. Early termination check: O(1) per iteration\n\n**Total Time: O(n)**\n\n**Space Complexity Analysis:**\n\n**What we store:**\n- The map: In worst case, all characters are unique\n- Maximum 26 characters (lowercase English letters)\n- So map has at most 26 entries\n- In big-O: O(1) - constant space!\n\n**Total Space: O(1)** - bounded by alphabet size\n\n**Comparison Table:**\n\n| Approach | Time | Space | Notes |\n|----------|------|-------|-------|\n| Sort | O(n log n) | O(n) | Slow due to sorting |\n| Separate Count | O(n) | O(1) | Two passes, two maps |\n| Increment-Decrement | O(n) | O(1) | Single map, elegant |\n\n**Why Optimal is Better:**\n\n- **Time efficiency:** O(n) vs O(n log n) - no sorting needed\n- **Space efficiency:** O(1) - bounded by alphabet size\n- **Early termination:** Can return false immediately on negative count\n- **Single pass after counting:** More efficient than separate counting\n\n**For large strings (n = 50,000):**\n- Sorting: ~800,000 operations (n log n)\n- Hash map: 50,000 operations (n)\n- **16x faster!**",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "### PHASE 9: Edge Cases\n\n**Edge Case 1: Different lengths**\n```\ns = \"abc\", t = \"ab\"\n```\n**Why it matters:** Tests early termination optimization.\n**How algorithm handles it:**\n- Length check: 3 !== 2 → return false immediately ✓\n\n**Edge Case 2: Same string**\n```\ns = \"abc\", t = \"abc\"\n```\n**Why it matters:** Tests identity case.\n**How algorithm handles it:**\n- Count s: {a:1, b:1, c:1}\n- Decrement t: all become 0\n- Return true ✓\n\n**Edge Case 3: Completely different characters**\n```\ns = \"abc\", t = \"def\"\n```\n**Why it matters:** Tests negative count detection.\n**How algorithm handles it:**\n- Count s: {a:1, b:1, c:1}\n- Process 'd' from t: map['d'] = -1\n- Negative detected → return false ✓\n\n**Edge Case 4: Same characters, different frequencies**\n```\ns = \"aabb\", t = \"abbb\"\n```\n**Why it matters:** Tests frequency mismatch.\n**How algorithm handles it:**\n- Count s: {a:2, b:2}\n- Process t: after 'b', 'b', 'b', map['b'] = -1\n- Negative detected → return false ✓\n\n**Edge Case 5: Single character**\n```\ns = \"a\", t = \"a\"\n```\n**Why it matters:** Tests minimum valid case.\n**How algorithm handles it:**\n- Count s: {a:1}\n- Decrement t: map['a'] = 0\n- Return true ✓\n\n**Edge Case 6: All same character**\n```\ns = \"aaaa\", t = \"aaaa\"\n```\n**Why it matters:** Tests repeated characters.\n**How algorithm handles it:**\n- Count s: {a:4}\n- Decrement t: map['a'] = 0\n- Return true ✓\n\n**Edge Case 7: Empty strings (if allowed)**\n```\ns = \"\", t = \"\"\n```\n**Why it matters:** Tests edge case handling.\n**How algorithm handles it:**\n- Length check: 0 === 0 → continue\n- No characters to process\n- Return true (empty strings are anagrams) ✓",
+      "action": "next",
+      "next": "lesson-complete"
+    },
+    {
+      "stepId": "lesson-complete",
+      "mentorSays": "### PHASE 10: Lesson Complete\n\n**Summary:**\n\n**Problem:** Check if two strings are anagrams (same characters, same frequencies).\n\n**Key Insight:** Use increment-decrement pattern - count frequencies in first string, then decrement for second string. If all counts are zero, they're anagrams.\n\n**Non-optimal vs Optimal:**\n- Sort: O(n log n) time, O(n) space - slow due to sorting\n- Increment-Decrement: O(n) time, O(1) space - fast and elegant\n\n**Techniques Learned:**\n1. Character frequency counting with hash maps\n2. Increment-decrement pattern for comparison\n3. Early termination on negative counts\n4. Constant space solution (bounded by alphabet)\n\n**Edge Cases Covered:**\n- Different lengths\n- Same string\n- Completely different characters\n- Same characters, different frequencies\n- Single character\n- All same character\n- Empty strings\n\n**Related Problems:**\n1. **Group Anagrams** - Group strings that are anagrams of each other\n2. **Find All Anagrams in a String** - Find anagram substrings\n3. **Valid Anagram II** - Can delete at most one character\n4. **Ransom Note** - Similar frequency counting pattern\n\n**Congratulations!** You've mastered the increment-decrement pattern for frequency comparison. This technique appears in many string problems!\n\n**Next Steps:**\n- Try solving \"Group Anagrams\" to extend this pattern\n- Review the frequency counting technique\n- Practice explaining your solution clearly",
+      "action": "complete"
+    }
+  ]
+}
+

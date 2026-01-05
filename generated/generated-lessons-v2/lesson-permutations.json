@@ -1,0 +1,97 @@
+{
+  "id": "permutations",
+  "title": "Permutations",
+  "difficulty": "medium",
+  "pattern": "backtracking (choose → explore → undo)",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of **distinct numbers**.\n\nYour task is to return **all possible orderings** of these numbers.\n\nEach ordering is called a **permutation**.",
+      "example": "nums = [1,2,3]",
+      "action": "next"
+    },
+    {
+      "stepId": "what-permutation-means",
+      "mentorSays": "A permutation means:\n\n• using all elements\n• exactly once\n• but in different orders",
+      "example": "[1,2] → [1,2], [2,1]",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Example:\n\nnums = [1,2,3]\n\nSome permutations are:\n[1,2,3]\n[1,3,2]\n[2,1,3]\n[2,3,1]\n[3,1,2]\n[3,2,1]",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nHow could we systematically generate all orders without missing or repeating any?",
+      "choices": [
+        {
+          "label": "Fix one position and try all choices",
+          "next": "core-idea"
+        },
+        {
+          "label": "Shuffle randomly many times",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe will:\n\n• build permutations step by step\n• at each step, choose one unused number\n• move forward\n• then undo the choice and try another",
+      "action": "next"
+    },
+    {
+      "stepId": "build-step-by-step",
+      "mentorSays": "Think of building a permutation like filling slots:\n\nSlot 1 → choose a number\nSlot 2 → choose from remaining numbers\nSlot 3 → choose from remaining numbers",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example: nums = [1,2,3]\n\nStart with empty list []\n\nChoose 1 → [1]\nChoose 2 → [1,2]\nChoose 3 → [1,2,3] ✔\n\nNow undo last choice and try a different one.",
+      "action": "next"
+    },
+    {
+      "stepId": "undo-explained",
+      "mentorSays": "Undoing means:\n\n• remove the last added number\n• mark it as available again\n\nThis allows us to explore all possibilities cleanly.",
+      "action": "next"
+    },
+    {
+      "stepId": "when-to-stop",
+      "mentorSays": "When the current list length equals the original list length:\n\n• we have one complete permutation\n• we save it",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "create result list",
+        "create used array to track chosen numbers",
+        "define helper function:",
+        "  if current list length equals nums length:",
+        "    add a copy to result",
+        "    return",
+        "  for each index in nums:",
+        "    if not used:",
+        "      choose number",
+        "      mark used",
+        "      recurse",
+        "      undo choice"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Now translate the logic into JavaScript.",
+      "code": "function permute(nums) {\n  const result = [];\n  const used = Array(nums.length).fill(false);\n\n  function backtrack(path) {\n    if (path.length === nums.length) {\n      result.push([...path]);\n      return;\n    }\n\n    for (let i = 0; i < nums.length; i++) {\n      if (used[i]) continue;\n\n      used[i] = true;\n      path.push(nums[i]);\n\n      backtrack(path);\n\n      path.pop();\n      used[i] = false;\n    }\n  }\n\n  backtrack([]);\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final check:\n\n[1,2] → [[1,2],[2,1]]\n[1,2,3] → 6 permutations\n\nAll possible orderings are generated without duplicates.",
+      "action": "complete"
+    }
+  ]
+}

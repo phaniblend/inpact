@@ -1,0 +1,255 @@
+{
+  "id": "remove-element-complete",
+  "title": "Remove Element",
+  "pattern": "two-pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "COMPLETE",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 9,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-09",
+    "introduces": [
+      "write-pointer-filtering",
+      "conditional-writing",
+      "in-place-removal"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "array-indexing",
+      "loops",
+      "for-loop",
+      "functions",
+      "return-statement",
+      "comparison-operators"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["move-zeroes", "remove-duplicates-sorted"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Initialize write pointer = 0." },
+    { "id": "ps2", "text": "For each element in the array:" },
+    { "id": "ps3", "text": "  If element is not equal to val:" },
+    { "id": "ps4", "text": "    Write element at write pointer position." },
+    { "id": "ps5", "text": "    Move write pointer forward." },
+    { "id": "ps6", "text": "Return write pointer (number of elements not equal to val)." }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Welcome to **Remove Element**!\n\nThis lesson applies the write pointer pattern to filter out specific values - a fundamental technique for array manipulation.\n\n**What you'll learn:**\n- How to filter elements in place\n- Write pointer for conditional writing\n- Removing specific values efficiently\n- O(n) time, O(1) space solution\n\n**By the end, you'll be able to:**\n- Remove specific values from arrays in place\n- Use write pointer for filtering\n- Return count of remaining elements\n- Apply this pattern to other filtering problems\n\nReady to master element removal?",
+      "action": "next",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "First, choose your programming language.\n\nThis lesson is available in:\n- JavaScript\n- Python\n- Java\n- C++\n- TypeScript\n\nWhich language would you like to use?",
+      "choices": [
+        { "label": "JavaScript", "next": "prereq-check-js" },
+        { "label": "Python", "next": "prereq-check-python" },
+        { "label": "Java", "next": "prereq-check-java" },
+        { "label": "C++", "next": "prereq-check-cpp" },
+        { "label": "TypeScript", "next": "prereq-check-ts" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Remove Element, let's make sure you're comfortable with the JavaScript constructs we'll use:\n\n**1. Arrays and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `nums.length`\n\n**2. Variables**\n- We'll use `write` pointer to track where to write next valid element\n- We'll use loop index `i` as read pointer\n- We'll use `val` to store the value to remove\n\n**3. For Loops**\n- Iterate: `for (let i = 0; i < nums.length; i++)`\n\n**4. Conditional Statements**\n- Check if not equal: `if (nums[i] !== val)`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write++`\n\n**6. Functions**\n- Function that takes array and value, returns count\n\nDo you feel comfortable with these JavaScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-js" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Remove Element, let's make sure you're comfortable with the Python constructs we'll use:\n\n**1. Lists and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `len(nums)`\n\n**2. Variables**\n- We'll use `write` pointer to track where to write next valid element\n- We'll use loop index `i` as read pointer\n- We'll use `val` to store the value to remove\n\n**3. For Loops**\n- Iterate: `for i in range(len(nums)):`\n\n**4. Conditional Statements**\n- Check if not equal: `if nums[i] != val:`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write += 1`\n\n**6. Functions**\n- Function that takes list and value, returns count\n\nDo you feel comfortable with these Python constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-python" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Remove Element, let's make sure you're comfortable with the Java constructs we'll use:\n\n**1. Arrays and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `nums.length`\n\n**2. Variables**\n- We'll use `int write` pointer to track where to write next valid element\n- We'll use loop index `i` as read pointer\n- We'll use `int val` to store the value to remove\n\n**3. For Loops**\n- Iterate: `for (int i = 0; i < nums.length; i++)`\n\n**4. Conditional Statements**\n- Check if not equal: `if (nums[i] != val)`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write++`\n\n**6. Methods**\n- Method that takes array and value, returns int count\n\nDo you feel comfortable with these Java constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-java" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Remove Element, let's make sure you're comfortable with the C++ constructs we'll use:\n\n**1. Vectors/Arrays and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `nums.size()`\n\n**2. Variables**\n- We'll use `int write` pointer to track where to write next valid element\n- We'll use loop index `i` as read pointer\n- We'll use `int val` to store the value to remove\n\n**3. For Loops**\n- Iterate: `for (int i = 0; i < nums.size(); i++)`\n\n**4. Conditional Statements**\n- Check if not equal: `if (nums[i] != val)`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write++`\n\n**6. Functions**\n- Function that takes vector and value, returns int count\n\nDo you feel comfortable with these C++ constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-cpp" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Remove Element, let's make sure you're comfortable with the TypeScript constructs we'll use:\n\n**1. Arrays with Types and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `nums.length`\n\n**2. Variables with Types**\n- We'll use `let write: number` pointer to track where to write next valid element\n- We'll use loop index `i` as read pointer\n- We'll use `val: number` to store the value to remove\n\n**3. For Loops**\n- Iterate: `for (let i = 0; i < nums.length; i++)`\n\n**4. Conditional Statements**\n- Check if not equal: `if (nums[i] !== val)`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write++`\n\n**6. Functions with Types**\n- `function removeElement(nums: number[], val: number): number`\n\nDo you feel comfortable with these TypeScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-ts" }
+      ]
+    },
+    {
+      "stepId": "algorithm-prereq-check",
+      "mentorSays": "### PHASE 2: Algorithm Prerequisites\n\n**Prerequisites for Remove Element:**\n\n**Required Concepts:**\n1. **Write Pointer Pattern** - Understanding from Move Zeroes and Remove Duplicates\n2. **Conditional Filtering** - Writing elements only if they meet a condition\n3. **Array Modification** - In-place array updates\n\n**No Advanced Prerequisites:**\n- You don't need to know hash maps\n- You don't need to know sorting\n\nThis is a **foundation-level** problem. If you understand write pointers and conditionals, you're ready!\n\nDo you feel ready to proceed?",
+      "choices": [
+        { "label": "Yes, I'm ready!", "next": "problem-statement" },
+        { "label": "I need to review prerequisites", "next": "review-prerequisites" }
+      ]
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### PHASE 3: Problem Statement\n\n**Problem:**\n\nGiven an integer array `nums` and an integer `val`, remove all occurrences of `val` in `nums` **in-place**. The order of the elements may be changed. Then return the number of elements in `nums` which are not equal to `val`.\n\n**Input:**\n- `nums`: An array of integers (e.g., `[3, 2, 2, 3]`)\n- `val`: The value to remove (e.g., `3`)\n\n**Output:**\n- Return `k`, the number of elements not equal to `val`\n- The first `k` elements of `nums` should contain elements not equal to `val`\n- Elements beyond `k` don't matter\n\n**Constraints:**\n- 0 <= nums.length <= 100\n- 0 <= nums[i] <= 50\n- 0 <= val <= 100\n\n**Example 1:**\n```\nInput: nums = [3, 2, 2, 3], val = 3\nOutput: 2, nums = [2, 2, _, _]\n\nExplanation: Function should return k = 2, with first two elements being 2.\n```\n\n**Example 2:**\n```\nInput: nums = [0, 1, 2, 2, 3, 0, 4, 2], val = 2\nOutput: 5, nums = [0, 1, 3, 0, 4, _, _, _]\n\nExplanation: Function should return k = 5, with first five elements being 0, 1, 3, 0, and 4.\n```\n\n**Understanding the Variables:**\n- `nums`: The input array (modified in place)\n- `val`: The value to remove\n- `write`: Pointer tracking where to write next valid (non-val) element\n- `i`: Read pointer iterating through the array\n- `nums[i]`: Current element being examined\n- `k`: Number of elements not equal to val (return value)\n\n**Comprehension Check:**\n\nFor `nums = [3, 2, 2, 3]` and `val = 3`, what should k be?",
+      "choices": [
+        { "label": "k = 2 (elements not equal to 3: 2, 2)", "next": "correct-k-2" },
+        { "label": "k = 4 (all elements)", "next": "wrong-k-4" },
+        { "label": "k = 0 (no elements)", "next": "wrong-k-0" }
+      ]
+    },
+    {
+      "stepId": "wrong-k-4",
+      "mentorSays": "Not quite! We need to remove all occurrences of val = 3.\n\n[3, 2, 2, 3] has:\n- 3 appears twice (remove both)\n- 2 appears twice (keep both)\n\nSo elements not equal to 3: 2, 2\nk = 2",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "wrong-k-0",
+      "mentorSays": "Not quite! We have two elements (2, 2) that are not equal to 3.\n\n[3, 2, 2, 3] after removing 3: [2, 2]\n\nSo k = 2",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "correct-k-2",
+      "mentorSays": "Perfect! k = 2 because we have two elements (2, 2) that are not equal to 3.\n\nThe result should be: [2, 2, _, _] (first 2 positions contain elements not equal to 3).\n\nYou've got the problem! Now let's think about how to solve it.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "how-would-you-solve",
+      "mentorSays": "### PHASE 4: How Would You Solve It?\n\nBefore I show you the solution, let's think about different approaches.\n\nHere are three ways we could solve this:\n\n**Approach A: Create New Array**\n- Create a new array\n- Copy only elements not equal to val\n- Return length of new array\n- Simple but uses O(n) extra space\n- Problem asks for in-place!\n\n**Approach B: Swap to End**\n- For each occurrence of val, swap it with last element\n- Decrease array length\n- Works but changes order and is complex\n\n**Approach C: Write Pointer (Optimal)**\n- Use write pointer to track where to place next valid element\n- Iterate through array\n- If element != val, write it at write position\n- Skip elements equal to val\n- O(n) time, O(1) space - optimal!\n\nWhich approach would you like to explore first?",
+      "choices": [
+        { "label": "Approach A: Create New Array", "next": "walkthrough-new-array" },
+        { "label": "Approach B: Swap to End", "next": "walkthrough-swap" },
+        { "label": "Approach C: Write Pointer", "next": "walkthrough-optimal" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-new-array",
+      "mentorSays": "### Approach A: Create New Array\n\n**Step 1: Create new array**\n```\nOriginal: [3, 2, 2, 3], val = 3\nNew:      []\n```\n\n**Step 2: Copy elements not equal to val**\n```\nCheck 3: Equal to val, skip\nCheck 2: Not equal, add → [2]\nCheck 2: Not equal, add → [2, 2]\nCheck 3: Equal to val, skip\n\nResult: [2, 2]\n```\n\n**Time Complexity:** O(n)\n**Space Complexity:** O(n) - violates in-place requirement!\n\n**Better approach:** Use write pointer for in-place modification!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-swap",
+      "mentorSays": "### Approach B: Swap to End\n\n**Algorithm:**\nFor each val found, swap with last element and decrease length.\n\n**Example:** `nums = [3, 2, 2, 3]`, `val = 3`\n\n**Iteration 1:** Find 3 at index 0\n- Swap with last: [3, 2, 2, 3] → [3, 2, 2, 3] (same)\n- Decrease length\n\n**Complexity:** O(n²) worst case if many vals\n**Order:** Changes order of elements\n\n**Better approach:** Write pointer maintains order and is simpler!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-optimal",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Optimal Approach (Write Pointer)\n\n**The Key Insight:**\n\nWe don't need to remove elements - we just need to collect all elements not equal to val!\n\n**Strategy:**\n1. Initialize write pointer = 0\n2. Iterate through array\n3. If element != val, write it at write position, then move write forward\n4. If element == val, skip it (don't write)\n5. Return write (number of valid elements)\n\n**Example:** `nums = [3, 2, 2, 3]`, `val = 3`\n\n**Initial State:**\n```\nArray: [3, 2, 2, 3]\n       ↑\n    write=0, i=0\n```\n\n**Decision Point 1:** At i=0, nums[0] = 3\nWhat should we check?\n[A] Check if 3 == val\n[B] Write 3 directly\n[C] Skip 3",
+      "choices": [
+        { "label": "[A] Check if 3 == val", "next": "correct-check-val" },
+        { "label": "[B] Write 3 directly", "next": "wrong-write-without-check" },
+        { "label": "[C] Skip 3", "next": "wrong-skip-without-check" }
+      ]
+    },
+    {
+      "stepId": "wrong-write-without-check",
+      "mentorSays": "We can't write without checking! If we write 3, we'd be keeping the value we want to remove.\n\nWe need to check: Is nums[i] == val?\n\nLet's check first.",
+      "action": "next",
+      "next": "correct-check-val"
+    },
+    {
+      "stepId": "wrong-skip-without-check",
+      "mentorSays": "We should check first! We need to know if the element equals val before deciding what to do.\n\nLet's check: Is nums[i] == val?",
+      "action": "next",
+      "next": "correct-check-val"
+    },
+    {
+      "stepId": "correct-check-val",
+      "mentorSays": "Perfect! We check: nums[0] == val?\n\n3 == 3? **Yes!**\n\n**Decision Point 2:** Since 3 == val, what should we do?\n[A] Write 3 at write position\n[B] Skip 3 (don't write it)\n[C] Return 0",
+      "choices": [
+        { "label": "[A] Write 3 at write position", "next": "wrong-write-val" },
+        { "label": "[B] Skip 3 (don't write it)", "next": "correct-skip-val" },
+        { "label": "[C] Return 0", "next": "wrong-return-early" }
+      ]
+    },
+    {
+      "stepId": "wrong-write-val",
+      "mentorSays": "If we write 3, we'd be keeping the value we want to remove! That's the opposite of what we want.\n\nSince 3 == val, we should **skip** it (don't write it).\n\nLet's skip.",
+      "action": "next",
+      "next": "correct-skip-val"
+    },
+    {
+      "stepId": "wrong-return-early",
+      "mentorSays": "We can't return 0 yet! We've only checked the first element. We need to process all elements first.\n\nSince 3 == val, we skip it and continue.",
+      "action": "next",
+      "next": "correct-skip-val"
+    },
+    {
+      "stepId": "correct-skip-val",
+      "mentorSays": "Correct! We skip 3 (don't write it).\n\n**State after i=0:**\n```\nArray: [3, 2, 2, 3]\n          ↑\n       write=0, i=1\n```\n\nwrite stays at 0 because we didn't write anything.\n\n**Decision Point 3:** At i=1, nums[1] = 2\nCheck: nums[1] == val?\n\n2 == 3? **No!**\n\n**Decision Point 4:** Since 2 != val, what should we do?\n[A] Write 2 at write position (0)\n[B] Skip 2\n[C] Check something else",
+      "choices": [
+        { "label": "[A] Write 2 at write position (0)", "next": "correct-write-2" },
+        { "label": "[B] Skip 2", "next": "wrong-skip-valid" },
+        { "label": "[C] Check something else", "next": "wrong-check-else" }
+      ]
+    },
+    {
+      "stepId": "wrong-skip-valid",
+      "mentorSays": "2 is not equal to val, so it's a valid element we want to keep! We should write it.\n\nLet's write 2 at the write position.",
+      "action": "next",
+      "next": "correct-write-2"
+    },
+    {
+      "stepId": "wrong-check-else",
+      "mentorSays": "We've already checked if it equals val. That's all we need!\n\nSince 2 != val, it's valid. Let's write it.",
+      "action": "next",
+      "next": "correct-write-2"
+    },
+    {
+      "stepId": "correct-write-2",
+      "mentorSays": "Perfect! We write nums[1] = 2 at nums[write] = nums[0]\n\n**After writing:**\n```\nArray: [2, 2, 2, 3]\n          ↑\n       write=0 (just wrote), now write=1\n```\n\nWe overwrote the 3 at position 0 with 2. Then increment write.\n\n**State after incrementing write:**\n```\nArray: [2, 2, 2, 3]\n           ↑\n        write=1, i=2\n```\n\n**Continue:**\n- i=2, nums[2]=2: 2 != 3, write at write=1, then write=2\n- i=3, nums[3]=3: 3 == 3, skip\n\n**Final State:**\n```\nArray: [2, 2, 2, 3]\n              ↑\n           write=2\n```\n\n**Return write = 2** (2 elements not equal to 3: both are 2)\n\n**Why This Works:**\n- Write pointer tracks where to place next valid element\n- We only write elements that are not equal to val\n- Elements equal to val are skipped\n- O(n) time, O(1) space!",
+      "action": "next",
+      "next": "pseudocode-phase"
+    },
+    {
+      "stepId": "pseudocode-phase",
+      "mentorSays": "### PHASE 6: Pseudocode\n\nNow let's write the logic in plain English (pseudocode):\n\n**Step 1:** Initialize write pointer = 0.\n\n**Step 2:** For each element in the array:\n\n**Step 3:** If element is not equal to val:\n\n**Step 4:** Write element at write pointer position.\n\n**Step 5:** Move write pointer forward.\n\n**Step 6:** Return write pointer (number of elements not equal to val).\n\nThis pseudocode matches exactly what we walked through!",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "code-implementation"
+    },
+    {
+      "stepId": "code-implementation",
+      "mentorSays": "### PHASE 7: Code Implementation\n\nNow let's translate the pseudocode into JavaScript code.\n\n**Step 1: Initialize write pointer**\n```javascript\nfunction removeElement(nums, val) {\n  let write = 0;\n}\n```\nThis matches pseudocode Step 1\n\n**Step 2: Loop through array**\n```javascript\nfunction removeElement(nums, val) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    \n  }\n}\n```\nThis matches pseudocode Step 2\n\n**Step 3, 4, 5: Write valid elements**\n```javascript\nfunction removeElement(nums, val) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== val) {\n      nums[write] = nums[i];\n      write++;\n    }\n  }\n}\n```\nThis matches pseudocode Steps 3, 4, 5\n\n**Step 6: Return write**\n```javascript\nfunction removeElement(nums, val) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== val) {\n      nums[write] = nums[i];\n      write++;\n    }\n  }\n  \n  return write;\n}\n```\nThis matches pseudocode Step 6\n\n**Final Code:**\n```javascript\nfunction removeElement(nums, val) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== val) {\n      nums[write] = nums[i];\n      write++;\n    }\n  }\n  \n  return write;\n}\n```",
+      "example": "function removeElement(nums, val) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== val) {\n      nums[write] = nums[i];\n      write++;\n    }\n  }\n  \n  return write;\n}",
+      "action": "next",
+      "next": "complexity-analysis"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "### PHASE 8: Complexity Analysis\n\n**Time Complexity Analysis:**\n\n**Step-by-step breakdown:**\n1. Initialize write: O(1)\n2. Loop through array: n iterations\n   - Each iteration: O(1) comparison and conditional write\n3. Return: O(1)\n\n**Total Time: O(n)**\n\n**Space Complexity Analysis:**\n\n**What we store:**\n- `write` variable: O(1)\n- `i` variable: O(1)\n- No additional arrays or data structures\n\n**Total Space: O(1)**\n\n**Comparison Table:**\n\n| Approach | Time | Space | Notes |\n|----------|------|-------|-------|\n| New Array | O(n) | O(n) | Uses extra space |\n| Swap to End | O(n²) | O(1) | Slow, changes order |\n| Write Pointer | O(n) | O(1) | Optimal! |\n\n**Why Optimal is Better:**\n\n- **Time efficiency:** O(n) - single pass through array\n- **Space efficiency:** O(1) - only a few variables\n- **Maintains order:** Elements keep their relative order (except removed ones)\n- **In-place:** Modifies original array without extra space\n- **Simple logic:** Easy to understand and implement\n\n**For n = 100:**\n- New array: 100 iterations + 100 extra space\n- Write pointer: 100 iterations + 1 variable\n- **Much more space-efficient!**",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "### PHASE 9: Edge Cases\n\n**Edge Case 1: Empty array**\n```\nnums = [], val = 1\n```\n**Why it matters:** Tests if algorithm handles empty input.\n**How algorithm handles it:**\n- Loop doesn't execute\n- Return 0 ✓\n\n**Edge Case 2: All elements equal to val**\n```\nnums = [3, 3, 3], val = 3\n```\n**Why it matters:** Tests if algorithm handles all removals.\n**How algorithm handles it:**\n- All elements skipped (all equal to val)\n- write stays at 0\n- Return 0 ✓\n\n**Edge Case 3: No elements equal to val**\n```\nnums = [1, 2, 3], val = 4\n```\n**Why it matters:** Tests if algorithm handles no removals.\n**How algorithm handles it:**\n- All elements written at their positions\n- write = 3\n- Return 3 ✓\n\n**Edge Case 4: Single element (equal to val)**\n```\nnums = [3], val = 3\n```\n**Why it matters:** Tests minimum removal case.\n**How algorithm handles it:**\n- Element skipped\n- Return 0 ✓\n\n**Edge Case 5: Single element (not equal to val)**\n```\nnums = [1], val = 3\n```\n**Why it matters:** Tests minimum valid case.\n**How algorithm handles it:**\n- Element written at position 0\n- Return 1 ✓\n\n**Edge Case 6: Val at beginning**\n```\nnums = [3, 1, 2], val = 3\n```\n**Why it matters:** Tests if first element removal works.\n**How algorithm handles it:**\n- First 3 skipped\n- Write 1 at position 0, 2 at position 1\n- Return 2 ✓\n\n**Edge Case 7: Val at end**\n```\nnums = [1, 2, 3], val = 3\n```\n**Why it matters:** Tests if last element removal works.\n**How algorithm handles it:**\n- Write 1 at 0, 2 at 1\n- Last 3 skipped\n- Return 2 ✓",
+      "action": "next",
+      "next": "lesson-complete"
+    },
+    {
+      "stepId": "lesson-complete",
+      "mentorSays": "### PHASE 10: Lesson Complete\n\n**Summary:**\n\n**Problem:** Remove all occurrences of a specific value from array in place, return count of remaining elements.\n\n**Key Insight:** Use write pointer to collect all elements not equal to val. Skip elements equal to val.\n\n**Non-optimal vs Optimal:**\n- New array: O(n) time, O(n) space - uses extra memory\n- Swap to end: O(n²) time, O(1) space - slow and changes order\n- Write pointer: O(n) time, O(1) space - optimal solution!\n\n**Techniques Learned:**\n1. Write pointer pattern for filtering\n2. Conditional writing (only write if condition met)\n3. In-place element removal\n4. Returning count of valid elements\n\n**Edge Cases Covered:**\n- Empty array\n- All elements equal to val\n- No elements equal to val\n- Single element (both cases)\n- Val at beginning\n- Val at end\n\n**Related Problems:**\n1. **Move Zeroes** - Similar write pointer pattern\n2. **Remove Duplicates from Sorted Array** - Similar pattern with sorted property\n3. **Partition Array** - Partition based on condition\n4. **Sort Colors** - Three-way partitioning\n\n**Congratulations!** You've mastered the write pointer filtering pattern. This technique is essential for many array manipulation problems!\n\n**Next Steps:**\n- Try solving \"Merge Sorted Array\" to practice two-pointer merging\n- Review the conditional writing concept\n- Practice explaining your solution clearly",
+      "action": "complete"
+    }
+  ]
+}
+

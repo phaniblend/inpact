@@ -1,0 +1,268 @@
+{
+  "id": "move-zeroes-complete",
+  "title": "Move Zeroes",
+  "pattern": "two-pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "COMPLETE",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 7,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-07",
+    "introduces": [
+      "two-pointers-partitioning",
+      "in-place-rearrangement",
+      "write-pointer-pattern"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "array-indexing",
+      "loops",
+      "for-loop",
+      "functions",
+      "in-place-modification"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["remove-duplicates-sorted", "remove-element"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Initialize write pointer = 0 (tracks where to write next non-zero)." },
+    { "id": "ps2", "text": "For each element in the array (read pointer):" },
+    { "id": "ps3", "text": "  If element is non-zero:" },
+    { "id": "ps4", "text": "    Write element at write pointer position." },
+    { "id": "ps5", "text": "    Move write pointer forward." },
+    { "id": "ps6", "text": "Fill remaining positions (from write pointer to end) with zeros." }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Welcome to **Move Zeroes**!\n\nThis lesson teaches the two-pointer partitioning pattern - a fundamental technique for rearranging arrays in place.\n\n**What you'll learn:**\n- How to use two pointers for partitioning\n- The write-pointer pattern\n- In-place array rearrangement\n- O(n) time, O(1) space solution\n\n**By the end, you'll be able to:**\n- Move elements to specific positions efficiently\n- Use write pointer to track insertion point\n- Rearrange arrays without extra space\n- Apply this pattern to other partitioning problems\n\nReady to master array partitioning?",
+      "action": "next",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "First, choose your programming language.\n\nThis lesson is available in:\n- JavaScript\n- Python\n- Java\n- C++\n- TypeScript\n\nWhich language would you like to use?",
+      "choices": [
+        { "label": "JavaScript", "next": "prereq-check-js" },
+        { "label": "Python", "next": "prereq-check-python" },
+        { "label": "Java", "next": "prereq-check-java" },
+        { "label": "C++", "next": "prereq-check-cpp" },
+        { "label": "TypeScript", "next": "prereq-check-ts" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Move Zeroes, let's make sure you're comfortable with the JavaScript constructs we'll use:\n\n**1. Arrays and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `nums.length`\n\n**2. Variables**\n- We'll use `write` pointer to track where to write next non-zero\n- We'll use loop index `i` as read pointer\n\n**3. For Loops**\n- Iterate: `for (let i = 0; i < nums.length; i++)`\n\n**4. Conditional Statements**\n- Check if non-zero: `if (nums[i] !== 0)`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write++`\n\n**6. While Loops (optional)**\n- Fill zeros: `while (write < nums.length) { nums[write++] = 0; }`\n\n**7. Functions**\n- Function that modifies array in place\n\nDo you feel comfortable with these JavaScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-js" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Move Zeroes, let's make sure you're comfortable with the Python constructs we'll use:\n\n**1. Lists and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `len(nums)`\n\n**2. Variables**\n- We'll use `write` pointer to track where to write next non-zero\n- We'll use loop index `i` as read pointer\n\n**3. For Loops**\n- Iterate: `for i in range(len(nums)):`\n\n**4. Conditional Statements**\n- Check if non-zero: `if nums[i] != 0:`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write += 1`\n\n**6. While Loops (optional)**\n- Fill zeros: `while write < len(nums): nums[write] = 0; write += 1`\n\n**7. Functions**\n- Function that modifies list in place\n\nDo you feel comfortable with these Python constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-python" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Move Zeroes, let's make sure you're comfortable with the Java constructs we'll use:\n\n**1. Arrays and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `nums.length`\n\n**2. Variables**\n- We'll use `int write` pointer to track where to write next non-zero\n- We'll use loop index `i` as read pointer\n\n**3. For Loops**\n- Iterate: `for (int i = 0; i < nums.length; i++)`\n\n**4. Conditional Statements**\n- Check if non-zero: `if (nums[i] != 0)`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write++`\n\n**6. While Loops (optional)**\n- Fill zeros: `while (write < nums.length) { nums[write++] = 0; }`\n\n**7. Methods**\n- Method that modifies array in place (void return)\n\nDo you feel comfortable with these Java constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-java" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Move Zeroes, let's make sure you're comfortable with the C++ constructs we'll use:\n\n**1. Vectors/Arrays and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `nums.size()`\n\n**2. Variables**\n- We'll use `int write` pointer to track where to write next non-zero\n- We'll use loop index `i` as read pointer\n\n**3. For Loops**\n- Iterate: `for (int i = 0; i < nums.size(); i++)`\n\n**4. Conditional Statements**\n- Check if non-zero: `if (nums[i] != 0)`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write++`\n\n**6. While Loops (optional)**\n- Fill zeros: `while (write < nums.size()) { nums[write++] = 0; }`\n\n**7. Functions**\n- Function that modifies vector in place (reference parameter)\n\nDo you feel comfortable with these C++ constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-cpp" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Move Zeroes, let's make sure you're comfortable with the TypeScript constructs we'll use:\n\n**1. Arrays with Types and Indexing**\n- Access: `nums[i]`\n- Modify: `nums[i] = value`\n- Length: `nums.length`\n\n**2. Variables with Types**\n- We'll use `let write: number` pointer to track where to write next non-zero\n- We'll use loop index `i` as read pointer\n\n**3. For Loops**\n- Iterate: `for (let i = 0; i < nums.length; i++)`\n\n**4. Conditional Statements**\n- Check if non-zero: `if (nums[i] !== 0)`\n\n**5. Assignment**\n- Write value: `nums[write] = nums[i]`\n- Increment pointer: `write++`\n\n**6. While Loops (optional)**\n- Fill zeros: `while (write < nums.length) { nums[write++] = 0; }`\n\n**7. Functions with Types**\n- `function moveZeroes(nums: number[]): void`\n\nDo you feel comfortable with these TypeScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-ts" }
+      ]
+    },
+    {
+      "stepId": "algorithm-prereq-check",
+      "mentorSays": "### PHASE 2: Algorithm Prerequisites\n\n**Prerequisites for Move Zeroes:**\n\n**Required Concepts:**\n1. **Two Pointers** - Understanding how to use two pointers (from Reverse String)\n2. **In-Place Modification** - Modifying arrays without creating new ones\n3. **Array Indexing** - Accessing and modifying array elements\n\n**No Advanced Prerequisites:**\n- You don't need to know sorting\n- You don't need to know hash maps\n\nThis is a **foundation-level** problem. If you understand two pointers and in-place modification, you're ready!\n\nDo you feel ready to proceed?",
+      "choices": [
+        { "label": "Yes, I'm ready!", "next": "problem-statement" },
+        { "label": "I need to review prerequisites", "next": "review-prerequisites" }
+      ]
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### PHASE 3: Problem Statement\n\n**Problem:**\n\nGiven an integer array `nums`, move all `0`'s to the end of it while maintaining the relative order of the non-zero elements.\n\nNote that you must do this **in-place** without making a copy of the array.\n\n**Input:**\n- `nums`: An array of integers (e.g., `[0, 1, 0, 3, 12]`)\n\n**Output:**\n- The array should be modified in place: `[1, 3, 12, 0, 0]`\n\n**Constraints:**\n- 1 <= nums.length <= 10^4\n- -2^31 <= nums[i] <= 2^31 - 1\n\n**Example 1:**\n```\nInput: nums = [0, 1, 0, 3, 12]\nOutput: [1, 3, 12, 0, 0]\n\nExplanation: All zeros moved to end, non-zeros maintain order.\n```\n\n**Example 2:**\n```\nInput: nums = [0]\nOutput: [0]\n\nExplanation: Only one element, already a zero.\n```\n\n**Understanding the Variables:**\n- `nums`: The input array (modified in place)\n- `write`: Pointer tracking where to write next non-zero element\n- `i`: Read pointer iterating through the array\n- `nums[i]`: Current element being examined\n- `nums[write]`: Position where we'll write the next non-zero\n\n**Comprehension Check:**\n\nFor `nums = [0, 1, 0, 3, 12]`, what should the result be?",
+      "choices": [
+        { "label": "[1, 3, 12, 0, 0]", "next": "correct-result" },
+        { "label": "[0, 0, 1, 3, 12]", "next": "wrong-zeros-first" },
+        { "label": "[12, 3, 1, 0, 0]", "next": "wrong-reversed" }
+      ]
+    },
+    {
+      "stepId": "wrong-zeros-first",
+      "mentorSays": "Not quite! The problem asks to move zeros to the **end**, not the beginning.\n\nWe want: [1, 3, 12, 0, 0]\n- Non-zeros (1, 3, 12) come first, maintaining their order\n- Zeros come at the end",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "wrong-reversed",
+      "mentorSays": "Not quite! The non-zero elements should maintain their **relative order**.\n\nOriginal order of non-zeros: 1, then 3, then 12\nSo result should be: [1, 3, 12, 0, 0]\n\nNot reversed!",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "correct-result",
+      "mentorSays": "Perfect! [1, 3, 12, 0, 0] is correct.\n\n- Non-zeros (1, 3, 12) are at the beginning, maintaining order\n- Zeros are at the end\n\nYou've got the problem! Now let's think about how to solve it.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "how-would-you-solve",
+      "mentorSays": "### PHASE 4: How Would You Solve It?\n\nBefore I show you the solution, let's think about different approaches.\n\nHere are three ways we could solve this:\n\n**Approach A: Create New Array**\n- Create a new array\n- Copy all non-zeros first\n- Then fill remaining with zeros\n- Simple but uses O(n) extra space\n- Problem asks for in-place!\n\n**Approach B: Bubble Zeros to End**\n- For each zero, swap it with next non-zero repeatedly\n- Keep swapping until zero reaches the end\n- Works but O(n²) time in worst case\n\n**Approach C: Two Pointers (Write Pointer)**\n- Use write pointer to track where to place next non-zero\n- Iterate through array, writing non-zeros at write position\n- Fill remaining positions with zeros\n- O(n) time, O(1) space - optimal!\n\nWhich approach would you like to explore first?",
+      "choices": [
+        { "label": "Approach A: Create New Array", "next": "walkthrough-new-array" },
+        { "label": "Approach B: Bubble Zeros", "next": "walkthrough-bubble" },
+        { "label": "Approach C: Two Pointers", "next": "walkthrough-optimal" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-new-array",
+      "mentorSays": "### Approach A: Create New Array\n\n**Step 1: Create new array**\n```\nOriginal: [0, 1, 0, 3, 12]\nNew:      [_, _, _, _, _]\n```\n\n**Step 2: Copy non-zeros**\n```\nCopy 1:   [1, _, _, _, _]\nCopy 3:   [1, 3, _, _, _]\nCopy 12:  [1, 3, 12, _, _]\n```\n\n**Step 3: Fill with zeros**\n```\nResult:   [1, 3, 12, 0, 0]\n```\n\n**Time Complexity:** O(n)\n**Space Complexity:** O(n) - violates in-place requirement!\n\n**Better approach:** Use two pointers for in-place modification!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-bubble",
+      "mentorSays": "### Approach B: Bubble Zeros to End\n\n**Algorithm:**\nFor each zero found, swap it with next non-zero repeatedly.\n\n**Example:** `nums = [0, 1, 0, 3, 12]`\n\n**Iteration 1:** Find zero at index 0\n- Swap with 1: [1, 0, 0, 3, 12]\n- Swap with next non-zero (3): [1, 3, 0, 0, 12]\n- Swap with 12: [1, 3, 12, 0, 0]\n\n**Operation Count:**\n- For each zero: may need to swap with all following elements\n- Worst case: O(n²) swaps\n\n**Time Complexity:** O(n²)\n**Space Complexity:** O(1)\n\n**Better approach:** Use write pointer for O(n) time!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-optimal",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Optimal Approach (Two Pointers)\n\n**The Key Insight:**\n\nWe don't need to move zeros - we just need to collect all non-zeros first, then fill the rest with zeros!\n\n**Strategy:**\n1. Use write pointer to track where to place next non-zero\n2. Iterate through array (read pointer)\n3. When we find a non-zero, write it at write position, then move write forward\n4. After processing all elements, fill remaining positions with zeros\n\n**Example:** `nums = [0, 1, 0, 3, 12]`\n\n**Initial State:**\n```\nArray: [0, 1, 0, 3, 12]\n       ↑\n    write=0, i=0\n```\n\n**Decision Point 1:** At i=0, nums[0] = 0\nWhat should we do?\n[A] Write 0 at write position\n[B] Skip 0 (don't write it)\n[C] Swap 0 with something",
+      "choices": [
+        { "label": "[A] Write 0 at write position", "next": "wrong-write-zero" },
+        { "label": "[B] Skip 0 (don't write it)", "next": "correct-skip-zero" },
+        { "label": "[C] Swap 0 with something", "next": "wrong-swap" }
+      ]
+    },
+    {
+      "stepId": "wrong-write-zero",
+      "mentorSays": "If we write 0 at the beginning, we'd have zeros at the start! We want zeros at the end.\n\n**Strategy:** We skip zeros during the first pass, only writing non-zeros. Then we fill the remaining positions with zeros at the end.\n\nLet's skip the zero.",
+      "action": "next",
+      "next": "correct-skip-zero"
+    },
+    {
+      "stepId": "wrong-swap",
+      "mentorSays": "We don't need to swap! The write pointer pattern is simpler:\n- Skip zeros (don't write them)\n- Write non-zeros at write position\n- Fill remaining with zeros later\n\nLet's skip the zero.",
+      "action": "next",
+      "next": "correct-skip-zero"
+    },
+    {
+      "stepId": "correct-skip-zero",
+      "mentorSays": "Perfect! We skip 0 (don't write it).\n\n**State after i=0:**\n```\nArray: [0, 1, 0, 3, 12]\n          ↑\n       write=0, i=1\n```\n\nNote: write stays at 0 because we didn't write anything.\n\n**Decision Point 2:** At i=1, nums[1] = 1 (non-zero!)\nWhat should we do?\n[A] Write 1 at write position (0)\n[B] Skip 1\n[C] Write 1 at position 1",
+      "choices": [
+        { "label": "[A] Write 1 at write position (0)", "next": "correct-write-1" },
+        { "label": "[B] Skip 1", "next": "wrong-skip-nonzero" },
+        { "label": "[C] Write 1 at position 1", "next": "wrong-write-wrong-position" }
+      ]
+    },
+    {
+      "stepId": "wrong-skip-nonzero",
+      "mentorSays": "We can't skip non-zeros! We need to write them at the write position.\n\nSince write=0, we write nums[0] = 1 (but wait, nums[0] is 0...)\n\nActually, we write the current element (nums[1] = 1) at the write position (0).",
+      "action": "next",
+      "next": "correct-write-1"
+    },
+    {
+      "stepId": "wrong-write-wrong-position",
+      "mentorSays": "We should write at the write pointer position, not at the current index!\n\nThe write pointer tells us where the next non-zero should go.\n\nLet's write at write position (0).",
+      "action": "next",
+      "next": "correct-write-1"
+    },
+    {
+      "stepId": "correct-write-1",
+      "mentorSays": "Perfect! We write nums[1] = 1 at nums[write] = nums[0]\n\n**After writing:**\n```\nArray: [1, 1, 0, 3, 12]\n          ↑\n       write=0 (just wrote), now write=1\n```\n\nWait, we overwrote the 0 at position 0 with 1. That's correct! Now we increment write.\n\n**State after incrementing write:**\n```\nArray: [1, 1, 0, 3, 12]\n           ↑\n        write=1, i=2\n```\n\n**Decision Point 3:** At i=2, nums[2] = 0\nWhat should we do?\n[A] Write 0 at write position\n[B] Skip 0",
+      "choices": [
+        { "label": "[A] Write 0 at write position", "next": "wrong-write-zero-again" },
+        { "label": "[B] Skip 0", "next": "correct-skip-zero-2" }
+      ]
+    },
+    {
+      "stepId": "wrong-write-zero-again",
+      "mentorSays": "We skip zeros during the first pass! We'll fill them at the end.\n\nLet's skip this zero and continue.",
+      "action": "next",
+      "next": "correct-skip-zero-2"
+    },
+    {
+      "stepId": "correct-skip-zero-2",
+      "mentorSays": "Correct! We skip 0.\n\n**State after i=2:**\n```\nArray: [1, 1, 0, 3, 12]\n              ↑\n           write=1, i=3\n```\n\n**Continue:**\n- i=3, nums[3]=3 (non-zero): Write at write=1, then write=2\n- i=4, nums[4]=12 (non-zero): Write at write=2, then write=3\n\n**After processing all elements:**\n```\nArray: [1, 3, 12, 3, 12]\n              ↑     ↑\n           write=3  (old values remain)\n```\n\n**Decision Point 4:** What should we do now?\n[A] Fill positions from write to end with zeros\n[B] We're done\n[C] Check if array is correct",
+      "choices": [
+        { "label": "[A] Fill positions from write to end with zeros", "next": "correct-fill-zeros" },
+        { "label": "[B] We're done", "next": "wrong-not-done" },
+        { "label": "[C] Check if array is correct", "next": "wrong-check-first" }
+      ]
+    },
+    {
+      "stepId": "wrong-not-done",
+      "mentorSays": "We're not done! The array still has old values at positions 3 and 4 (3 and 12).\n\nWe need to fill positions from write=3 to the end with zeros.\n\nLet's fill them.",
+      "action": "next",
+      "next": "correct-fill-zeros"
+    },
+    {
+      "stepId": "wrong-check-first",
+      "mentorSays": "The array isn't correct yet - it has [1, 3, 12, 3, 12] but should be [1, 3, 12, 0, 0].\n\nWe need to fill the remaining positions (from write=3 to end) with zeros first.",
+      "action": "next",
+      "next": "correct-fill-zeros"
+    },
+    {
+      "stepId": "correct-fill-zeros",
+      "mentorSays": "Perfect! We fill positions from write=3 to end with zeros.\n\n**After filling:**\n```\nArray: [1, 3, 12, 0, 0]\n```\n\n**Final Result:** [1, 3, 12, 0, 0] ✓\n\n**Why This Works:**\n- Write pointer tracks where to place next non-zero\n- We skip zeros during first pass\n- After collecting all non-zeros, we fill remaining with zeros\n- Maintains relative order of non-zeros\n- O(n) time, O(1) space!",
+      "action": "next",
+      "next": "pseudocode-phase"
+    },
+    {
+      "stepId": "pseudocode-phase",
+      "mentorSays": "### PHASE 6: Pseudocode\n\nNow let's write the logic in plain English (pseudocode):\n\n**Step 1:** Initialize write pointer = 0 (tracks where to write next non-zero).\n\n**Step 2:** For each element in the array (read pointer):\n\n**Step 3:** If element is non-zero:\n\n**Step 4:** Write element at write pointer position.\n\n**Step 5:** Move write pointer forward.\n\n**Step 6:** Fill remaining positions (from write pointer to end) with zeros.\n\nThis pseudocode matches exactly what we walked through!",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "code-implementation"
+    },
+    {
+      "stepId": "code-implementation",
+      "mentorSays": "### PHASE 7: Code Implementation\n\nNow let's translate the pseudocode into JavaScript code.\n\n**Step 1: Initialize write pointer**\n```javascript\nfunction moveZeroes(nums) {\n  let write = 0;\n}\n```\nThis matches pseudocode Step 1\n\n**Step 2: Loop through array**\n```javascript\nfunction moveZeroes(nums) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    \n  }\n}\n```\nThis matches pseudocode Step 2\n\n**Step 3, 4, 5: Write non-zeros**\n```javascript\nfunction moveZeroes(nums) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[write] = nums[i];\n      write++;\n    }\n  }\n}\n```\nThis matches pseudocode Steps 3, 4, 5\n\n**Step 6: Fill remaining with zeros**\n```javascript\nfunction moveZeroes(nums) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[write] = nums[i];\n      write++;\n    }\n  }\n  \n  while (write < nums.length) {\n    nums[write++] = 0;\n  }\n}\n```\nThis matches pseudocode Step 6\n\n**Final Code:**\n```javascript\nfunction moveZeroes(nums) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[write] = nums[i];\n      write++;\n    }\n  }\n  \n  while (write < nums.length) {\n    nums[write++] = 0;\n  }\n}\n```",
+      "example": "function moveZeroes(nums) {\n  let write = 0;\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (nums[i] !== 0) {\n      nums[write] = nums[i];\n      write++;\n    }\n  }\n  \n  while (write < nums.length) {\n    nums[write++] = 0;\n  }\n}",
+      "action": "next",
+      "next": "complexity-analysis"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "### PHASE 8: Complexity Analysis\n\n**Time Complexity Analysis:**\n\n**Step-by-step breakdown:**\n1. Initialize write: O(1)\n2. First loop (collect non-zeros): n iterations\n   - Each iteration: O(1) check and write\n3. Second loop (fill zeros): At most n iterations\n   - Each iteration: O(1) assignment\n\n**Total Time: O(n)**\n\n**Space Complexity Analysis:**\n\n**What we store:**\n- `write` variable: O(1)\n- `i` variable: O(1)\n- No additional arrays or data structures\n\n**Total Space: O(1)**\n\n**Comparison Table:**\n\n| Approach | Time | Space | Notes |\n|----------|------|-------|-------|\n| New Array | O(n) | O(n) | Uses extra space |\n| Bubble | O(n²) | O(1) | Slow, many swaps |\n| Two Pointers | O(n) | O(1) | Optimal! |\n\n**Why Optimal is Better:**\n\n- **Time efficiency:** O(n) - single pass to collect, single pass to fill\n- **Space efficiency:** O(1) - only a few variables\n- **In-place:** Modifies original array without extra space\n- **Simple logic:** Easy to understand and implement\n\n**For n = 10,000:**\n- Bubble: Up to 100 million operations (worst case)\n- Two pointers: 20,000 operations (two passes)\n- **5,000x faster!**",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "### PHASE 9: Edge Cases\n\n**Edge Case 1: All zeros**\n```\nnums = [0, 0, 0]\n```\n**Why it matters:** Tests if algorithm handles no non-zeros.\n**How algorithm handles it:**\n- All zeros skipped in first pass\n- write stays at 0\n- Fill from 0 to end with zeros\n- Result: [0, 0, 0] ✓\n\n**Edge Case 2: No zeros**\n```\nnums = [1, 2, 3]\n```\n**Why it matters:** Tests if algorithm handles all non-zeros.\n**How algorithm handles it:**\n- All elements written at their original positions\n- write = 3 after first pass\n- No zeros to fill\n- Result: [1, 2, 3] (unchanged) ✓\n\n**Edge Case 3: Single element (zero)**\n```\nnums = [0]\n```\n**Why it matters:** Tests minimum valid input.\n**How algorithm handles it:**\n- Zero skipped\n- Fill position 0 with 0\n- Result: [0] ✓\n\n**Edge Case 4: Single element (non-zero)**\n```\nnums = [1]\n```\n**Why it matters:** Tests minimum non-zero case.\n**How algorithm handles it:**\n- Write 1 at position 0\n- write = 1, no zeros to fill\n- Result: [1] ✓\n\n**Edge Case 5: Zeros at beginning**\n```\nnums = [0, 0, 1, 2]\n```\n**Why it matters:** Tests if zeros are properly skipped.\n**How algorithm handles it:**\n- Skip first two zeros\n- Write 1 at position 0, 2 at position 1\n- Fill positions 2-3 with zeros\n- Result: [1, 2, 0, 0] ✓\n\n**Edge Case 6: Zeros at end**\n```\nnums = [1, 2, 0, 0]\n```\n**Why it matters:** Tests if already-correct arrays work.\n**How algorithm handles it:**\n- Write 1 at 0, 2 at 1\n- Zeros already at end\n- Fill positions 2-3 with zeros (no change)\n- Result: [1, 2, 0, 0] ✓\n\n**Edge Case 7: Alternating zeros and non-zeros**\n```\nnums = [0, 1, 0, 2, 0, 3]\n```\n**Why it matters:** Tests complex rearrangement.\n**How algorithm handles it:**\n- Collect: 1, 2, 3 at positions 0, 1, 2\n- Fill: positions 3, 4, 5 with zeros\n- Result: [1, 2, 3, 0, 0, 0] ✓",
+      "action": "next",
+      "next": "lesson-complete"
+    },
+    {
+      "stepId": "lesson-complete",
+      "mentorSays": "### PHASE 10: Lesson Complete\n\n**Summary:**\n\n**Problem:** Move all zeros to the end while maintaining relative order of non-zeros.\n\n**Key Insight:** Use write pointer to collect all non-zeros first, then fill remaining positions with zeros.\n\n**Non-optimal vs Optimal:**\n- New array: O(n) time, O(n) space - uses extra memory\n- Bubble: O(n²) time, O(1) space - slow due to many swaps\n- Two pointers: O(n) time, O(1) space - optimal solution!\n\n**Techniques Learned:**\n1. Write pointer pattern for partitioning\n2. Two-pass approach (collect then fill)\n3. In-place array modification\n4. Maintaining relative order\n\n**Edge Cases Covered:**\n- All zeros\n- No zeros\n- Single element (zero and non-zero)\n- Zeros at beginning\n- Zeros at end\n- Alternating pattern\n\n**Related Problems:**\n1. **Remove Element** - Remove specific value (similar pattern)\n2. **Remove Duplicates from Sorted Array** - Similar write pointer pattern\n3. **Partition Array** - Partition based on condition\n4. **Sort Colors** - Three-way partitioning\n\n**Congratulations!** You've mastered the write pointer pattern. This technique is essential for many array manipulation problems!\n\n**Next Steps:**\n- Try solving \"Remove Element\" to practice this pattern\n- Review the two-pointer partitioning concept\n- Practice explaining your solution clearly",
+      "action": "complete"
+    }
+  ]
+}
+

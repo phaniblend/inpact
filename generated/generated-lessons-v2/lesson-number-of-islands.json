@@ -1,0 +1,147 @@
+{
+  "id": "number-of-islands",
+  "title": "Number of Islands",
+  "pattern": "grid-traversal (DFS)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-17",
+    "introduces": ["depth-first-search", "grid-visited-marking", "recursion"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "2d-to-1d-mapping"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Initialize islandCount = 0." },
+    { "id": "ps2", "text": "Loop through each cell in the grid." },
+    { "id": "ps3", "text": "If the cell is land ('1'), increment islandCount and explore it." },
+    { "id": "ps4", "text": "Explore means marking this cell and all connected land as visited." },
+    { "id": "ps5", "text": "Use DFS to visit up, down, left, and right neighbors." },
+    { "id": "ps6", "text": "Return islandCount." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Number of Islands**.\n\nThis lesson introduces **depth-first search (DFS)** to explore connected regions in a grid.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a 2D grid where:\n- '1' represents land\n- '0' represents water\n\nAn island is a group of connected land cells (up, down, left, right).\n\nYour task is to count how many islands exist.",
+      "example": "grid = [['1','1','0'],['1','0','0'],['0','0','1']]",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [['1']] → 1 island\n2) [['1','0'],['0','1']] → 2 islands",
+      "action": "next",
+      "next": "why-not-count-directly"
+    },
+    {
+      "stepId": "why-not-count-directly",
+      "mentorSays": "We cannot just count '1's.\n\nConnected land cells form **one** island, not many.\n\nSo we must group connected cells together.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nWhen you find a land cell, what should you do to avoid counting the same island again?",
+      "choices": [
+        { "label": "Mark all connected land as visited", "next": "core-idea" },
+        { "label": "Just count this one cell", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWhenever we find land, we **explore and mark the entire island**.\n\nWe then continue scanning the grid for new islands.",
+      "action": "next",
+      "next": "dfs-explained"
+    },
+    {
+      "stepId": "dfs-explained",
+      "mentorSays": "### Depth-First Search (DFS)\n\nDFS explores as far as possible in one direction before backtracking.\n\nIn a grid, DFS moves:\n- up\n- down\n- left\n- right\n\nWe use it to visit all connected land cells.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nStart at a land cell:\n- mark it as visited\n- explore its neighbors\n- repeat until no connected land remains\n\nThat completes one island.",
+      "action": "next",
+      "next": "visited-marking"
+    },
+    {
+      "stepId": "visited-marking",
+      "mentorSays": "### How do we mark visited?\n\nWe can modify the grid directly:\n- change '1' → '0'\n\nThis avoids extra memory and prevents revisiting.",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5","ps6"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis is your first recursive grid traversal.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the main function.",
+      "example": "function numIslands(grid) {\n\n}",
+      "action": "next",
+      "next": "code-02-setup",
+      "pseudocodeLineIds": ["ps1","ps2"]
+    },
+    {
+      "stepId": "code-02-setup",
+      "mentorSays": "Step 2: Initialize count and loop through grid.",
+      "example": "let count = 0;\nconst rows = grid.length;\nconst cols = grid[0].length;\n\nfor (let r = 0; r < rows; r++) {\n  for (let c = 0; c < cols; c++) {\n\n  }\n}",
+      "action": "next",
+      "next": "code-03-dfs",
+      "pseudocodeLineIds": ["ps3","ps4","ps5"]
+    },
+    {
+      "stepId": "code-03-dfs",
+      "mentorSays": "Step 3: Define DFS to explore land.",
+      "example": "function dfs(r, c) {\n  if (r < 0 || c < 0 || r >= rows || c >= cols) return;\n  if (grid[r][c] === '0') return;\n\n  grid[r][c] = '0';\n\n  dfs(r + 1, c);\n  dfs(r - 1, c);\n  dfs(r, c + 1);\n  dfs(r, c - 1);\n}",
+      "action": "next",
+      "next": "code-04-connect",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-04-connect",
+      "mentorSays": "Step 4: When land is found, count island and explore it.",
+      "example": "if (grid[r][c] === '1') {\n  count++;\n  dfs(r, c);\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function numIslands(grid) {\n  let count = 0;\n  const rows = grid.length;\n  const cols = grid[0].length;\n\n  function dfs(r, c) {\n    if (r < 0 || c < 0 || r >= rows || c >= cols) return;\n    if (grid[r][c] === '0') return;\n\n    grid[r][c] = '0';\n\n    dfs(r + 1, c);\n    dfs(r - 1, c);\n    dfs(r, c + 1);\n    dfs(r, c - 1);\n  }\n\n  for (let r = 0; r < rows; r++) {\n    for (let c = 0; c < cols; c++) {\n      if (grid[r][c] === '1') {\n        count++;\n        dfs(r, c);\n      }\n    }\n  }\n\n  return count;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how DFS explores connected components\n- how grids are just graphs in disguise\n- how marking visited avoids double counting\n\nDFS is foundational for many graph and grid problems.",
+      "action": "complete"
+    }
+  ]
+}

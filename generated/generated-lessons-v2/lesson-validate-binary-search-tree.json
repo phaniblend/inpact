@@ -1,0 +1,95 @@
+{
+  "id": "validate-binary-search-tree",
+  "title": "Validate Binary Search Tree",
+  "difficulty": "medium",
+  "pattern": "tree + constraints",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the **root of a binary tree**.\n\nYour task is to check whether this tree is a **valid Binary Search Tree (BST)**.\n\nYou only need to return **true or false**.",
+      "action": "next"
+    },
+    {
+      "stepId": "concept-binary-search-tree",
+      "mentorSays": "Before validating anything, we must be very clear:\n\nWhat is a **Binary Search Tree**?\n\nA tree is a valid BST if **every node** follows this rule:\n\n• All values in the left subtree are **less than** the node\n• All values in the right subtree are **greater than** the node",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-valid-example",
+      "mentorSays": "Let’s look at a tiny valid BST.\n\n      2\n     / \\\n    1   3\n\nWhy is this valid?\n• 1 < 2\n• 3 > 2\n• Both subtrees follow the same rule",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-invalid-example",
+      "mentorSays": "Now look at this tree.\n\n      5\n     / \\\n    1   4\n       / \\\n      3   6\n\nThis tree is **NOT** a valid BST.\n\nWhy?\n• 3 is in the right subtree of 5\n• But 3 < 5\n\nSo the BST rule is violated.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you only compare each node with its **immediate parent**, would that be enough?\n\nOr do you need to consider **all ancestors**?",
+      "choices": [
+        {
+          "label": "Only the parent matters",
+          "next": "why-parent-check-fails"
+        },
+        {
+          "label": "All ancestor constraints matter",
+          "next": "introduce-range-logic"
+        }
+      ]
+    },
+    {
+      "stepId": "why-parent-check-fails",
+      "mentorSays": "Checking only the parent is **not sufficient**.\n\nIn the previous invalid example:\n• Node 3 is less than its parent 4\n• But it is still invalid because it violates the rule of ancestor 5\n\nSo we must track more than just the parent.",
+      "action": "next"
+    },
+    {
+      "stepId": "introduce-range-logic",
+      "mentorSays": "The correct way to think is:\n\nEach node must lie within a **valid range**.\n\n• Left child must be less than the parent\n• Right child must be greater than the parent\n• These limits come from **all ancestors**, not just one",
+      "action": "next"
+    },
+    {
+      "stepId": "logic-walkthrough",
+      "mentorSays": "Let’s walk through the idea.\n\n• Start with an initial range: (-∞, +∞)\n• For the left child, update the upper bound\n• For the right child, update the lower bound\n• Every node must stay within its allowed range",
+      "example": "Root 5 → allowed range (-∞, +∞)\nLeft child 1 → (-∞, 5)\nRight child 4 → (5, +∞)",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Each subtree has the **same validation problem**, just with tighter limits.\n\nThis makes **recursion** a natural solution.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "define a recursive function with node, min, max",
+        "if node is null, return true",
+        "if node value <= min or >= max, return false",
+        "validate left subtree with updated max",
+        "validate right subtree with updated min",
+        "return true if both subtrees are valid"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself and focus on how the range changes.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function isValidBST(root) {\n  function validate(node, min, max) {\n    if (node === null) return true;\n\n    if (node.val <= min || node.val >= max) {\n      return false;\n    }\n\n    return (\n      validate(node.left, min, node.val) &&\n      validate(node.right, node.val, max)\n    );\n  }\n\n  return validate(root, -Infinity, Infinity);\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "If the tree is:\n\n      2\n     / \\\n    1   3\n\nThe result is true.\n\nIf the tree violates any ancestor constraint, the result is false.\n\nThis confirms correct BST validation.",
+      "action": "complete"
+    }
+  ]
+}

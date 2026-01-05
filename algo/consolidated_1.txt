@@ -1,0 +1,2476 @@
+
+================================================================================
+FILE: add-two-numbers.json
+================================================================================
+
+{
+  "id": "add-two-numbers",
+  "title": "Add Two Numbers",
+  "pattern": "linked-list + carry",
+  "difficulty": "medium",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given **two numbers**, but they are not written normally.\n\nEach number is stored as a **linked list**, where:\n- Each node contains a single digit\n- Digits are stored in **reverse order**\n\nYour task is to return the **sum** of these two numbers as a linked list, also in reverse order.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s look at a very small example.\n\nNumber 1: 2 → 4 → 3\nNumber 2: 5 → 6 → 4\n\nBecause the digits are reversed:\n- First list represents 342\n- Second list represents 465\n\n342 + 465 = 807",
+      "action": "next"
+    },
+    {
+      "stepId": "expected-output",
+      "mentorSays": "The result should also be a linked list in reverse order.\n\n807 becomes:\n\n7 → 0 → 8",
+      "action": "next"
+    },
+    {
+      "stepId": "concept-linked-list",
+      "mentorSays": "Before solving the problem, let’s understand **what a linked list is**.\n\nA linked list is a chain of boxes.\n\nEach box (node) contains:\n- a value\n- a reference to the next box\n\nExample:\n\n7 → 0 → 8 → null",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now think carefully.\n\nIf you were adding numbers **by hand**, digit by digit:\n\n- You start from the rightmost digit\n- You add digits one at a time\n- Sometimes the sum is greater than 9\n\nHow would you handle that extra value?",
+      "action": "next"
+    },
+    {
+      "stepId": "introduce-carry",
+      "mentorSays": "When a digit sum is greater than 9, we:\n\n- Write down the rightmost digit\n- Carry the extra value to the next addition\n\nExample:\n8 + 7 = 15\n- Write 5\n- Carry 1\n\nWe call this extra value the **carry**.",
+      "action": "next"
+    },
+    {
+      "stepId": "logic-walkthrough",
+      "mentorSays": "Now let’s connect this idea to linked lists.\n\nWe will:\n- Start at the first node of both lists\n- Add their values plus any carry\n- Create a new node for the result\n- Move to the next nodes\n\nWe repeat until both lists are finished.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Here is the logic written in plain steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "create a dummy result node",
+        "set current pointer to dummy node",
+        "set carry to 0",
+        "while at least one list has nodes",
+        "  add values from both lists and carry",
+        "  update carry",
+        "  create new node with digit",
+        "  move to next nodes",
+        "if carry remains, add new node",
+        "return next of dummy node"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself. Focus on understanding each step.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function addTwoNumbers(l1, l2) {\n  let dummy = { val: 0, next: null };\n  let current = dummy;\n  let carry = 0;\n\n  while (l1 !== null || l2 !== null) {\n    let sum = carry;\n\n    if (l1 !== null) {\n      sum += l1.val;\n      l1 = l1.next;\n    }\n\n    if (l2 !== null) {\n      sum += l2.val;\n      l2 = l2.next;\n    }\n\n    carry = Math.floor(sum / 10);\n    current.next = { val: sum % 10, next: null };\n    current = current.next;\n  }\n\n  if (carry > 0) {\n    current.next = { val: carry, next: null };\n  }\n\n  return dummy.next;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "For the input:\n\n2 → 4 → 3\n5 → 6 → 4\n\nThe output will be:\n\n7 → 0 → 8\n\nThis confirms the addition logic is correct.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: binary-search.json
+================================================================================
+
+{
+  "id": "binary-search",
+  "title": "Binary Search",
+  "pattern": "binary-search (core)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-03",
+    "introduces": ["binary-search-loop", "search-space-halving"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "midpoint"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left = 0 and right = last index." },
+    { "id": "ps2", "text": "While left <= right:" },
+    { "id": "ps3", "text": "  Compute mid index." },
+    { "id": "ps4", "text": "  If nums[mid] equals target, return mid." },
+    { "id": "ps5", "text": "  If nums[mid] < target, move left to mid + 1." },
+    { "id": "ps6", "text": "  Else move right to mid - 1." },
+    { "id": "ps7", "text": "If loop ends, target is not present; return -1." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Binary Search**.\n\nThis lesson teaches the **core searching technique** used throughout many algorithms.\n\nWe assume you are comfortable with arrays, indexes, and loops.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a **sorted** array of numbers and a target value.\n\nYour task is to return the **index** of the target if it exists.\nIf it does not exist, return **-1**.",
+      "example": "nums = [1,3,5,7,9], target = 5",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) nums = [1,3,5,7,9], target = 5 → index 2\n2) nums = [1,3,5,7,9], target = 6 → -1",
+      "action": "next",
+      "next": "why-not-linear"
+    },
+    {
+      "stepId": "why-not-linear",
+      "mentorSays": "A simple loop could check every element.\n\nBut because the array is **sorted**, we can do better than checking one-by-one.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf the array has 1,000,000 elements, how can we reduce the number of checks quickly?",
+      "choices": [
+        { "label": "Ignore half the numbers each time", "next": "core-idea" },
+        { "label": "Start from the beginning", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nBinary search works by **halving the search space** on each step.\n\nWe repeatedly look at the middle element and decide which half can be ignored.",
+      "action": "next",
+      "next": "midpoint-recap"
+    },
+    {
+      "stepId": "midpoint-recap",
+      "mentorSays": "### Midpoint recap\n\nIf left = 0 and right = 4:\n\nmid = floor((0 + 4) / 2) = 2\n\n`nums[2]` is the middle element.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums = [1,3,5,7,9], target = 7\n\n- left=0, right=4\n- mid=2 → nums[2]=5 (too small)\n- move left to 3\n- mid=3 → nums[3]=7 → found",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)\nEach coding step maps to this plan.",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nRemember: type the code yourself for learning retention.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function binarySearch(nums, target) {\n\n}",
+      "action": "next",
+      "next": "code-02-pointers",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-pointers",
+      "mentorSays": "Step 2: Initialize left and right pointers.",
+      "example": "function binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n}",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Loop while left <= right.",
+      "example": "while (left <= right) {\n\n}",
+      "action": "next",
+      "next": "loop-invariant"
+    },
+    {
+      "stepId": "loop-invariant",
+      "mentorSays": "### Loop Invariant (Interview-Grade Explanation)\n\n**The invariant:** Throughout the loop, if the target exists in the array, it must be within the range `[left, right]`.\n\n**Why this matters:**\n- At start: `left = 0`, `right = length - 1` → target is in `[0, length-1]` ✓\n- Each iteration: We narrow the range, but the invariant holds\n- When `left > right`: The range is empty, target doesn't exist\n\n**This is why we use `left <= right`:**\n- When `left == right`, there's still one element to check\n- Only when `left > right` is the range truly empty\n\n**Interview tip:** Stating the invariant shows deep understanding of the algorithm!",
+      "action": "next",
+      "next": "code-04-mid",
+      "pseudocodeLineIds": ["ps2", "ps3"]
+    },
+    {
+      "stepId": "code-04-mid",
+      "mentorSays": "Step 4: Compute the midpoint.",
+      "example": "const mid = Math.floor((left + right) / 2);",
+      "action": "next",
+      "next": "code-05-compare",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-05-compare",
+      "mentorSays": "Step 5: Compare middle value with target and adjust pointers.",
+      "example": "if (nums[mid] === target) return mid;\nif (nums[mid] < target) left = mid + 1;\nelse right = mid - 1;",
+      "action": "next",
+      "next": "code-06-not-found",
+      "pseudocodeLineIds": ["ps4", "ps5", "ps6"]
+    },
+    {
+      "stepId": "code-06-not-found",
+      "mentorSays": "Step 6: If the loop ends, the target is not present.",
+      "example": "return -1;",
+      "action": "next",
+      "next": "final-code",
+      "pseudocodeLineIds": ["ps7"]
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function binarySearch(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) return mid;\n    if (nums[mid] < target) left = mid + 1;\n    else right = mid - 1;\n  }\n\n  return -1;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Wrong loop condition** - Use `left <= right` not `left < right` (need to check when they're equal)\n2. **Off-by-one in pointer updates** - Use `mid + 1` and `mid - 1`, not `mid` (avoid infinite loop)\n3. **Integer overflow** - Use `Math.floor((left + right) / 2)` or `left + Math.floor((right - left) / 2)`\n4. **Forgetting array is sorted** - Binary search only works on sorted arrays!\n5. **Returning wrong value** - Return `mid` when found, `-1` when not found",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I maintain the invariant that if target exists, it's within [left, right]\"**\n2. **\"I calculate the midpoint and compare with target\"**\n3. **\"If target is smaller, I search the left half by setting right = mid - 1\"**\n4. **\"If target is larger, I search the right half by setting left = mid + 1\"**\n5. **\"This halves the search space each iteration, giving O(log n) time complexity\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how binary search halves the search space\n- why sorted arrays are critical\n- the loop invariant: target is within [left, right]\n- how this pattern appears in many future problems\n\nNext lessons will reuse this exact structure.\n\n**Follow-up variant:**\n\n**Search Insert Position:** Given a sorted array and a target, return the index where target should be inserted. How would you modify the binary search?",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: binary-tree-inorder.json
+================================================================================
+
+{
+  "id": "binary-tree-inorder",
+  "title": "Binary Tree Inorder Traversal",
+  "pattern": "tree + recursion",
+  "difficulty": "medium",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the **root of a binary tree**.\n\nYour task is to return the values of the nodes using **inorder traversal**.\n\nInorder traversal follows a specific visiting order that we will build step by step.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-tree-example",
+      "mentorSays": "Let’s start with a very small tree.\n\n      2\n     / \\\n    1   3\n\nThis tree has:\n- a root (2)\n- a left child (1)\n- a right child (3)",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Before learning any rules, think carefully.\n\nIf you had to **visit all nodes** in this tree, what could be a reasonable order?\n\nShould you:\n- Visit the root first?\n- Visit the children first?\n\nThere are multiple valid traversal styles. We are learning one of them.",
+      "action": "next"
+    },
+    {
+      "stepId": "define-inorder",
+      "mentorSays": "In **inorder traversal**, the rule is:\n\n1. Visit the **left subtree**\n2. Visit the **current node**\n3. Visit the **right subtree**\n\nThis order is always followed.",
+      "action": "next"
+    },
+    {
+      "stepId": "walkthrough-example",
+      "mentorSays": "Let’s apply the rule to our tiny tree.\n\n      2\n     / \\\n    1   3\n\nStep-by-step:\n- Go left → visit 1\n- Visit current node → 2\n- Go right → visit 3\n\nSo the inorder result is:\n[1, 2, 3]",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Notice something important.\n\nEach subtree is itself a **smaller tree**.\n\nThat means the same rule applies again and again.\n\nThis is a strong hint that **recursion** is a natural fit for this problem.",
+      "action": "next"
+    },
+    {
+      "stepId": "concept-recursion",
+      "mentorSays": "Recursion means a function **calls itself** to solve a smaller version of the same problem.\n\nFor a tree:\n- If the node is null → do nothing\n- Otherwise:\n  - Traverse left\n  - Process current node\n  - Traverse right",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic in plain steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "create an empty result list",
+        "define a recursive function",
+        "if node is null, return",
+        "traverse left subtree",
+        "add node value to result",
+        "traverse right subtree",
+        "call recursive function with root",
+        "return result"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself to build confidence with recursion.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function inorderTraversal(root) {\n  const result = [];\n\n  function traverse(node) {\n    if (node === null) return;\n\n    traverse(node.left);\n    result.push(node.val);\n    traverse(node.right);\n  }\n\n  traverse(root);\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "If the tree is:\n\n      2\n     / \\\n    1   3\n\nThe output will be:\n[1, 2, 3]\n\nThis confirms the traversal order is correct.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: binary-tree-level-order.json
+================================================================================
+
+{
+  "id": "binary-tree-level-order",
+  "title": "Binary Tree Level Order Traversal",
+  "pattern": "tree",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Binary Tree Level Order Traversal lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews: **tree**.\n\nAfter this, you'll be able to:\n- Understand the Binary Tree Level Order Traversal problem\n- Recognize when to use the tree pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these JavaScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these Python concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these Java concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these C++ concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we tackle this problem, let me make sure you have the building blocks.\n\nTo solve this in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n- **Recursion** - How to solve problems recursively\n\nDo you feel confident with these TypeScript concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know all of them",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-all-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "teach-all-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "choices": null,
+      "next": "function-explanation-js"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code.",
+      "example": "",
+      "action": "continue",
+      "choices": null,
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "Perfect! Now let's understand what the Binary Tree Level Order Traversal problem asks for.\n\n[Detailed explanation will be added in Phase 2]",
+      "action": "continue",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement level-order traversal in JavaScript.",
+      "example": "function levelOrder(root) {\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Initialize queue with root and result array.",
+      "example": "function levelOrder(root) {\n  if (!root) return [];\n  \n  const queue = [root];\n  const result = [];\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-while-loop-js"
+    },
+    {
+      "stepId": "coding-while-loop-js",
+      "mentorSays": "Create a while loop that continues while queue is not empty.",
+      "example": "function levelOrder(root) {\n  if (!root) return [];\n  \n  const queue = [root];\n  const result = [];\n  \n  while (queue.length > 0) {\n    // Process one level\n  }\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-level-size-js"
+    },
+    {
+      "stepId": "coding-level-size-js",
+      "mentorSays": "Get the current level size (number of nodes at this level).",
+      "example": "function levelOrder(root) {\n  if (!root) return [];\n  \n  const queue = [root];\n  const result = [];\n  \n  while (queue.length > 0) {\n    const levelSize = queue.length;  // Nodes at current level\n    const level = [];\n    \n  }\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-process-level-js"
+    },
+    {
+      "stepId": "coding-process-level-js",
+      "mentorSays": "Process all nodes at current level: dequeue, add to level, enqueue children.",
+      "example": "function levelOrder(root) {\n  if (!root) return [];\n  \n  const queue = [root];\n  const result = [];\n  \n  while (queue.length > 0) {\n    const levelSize = queue.length;\n    const level = [];\n    \n    for (let i = 0; i < levelSize; i++) {\n      const node = queue.shift();  // Dequeue\n      level.push(node.val);\n      \n      if (node.left) queue.push(node.left);   // Enqueue left child\n      if (node.right) queue.push(node.right); // Enqueue right child\n    }\n    \n  }\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-add-level-js"
+    },
+    {
+      "stepId": "coding-add-level-js",
+      "mentorSays": "Add the level array to result.",
+      "example": "function levelOrder(root) {\n  if (!root) return [];\n  \n  const queue = [root];\n  const result = [];\n  \n  while (queue.length > 0) {\n    const levelSize = queue.length;\n    const level = [];\n    \n    for (let i = 0; i < levelSize; i++) {\n      const node = queue.shift();\n      level.push(node.val);\n      if (node.left) queue.push(node.left);\n      if (node.right) queue.push(node.right);\n    }\n    \n    result.push(level);  // Add level to result\n  }\n  \n}",
+      "action": "continue",
+      "choices": null,
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Return the result array.",
+      "example": "function levelOrder(root) {\n  if (!root) return [];\n  \n  const queue = [root];\n  const result = [];\n  \n  while (queue.length > 0) {\n    const levelSize = queue.length;\n    const level = [];\n    \n    for (let i = 0; i < levelSize; i++) {\n      const node = queue.shift();\n      level.push(node.val);\n      if (node.left) queue.push(node.left);\n      if (node.right) queue.push(node.right);\n    }\n    \n    result.push(level);\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "choices": null,
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "Congratulations! You just solved Binary Tree Level Order Traversal!\n\nWhat you've mastered:\n- Understanding the problem requirements\n- Choosing an efficient approach\n- Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going!",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: binary-tree-postorder.json
+================================================================================
+
+{
+  "id": "binary-tree-postorder",
+  "title": "Binary Tree Postorder Traversal",
+  "pattern": "tree + recursion",
+  "difficulty": "medium",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the **root of a binary tree**.\n\nYour task is to return the values of the nodes using **postorder traversal**.\n\nPostorder traversal follows a specific visiting order that we will build carefully.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-tree-example",
+      "mentorSays": "Let’s start with a very small tree.\n\n      2\n     / \\\n    1   3\n\nThis tree has:\n- a root (2)\n- a left child (1)\n- a right child (3)",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Before learning the rule, pause and think.\n\nIf you had to **visit every node**, when do you think the root should be visited?\n\n- Before the children?\n- Between the children?\n- After both children?\n\nDifferent traversal styles answer this differently.",
+      "action": "next"
+    },
+    {
+      "stepId": "define-postorder",
+      "mentorSays": "In **postorder traversal**, the rule is:\n\n1. Visit the **left subtree**\n2. Visit the **right subtree**\n3. Visit the **current node**\n\nThe node itself is visited **last**.",
+      "action": "next"
+    },
+    {
+      "stepId": "walkthrough-example",
+      "mentorSays": "Let’s apply the rule to our tiny tree.\n\n      2\n     / \\\n    1   3\n\nStep-by-step:\n- Go left → visit 1\n- Go right → visit 3\n- Visit current node → 2\n\nSo the postorder result is:\n[1, 3, 2]",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Notice the pattern.\n\nEach subtree is itself a **smaller tree**.\n\nThe same visiting rule applies again and again.\n\nThis makes **recursion** a natural way to solve this problem.",
+      "action": "next"
+    },
+    {
+      "stepId": "concept-recursion",
+      "mentorSays": "Using recursion for trees means:\n\n- If the node is null → stop\n- Otherwise:\n  - Traverse left subtree\n  - Traverse right subtree\n  - Process the current node\n\nThis exactly matches postorder traversal.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic in plain steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "create an empty result list",
+        "define a recursive function",
+        "if node is null, return",
+        "traverse left subtree",
+        "traverse right subtree",
+        "add node value to result",
+        "call recursive function with root",
+        "return result"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself to reinforce recursion understanding.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function postorderTraversal(root) {\n  const result = [];\n\n  function traverse(node) {\n    if (node === null) return;\n\n    traverse(node.left);\n    traverse(node.right);\n    result.push(node.val);\n  }\n\n  traverse(root);\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "If the tree is:\n\n      2\n     / \\\n    1   3\n\nThe output will be:\n[1, 3, 2]\n\nThis confirms the postorder traversal sequence.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: binary-tree-preorder.json
+================================================================================
+
+{
+  "id": "binary-tree-preorder",
+  "title": "Binary Tree Preorder Traversal",
+  "pattern": "tree",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Binary Tree Preorder Traversal lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Binary Tree Preorder Traversal problem\n- Recognize the tree pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function binarytreepreorder(root) {\n  // Returns Preorder traversal\n  return [];\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what Binary Tree Preorder Traversal traversal means\n2. Use recursion to traverse a binary tree in Preorder order\n3. Understand the root, then left subtree, then right subtree pattern\n4. Handle base cases (null nodes)\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement Preorder traversal in JavaScript.",
+      "example": "function binarytreepreorder(root) {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Initialize a result array.",
+      "example": "function binarytreepreorder(root) {\n  const result = [];\n  \n}",
+      "action": "continue",
+      "next": "coding-helper-js"
+    },
+    {
+      "stepId": "coding-helper-js",
+      "mentorSays": "Create a helper function.",
+      "example": "function binarytreepreorder(root) {\n  const result = [];\n  \n  function traverse(node) {\n    // Traversal logic\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-base-case-js"
+    },
+    {
+      "stepId": "coding-base-case-js",
+      "mentorSays": "Handle base case (null node).",
+      "example": "function binarytreepreorder(root) {\n  const result = [];\n  \n  function traverse(node) {\n    if (node === null) return;\n    \n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-visit-root-js"
+    },
+    {
+      "stepId": "coding-visit-root-js",
+      "mentorSays": "Visit current node first (preorder: root before children).",
+      "example": "function binarytreepreorder(root) {\n  const result = [];\n  \n  function traverse(node) {\n    if (node === null) return;\n    \n    result.push(node.val);  // Visit root first\n    \n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-visit-left-js"
+    },
+    {
+      "stepId": "coding-visit-left-js",
+      "mentorSays": "Recursively visit left subtree.",
+      "example": "function binarytreepreorder(root) {\n  const result = [];\n  \n  function traverse(node) {\n    if (node === null) return;\n    \n    result.push(node.val);\n    traverse(node.left);  // Visit left\n    \n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-visit-right-js"
+    },
+    {
+      "stepId": "coding-visit-right-js",
+      "mentorSays": "Recursively visit right subtree, then call helper and return.",
+      "example": "function binarytreepreorder(root) {\n  const result = [];\n  const result = [];\n  \n  function traverse(node) {\n    if (node === null) return;\n    \n    result.push(node.val);\n    traverse(node.left);\n    traverse(node.right);  // Visit right\n  }\n  \n  traverse(root);\n  return result;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Binary Tree Preorder Traversal!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: binary-tree-zigzag.json
+================================================================================
+
+{
+  "id": "binary-tree-zigzag",
+  "title": "Binary Tree Zigzag Level Order Traversal",
+  "pattern": "tree",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Binary Tree Zigzag Level Order Traversal lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Binary Tree Zigzag Level Order Traversal problem\n- Recognize the tree pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code.",
+      "example": "function zigzagLevelOrder(root) {}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what Zigzag Level Order Traversal asks for\n2. Use BFS with direction toggle\n3. Reverse alternate levels\n4. Track level direction (left-to-right vs right-to-left)\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Implement zigzag traversal in JS.",
+      "example": "function zigzagLevelOrder(root) {}",
+      "action": "continue",
+      "next": "coding-edge-case-js"
+    },
+    {
+      "stepId": "coding-edge-case-js",
+      "mentorSays": "Handle edge case: if root is null, return empty array.",
+      "example": "function zigzagLevelOrder(root) {\n  if (!root) return [];",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Initialize result array, queue, and direction flag.",
+      "example": "function zigzagLevelOrder(root) {\n  if (!root) return [];\n  let result = [];\n  let queue = [root];\n  let leftToRight = true;",
+      "action": "continue",
+      "next": "coding-bfs-loop-js"
+    },
+    {
+      "stepId": "coding-bfs-loop-js",
+      "mentorSays": "Start BFS loop: while queue is not empty.",
+      "example": "function zigzagLevelOrder(root) {\n  if (!root) return [];\n  let result = [];\n  let queue = [root];\n  let leftToRight = true;\n  \n  while (queue.length > 0) {",
+      "action": "continue",
+      "next": "coding-process-level-js"
+    },
+    {
+      "stepId": "coding-process-level-js",
+      "mentorSays": "Process current level: get level size, create level array, process all nodes at this level.",
+      "example": "function zigzagLevelOrder(root) {\n  if (!root) return [];\n  let result = [];\n  let queue = [root];\n  let leftToRight = true;\n  \n  while (queue.length > 0) {\n    let levelSize = queue.length;\n    let level = [];\n    \n    for (let i = 0; i < levelSize; i++) {\n      let node = queue.shift();\n      level.push(node.val);\n      if (node.left) queue.push(node.left);\n      if (node.right) queue.push(node.right);\n    }",
+      "action": "continue",
+      "next": "coding-reverse-js"
+    },
+    {
+      "stepId": "coding-reverse-js",
+      "mentorSays": "If direction is right-to-left, reverse the level array.",
+      "example": "function zigzagLevelOrder(root) {\n  if (!root) return [];\n  let result = [];\n  let queue = [root];\n  let leftToRight = true;\n  \n  while (queue.length > 0) {\n    let levelSize = queue.length;\n    let level = [];\n    \n    for (let i = 0; i < levelSize; i++) {\n      let node = queue.shift();\n      level.push(node.val);\n      if (node.left) queue.push(node.left);\n      if (node.right) queue.push(node.right);\n    }\n    \n    if (!leftToRight) level.reverse();",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Add level to result, toggle direction, and return result.",
+      "example": "function zigzagLevelOrder(root) {\n  if (!root) return [];\n  let result = [];\n  let queue = [root];\n  let leftToRight = true;\n  \n  while (queue.length > 0) {\n    let levelSize = queue.length;\n    let level = [];\n    \n    for (let i = 0; i < levelSize; i++) {\n      let node = queue.shift();\n      level.push(node.val);\n      if (node.left) queue.push(node.left);\n      if (node.right) queue.push(node.right);\n    }\n    \n    if (!leftToRight) level.reverse();\n    result.push(level);\n    leftToRight = !leftToRight;\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Binary Tree Zigzag Level Order Traversal!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: buy-sell-stock-ii.json
+================================================================================
+
+{
+  "id": "buy-sell-stock-ii",
+  "title": "Best Time to Buy and Sell Stock II",
+  "pattern": "greedy",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Best Time to Buy and Sell Stock II lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Best Time to Buy and Sell Stock II problem\n- Recognize the greedy pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code.",
+      "example": "function maxProfit(prices) {}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "Do you know what loop is?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop repeats code. We use a for loop to iterate through the prices array.",
+      "example": "for (let i = 1; i < prices.length; i++) {\n    // Process prices[i]\n}",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what Buy and Sell Stock II asks for\n2. Use greedy approach to capture all profits\n3. Sum all positive price differences\n4. Make multiple transactions\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Implement max profit in JS.",
+      "example": "function maxProfit(prices) {}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Initialize profit to 0.",
+      "example": "function maxProfit(prices) {\n  let profit = 0;",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Loop through prices starting from index 1.",
+      "example": "function maxProfit(prices) {\n  let profit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {",
+      "action": "continue",
+      "next": "coding-check-increase-js"
+    },
+    {
+      "stepId": "coding-check-increase-js",
+      "mentorSays": "If price increased, add the difference to profit.",
+      "example": "function maxProfit(prices) {\n  let profit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] > prices[i - 1]) {",
+      "action": "continue",
+      "next": "coding-add-profit-js"
+    },
+    {
+      "stepId": "coding-add-profit-js",
+      "mentorSays": "Add the price difference to profit.",
+      "example": "function maxProfit(prices) {\n  let profit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] > prices[i - 1]) {\n      profit += prices[i] - prices[i - 1];",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Return the total profit.",
+      "example": "function maxProfit(prices) {\n  let profit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] > prices[i - 1]) {\n      profit += prices[i] - prices[i - 1];\n    }\n  }\n  \n  return profit;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Best Time to Buy and Sell Stock II!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: buy-sell-stock.json
+================================================================================
+
+{
+  "id": "buy-sell-stock",
+  "title": "Best time to buy and sell stock",
+  "pattern": "greedy",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Best time to buy and sell stock lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Best time to buy and sell stock problem\n- Recognize the greedy pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function maxProfit(prices) {\n  return 0;\n}\n\nmaxProfit([7, 1, 5, 3, 6, 4]) returns 5",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use a loop to iterate through the prices. Do you know what a loop is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in JavaScript runs code for each item in a sequence.\n\nFor example, you can loop through an array to check each price one by one.",
+      "example": "for (let i = 0; i < prices.length; i++) {\n  // Process prices[i]\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Best Time to Buy and Sell Stock problem asks for\n2. Use a greedy approach to track minimum price and maximum profit\n3. Find the maximum profit from one buy and one sell transaction\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the best time to buy and sell stock solution in JavaScript. We'll create a function that takes an array of prices and returns the maximum profit.",
+      "example": "function maxProfit(prices) {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-vars-js"
+    },
+    {
+      "stepId": "coding-init-vars-js",
+      "mentorSays": "First, initialize variables to track the minimum price and maximum profit.",
+      "example": "function maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n}",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, create a loop to iterate through all prices starting from index 1.",
+      "example": "function maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-update-min-js"
+    },
+    {
+      "stepId": "coding-update-min-js",
+      "mentorSays": "Inside the loop, update the minimum price if we find a lower price.",
+      "example": "function maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-calculate-profit-js"
+    },
+    {
+      "stepId": "coding-calculate-profit-js",
+      "mentorSays": "Calculate the profit if we sell today (current price - minimum price) and update maxProfit if this profit is larger.",
+      "example": "function maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    }\n    \n    const profit = prices[i] - minPrice;\n    if (profit > maxProfit) {\n      maxProfit = profit;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-edge-case-js"
+    },
+    {
+      "stepId": "coding-edge-case-js",
+      "mentorSays": "Before we return, let's handle an important edge case.\n\nWhat if there's no profitable trade? Our profit stays at 0, which is correct!\n\nLet's verify our logic handles this:\n- If prices only decrease, minPrice keeps updating but profit stays 0\n- If prices never go up, we correctly return 0\n\nOur code already handles this perfectly - no changes needed. But it's important to think through edge cases!",
+      "example": "function maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    }\n    \n    const profit = prices[i] - minPrice;\n    if (profit > maxProfit) {\n      maxProfit = profit;\n    }\n  }\n  \n  // Edge case: If no profit, returns 0 ✓\n  return maxProfit;\n}",
+      "action": "continue",
+      "next": "coding-edge-case-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return the maximum profit.",
+      "example": "function maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    if (prices[i] < minPrice) {\n      minPrice = prices[i];\n    }\n    \n    const profit = prices[i] - minPrice;\n    if (profit > maxProfit) {\n      maxProfit = profit;\n    }\n  }\n  \n  return maxProfit;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Best time to buy and sell stock!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: checklist.md
+================================================================================
+
+# INPACT Lesson Quality Verification Checklist (v1.0)
+
+Use this checklist to verify any algorithm lesson meets our teaching standards.
+
+---
+
+## ✅ METADATA COMPLIANCE
+
+- [ ] `id` is in kebab-case
+- [ ] `title` is human-readable
+- [ ] `pattern` clearly names the algorithmic technique
+- [ ] `difficulty` is one of: easy, medium, hard
+- [ ] `language` is specified (e.g., "javascript")
+- [ ] `status` is set to "PERFECT" only if all criteria pass
+- [ ] `standardsVersion` is "lessonStandards.v1"
+- [ ] `curriculum.lessonOrderTag` follows format: FOUNDATION-XX
+- [ ] `curriculum.introduces` lists ALL new concepts taught in this lesson
+- [ ] `curriculum.assumesAlreadyTaught` lists ALL prerequisites
+- [ ] No concept appears in BOTH introduces and assumesAlreadyTaught
+
+---
+
+## ✅ PHASE 0: PREREQUISITES CHECK
+
+- [ ] Step 0 exists and is titled "Language & Prerequisite Check"
+- [ ] Lists the selected language by name
+- [ ] Lists ALL JavaScript constructs needed:
+  - [ ] Variables (let, const) if used
+  - [ ] Arrays if used
+  - [ ] Loops if used
+  - [ ] Functions and parameters if used
+  - [ ] Objects if used
+  - [ ] Return statements if used
+  - [ ] Any other constructs (recursion, etc.)
+- [ ] Offers binary choice: "Yes, I'm comfortable" or "No, please explain"
+- [ ] Does NOT use outdated constructs (e.g., `var`)
+
+---
+
+## ✅ PHASE 1: PROBLEM UNDERSTANDING
+
+### Step 1: Problem Statement
+- [ ] Written in plain English (no jargon without explanation)
+- [ ] Includes ONE concrete example with input and output
+- [ ] States explicit constraints/rules
+- [ ] Does NOT hint at the solution approach yet
+- [ ] Example uses small, friendly numbers (not abstract symbols)
+
+### Step 2: Thinking Challenge
+- [ ] Presents 2-3 strategic approach options
+- [ ] Forces learner to choose before teaching
+- [ ] All choices are pedagogically valid (no trick options)
+- [ ] Choices are labeled clearly (e.g., "1. Check every pair...")
+
+---
+
+## ✅ PHASE 2: BRUTE FORCE UNDERSTANDING
+
+### Step 3: Understanding Brute Force
+- [ ] Uses TINY examples (3-5 elements maximum)
+- [ ] Shows step-by-step execution with explicit actions
+- [ ] Uses format: "Take first element: [action] → result ❌"
+- [ ] Demonstrates it works but is limited
+- [ ] Explains WHY it's slow (concrete numbers, not Big-O)
+- [ ] Ends with "Can we do better?" motivation
+- [ ] Does NOT assume learner knows what "brute force" means
+
+---
+
+## ✅ PHASE 3: KEY INSIGHT
+
+### Step 4: The Key Insight
+- [ ] Reframes the problem (what are we REALLY looking for?)
+- [ ] Uses concrete example to show the pattern
+- [ ] NO code yet, pure logic
+- [ ] Uses accessible language
+
+### Step 5: Introducing the Technique
+- [ ] Names the technique explicitly (e.g., "hash map", "two pointers")
+- [ ] Explains what it IS (simple definition)
+- [ ] Explains WHY it's powerful (concrete benefit)
+- [ ] Uses visual/spatial metaphors when appropriate
+- [ ] Does NOT assume learner knows the technique
+
+---
+
+## ✅ PHASE 4: STRATEGY WALKTHROUGH
+
+### Step 6: Strategy Walkthrough
+- [ ] Uses same tiny example from brute force (for comparison)
+- [ ] Shows step-by-step execution of optimal approach
+- [ ] Explicitly shows state changes at each step
+- [ ] Uses format:
+```
+  **Start:** [initial state]
+  **Look at position X:**
+  - Calculate/check: [action]
+  - State after: [updated state]
+```
+- [ ] Highlights when/why it's faster than brute force
+- [ ] NO code syntax yet
+
+---
+
+## ✅ PHASE 5: PSEUDOCODE
+
+### Step 7: Pseudocode
+- [ ] Exists and is complete
+- [ ] Each line is numbered
+- [ ] Uses plain language, NOT programming syntax
+- [ ] Covers the ENTIRE algorithm
+- [ ] States that this maps to actual code
+- [ ] Stored in `pseudocode` array in JSON
+- [ ] Each pseudocode item has `id` and `text` fields
+
+---
+
+## ✅ PHASE 6: CODING (STEPWISE CONSTRUCTION)
+
+### General Coding Phase Rules
+- [ ] ONE concept per step
+- [ ] Each step references pseudocode line numbers
+- [ ] Shows incremental code growth (not full dumps)
+- [ ] Every new line of code is explained
+- [ ] Uses `example` field to show code snippets
+- [ ] Each step has `pseudocodeLineIds` field mapping to pseudocode
+
+### Coding Progression Order
+- [ ] Step 1: Function signature
+- [ ] Step 2: Setup (variables, data structures)
+- [ ] Step 3: Main loop/iteration structure
+- [ ] Step 4: Core logic inside loop
+- [ ] Step 5: Edge cases/returns (if applicable)
+- [ ] Final step: Complete solution shown
+
+### Code Explanation Quality
+- [ ] Every new construct is explained
+- [ ] Example values shown where helpful
+- [ ] No jargon without definition
+- [ ] Explains WHY, not just WHAT
+
+---
+
+## ✅ PHASE 7: COMPLETION
+
+### Final Code Step
+- [ ] Shows complete, clean solution
+- [ ] Brief summary of how it works
+- [ ] Comparison to brute force (why it's better)
+
+### Wrap-Up Step
+- [ ] Lists 3-5 key takeaways
+- [ ] Names the pattern explicitly
+- [ ] States where this pattern appears next
+- [ ] Provides motivation for practice
+- [ ] action is set to "complete"
+
+---
+
+## ✅ TONE & LANGUAGE
+
+- [ ] Uses "we" language (collaborative)
+- [ ] Never uses "you should know this"
+- [ ] Never uses condescending phrases
+- [ ] Never uses outdated syntax (var, etc.)
+- [ ] Explains every construct the first time it appears
+- [ ] Uses tiny examples throughout (3-5 elements max)
+- [ ] Explicit about state changes
+- [ ] References pseudocode line numbers in coding steps
+
+---
+
+## ✅ JSON STRUCTURE
+
+- [ ] Valid JSON (no syntax errors)
+- [ ] All `stepId` values are unique
+- [ ] All `next` references point to valid stepIds
+- [ ] `action` field is either "next", "complete", or omitted (defaults to "next")
+- [ ] `choices` array exists only for thinking challenge steps
+- [ ] Each choice has `label` and `next` fields
+- [ ] `pseudocodeLineIds` arrays contain valid pseudocode IDs
+- [ ] No broken references
+
+---
+
+## ✅ CURRICULUM INTEGRATION
+
+- [ ] `introduces` concepts are actually introduced (not assumed)
+- [ ] `assumesAlreadyTaught` concepts are never re-explained
+- [ ] Lesson builds on previous lessons logically
+- [ ] No circular dependencies in curriculum
+
+---
+
+## 🎯 VERIFICATION COMMAND
+
+Run this prompt in ChatGPT/Cursor to verify a lesson:
+```
+I have an INPACT algorithm lesson JSON file. Please verify it against the 
+INPACT Lesson Quality Verification Checklist (v1.0). 
+
+For each section, report:
+✅ PASS - All criteria met
+⚠️  PARTIAL - Some criteria met
+❌ FAIL - Criteria not met
+
+Provide specific line numbers and issues for any failures.
+
+Here's the lesson:
+[paste JSON]
+```
+
+---
+
+## 📊 SCORING
+
+- **PERFECT**: All checkboxes pass
+- **GOOD**: 90%+ pass, minor issues only
+- **NEEDS WORK**: 75-89% pass
+- **INSUFFICIENT**: <75% pass
+
+Only mark lesson status as "PERFECT" if ALL criteria pass.
+
+================================================================================
+FILE: climbing-stairs-dp.json
+================================================================================
+
+{
+  "id": "climbing-stairs-dp",
+  "title": "Climbing stairs (DP)",
+  "pattern": "dynamic-programming",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Climbing stairs (DP) lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Climbing stairs (DP) problem\n- Recognize the dynamic-programming pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Climbing Stairs problem asks for\n2. Use dynamic programming to count ways to climb stairs\n3. Build the solution by storing previously computed values\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement climbing stairs using dynamic programming in JavaScript.",
+      "example": "function climbStairs(n) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-base-js"
+    },
+    {
+      "stepId": "coding-base-js",
+      "mentorSays": "First, handle edge cases: if n is 0, return 1. If n is 1, return 1.",
+      "example": "function climbStairs(n) {\n  if (n === 0) return 1;\n  if (n === 1) return 1;",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Now, create a DP array to store the number of ways. Initialize base cases: dp[0] = 1, dp[1] = 1.",
+      "example": "function climbStairs(n) {\n  if (n === 0) return 1;\n  if (n === 1) return 1;\n  \n  const dp = new Array(n + 1);\n  dp[0] = 1;\n  dp[1] = 1;",
+      "action": "continue",
+      "next": "coding-fill-js"
+    },
+    {
+      "stepId": "coding-fill-js",
+      "mentorSays": "Now, fill the DP array: for each i from 2 to n, compute dp[i] = dp[i-1] + dp[i-2].",
+      "example": "function climbStairs(n) {\n  if (n === 0) return 1;\n  if (n === 1) return 1;\n  \n  const dp = new Array(n + 1);\n  dp[0] = 1;\n  dp[1] = 1;\n  \n  for (let i = 2; i <= n; i++) {\n    dp[i] = dp[i-1] + dp[i-2];\n  }",
+      "action": "continue",
+      "next": "coding-recursive-relation-js"
+    },
+    {
+      "stepId": "coding-recursive-relation-js",
+      "mentorSays": "Let's define the recursive relation.\n\nTo reach step i, you could have come from:\n- Step i-1 (then take 1 step)\n- Step i-2 (then take 2 steps)\n\nSo: ways[i] = ways[i-1] + ways[i-2]\n\nThis is the Fibonacci sequence!\n\nways[0] = 1\nways[1] = 1\nways[2] = ways[1] + ways[0] = 2\nways[3] = ways[2] + ways[1] = 3\nways[4] = ways[3] + ways[2] = 5\nways[5] = ways[4] + ways[3] = 8",
+      "example": "// Recursive relation:\n// dp[i] = dp[i-1] + dp[i-2]\n\nfor (let i = 2; i <= n; i++) {\n  dp[i] = dp[i-1] + dp[i-2];\n}",
+      "action": "continue",
+      "next": "coding-space-optimization-js"
+    },
+    {
+      "stepId": "coding-space-optimization-js",
+      "mentorSays": "We can optimize space from O(n) to O(1).\n\nNotice: we only need the previous 2 values!\n\nInstead of:\nlet dp = [1, 1, 2, 3, 5, 8]\n\nWe can use:\nlet prev2 = 1;  // dp[i-2]\nlet prev1 = 1;  // dp[i-1]\nlet current;\n\nfor (let i = 2; i <= n; i++) {\n  current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\n\nSpace: O(n) → O(1)\nTime: still O(n)",
+      "example": "// Space optimized version:\nlet prev2 = 1, prev1 = 1;\nfor (let i = 2; i <= n; i++) {\n  let current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\nreturn prev1;",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return dp[n], which contains the number of ways to reach step n.",
+      "example": "function climbStairs(n) {\n  if (n === 0) return 1;\n  if (n === 1) return 1;\n  \n  const dp = new Array(n + 1);\n  dp[0] = 1;\n  dp[1] = 1;\n  \n  for (let i = 2; i <= n; i++) {\n    dp[i] = dp[i-1] + dp[i-2];\n  }\n  \n  return dp[n];\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Climbing stairs (DP)!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

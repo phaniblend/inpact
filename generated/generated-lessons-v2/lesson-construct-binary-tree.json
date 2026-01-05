@@ -1,0 +1,296 @@
+{
+  "id": "construct-binary-tree",
+  "title": "Construct Binary Tree from Preorder and Inorder",
+  "pattern": "tree",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Construct Binary Tree from Preorder and Inorder lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Construct Binary Tree from Preorder and Inorder problem\n- Recognize the tree pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JS?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function buildTree(preorder, inorder) {\n  // Returns the constructed binary tree\n  return null;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what Construct Binary Tree from Preorder and Inorder asks for\n2. Use recursion to build the tree from traversal arrays\n3. Find root in inorder to split left/right subtrees\n4. Build left and right subtrees recursively\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the construct binary tree solution in JS. We'll create a function that takes preorder and inorder arrays and returns the constructed tree.",
+      "example": "function buildTree(preorder, inorder) {\n  \n}",
+      "action": "continue",
+      "next": "coding-base-case-js"
+    },
+    {
+      "stepId": "coding-base-case-js",
+      "mentorSays": "Add the base case: if preorder or inorder arrays are empty, return null.",
+      "example": "function buildTree(preorder, inorder) {\n  // Base case: empty arrays\n  if (preorder.length === 0 || inorder.length === 0) {\n    return null;\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-get-root-js"
+    },
+    {
+      "stepId": "coding-get-root-js",
+      "mentorSays": "Get the root value from the first element of preorder array.",
+      "example": "function buildTree(preorder, inorder) {\n  if (preorder.length === 0 || inorder.length === 0) {\n    return null;\n  }\n  \n  // Root is first element in preorder\n  let rootVal = preorder[0];\n  \n}",
+      "action": "continue",
+      "next": "coding-find-root-index-js"
+    },
+    {
+      "stepId": "coding-find-root-index-js",
+      "mentorSays": "Find the root's position in the inorder array. This tells us how many nodes are in the left subtree.",
+      "example": "function buildTree(preorder, inorder) {\n  if (preorder.length === 0 || inorder.length === 0) {\n    return null;\n  }\n  \n  let rootVal = preorder[0];\n  \n  // Find root position in inorder\n  let rootIndex = inorder.indexOf(rootVal);\n  \n}",
+      "action": "continue",
+      "next": "coding-split-arrays-js"
+    },
+    {
+      "stepId": "coding-split-arrays-js",
+      "mentorSays": "Split the inorder and preorder arrays into left and right subtrees. Left subtree has rootIndex elements, right subtree has the rest.",
+      "example": "function buildTree(preorder, inorder) {\n  if (preorder.length === 0 || inorder.length === 0) {\n    return null;\n  }\n  \n  let rootVal = preorder[0];\n  let rootIndex = inorder.indexOf(rootVal);\n  \n  // Split arrays\n  let leftInorder = inorder.slice(0, rootIndex);\n  let rightInorder = inorder.slice(rootIndex + 1);\n  let leftPreorder = preorder.slice(1, 1 + rootIndex);\n  let rightPreorder = preorder.slice(1 + rootIndex);\n  \n}",
+      "action": "continue",
+      "next": "coding-create-node-js"
+    },
+    {
+      "stepId": "coding-create-node-js",
+      "mentorSays": "Create a new tree node with the root value.",
+      "example": "function buildTree(preorder, inorder) {\n  if (preorder.length === 0 || inorder.length === 0) {\n    return null;\n  }\n  \n  let rootVal = preorder[0];\n  let rootIndex = inorder.indexOf(rootVal);\n  \n  let leftInorder = inorder.slice(0, rootIndex);\n  let rightInorder = inorder.slice(rootIndex + 1);\n  let leftPreorder = preorder.slice(1, 1 + rootIndex);\n  let rightPreorder = preorder.slice(1 + rootIndex);\n  \n  // Create root node\n  let root = new TreeNode(rootVal);\n  \n}",
+      "action": "continue",
+      "next": "coding-recurse-js"
+    },
+    {
+      "stepId": "coding-recurse-js",
+      "mentorSays": "Recursively build the left and right subtrees, then attach them to the root node and return the root.",
+      "example": "function buildTree(preorder, inorder) {\n  if (preorder.length === 0 || inorder.length === 0) {\n    return null;\n  }\n  \n  let rootVal = preorder[0];\n  let rootIndex = inorder.indexOf(rootVal);\n  \n  let leftInorder = inorder.slice(0, rootIndex);\n  let rightInorder = inorder.slice(rootIndex + 1);\n  let leftPreorder = preorder.slice(1, 1 + rootIndex);\n  let rightPreorder = preorder.slice(1 + rootIndex);\n  \n  let root = new TreeNode(rootVal);\n  \n  // Recursively build subtrees\n  root.left = buildTree(leftPreorder, leftInorder);\n  root.right = buildTree(rightPreorder, rightInorder);\n  \n  return root;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Construct Binary Tree from Preorder and Inorder!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

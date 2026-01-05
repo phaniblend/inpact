@@ -1,0 +1,303 @@
+{
+  "id": "merge-sort",
+  "title": "Merge sort",
+  "pattern": "sorting",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Merge sort lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Merge sort problem\n- Recognize the sorting pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Let me explain the JavaScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand how merge sort works using divide-and-conquer\n2. Split arrays in half recursively\n3. Merge two sorted arrays into one\n4. Implement merge sort step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement merge sort in JavaScript. We'll need two functions:\n1. `mergeSort` - the main recursive function\n2. `merge` - a helper function to merge two sorted arrays\n\nLet's start with the mergeSort function.",
+      "example": "function mergeSort(arr) {\n  // Your code here\n}\n\nfunction merge(left, right) {\n  // Helper function to merge two sorted arrays\n}",
+      "action": "continue",
+      "next": "coding-base-case-js"
+    },
+    {
+      "stepId": "coding-base-case-js",
+      "mentorSays": "First, let's add the base case: if the array has 0 or 1 element, it's already sorted, so return it.",
+      "example": "function mergeSort(arr) {\n  // Base case: array of 0 or 1 element is already sorted\n  if (arr.length <= 1) {\n    return arr;\n  }\n}",
+      "action": "continue",
+      "next": "coding-find-mid-js"
+    },
+    {
+      "stepId": "coding-find-mid-js",
+      "mentorSays": "Now, let's find the middle index to split the array in half.",
+      "example": "function mergeSort(arr) {\n  if (arr.length <= 1) {\n    return arr;\n  }\n  \n  // Find the middle index\n  const mid = Math.floor(arr.length / 2);\n}",
+      "action": "continue",
+      "next": "coding-split-js"
+    },
+    {
+      "stepId": "coding-split-js",
+      "mentorSays": "Split the array into left and right halves using slice.",
+      "example": "function mergeSort(arr) {\n  if (arr.length <= 1) {\n    return arr;\n  }\n  \n  const mid = Math.floor(arr.length / 2);\n  \n  // Split into left and right halves\n  const left = arr.slice(0, mid);\n  const right = arr.slice(mid);\n}",
+      "action": "continue",
+      "next": "coding-recursive-sort-js"
+    },
+    {
+      "stepId": "coding-recursive-sort-js",
+      "mentorSays": "Recursively sort both halves. This is the \"conquer\" step - we trust that mergeSort will correctly sort smaller arrays.",
+      "example": "function mergeSort(arr) {\n  if (arr.length <= 1) {\n    return arr;\n  }\n  \n  const mid = Math.floor(arr.length / 2);\n  const left = arr.slice(0, mid);\n  const right = arr.slice(mid);\n  \n  // Recursively sort both halves\n  const sortedLeft = mergeSort(left);\n  const sortedRight = mergeSort(right);\n}",
+      "action": "continue",
+      "next": "coding-merge-call-js"
+    },
+    {
+      "stepId": "coding-merge-call-js",
+      "mentorSays": "Finally, merge the two sorted halves and return the result.",
+      "example": "function mergeSort(arr) {\n  if (arr.length <= 1) {\n    return arr;\n  }\n  \n  const mid = Math.floor(arr.length / 2);\n  const left = arr.slice(0, mid);\n  const right = arr.slice(mid);\n  \n  const sortedLeft = mergeSort(left);\n  const sortedRight = mergeSort(right);\n  \n  // Merge the two sorted halves\n  return merge(sortedLeft, sortedRight);\n}",
+      "action": "continue",
+      "next": "coding-merge-start-js"
+    },
+    {
+      "stepId": "coding-merge-start-js",
+      "mentorSays": "Now let's implement the merge helper function. This function takes two sorted arrays and combines them into one sorted array.",
+      "example": "function merge(left, right) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-merge-init-js"
+    },
+    {
+      "stepId": "coding-merge-init-js",
+      "mentorSays": "Initialize an empty result array and two pointers (i for left array, j for right array).",
+      "example": "function merge(left, right) {\n  const result = [];\n  let i = 0;  // Pointer for left array\n  let j = 0;  // Pointer for right array\n}",
+      "action": "continue",
+      "next": "coding-merge-compare-js"
+    },
+    {
+      "stepId": "coding-merge-compare-js",
+      "mentorSays": "Compare elements from both arrays. Add the smaller one to the result and move its pointer forward. Continue until one array is exhausted.",
+      "example": "function merge(left, right) {\n  const result = [];\n  let i = 0;\n  let j = 0;\n  \n  // Compare and merge\n  while (i < left.length && j < right.length) {\n    if (left[i] <= right[j]) {\n      result.push(left[i]);\n      i++;\n    } else {\n      result.push(right[j]);\n      j++;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-merge-remaining-js"
+    },
+    {
+      "stepId": "coding-merge-remaining-js",
+      "mentorSays": "Add any remaining elements from the array that wasn't fully processed.",
+      "example": "function merge(left, right) {\n  const result = [];\n  let i = 0;\n  let j = 0;\n  \n  while (i < left.length && j < right.length) {\n    if (left[i] <= right[j]) {\n      result.push(left[i]);\n      i++;\n    } else {\n      result.push(right[j]);\n      j++;\n    }\n  }\n  \n  // Add remaining elements\n  while (i < left.length) {\n    result.push(left[i]);\n    i++;\n  }\n  \n  while (j < right.length) {\n    result.push(right[j]);\n    j++;\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Merge sort!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

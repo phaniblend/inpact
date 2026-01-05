@@ -1,0 +1,226 @@
+{
+  "id": "best-time-buy-sell-stock-complete",
+  "title": "Best Time to Buy and Sell Stock",
+  "pattern": "sliding-window",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "COMPLETE",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 12,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-12",
+    "introduces": [
+      "track-minimum",
+      "max-profit-calculation",
+      "single-pass-scan",
+      "greedy-approach"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "array-indexing",
+      "loops",
+      "for-loop",
+      "functions",
+      "return-statement",
+      "comparison-operators",
+      "min-max-operations"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["maximum-subarray", "best-time-buy-sell-stock-ii"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Initialize minPrice = first price, maxProfit = 0." },
+    { "id": "ps2", "text": "For each price in the array:" },
+    { "id": "ps3", "text": "  Update minPrice = minimum of current minPrice and current price." },
+    { "id": "ps4", "text": "  Calculate profit if selling today = current price - minPrice." },
+    { "id": "ps5", "text": "  Update maxProfit = maximum of current maxProfit and profit." },
+    { "id": "ps6", "text": "Return maxProfit." }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Welcome to **Best Time to Buy and Sell Stock**!\n\nThis is a classic interview problem that teaches the \"track minimum\" pattern - essential for many optimization problems.\n\n**What you'll learn:**\n- How to track minimum value while scanning\n- Calculate maximum profit in single pass\n- Greedy approach to optimization\n- O(n) time, O(1) space solution\n\n**By the end, you'll be able to:**\n- Find maximum profit from one buy and one sell\n- Track minimum price efficiently\n- Apply this pattern to other optimization problems\n- Explain your solution clearly in interviews\n\nReady to master stock trading?",
+      "action": "next",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "First, choose your programming language.\n\nThis lesson is available in:\n- JavaScript\n- Python\n- Java\n- C++\n- TypeScript\n\nWhich language would you like to use?",
+      "choices": [
+        { "label": "JavaScript", "next": "prereq-check-js" },
+        { "label": "Python", "next": "prereq-check-python" },
+        { "label": "Java", "next": "prereq-check-java" },
+        { "label": "C++", "next": "prereq-check-cpp" },
+        { "label": "TypeScript", "next": "prereq-check-ts" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Best Time to Buy and Sell Stock, let's make sure you're comfortable with the JavaScript constructs we'll use:\n\n**1. Arrays and Indexing**\n- Access: `prices[i]`\n- Length: `prices.length`\n\n**2. Variables**\n- We'll use `minPrice` to track minimum price seen so far\n- We'll use `maxProfit` to track maximum profit found\n- We'll use loop index `i` to iterate\n\n**3. For Loops**\n- Iterate: `for (let i = 0; i < prices.length; i++)`\n\n**4. Math Operations**\n- Minimum: `Math.min(a, b)`\n- Maximum: `Math.max(a, b)`\n\n**5. Comparison**\n- Compare: `prices[i] < minPrice`\n\n**6. Functions**\n- Function that returns maximum profit\n\nDo you feel comfortable with these JavaScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-js" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Best Time to Buy and Sell Stock, let's make sure you're comfortable with the Python constructs we'll use:\n\n**1. Lists and Indexing**\n- Access: `prices[i]`\n- Length: `len(prices)`\n\n**2. Variables**\n- We'll use `min_price` to track minimum price seen so far\n- We'll use `max_profit` to track maximum profit found\n- We'll use loop index `i` to iterate\n\n**3. For Loops**\n- Iterate: `for i in range(len(prices)):`\n\n**4. Math Operations**\n- Minimum: `min(a, b)`\n- Maximum: `max(a, b)`\n\n**5. Comparison**\n- Compare: `prices[i] < min_price`\n\n**6. Functions**\n- Function that returns maximum profit\n\nDo you feel comfortable with these Python constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-python" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Best Time to Buy and Sell Stock, let's make sure you're comfortable with the Java constructs we'll use:\n\n**1. Arrays and Indexing**\n- Access: `prices[i]`\n- Length: `prices.length`\n\n**2. Variables**\n- We'll use `int minPrice` to track minimum price seen so far\n- We'll use `int maxProfit` to track maximum profit found\n- We'll use loop index `i` to iterate\n\n**3. For Loops**\n- Iterate: `for (int i = 0; i < prices.length; i++)`\n\n**4. Math Operations**\n- Minimum: `Math.min(a, b)`\n- Maximum: `Math.max(a, b)`\n\n**5. Comparison**\n- Compare: `prices[i] < minPrice`\n\n**6. Methods**\n- Method that returns maximum profit\n\nDo you feel comfortable with these Java constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-java" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Best Time to Buy and Sell Stock, let's make sure you're comfortable with the C++ constructs we'll use:\n\n**1. Vectors/Arrays and Indexing**\n- Access: `prices[i]`\n- Length: `prices.size()`\n\n**2. Variables**\n- We'll use `int minPrice` to track minimum price seen so far\n- We'll use `int maxProfit` to track maximum profit found\n- We'll use loop index `i` to iterate\n\n**3. For Loops**\n- Iterate: `for (int i = 0; i < prices.size(); i++)`\n\n**4. Math Operations**\n- Minimum: `min(a, b)`\n- Maximum: `max(a, b)`\n\n**5. Comparison**\n- Compare: `prices[i] < minPrice`\n\n**6. Functions**\n- Function that returns maximum profit\n\nDo you feel comfortable with these C++ constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-cpp" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Best Time to Buy and Sell Stock, let's make sure you're comfortable with the TypeScript constructs we'll use:\n\n**1. Arrays with Types and Indexing**\n- Access: `prices[i]`\n- Length: `prices.length`\n\n**2. Variables with Types**\n- We'll use `let minPrice: number` to track minimum price seen so far\n- We'll use `let maxProfit: number` to track maximum profit found\n- We'll use loop index `i` to iterate\n\n**3. For Loops**\n- Iterate: `for (let i = 0; i < prices.length; i++)`\n\n**4. Math Operations**\n- Minimum: `Math.min(a, b)`\n- Maximum: `Math.max(a, b)`\n\n**5. Comparison**\n- Compare: `prices[i] < minPrice`\n\n**6. Functions with Types**\n- `function maxProfit(prices: number[]): number`\n\nDo you feel comfortable with these TypeScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-ts" }
+      ]
+    },
+    {
+      "stepId": "algorithm-prereq-check",
+      "mentorSays": "### PHASE 2: Algorithm Prerequisites\n\n**Prerequisites for Best Time to Buy and Sell Stock:**\n\n**Required Concepts:**\n1. **Array Scanning** - Iterating through arrays\n2. **Tracking Minimum** - Keeping track of minimum value seen so far\n3. **Profit Calculation** - Profit = sell price - buy price\n\n**No Advanced Prerequisites:**\n- You don't need to know dynamic programming\n- You don't need to know hash maps\n\nThis is a **foundation-level** problem. If you understand arrays, loops, and basic math, you're ready!\n\nDo you feel ready to proceed?",
+      "choices": [
+        { "label": "Yes, I'm ready!", "next": "problem-statement" },
+        { "label": "I need to review prerequisites", "next": "review-prerequisites" }
+      ]
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### PHASE 3: Problem Statement\n\n**Problem:**\n\nYou are given an array `prices` where `prices[i]` is the price of a given stock on the `i`th day.\n\nYou want to maximize your profit by choosing a **single day** to buy one stock and choosing a **different day in the future** to sell that stock.\n\nReturn the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return `0`.\n\n**Input:**\n- `prices`: An array of stock prices (e.g., `[7, 1, 5, 3, 6, 4]`)\n\n**Output:**\n- Return maximum profit (non-negative integer)\n\n**Constraints:**\n- 1 <= prices.length <= 10^5\n- 0 <= prices[i] <= 10^4\n\n**Example 1:**\n```\nInput: prices = [7,1,5,3,6,4]\nOutput: 5\n\nExplanation: Buy on day 2 (price = 1) and sell on day 5 (price = 6), profit = 6-1 = 5.\nNote that buying on day 2 and selling on day 1 is not allowed because you must buy before you sell.\n```\n\n**Example 2:**\n```\nInput: prices = [7,6,4,3,1]\nOutput: 0\n\nExplanation: In this case, no transactions are done and the max profit = 0.\n```\n\n**Understanding the Variables:**\n- `prices`: Array of stock prices for each day\n- `minPrice`: Minimum price seen so far (best buy price)\n- `maxProfit`: Maximum profit found so far\n- `profit`: Profit if selling today = prices[i] - minPrice\n\n**Comprehension Check:**\n\nFor `prices = [7, 1, 5, 3, 6, 4]`:\n\nWhat is the maximum profit?\n[A] Buy at 1, sell at 6 → profit = 5\n[B] Buy at 7, sell at 6 → profit = -1\n[C] Buy at 1, sell at 5 → profit = 4",
+      "choices": [
+        { "label": "[A] Buy at 1, sell at 6 → profit = 5", "next": "correct-profit-5" },
+        { "label": "[B] Buy at 7, sell at 6 → profit = -1", "next": "wrong-negative" },
+        { "label": "[C] Buy at 1, sell at 5 → profit = 4", "next": "wrong-4" }
+      ]
+    },
+    {
+      "stepId": "wrong-negative",
+      "mentorSays": "We can't have negative profit! If we can't make profit, we return 0.\n\nAlso, we must buy before selling. Buying at 7 and selling at 6 means selling before buying, which is not allowed.\n\nThe correct answer is: Buy at 1, sell at 6 → profit = 5",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "wrong-4",
+      "mentorSays": "4 is a valid profit, but it's not the maximum!\n\nBuy at 1, sell at 6 gives profit = 5, which is larger than 4.\n\nThe maximum profit is 5.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "correct-profit-5",
+      "mentorSays": "Perfect! Buy at 1, sell at 6 → profit = 5 is the maximum profit.\n\nYou've got the problem! Now let's think about how to solve it.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "how-would-you-solve",
+      "mentorSays": "### PHASE 4: How Would You Solve It?\n\nBefore I show you the solution, let's think about different approaches.\n\n**Approach A: Brute Force**\n- Try every buy day and every sell day\n- Calculate profit for each pair\n- Keep track of maximum\n- O(n²) time - too slow!\n\n**Approach B: Track Minimum (Optimal)**\n- As we scan, track minimum price seen so far\n- For each day, calculate profit if selling today\n- Update maximum profit\n- O(n) time, O(1) space - optimal!\n\n**Key Insight:**\n- To maximize profit, we want to buy at the lowest price\n- As we scan forward, we can't go back to buy\n- So we track minimum price seen so far\n- For each day, profit = current price - minPrice\n\nWhich approach would you like to explore first?",
+      "choices": [
+        { "label": "Approach A: Brute Force", "next": "walkthrough-brute-force" },
+        { "label": "Approach B: Track Minimum", "next": "walkthrough-optimal" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-brute-force",
+      "mentorSays": "### Approach A: Brute Force\n\n**Algorithm:**\nFor each buy day i:\n  For each sell day j > i:\n    Calculate profit = prices[j] - prices[i]\n    Update maxProfit\n\n**Example:** `prices = [7, 1, 5, 3, 6, 4]`\n\nTry all pairs:\n- Buy at 0 (7), sell at 1 (1): profit = -6\n- Buy at 0 (7), sell at 2 (5): profit = -2\n- ...\n- Buy at 1 (1), sell at 4 (6): profit = 5 ✓\n\n**Time Complexity:** O(n²) - nested loops\n**Space Complexity:** O(1)\n\n**Better approach:** Track minimum in single pass!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-optimal",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Optimal Approach (Track Minimum)\n\n**The Key Insight:**\n\nAs we scan forward, we can't go back to buy. So we track the minimum price seen so far. For each day, we calculate profit if selling today.\n\n**Strategy:**\n1. Initialize minPrice = prices[0], maxProfit = 0\n2. For each price:\n   - Update minPrice = min(minPrice, current price)\n   - Calculate profit = current price - minPrice\n   - Update maxProfit = max(maxProfit, profit)\n3. Return maxProfit\n\n**Example:** `prices = [7, 1, 5, 3, 6, 4]`\n\n**Initial State:**\n```\nprices: [7, 1, 5, 3, 6, 4]\n        ↑\n        i=0\nminPrice = 7\nmaxProfit = 0\n```\n\n**Decision Point 1:** At i=0, price = 7\nWhat should we do?\n[A] Update minPrice = 7\n[B] Calculate profit = 7 - 7 = 0\n[C] Both A and B",
+      "choices": [
+        { "label": "[A] Update minPrice = 7", "next": "correct-update-min" },
+        { "label": "[B] Calculate profit = 7 - 7 = 0", "next": "correct-both" },
+        { "label": "[C] Both A and B", "next": "correct-both" }
+      ]
+    },
+    {
+      "stepId": "correct-update-min",
+      "mentorSays": "Good! We update minPrice = 7. But we should also calculate profit!\n\nLet's do both: update minPrice and calculate profit.",
+      "action": "next",
+      "next": "correct-both"
+    },
+    {
+      "stepId": "correct-both",
+      "mentorSays": "Correct! We do both:\n- Update minPrice = min(7, 7) = 7\n- Calculate profit = 7 - 7 = 0\n- Update maxProfit = max(0, 0) = 0\n\n**State after i=0:**\n```\nprices: [7, 1, 5, 3, 6, 4]\n           ↑\n           i=1\nminPrice = 7\nmaxProfit = 0\n```\n\n**Decision Point 2:** At i=1, price = 1\nWhat should we do?\n[A] Update minPrice = min(7, 1) = 1\n[B] Calculate profit = 1 - 7 = -6\n[C] Both A and B",
+      "choices": [
+        { "label": "[A] Update minPrice = min(7, 1) = 1", "next": "correct-update-min-1" },
+        { "label": "[B] Calculate profit = 1 - 7 = -6", "next": "correct-both-1" },
+        { "label": "[C] Both A and B", "next": "correct-both-1" }
+      ]
+    },
+    {
+      "stepId": "correct-update-min-1",
+      "mentorSays": "Good! We update minPrice = 1. But we should also calculate profit!\n\nLet's do both.",
+      "action": "next",
+      "next": "correct-both-1"
+    },
+    {
+      "stepId": "correct-both-1",
+      "mentorSays": "Correct! We do both:\n- Update minPrice = min(7, 1) = 1\n- Calculate profit = 1 - 1 = 0 (use NEW minPrice!)\n- Update maxProfit = max(0, 0) = 0\n\n**Important:** We use the UPDATED minPrice for profit calculation!\n\n**State after i=1:**\n```\nprices: [7, 1, 5, 3, 6, 4]\n              ↑\n              i=2\nminPrice = 1\nmaxProfit = 0\n```\n\n**Decision Point 3:** At i=2, price = 5\nWhat should we do?\n[A] Update minPrice = min(1, 5) = 1\n[B] Calculate profit = 5 - 1 = 4\n[C] Both A and B",
+      "choices": [
+        { "label": "[A] Update minPrice = min(1, 5) = 1", "next": "correct-both-2" },
+        { "label": "[B] Calculate profit = 5 - 1 = 4", "next": "correct-both-2" },
+        { "label": "[C] Both A and B", "next": "correct-both-2" }
+      ]
+    },
+    {
+      "stepId": "correct-both-2",
+      "mentorSays": "Correct! We do both:\n- Update minPrice = min(1, 5) = 1 (stays same)\n- Calculate profit = 5 - 1 = 4\n- Update maxProfit = max(0, 4) = 4\n\n**State after i=2:**\n```\nprices: [7, 1, 5, 3, 6, 4]\n                 ↑\n                 i=3\nminPrice = 1\nmaxProfit = 4\n```\n\n**Continue:**\n- i=3, price=3: minPrice=1, profit=2, maxProfit=4\n- i=4, price=6: minPrice=1, profit=5, maxProfit=5 ✓\n- i=5, price=4: minPrice=1, profit=3, maxProfit=5\n\n**Final Result:** maxProfit = 5\n\n**Why This Works:**\n- We track minimum price seen so far (best buy price)\n- For each day, we calculate profit if selling today\n- We keep maximum profit found\n- O(n) time, O(1) space!",
+      "action": "next",
+      "next": "pseudocode-phase"
+    },
+    {
+      "stepId": "pseudocode-phase",
+      "mentorSays": "### PHASE 6: Pseudocode\n\nNow let's write the logic in plain English (pseudocode):\n\n**Step 1:** Initialize minPrice = first price, maxProfit = 0.\n\n**Step 2:** For each price in the array:\n\n**Step 3:** Update minPrice = minimum of current minPrice and current price.\n\n**Step 4:** Calculate profit if selling today = current price - minPrice.\n\n**Step 5:** Update maxProfit = maximum of current maxProfit and profit.\n\n**Step 6:** Return maxProfit.\n\nThis pseudocode matches exactly what we walked through!",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "code-implementation"
+    },
+    {
+      "stepId": "code-implementation",
+      "mentorSays": "### PHASE 7: Code Implementation\n\nNow let's translate the pseudocode into JavaScript code.\n\n**Step 1: Initialize variables**\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n}\n```\nThis matches pseudocode Step 1\n\n**Step 2-5: Loop and update**\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    minPrice = Math.min(minPrice, prices[i]);\n    const profit = prices[i] - minPrice;\n    maxProfit = Math.max(maxProfit, profit);\n  }\n}\n```\nThis matches pseudocode Steps 2-5\n\n**Step 6: Return maxProfit**\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    minPrice = Math.min(minPrice, prices[i]);\n    const profit = prices[i] - minPrice;\n    maxProfit = Math.max(maxProfit, profit);\n  }\n  \n  return maxProfit;\n}\n```\nThis matches pseudocode Step 6\n\n**Final Code:**\n```javascript\nfunction maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    minPrice = Math.min(minPrice, prices[i]);\n    const profit = prices[i] - minPrice;\n    maxProfit = Math.max(maxProfit, profit);\n  }\n  \n  return maxProfit;\n}\n```",
+      "example": "function maxProfit(prices) {\n  let minPrice = prices[0];\n  let maxProfit = 0;\n  \n  for (let i = 1; i < prices.length; i++) {\n    minPrice = Math.min(minPrice, prices[i]);\n    const profit = prices[i] - minPrice;\n    maxProfit = Math.max(maxProfit, profit);\n  }\n  \n  return maxProfit;\n}",
+      "action": "next",
+      "next": "complexity-analysis"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "### PHASE 8: Complexity Analysis\n\n**Time Complexity Analysis:**\n\n**Step-by-step breakdown:**\n1. Initialize variables: O(1)\n2. Loop through array: n-1 iterations\n   - Each iteration: O(1) min, subtraction, max operations\n3. Return: O(1)\n\n**Total Time: O(n)**\n\n**Space Complexity Analysis:**\n\n**What we store:**\n- `minPrice` variable: O(1)\n- `maxProfit` variable: O(1)\n- `profit` variable: O(1)\n- No additional arrays or data structures\n\n**Total Space: O(1)**\n\n**Comparison Table:**\n\n| Approach | Time | Space | Notes |\n|----------|------|-------|-------|\n| Brute Force | O(n²) | O(1) | Too slow for large inputs |\n| Track Minimum | O(n) | O(1) | Optimal! |\n\n**Why Optimal is Better:**\n\n- **Time efficiency:** O(n) vs O(n²) - single pass!\n- **Space efficiency:** O(1) - only a few variables\n- **Simple logic:** Easy to understand and implement\n- **Scalable:** Works efficiently for large inputs\n\n**For n = 10,000:**\n- Brute force: ~100,000,000 operations\n- Track minimum: 10,000 operations\n- **10,000x faster!**",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "### PHASE 9: Edge Cases\n\n**Edge Case 1: Single price**\n```\nprices = [7]\n```\n**Why it matters:** Tests if algorithm handles single element.\n**How algorithm handles it:**\n- Loop doesn't execute (i starts at 1, length is 1)\n- maxProfit = 0 (can't buy and sell on same day)\n- Return 0 ✓\n\n**Edge Case 2: Decreasing prices**\n```\nprices = [7, 6, 4, 3, 1]\n```\n**Why it matters:** Tests if algorithm handles no profit scenario.\n**How algorithm handles it:**\n- minPrice keeps decreasing\n- All profits are negative or zero\n- maxProfit stays 0\n- Return 0 ✓\n\n**Edge Case 3: Increasing prices**\n```\nprices = [1, 2, 3, 4, 5]\n```\n**Why it matters:** Tests if algorithm handles maximum profit scenario.\n**How algorithm handles it:**\n- Buy at 1, sell at 5\n- maxProfit = 4\n- Return 4 ✓\n\n**Edge Case 4: Price stays same**\n```\nprices = [5, 5, 5, 5]\n```\n**Why it matters:** Tests if algorithm handles constant prices.\n**How algorithm handles it:**\n- All profits are 0\n- maxProfit = 0\n- Return 0 ✓\n\n**Edge Case 5: Minimum at end**\n```\nprices = [5, 4, 3, 2, 1]\n```\n**Why it matters:** Tests if algorithm handles minimum price at the end.\n**How algorithm handles it:**\n- Can't sell after buying at minimum\n- maxProfit = 0\n- Return 0 ✓\n\n**Edge Case 6: Maximum profit at end**\n```\nprices = [1, 2, 3, 4, 5]\n```\n**Why it matters:** Tests if algorithm finds profit when it's at the end.\n**How algorithm handles it:**\n- Buy at 1, sell at 5\n- maxProfit = 4\n- Return 4 ✓\n\n**Edge Case 7: Multiple profit opportunities**\n```\nprices = [3, 2, 6, 5, 0, 3]\n```\n**Why it matters:** Tests if algorithm finds maximum among multiple profits.\n**How algorithm handles it:**\n- Buy at 2, sell at 6: profit = 4\n- Buy at 0, sell at 3: profit = 3\n- maxProfit = 4\n- Return 4 ✓",
+      "action": "next",
+      "next": "lesson-complete"
+    },
+    {
+      "stepId": "lesson-complete",
+      "mentorSays": "### PHASE 10: Lesson Complete\n\n**Summary:**\n\n**Problem:** Find maximum profit from buying and selling stock once.\n\n**Key Insight:** Track minimum price seen so far. For each day, calculate profit if selling today.\n\n**Non-optimal vs Optimal:**\n- Brute force: O(n²) time, O(1) space - too slow\n- Track minimum: O(n) time, O(1) space - optimal solution!\n\n**Techniques Learned:**\n1. Track minimum while scanning\n2. Calculate profit at each step\n3. Update maximum found so far\n4. Single-pass solution\n\n**Edge Cases Covered:**\n- Single price\n- Decreasing prices (no profit)\n- Increasing prices (maximum profit)\n- Constant prices\n- Minimum at end\n- Maximum profit at end\n- Multiple profit opportunities\n\n**Related Problems:**\n1. **Maximum Subarray** - Similar scanning pattern\n2. **Best Time to Buy and Sell Stock II** - Multiple transactions\n3. **Best Time to Buy and Sell Stock III** - At most 2 transactions\n4. **Container With Most Water** - Similar optimization pattern\n\n**Congratulations!** You've mastered the \"track minimum\" pattern. This technique is essential for many optimization problems!\n\n**Next Steps:**\n- Try solving \"Maximum Subarray\" to practice similar scanning\n- Review the greedy approach concept\n- Practice explaining why we track minimum",
+      "action": "complete"
+    }
+  ]
+}
+

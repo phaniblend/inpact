@@ -1,0 +1,107 @@
+{
+  "id": "trapping-rain-water",
+  "title": "Trapping Rain Water",
+  "difficulty": "hard",
+  "pattern": "two-pointers + max-tracking",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of non-negative numbers.\n\nEach number represents the **height of a vertical wall**.\n\nImagine rain falls on this structure.\n\nYour task is to calculate **how much water can be trapped** between the walls after the rain.",
+      "example": "Heights: [0,1,0,2]",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-visual-example",
+      "mentorSays": "Let’s visualize a very small example.\n\nHeights: [0, 1, 0, 2]\n\nBetween the walls of height 1 and 2, water can be trapped above the 0.\n\nTotal trapped water = 1 unit.",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-what-matters",
+      "mentorSays": "Important observation:\n\nWater at a position depends on:\n• the **highest wall to its left**\n• the **highest wall to its right**\n\nWater level is limited by the **shorter** of these two walls.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you look at one position in the list, how would you decide how much water sits there?\n\nWould you:\n• scan left and right every time?\n• or try to reuse information?",
+      "choices": [
+        {
+          "label": "Scan left and right for each position",
+          "next": "bruteforce-logic"
+        },
+        {
+          "label": "Reuse previously found maximums",
+          "next": "optimized-intuition"
+        }
+      ]
+    },
+    {
+      "stepId": "bruteforce-logic",
+      "mentorSays": "A brute-force idea is:\n\nFor each position:\n• find the tallest wall to the left\n• find the tallest wall to the right\n• trapped water = min(leftMax, rightMax) - height\n\nThis works, but it repeats the same scans many times.",
+      "action": "next"
+    },
+    {
+      "stepId": "pain-point",
+      "mentorSays": "If the list is long, scanning left and right for every position becomes slow.\n\nWe need a way to track maximums **without re-scanning**.",
+      "action": "next"
+    },
+    {
+      "stepId": "optimized-intuition",
+      "mentorSays": "Here’s the key idea:\n\nIf we process the walls from **both ends inward**, we can keep track of:\n• the highest wall seen so far on the left\n• the highest wall seen so far on the right\n\nThis allows us to calculate trapped water in one pass.",
+      "action": "next"
+    },
+    {
+      "stepId": "two-pointer-idea",
+      "mentorSays": "We use **two pointers**:\n\n• left pointer starts at the beginning\n• right pointer starts at the end\n\nWe also track:\n• leftMax → tallest wall seen from the left\n• rightMax → tallest wall seen from the right",
+      "action": "next"
+    },
+    {
+      "stepId": "why-pointer-moves",
+      "mentorSays": "At each step:\n\n• If left height is smaller than right height:\n  - water depends on leftMax\n  - move left pointer\n\n• Otherwise:\n  - water depends on rightMax\n  - move right pointer",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\nHeights: [0,1,0,2]\n\nStep-by-step:\n• left=0, right=3\n• leftMax=0, rightMax=2\n• move left → trapped = 0\n• move left → trapped = 1\n\nTotal water = 1",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "set left pointer to start, right pointer to end",
+        "initialize leftMax and rightMax to 0",
+        "initialize totalWater to 0",
+        "while left < right:",
+        "  if height[left] < height[right]:",
+        "    update leftMax",
+        "    add leftMax - height[left] to totalWater",
+        "    move left pointer",
+        "  else:",
+        "    update rightMax",
+        "    add rightMax - height[right] to totalWater",
+        "    move right pointer",
+        "return totalWater"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself and track pointer movement carefully.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function trap(height) {\n  let left = 0;\n  let right = height.length - 1;\n  let leftMax = 0;\n  let rightMax = 0;\n  let water = 0;\n\n  while (left < right) {\n    if (height[left] < height[right]) {\n      leftMax = Math.max(leftMax, height[left]);\n      water += leftMax - height[left];\n      left++;\n    } else {\n      rightMax = Math.max(rightMax, height[right]);\n      water += rightMax - height[right];\n      right--;\n    }\n  }\n\n  return water;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example checks:\n\n[0,1,0,2] → 1\n[4,2,0,3,2,5] → 9\n\nThis confirms the two-pointer solution works correctly.",
+      "action": "complete"
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "id": "remove-nth-node",
+  "title": "Remove Nth Node From End of List",
+  "difficulty": "medium",
+  "pattern": "linked-list + two-pointers",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the head of a singly linked list and a number **n**.\n\nYour task is to remove the **n-th node from the end** of the list and return the head of the modified list.",
+      "example": "List: 1 → 2 → 3 → 4 → 5, n = 2",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-n-from-end",
+      "mentorSays": "Important clarification:\n\n• Counting starts from the **end**, not the beginning\n• n = 1 means remove the **last** node\n• n = length means remove the **first** node",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Example:\n\nList: 1 → 2 → 3 → 4 → 5\nn = 2\n\nCounting from the end:\n• 1st from end → 5\n• 2nd from end → 4\n\nNode to remove is **4**.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you only have the head of the list, how could you find the n-th node from the end?",
+      "choices": [
+        {
+          "label": "First count all nodes, then remove",
+          "next": "two-pass-idea"
+        },
+        {
+          "label": "Try to do it in one pass",
+          "next": "one-pass-intuition"
+        }
+      ]
+    },
+    {
+      "stepId": "two-pass-idea",
+      "mentorSays": "A two-pass approach would:\n\n• traverse the list to count nodes\n• calculate the position to remove from the start\n• traverse again to remove it\n\nThis works, but it takes two passes.",
+      "action": "next"
+    },
+    {
+      "stepId": "one-pass-intuition",
+      "mentorSays": "We can do better.\n\nIf one pointer is **n nodes ahead** of another:\n\n• when the first reaches the end\n• the second will be at the node just before the one to remove",
+      "action": "next"
+    },
+    {
+      "stepId": "dummy-node-idea",
+      "mentorSays": "To handle edge cases (like removing the first node), we use a **dummy node**.\n\nThe dummy node points to the head and simplifies pointer updates.",
+      "action": "next"
+    },
+    {
+      "stepId": "pointer-setup",
+      "mentorSays": "We use two pointers:\n\n• first → moves ahead by n+1 steps\n• second → starts at the dummy node\n\nThen both move together.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\nList: 1 → 2 → 3 → 4 → 5, n = 2\n\nAdd dummy:\n0 → 1 → 2 → 3 → 4 → 5\n\nMove first pointer 3 steps ahead.\nThen move both pointers together until first reaches the end.\n\nSecond pointer now points just before the node to remove.",
+      "action": "next"
+    },
+    {
+      "stepId": "remove-step",
+      "mentorSays": "To remove a node:\n\n• set second.next to second.next.next\n\nThis skips the target node.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "create a dummy node pointing to head",
+        "set first and second to dummy",
+        "move first forward n+1 steps",
+        "while first is not null:",
+        "  move first forward",
+        "  move second forward",
+        "remove second.next by linking to second.next.next",
+        "return dummy.next"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nFocus on pointer movement and edge cases.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function removeNthFromEnd(head, n) {\n  const dummy = { next: head };\n  let first = dummy;\n  let second = dummy;\n\n  for (let i = 0; i <= n; i++) {\n    first = first.next;\n  }\n\n  while (first !== null) {\n    first = first.next;\n    second = second.next;\n  }\n\n  second.next = second.next.next;\n  return dummy.next;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final checks:\n\n1 → 2 → 3 → 4 → 5, n=2 → 1 → 2 → 3 → 5\n1, n=1 → empty list\n\nThe correct node is removed in one pass.",
+      "action": "complete"
+    }
+  ]
+}

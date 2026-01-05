@@ -1,0 +1,167 @@
+{
+  "id": "plus-one",
+  "title": "Plus One",
+  "pattern": "array-manipulation + carry",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-01",
+    "introduces": ["variables", "arrays", "indexes", "loops", "functions", "return", "console.log", "carry"],
+    "assumesAlreadyTaught": []
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Start with carry = 1 (because we add one)." },
+    { "id": "ps2", "text": "Move from the last digit to the first digit." },
+    { "id": "ps3", "text": "Add carry to the current digit." },
+    { "id": "ps4", "text": "If digit becomes 10, set it to 0 and keep carry = 1." },
+    { "id": "ps5", "text": "Otherwise set carry = 0 and stop (we are done)." },
+    { "id": "ps6", "text": "If carry is still 1 after the loop, add 1 to the front." },
+    { "id": "ps7", "text": "Return the digits array." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Plus One** in **JavaScript**.\n\nToday you’ll learn two things:\n1) How an **array** can represent a number\n2) How to add **1** using a right-to-left carry",
+      "action": "next",
+      "next": "js-mini-basics"
+    },
+    {
+      "stepId": "js-mini-basics",
+      "mentorSays": "Quick JavaScript basics we will use (no quiz):\n\n- **Variable**: a named box for a value (`let`, `const`)\n- **Array**: a larger box holding multiple values in order\n- **Index**: the position of an item in the array (starts at 0)\n- **Function**: reusable code block\n- **console.log**: built-in output tool to print results\n\nIf any of these words feels new, don’t worry — I’ll explain it when we use it.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array of digits.\n\nExample:\n`digits = [1, 2, 3]`\n\nThis array represents the number **123**.\n\nYour task: add **1** and return the resulting digits array.",
+      "action": "next",
+      "next": "array-explained"
+    },
+    {
+      "stepId": "array-explained",
+      "mentorSays": "### What is an array here?\n`digits = [1, 2, 3]`\n\n- `digits[0]` is 1\n- `digits[1]` is 2\n- `digits[2]` is 3\n\nSo indexes are:\n0 → first digit\n1 → second digit\n2 → third digit\n\nWe will change digits by using indexes.",
+      "action": "next",
+      "next": "tiny-example-1"
+    },
+    {
+      "stepId": "tiny-example-1",
+      "mentorSays": "Tiny example:\n\n`[1, 2, 3] + 1 → [1, 2, 4]`\n\nOnly the last digit changes.\n\nNow the real challenge: what if the last digit is 9?",
+      "action": "next",
+      "next": "carry-intuition"
+    },
+    {
+      "stepId": "carry-intuition",
+      "mentorSays": "### Carry (simple meaning)\nIf we add 1 to 9:\n- `9 + 1 = 10`\n- We write **0** in that place\n- And we carry **1** to the left\n\nExample:\n`[1, 2, 9] + 1 → [1, 3, 0]`",
+      "action": "next",
+      "next": "edge-case-all-nines"
+    },
+    {
+      "stepId": "edge-case-all-nines",
+      "mentorSays": "Edge case:\n\n`[9, 9, 9] + 1 → [1, 0, 0, 0]`\n\nThe number becomes longer.\nThat happens because carry continues past the first digit.",
+      "action": "next",
+      "next": "thinking-challenge-direction"
+    },
+    {
+      "stepId": "thinking-challenge-direction",
+      "mentorSays": "Thinking challenge:\n\nWhen you add numbers normally, do you start from the left or the right?\n\n(Choose one.)",
+      "choices": [
+        { "label": "Start from the rightmost digit", "next": "core-idea" },
+        { "label": "Start from the leftmost digit", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct direction: **right to left**.\n\nBecause the **rightmost digit** is the least significant digit, and addition starts there.\n\nSo our plan:\n- start at the last index\n- add 1\n- if it becomes 10 → write 0 and keep carrying\n- otherwise stop",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (your 3rd column)\nThis is the full plan. Each next step will highlight parts of this plan.",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\ndigits = `[1, 2, 9]`\n\n- carry = 1\n- start from last digit (index 2): 9 + 1 = 10 → put 0, carry stays 1\n- move left (index 1): 2 + 1 = 3 → put 3, carry becomes 0 → stop\n\nResult: `[1, 3, 0]`",
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nRule: type the code yourself for muscle memory.\n(Your UI can block copy actions outside the editor with a gentle toast.)",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.\n\nA function takes input (parameter) and returns output.",
+      "example": "function plusOne(digits) {\n\n}",
+      "action": "next",
+      "next": "code-02-carry",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-carry",
+      "mentorSays": "Step 2: Create `carry = 1` because we are adding one.",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n\n}",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps1", "ps2"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Loop from the last index to the first.\n\n- `digits.length - 1` is the last index\n- we go backwards: `i--`",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n\n  for (let i = digits.length - 1; i >= 0; i--) {\n\n  }\n}",
+      "action": "next",
+      "next": "code-04-add",
+      "pseudocodeLineIds": ["ps2", "ps3"]
+    },
+    {
+      "stepId": "code-04-add",
+      "mentorSays": "Step 4: Add carry to the current digit.",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n\n  for (let i = digits.length - 1; i >= 0; i--) {\n    digits[i] = digits[i] + carry;\n\n  }\n}",
+      "action": "next",
+      "next": "code-05-handle-10",
+      "pseudocodeLineIds": ["ps3", "ps4", "ps5"]
+    },
+    {
+      "stepId": "code-05-handle-10",
+      "mentorSays": "Step 5: If it becomes 10, write 0 and keep carry = 1.\nOtherwise carry = 0 and we stop early.",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n\n  for (let i = digits.length - 1; i >= 0; i--) {\n    digits[i] = digits[i] + carry;\n\n    if (digits[i] === 10) {\n      digits[i] = 0;\n      carry = 1;\n    } else {\n      carry = 0;\n      break;\n    }\n  }\n\n}",
+      "action": "next",
+      "next": "code-06-front-carry",
+      "pseudocodeLineIds": ["ps4", "ps5", "ps6"]
+    },
+    {
+      "stepId": "code-06-front-carry",
+      "mentorSays": "Step 6: If carry is still 1, add 1 at the front.\n\n`unshift(1)` adds an item at the beginning of the array.",
+      "example": "function plusOne(digits) {\n  let carry = 1;\n\n  for (let i = digits.length - 1; i >= 0; i--) {\n    digits[i] = digits[i] + carry;\n\n    if (digits[i] === 10) {\n      digits[i] = 0;\n      carry = 1;\n    } else {\n      carry = 0;\n      break;\n    }\n  }\n\n  if (carry === 1) {\n    digits.unshift(1);\n  }\n\n  return digits;\n}",
+      "action": "next",
+      "next": "test-run",
+      "pseudocodeLineIds": ["ps6", "ps7"]
+    },
+    {
+      "stepId": "test-run",
+      "mentorSays": "Step 7: Test quickly using console.\n\nIn JavaScript, `console.log` prints output.",
+      "example": "console.log(plusOne([1,2,3])); // [1,2,4]\nconsole.log(plusOne([1,2,9])); // [1,3,0]\nconsole.log(plusOne([9,9,9])); // [1,0,0,0]",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- arrays + indexes (basic)\n- looping from right to left\n- carry logic\n\nNext lessons will assume you know what arrays and indexes are, so we won’t repeat those prereqs.",
+      "action": "complete"
+    },
+    {
+      "stepId": "gentle-redirect",
+      "mentorSays": "Good question — it’s just a bit outside the current step.\n\nLet’s finish this part first, and we’ll cover that concept in the right lesson.",
+      "action": "next",
+      "next": "resume-last-step"
+    }
+  ]
+}

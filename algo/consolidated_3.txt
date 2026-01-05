@@ -1,0 +1,3381 @@
+
+================================================================================
+FILE: course-schedule.json
+================================================================================
+
+{
+  "id": "course-schedule",
+  "title": "Course Schedule",
+  "pattern": "graph",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Course Schedule lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Course Schedule problem\n- Recognize the graph pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code.",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Course Schedule problem asks for\n2. Detect cycles in a directed graph\n3. Use DFS with coloring (white/gray/black) to detect cycles\n4. Understand topological sort concept\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement course schedule in JavaScript.",
+      "example": "function canFinish(numCourses, prerequisites) {\n  \n}",
+      "action": "continue",
+      "next": "coding-build-graph-js"
+    },
+    {
+      "stepId": "coding-build-graph-js",
+      "mentorSays": "Build the adjacency list graph from prerequisites.",
+      "example": "function canFinish(numCourses, prerequisites) {\n  // Build graph\n  const graph = Array(numCourses).fill(0).map(() => []);\n  for (let [course, prereq] of prerequisites) {\n    graph[prereq].push(course);\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-init-color-js"
+    },
+    {
+      "stepId": "coding-init-color-js",
+      "mentorSays": "Initialize color array (0=white, 1=gray, 2=black).",
+      "example": "function canFinish(numCourses, prerequisites) {\n  const graph = Array(numCourses).fill(0).map(() => []);\n  for (let [course, prereq] of prerequisites) {\n    graph[prereq].push(course);\n  }\n  \n  const color = Array(numCourses).fill(0);  // 0=white, 1=gray, 2=black\n  \n}",
+      "action": "continue",
+      "next": "coding-dfs-helper-js"
+    },
+    {
+      "stepId": "coding-dfs-helper-js",
+      "mentorSays": "Create DFS helper function that detects cycles.",
+      "example": "function canFinish(numCourses, prerequisites) {\n  const graph = Array(numCourses).fill(0).map(() => []);\n  for (let [course, prereq] of prerequisites) {\n    graph[prereq].push(course);\n  }\n  const color = Array(numCourses).fill(0);\n  \n  function dfs(node) {\n    // DFS logic\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-check-cycle-js"
+    },
+    {
+      "stepId": "coding-check-cycle-js",
+      "mentorSays": "In DFS, check if node is gray (cycle detected).",
+      "example": "function canFinish(numCourses, prerequisites) {\n  // ... graph and color setup ...\n  \n  function dfs(node) {\n    if (color[node] === 1) return false;  // Gray = cycle!\n    if (color[node] === 2) return true;   // Black = processed\n    \n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-mark-gray-js"
+    },
+    {
+      "stepId": "coding-mark-gray-js",
+      "mentorSays": "Mark node as gray, visit neighbors, mark as black.",
+      "example": "function canFinish(numCourses, prerequisites) {\n  // ... setup ...\n  \n  function dfs(node) {\n    if (color[node] === 1) return false;\n    if (color[node] === 2) return true;\n    \n    color[node] = 1;  // Mark as gray\n    \n    for (let neighbor of graph[node]) {\n      if (!dfs(neighbor)) return false;\n    }\n    \n    color[node] = 2;  // Mark as black\n    return true;\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-call-dfs-js"
+    },
+    {
+      "stepId": "coding-call-dfs-js",
+      "mentorSays": "Call DFS for all nodes and return result.",
+      "example": "function canFinish(numCourses, prerequisites) {\n  const graph = Array(numCourses).fill(0).map(() => []);\n  for (let [course, prereq] of prerequisites) {\n    graph[prereq].push(course);\n  }\n  const color = Array(numCourses).fill(0);\n  \n  function dfs(node) {\n    if (color[node] === 1) return false;\n    if (color[node] === 2) return true;\n    \n    color[node] = 1;\n    for (let neighbor of graph[node]) {\n      if (!dfs(neighbor)) return false;\n    }\n    color[node] = 2;\n    return true;\n  }\n  \n  for (let i = 0; i < numCourses; i++) {\n    if (!dfs(i)) return false;\n  }\n  \n  return true;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Course Schedule!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: decode-ways.json
+================================================================================
+
+{
+  "id": "decode-ways",
+  "title": "Decode Ways",
+  "pattern": "dynamic-programming",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Decode Ways lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Decode Ways problem\n- Recognize the dynamic-programming pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code.",
+      "example": "function numDecodings() {}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what Decode Ways asks for\n2. Use dynamic programming to count ways\n3. Handle single and double digit decoding\n4. Check valid encoding (1-26)\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Implement decode ways in JS.",
+      "example": "function numDecodings(s) {}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Initialize DP array. dp[0] = 1 (one way to decode empty string).",
+      "example": "",
+      "action": "continue",
+      "next": "coding-first-js"
+    },
+    {
+      "stepId": "coding-first-js",
+      "mentorSays": "Handle first character: if '0' return 0, else dp[1] = 1.",
+      "example": "",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Loop from index 1 to end.",
+      "example": "",
+      "action": "continue",
+      "next": "coding-single-js"
+    },
+    {
+      "stepId": "coding-single-js",
+      "mentorSays": "Check single digit: if valid (1-9), add dp[i-1].",
+      "example": "",
+      "action": "continue",
+      "next": "coding-double-js"
+    },
+    {
+      "stepId": "coding-double-js",
+      "mentorSays": "Check double digit: if valid (10-26), add dp[i-2].",
+      "example": "",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Return dp[n] where n is string length.",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Decode Ways!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: diameter-of-binary-tree.json
+================================================================================
+
+{
+  "id": "diameter-of-binary-tree",
+  "title": "Diameter of Binary Tree",
+  "pattern": "tree",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Diameter of Binary Tree lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Diameter of Binary Tree problem\n- Recognize the tree pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function diameterOfBinaryTree(root) {\n  // Returns diameter of tree\n  return 0;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Diameter of Binary Tree problem asks for\n2. Use recursion to calculate the diameter\n3. Track both height and diameter in the same traversal\n4. Understand that diameter may pass through root or not\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the diameter of binary tree solution in JavaScript. We'll create a function that takes the root and returns the diameter.",
+      "example": "function diameterOfBinaryTree(root) {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-max-js"
+    },
+    {
+      "stepId": "coding-init-max-js",
+      "mentorSays": "Initialize a variable to track the maximum diameter. We'll use an array to pass by reference.",
+      "example": "function diameterOfBinaryTree(root) {\n  // Track maximum diameter\n  let maxDiameter = [0];\n  \n}",
+      "action": "continue",
+      "next": "coding-helper-start-js"
+    },
+    {
+      "stepId": "coding-helper-start-js",
+      "mentorSays": "Create a helper function that calculates height and updates the maximum diameter.",
+      "example": "function diameterOfBinaryTree(root) {\n  let maxDiameter = [0];\n  \n  // Helper function to calculate height and track diameter\n  function height(node) {\n    // Height calculation here\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-helper-base-js"
+    },
+    {
+      "stepId": "coding-helper-base-js",
+      "mentorSays": "In the helper function, handle the base case: if node is null, return 0.",
+      "example": "function diameterOfBinaryTree(root) {\n  let maxDiameter = [0];\n  \n  function height(node) {\n    // Base case: empty tree has height 0\n    if (node === null) {\n      return 0;\n    }\n    \n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-helper-recursive-js"
+    },
+    {
+      "stepId": "coding-helper-recursive-js",
+      "mentorSays": "Recursively calculate left and right heights.",
+      "example": "function diameterOfBinaryTree(root) {\n  let maxDiameter = [0];\n  \n  function height(node) {\n    if (node === null) {\n      return 0;\n    }\n    \n    // Recursively calculate heights\n    let leftHeight = height(node.left);\n    let rightHeight = height(node.right);\n    \n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-update-diameter-js"
+    },
+    {
+      "stepId": "coding-update-diameter-js",
+      "mentorSays": "Update the maximum diameter: diameter through this node = leftHeight + rightHeight.",
+      "example": "function diameterOfBinaryTree(root) {\n  let maxDiameter = [0];\n  \n  function height(node) {\n    if (node === null) {\n      return 0;\n    }\n    \n    let leftHeight = height(node.left);\n    let rightHeight = height(node.right);\n    \n    // Update maximum diameter\n    maxDiameter[0] = Math.max(maxDiameter[0], leftHeight + rightHeight);\n    \n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-return-height-js"
+    },
+    {
+      "stepId": "coding-return-height-js",
+      "mentorSays": "Return the height of the current node: 1 + max(leftHeight, rightHeight).",
+      "example": "function diameterOfBinaryTree(root) {\n  let maxDiameter = [0];\n  \n  function height(node) {\n    if (node === null) {\n      return 0;\n    }\n    \n    let leftHeight = height(node.left);\n    let rightHeight = height(node.right);\n    \n    maxDiameter[0] = Math.max(maxDiameter[0], leftHeight + rightHeight);\n    \n    // Return height of current node\n    return 1 + Math.max(leftHeight, rightHeight);\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-call-return-js"
+    },
+    {
+      "stepId": "coding-call-return-js",
+      "mentorSays": "Call the helper function and return the maximum diameter.",
+      "example": "function diameterOfBinaryTree(root) {\n  let maxDiameter = [0];\n  \n  function height(node) {\n    if (node === null) {\n      return 0;\n    }\n    \n    let leftHeight = height(node.left);\n    let rightHeight = height(node.right);\n    \n    maxDiameter[0] = Math.max(maxDiameter[0], leftHeight + rightHeight);\n    \n    return 1 + Math.max(leftHeight, rightHeight);\n  }\n  \n  // Call helper to calculate and update diameter\n  height(root);\n  \n  return maxDiameter[0];\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Diameter of Binary Tree!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: edit-distance.json
+================================================================================
+
+{
+  "id": "edit-distance",
+  "title": "Edit distance",
+  "pattern": "dynamic-programming",
+  "difficulty": "hard",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Edit distance lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Edit distance problem\n- Recognize the dynamic-programming pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Edit Distance (Levenshtein Distance) problem asks for\n2. Use dynamic programming with a 2D table to find minimum edit operations\n3. Handle three operations: insert, delete, and replace\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement edit distance in JavaScript. We'll use dynamic programming with a 2D table.",
+      "example": "function minDistance(word1, word2) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "First, get the lengths of both strings and create a 2D DP table. Initialize base cases: dp[0][j] = j (insert j characters) and dp[i][0] = i (delete i characters).",
+      "example": "function minDistance(word1, word2) {\n  const m = word1.length;\n  const n = word2.length;\n  \n  // dp[i][j] = min edits to convert word1[0..i-1] to word2[0..j-1]\n  const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));\n  \n  // Base cases: empty string conversions\n  for (let i = 0; i <= m; i++) {\n    dp[i][0] = i;  // Delete i characters\n  }\n  for (let j = 0; j <= n; j++) {\n    dp[0][j] = j;  // Insert j characters\n  }",
+      "action": "continue",
+      "next": "coding-loop-js"
+    },
+    {
+      "stepId": "coding-loop-js",
+      "mentorSays": "Now, fill the DP table using nested loops. For each position, check if characters match.",
+      "example": "function minDistance(word1, word2) {\n  const m = word1.length;\n  const n = word2.length;\n  \n  const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));\n  \n  for (let i = 0; i <= m; i++) {\n    dp[i][0] = i;\n  }\n  for (let j = 0; j <= n; j++) {\n    dp[0][j] = j;\n  }\n  \n  // Fill DP table\n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      // Check if characters match\n    }\n  }",
+      "action": "continue",
+      "next": "coding-match-js"
+    },
+    {
+      "stepId": "coding-match-js",
+      "mentorSays": "If characters match, no operation needed: dp[i][j] = dp[i-1][j-1]. Otherwise, take the minimum of three operations: delete, insert, or replace.",
+      "example": "function minDistance(word1, word2) {\n  const m = word1.length;\n  const n = word2.length;\n  \n  const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));\n  \n  for (let i = 0; i <= m; i++) {\n    dp[i][0] = i;\n  }\n  for (let j = 0; j <= n; j++) {\n    dp[0][j] = j;\n  }\n  \n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (word1[i - 1] === word2[j - 1]) {\n        // Characters match: no operation needed\n        dp[i][j] = dp[i - 1][j - 1];\n      } else {\n        // Characters don't match: try delete, insert, or replace\n        dp[i][j] = 1 + Math.min(\n          dp[i - 1][j],      // delete from word1\n          dp[i][j - 1],      // insert into word1\n          dp[i - 1][j - 1]   // replace in word1\n        );\n      }\n    }\n  }",
+      "action": "continue",
+      "next": "coding-2d-initialization-js"
+    },
+    {
+      "stepId": "coding-2d-initialization-js",
+      "mentorSays": "Let's initialize the 2D DP table with base cases.\n\nBase cases:\n- dp[0][j] = j (need to insert j characters to transform empty string to word2[0..j-1])\n- dp[i][0] = i (need to delete i characters to transform word1[0..i-1] to empty string)\n\nThese form the first row and first column of our table!",
+      "example": "// Initialize 2D DP table\nlet dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));\n\n// Base cases:\nfor (let i = 0; i <= m; i++) dp[i][0] = i;\nfor (let j = 0; j <= n; j++) dp[0][j] = j;",
+      "action": "continue",
+      "next": "coding-three-operations-js"
+    },
+    {
+      "stepId": "coding-three-operations-js",
+      "mentorSays": "Now let's fill the table by considering three operations.\n\nFor each cell dp[i][j]:\n- If characters match: dp[i][j] = dp[i-1][j-1] (no operation)\n- Else: dp[i][j] = 1 + min(delete, insert, replace)\n  - DELETE: dp[i-1][j] + 1\n  - INSERT: dp[i][j-1] + 1\n  - REPLACE: dp[i-1][j-1] + 1\n\nWe choose the minimum cost operation!",
+      "example": "for (let i = 1; i <= m; i++) {\n  for (let j = 1; j <= n; j++) {\n    if (word1[i-1] === word2[j-1]) {\n      dp[i][j] = dp[i-1][j-1];\n    } else {\n      dp[i][j] = 1 + Math.min(\n        dp[i-1][j],    // delete\n        dp[i][j-1],    // insert\n        dp[i-1][j-1]   // replace\n      );\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return dp[m][n], which contains the minimum edit distance to convert word1 to word2.",
+      "example": "function minDistance(word1, word2) {\n  const m = word1.length;\n  const n = word2.length;\n  \n  const dp = Array(m + 1).fill(null).map(() => Array(n + 1).fill(0));\n  \n  for (let i = 0; i <= m; i++) {\n    dp[i][0] = i;\n  }\n  for (let j = 0; j <= n; j++) {\n    dp[0][j] = j;\n  }\n  \n  for (let i = 1; i <= m; i++) {\n    for (let j = 1; j <= n; j++) {\n      if (word1[i - 1] === word2[j - 1]) {\n        dp[i][j] = dp[i - 1][j - 1];\n      } else {\n        dp[i][j] = 1 + Math.min(\n          dp[i - 1][j],\n          dp[i][j - 1],\n          dp[i - 1][j - 1]\n        );\n      }\n    }\n  }\n  \n  return dp[m][n];\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Edit distance!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: fibonacci-dp.json
+================================================================================
+
+{
+  "id": "fibonacci-dp",
+  "title": "Fibonacci with DP",
+  "pattern": "dynamic-programming",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Fibonacci with DP lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Fibonacci with DP problem\n- Recognize the dynamic-programming pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Fibonacci sequence is\n2. Use dynamic programming to compute Fibonacci numbers efficiently\n3. Build the solution by storing previously computed values\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement Fibonacci using dynamic programming in JavaScript.",
+      "example": "function fib(n) {\n  // Your code here\n}",
+      "action": "continue",
+      "next": "coding-base-js"
+    },
+    {
+      "stepId": "coding-base-js",
+      "mentorSays": "First, handle edge cases: if n is 0, return 0. If n is 1, return 1.",
+      "example": "function fib(n) {\n  if (n === 0) return 0;\n  if (n === 1) return 1;",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Now, create a DP array to store Fibonacci numbers. Initialize base cases: dp[0] = 0, dp[1] = 1.",
+      "example": "function fib(n) {\n  if (n === 0) return 0;\n  if (n === 1) return 1;\n  \n  const dp = new Array(n + 1);\n  dp[0] = 0;\n  dp[1] = 1;",
+      "action": "continue",
+      "next": "coding-fill-js"
+    },
+    {
+      "stepId": "coding-fill-js",
+      "mentorSays": "Now, fill the DP array: for each i from 2 to n, compute dp[i] = dp[i-1] + dp[i-2].",
+      "example": "function fib(n) {\n  if (n === 0) return 0;\n  if (n === 1) return 1;\n  \n  const dp = new Array(n + 1);\n  dp[0] = 0;\n  dp[1] = 1;\n  \n  for (let i = 2; i <= n; i++) {\n    dp[i] = dp[i-1] + dp[i-2];\n  }",
+      "action": "continue",
+      "next": "coding-memoization-js"
+    },
+    {
+      "stepId": "coding-memoization-js",
+      "mentorSays": "Let's add memoization to the recursive solution.\n\nWe create a memo object to cache results:\n- Before computing fib(n), check if memo[n] exists\n- If yes, return cached value\n- If no, compute it, store in memo, then return\n\nThis transforms O(2^n) to O(n) time!",
+      "example": "let memo = {};\n\nfunction fib(n) {\n  if (n <= 1) return n;\n  if (memo[n]) return memo[n];  // Return cached\n  memo[n] = fib(n-1) + fib(n-2);  // Store result\n  return memo[n];\n}",
+      "action": "continue",
+      "next": "coding-space-optimization-js"
+    },
+    {
+      "stepId": "coding-space-optimization-js",
+      "mentorSays": "We can optimize space from O(n) to O(1).\n\nNotice: we only need the previous 2 values!\n\nInstead of storing all values:\nlet dp = [0, 1, 1, 2, 3, 5, 8]\n\nWe can use just two variables:\nlet prev2 = 0, prev1 = 1;\n\nSpace: O(n) → O(1)\nTime: still O(n)",
+      "example": "// Space optimized version:\nif (n <= 1) return n;\nlet prev2 = 0, prev1 = 1;\nfor (let i = 2; i <= n; i++) {\n  let current = prev1 + prev2;\n  prev2 = prev1;\n  prev1 = current;\n}\nreturn prev1;",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return dp[n], which contains the nth Fibonacci number.",
+      "example": "function fib(n) {\n  if (n === 0) return 0;\n  if (n === 1) return 1;\n  \n  const dp = new Array(n + 1);\n  dp[0] = 0;\n  dp[1] = 1;\n  \n  for (let i = 2; i <= n; i++) {\n    dp[i] = dp[i-1] + dp[i-2];\n  }\n  \n  return dp[n];\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Fibonacci with DP!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: find-all-anagrams.json
+================================================================================
+
+{
+  "id": "find-all-anagrams",
+  "title": "Find all anagrams in string",
+  "pattern": "sliding-window",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Find all anagrams in string lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Find all anagrams in string problem\n- Recognize the sliding-window pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function findAnagrams(s, p) {\n  return [];\n}\n\nfindAnagrams(\"cbaebabacd\", \"abc\") returns [0, 6]",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Find All Anagrams problem asks for\n2. Use a sliding window with hash maps to track character frequencies\n3. Compare character counts to find anagram matches\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the find all anagrams solution in JavaScript.",
+      "example": "function findAnagrams(s, p) {\n  \n}",
+      "action": "continue",
+      "next": "coding-count-p-js"
+    },
+    {
+      "stepId": "coding-count-p-js",
+      "mentorSays": "First, count character frequencies in p.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  // Count character frequencies in p\n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n}",
+      "action": "continue",
+      "next": "coding-init-js"
+    },
+    {
+      "stepId": "coding-init-js",
+      "mentorSays": "Initialize variables: result array, window size, and sCount for tracking window frequencies.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n}",
+      "action": "continue",
+      "next": "coding-window-js"
+    },
+    {
+      "stepId": "coding-window-js",
+      "mentorSays": "Now, create the first window and count its character frequencies.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n  \n  // Count frequencies in first window\n  for (let i = 0; i < windowSize; i++) {\n    const char = s[i];\n    sCount[char] = (sCount[char] || 0) + 1;\n  }\n}",
+      "action": "continue",
+      "next": "coding-check-match-js"
+    },
+    {
+      "stepId": "coding-check-match-js",
+      "mentorSays": "Check if the first window matches p frequencies. We'll create a helper function to compare counts.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n  \n  for (let i = 0; i < windowSize; i++) {\n    const char = s[i];\n    sCount[char] = (sCount[char] || 0) + 1;\n  }\n  \n  // Check if first window matches\n  let matches = true;\n  for (let char in pCount) {\n    if (sCount[char] !== pCount[char]) {\n      matches = false;\n      break;\n    }\n  }\n  if (matches) {\n    result.push(0);\n  }\n}",
+      "action": "continue",
+      "next": "coding-slide-js"
+    },
+    {
+      "stepId": "coding-slide-js",
+      "mentorSays": "Now slide the window: remove leftmost character, add rightmost character, and check if frequencies match.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n  \n  for (let i = 0; i < windowSize; i++) {\n    const char = s[i];\n    sCount[char] = (sCount[char] || 0) + 1;\n  }\n  \n  let matches = true;\n  for (let char in pCount) {\n    if (sCount[char] !== pCount[char]) {\n      matches = false;\n      break;\n    }\n  }\n  if (matches) {\n    result.push(0);\n  }\n  \n  // Slide window\n  for (let i = windowSize; i < s.length; i++) {\n    // Remove leftmost character\n    const leftChar = s[i - windowSize];\n    sCount[leftChar]--;\n    if (sCount[leftChar] === 0) {\n      delete sCount[leftChar];\n    }\n    \n    // Add rightmost character\n    const rightChar = s[i];\n    sCount[rightChar] = (sCount[rightChar] || 0) + 1;\n    \n    // Check if frequencies match\n    matches = true;\n    for (let char in pCount) {\n      if (sCount[char] !== pCount[char]) {\n        matches = false;\n        break;\n      }\n    }\n    if (matches) {\n      result.push(i - windowSize + 1);\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return the result array.",
+      "example": "function findAnagrams(s, p) {\n  const pCount = {};\n  \n  for (let i = 0; i < p.length; i++) {\n    const char = p[i];\n    pCount[char] = (pCount[char] || 0) + 1;\n  }\n  \n  const result = [];\n  const windowSize = p.length;\n  const sCount = {};\n  \n  for (let i = 0; i < windowSize; i++) {\n    const char = s[i];\n    sCount[char] = (sCount[char] || 0) + 1;\n  }\n  \n  let matches = true;\n  for (let char in pCount) {\n    if (sCount[char] !== pCount[char]) {\n      matches = false;\n      break;\n    }\n  }\n  if (matches) {\n    result.push(0);\n  }\n  \n  for (let i = windowSize; i < s.length; i++) {\n    const leftChar = s[i - windowSize];\n    sCount[leftChar]--;\n    if (sCount[leftChar] === 0) {\n      delete sCount[leftChar];\n    }\n    \n    const rightChar = s[i];\n    sCount[rightChar] = (sCount[rightChar] || 0) + 1;\n    \n    matches = true;\n    for (let char in pCount) {\n      if (sCount[char] !== pCount[char]) {\n        matches = false;\n        break;\n      }\n    }\n    if (matches) {\n      result.push(i - windowSize + 1);\n    }\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Find all anagrams in string!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: find-first-last-position.json
+================================================================================
+
+{
+  "id": "find-first-last-position",
+  "title": "Find First and Last Position",
+  "pattern": "binary-search",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Find First and Last Position lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Find First and Last Position problem\n- Recognize the binary-search pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'while' loop runs code while a condition is true.\n\nFor example, 'while (left <= right)' means: keep going while left is less than or equal to right.",
+      "example": "while (left <= right) {\n    // This code runs while the condition is true\n    // We'll do binary search here\n}",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Find First and Last Position problem asks for\n2. Use two binary searches to find the first and last occurrence\n3. Modify binary search to find leftmost and rightmost positions\n4. Handle edge cases like target not found or single occurrence\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the find first and last position solution in JavaScript. We'll create a function that takes a sorted array and target, and returns [first, last] positions.",
+      "example": "function searchRange(nums, target) {\n  \n}",
+      "action": "continue",
+      "next": "coding-find-first-init-js"
+    },
+    {
+      "stepId": "coding-find-first-init-js",
+      "mentorSays": "Create a helper function to find the first position. Initialize the binary search variables: left at 0, right at the end, and first at -1 (meaning not found yet).",
+      "example": "function searchRange(nums, target) {\n  // Helper to find first (leftmost) position\n  function findFirst() {\n    let left = 0;\n    let right = nums.length - 1;\n    let first = -1;  // -1 means not found\n    \n    // Binary search will go here\n  }\n}",
+      "action": "continue",
+      "next": "coding-find-first-loop-js"
+    },
+    {
+      "stepId": "coding-find-first-loop-js",
+      "mentorSays": "Add the binary search while loop. While left and right don't cross, calculate the middle index.",
+      "example": "function searchRange(nums, target) {\n  function findFirst() {\n    let left = 0;\n    let right = nums.length - 1;\n    let first = -1;\n    \n    while (left <= right) {\n      let mid = Math.floor((left + right) / 2);\n      \n      // Comparison logic will go here\n    }\n    \n    return first;\n  }\n}",
+      "action": "continue",
+      "next": "coding-find-first-compare-js"
+    },
+    {
+      "stepId": "coding-find-first-compare-js",
+      "mentorSays": "Add the comparison logic. When we find the target, save the position but continue searching LEFT to find the FIRST occurrence.",
+      "example": "function searchRange(nums, target) {\n  function findFirst() {\n    let left = 0;\n    let right = nums.length - 1;\n    let first = -1;\n    \n    while (left <= right) {\n      let mid = Math.floor((left + right) / 2);\n      \n      if (nums[mid] === target) {\n        first = mid;  // Found it!\n        right = mid - 1;  // Keep searching LEFT for first occurrence\n      } else if (nums[mid] < target) {\n        left = mid + 1;\n      } else {\n        right = mid - 1;\n      }\n    }\n    \n    return first;\n  }\n}",
+      "action": "continue",
+      "next": "coding-find-last-init-js"
+    },
+    {
+      "stepId": "coding-find-last-init-js",
+      "mentorSays": "Now create a second helper function to find the last position. Initialize the same binary search variables.",
+      "example": "function searchRange(nums, target) {\n  function findFirst() {\n    let left = 0;\n    let right = nums.length - 1;\n    let first = -1;\n    \n    while (left <= right) {\n      let mid = Math.floor((left + right) / 2);\n      if (nums[mid] === target) {\n        first = mid;\n        right = mid - 1;\n      } else if (nums[mid] < target) {\n        left = mid + 1;\n      } else {\n        right = mid - 1;\n      }\n    }\n    return first;\n  }\n  \n  // Helper to find last (rightmost) position\n  function findLast() {\n    let left = 0;\n    let right = nums.length - 1;\n    let last = -1;\n    \n    // Binary search will go here\n  }\n}",
+      "action": "continue",
+      "next": "coding-find-last-loop-js"
+    },
+    {
+      "stepId": "coding-find-last-loop-js",
+      "mentorSays": "Add the binary search while loop for finding the last position.",
+      "example": "function searchRange(nums, target) {\n  function findFirst() {\n    let left = 0;\n    let right = nums.length - 1;\n    let first = -1;\n    while (left <= right) {\n      let mid = Math.floor((left + right) / 2);\n      if (nums[mid] === target) {\n        first = mid;\n        right = mid - 1;\n      } else if (nums[mid] < target) {\n        left = mid + 1;\n      } else {\n        right = mid - 1;\n      }\n    }\n    return first;\n  }\n  \n  function findLast() {\n    let left = 0;\n    let right = nums.length - 1;\n    let last = -1;\n    \n    while (left <= right) {\n      let mid = Math.floor((left + right) / 2);\n      \n      // Comparison logic will go here\n    }\n    \n    return last;\n  }\n}",
+      "action": "continue",
+      "next": "coding-find-last-compare-js"
+    },
+    {
+      "stepId": "coding-find-last-compare-js",
+      "mentorSays": "Add the comparison logic for finding last. When we find the target, continue searching RIGHT to find the LAST occurrence.",
+      "example": "function searchRange(nums, target) {\n  function findFirst() {\n    let left = 0;\n    let right = nums.length - 1;\n    let first = -1;\n    while (left <= right) {\n      let mid = Math.floor((left + right) / 2);\n      if (nums[mid] === target) {\n        first = mid;\n        right = mid - 1;\n      } else if (nums[mid] < target) {\n        left = mid + 1;\n      } else {\n        right = mid - 1;\n      }\n    }\n    return first;\n  }\n  \n  function findLast() {\n    let left = 0;\n    let right = nums.length - 1;\n    let last = -1;\n    \n    while (left <= right) {\n      let mid = Math.floor((left + right) / 2);\n      \n      if (nums[mid] === target) {\n        last = mid;  // Found it!\n        left = mid + 1;  // Keep searching RIGHT for last occurrence\n      } else if (nums[mid] < target) {\n        left = mid + 1;\n      } else {\n        right = mid - 1;\n      }\n    }\n    \n    return last;\n  }\n}",
+      "action": "continue",
+      "next": "coding-call-helpers-js"
+    },
+    {
+      "stepId": "coding-call-helpers-js",
+      "mentorSays": "Finally, call both helper functions to get the first and last positions, then return them as an array. If the target wasn't found (first is -1), return [-1, -1].",
+      "example": "function searchRange(nums, target) {\n  function findFirst() {\n    let left = 0;\n    let right = nums.length - 1;\n    let first = -1;\n    while (left <= right) {\n      let mid = Math.floor((left + right) / 2);\n      if (nums[mid] === target) {\n        first = mid;\n        right = mid - 1;\n      } else if (nums[mid] < target) {\n        left = mid + 1;\n      } else {\n        right = mid - 1;\n      }\n    }\n    return first;\n  }\n  \n  function findLast() {\n    let left = 0;\n    let right = nums.length - 1;\n    let last = -1;\n    while (left <= right) {\n      let mid = Math.floor((left + right) / 2);\n      if (nums[mid] === target) {\n        last = mid;\n        left = mid + 1;\n      } else if (nums[mid] < target) {\n        left = mid + 1;\n      } else {\n        right = mid - 1;\n      }\n    }\n    return last;\n  }\n  \n  // Find both positions\n  let first = findFirst();\n  let last = findLast();\n  \n  // If target not found, return [-1, -1]\n  if (first === -1) {\n    return [-1, -1];\n  }\n  \n  return [first, last];\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Find First and Last Position!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: find-minimum-rotated.json
+================================================================================
+
+{
+  "id": "find-minimum-rotated",
+  "title": "Find Minimum in Rotated Sorted Array",
+  "pattern": "binary-search",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Find Minimum in Rotated Sorted Array lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Find Minimum in Rotated Sorted Array problem\n- Recognize the binary-search pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function findMin(nums) {\n  // Returns minimum element\n  return 0;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'while' loop in JavaScript runs code while a condition is true.",
+      "example": "while (left < right) {\n  // This code runs while condition is true\n  // Binary search logic\n}",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Find Minimum in Rotated Sorted Array problem asks for\n2. Use binary search to find the pivot point (minimum element)\n3. Compare mid with right to determine which half contains the minimum\n4. Handle edge cases (no rotation, single element)\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the find minimum solution in JavaScript. We'll create a function that takes an array and returns the minimum element.",
+      "example": "function findMin(nums) {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-pointers-js"
+    },
+    {
+      "stepId": "coding-init-pointers-js",
+      "mentorSays": "Initialize binary search pointers: left at 0, right at the end of the array.",
+      "example": "function findMin(nums) {\n  let left = 0;\n  let right = nums.length - 1;\n  \n}",
+      "action": "continue",
+      "next": "coding-binary-search-js"
+    },
+    {
+      "stepId": "coding-binary-search-js",
+      "mentorSays": "Create a while loop for binary search. Continue while left < right (not <=, because we want to find the exact minimum).",
+      "example": "function findMin(nums) {\n  let left = 0;\n  let right = nums.length - 1;\n  \n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    \n    // Comparison logic here\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-compare-mid-right-js"
+    },
+    {
+      "stepId": "coding-compare-mid-right-js",
+      "mentorSays": "Compare nums[mid] with nums[right]. If nums[mid] > nums[right], the minimum is in the right half.",
+      "example": "function findMin(nums) {\n  let left = 0;\n  let right = nums.length - 1;\n  \n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    \n    // If mid > right, minimum is in right half\n    if (nums[mid] > nums[right]) {\n      left = mid + 1;\n    } else {\n      // Minimum is in left half\n    }\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-update-right-js"
+    },
+    {
+      "stepId": "coding-update-right-js",
+      "mentorSays": "If nums[mid] <= nums[right], the minimum is in the left half (including mid). Update right = mid.",
+      "example": "function findMin(nums) {\n  let left = 0;\n  let right = nums.length - 1;\n  \n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    \n    if (nums[mid] > nums[right]) {\n      left = mid + 1;\n    } else {\n      // Minimum is in left half (including mid)\n      right = mid;\n    }\n  }\n  \n}",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "After the loop, left == right, and that's the index of the minimum. Return nums[left].",
+      "example": "function findMin(nums) {\n  let left = 0;\n  let right = nums.length - 1;\n  \n  while (left < right) {\n    let mid = Math.floor((left + right) / 2);\n    \n    if (nums[mid] > nums[right]) {\n      left = mid + 1;\n    } else {\n      right = mid;\n    }\n  }\n  \n  // left == right, this is the minimum\n  return nums[left];\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Find Minimum in Rotated Sorted Array!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: first-unique-character.json
+================================================================================
+
+{
+  "id": "first-unique-character",
+  "title": "First unique character in string",
+  "pattern": "hash-map",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the First unique character in string lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the First unique character in string problem\n- Recognize the hash-map pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.",
+      "example": "function firstUniqChar(s) {\n  return -1;\n}\n\nfirstUniqChar(\"leetcode\") returns 0",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops to iterate through the string. Do you know what a loop is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in JavaScript runs code for each item in a sequence.\n\nFor example, you can loop through a string to check each character one by one.",
+      "example": "for (let i = 0; i < s.length; i++) {\n  // Process s[i]\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the First Unique Character problem asks for\n2. Use hash maps to count character frequencies\n3. Find the first character that appears exactly once\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the first unique character solution in JavaScript. We'll create a function that takes a string and returns the index of the first unique character.",
+      "example": "function firstUniqChar(s) {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-freq-js"
+    },
+    {
+      "stepId": "coding-init-freq-js",
+      "mentorSays": "First, initialize an empty hash map to store character frequencies.",
+      "example": "function firstUniqChar(s) {\n  const freq = {};\n}",
+      "action": "continue",
+      "next": "coding-count-loop-js"
+    },
+    {
+      "stepId": "coding-count-loop-js",
+      "mentorSays": "Now, loop through the string and count how many times each character appears.",
+      "example": "function firstUniqChar(s) {\n  const freq = {};\n  \n  // Count character frequencies\n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n}",
+      "action": "continue",
+      "next": "coding-scan-loop-js"
+    },
+    {
+      "stepId": "coding-scan-loop-js",
+      "mentorSays": "Now, scan the string from left to right and find the first character with frequency 1.",
+      "example": "function firstUniqChar(s) {\n  const freq = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n  \n  // Find first character with frequency 1\n  for (let i = 0; i < s.length; i++) {\n    if (freq[s[i]] === 1) {\n      return i;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "If no unique character is found, return -1.",
+      "example": "function firstUniqChar(s) {\n  const freq = {};\n  \n  for (let i = 0; i < s.length; i++) {\n    const char = s[i];\n    freq[char] = (freq[char] || 0) + 1;\n  }\n  \n  for (let i = 0; i < s.length; i++) {\n    if (freq[s[i]] === 1) {\n      return i;\n    }\n  }\n  \n  return -1;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved First unique character in string!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: four-sum.json
+================================================================================
+
+{
+  "id": "four-sum",
+  "title": "4Sum",
+  "pattern": "two-pointers",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the 4Sum lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the 4Sum problem\n- Recognize the two-pointers pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function add(a, b) {\n  return a + b;\n}\n\nadd(3, 5) returns 8\nadd(10, 20) returns 30",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop runs code for each item in a sequence.\n\nFor example, 'for (let i = 0; i < nums.length; i++)' means: start at 0, keep going while i is less than the array length, and add 1 to i each time.",
+      "example": "for (let i = 0; i < 3; i++) {\n  console.log(i);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the 4Sum problem asks for\n2. Use sorting and two pointers to find quadruplets efficiently\n3. Avoid duplicate quadruplets in the result\n4. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "explore-nested-loops",
+      "mentorSays": "That's a straightforward approach! You're thinking: \"I'll check every possible quadruplet to see if they sum to target.\"\n\nFor nums = [-1, 0, 1, 2, -1, -4]:\n- Check all combinations: (-1,0,1), (-1,0,2), ...\n- Found: (-1, 0, 1) and (-1, -1, 2) ✓\n\nThis works! However, it takes O(n³) time and requires careful duplicate handling.\n\nThere's a more efficient O(n³) approach using sorting and two pointers. Would you like to learn that?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the 4Sum solution in JavaScript. We'll create a function that takes an array and a target, and returns all unique quadruplets that sum to target.",
+      "example": "function fourSum(nums, target) {\n  \n}",
+      "action": "continue",
+      "next": "coding-sort-js"
+    },
+    {
+      "stepId": "coding-sort-js",
+      "mentorSays": "First, let's sort the array. This helps us use two pointers and avoid duplicates.",
+      "example": "function fourSum(nums, target) {\n  // Sort the array first\n  nums.sort((a, b) => a - b);\n  \n  let result = [];\n}",
+      "action": "continue",
+      "next": "coding-outer-loop-js"
+    },
+    {
+      "stepId": "coding-outer-loop-js",
+      "mentorSays": "Now, let's create an outer loop to fix the first number. We'll iterate through the array, but skip the last three elements (since we need at least 4 numbers).",
+      "example": "function fourSum(nums, target) {\n  nums.sort((a, b) => a - b);\n  let result = [];\n  \n  // Fix the first number\n  for (let i = 0; i < nums.length - 3; i++) {\n    // Skip duplicates for the first number\n    if (i > 0 && nums[i] === nums[i - 1]) {\n      continue;\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-init-pointers-js"
+    },
+    {
+      "stepId": "coding-init-pointers-js",
+      "mentorSays": "Inside the outer loop, create an inner loop to fix the second number. We'll iterate starting from i+1, but skip the last two elements.",
+      "example": "function fourSum(nums, target) {\n  nums.sort((a, b) => a - b);\n  let result = [];\n  \n  for (let i = 0; i < nums.length - 3; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) {\n      continue;\n    }\n    \n    // Fix the second number\n    for (let j = i + 1; j < nums.length - 2; j++) {\n      // Skip duplicates for the second number\n      if (j > i + 1 && nums[j] === nums[j - 1]) {\n        continue;\n      }\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-two-pointers-loop-js"
+    },
+    {
+      "stepId": "coding-two-pointers-loop-js",
+      "mentorSays": "Inside the inner loop, initialize two pointers: left starts right after j, and right starts at the end of the array. Calculate the remaining sum we need.",
+      "example": "function fourSum(nums, target) {\n  nums.sort((a, b) => a - b);\n  let result = [];\n  \n  for (let i = 0; i < nums.length - 3; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) {\n      continue;\n    }\n    \n    for (let j = i + 1; j < nums.length - 2; j++) {\n      if (j > i + 1 && nums[j] === nums[j - 1]) {\n        continue;\n      }\n      \n      // Initialize two pointers and calculate remaining\n      let left = j + 1;\n      let right = nums.length - 1;\n      let remaining = target - nums[i] - nums[j];\n      \n      // Use two pointers to find pairs\n      while (left < right) {\n        let sum = nums[left] + nums[right];\n        // Check sum logic here\n      }\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-check-sum-js"
+    },
+    {
+      "stepId": "coding-check-sum-js",
+      "mentorSays": "Inside the while loop, check if the sum of the two pointers equals the remaining. If it does, we found a quadruplet! Add it to the result and move both pointers (skipping duplicates).",
+      "example": "function fourSum(nums, target) {\n  nums.sort((a, b) => a - b);\n  let result = [];\n  \n  for (let i = 0; i < nums.length - 3; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) {\n      continue;\n    }\n    \n    for (let j = i + 1; j < nums.length - 2; j++) {\n      if (j > i + 1 && nums[j] === nums[j - 1]) {\n        continue;\n      }\n      \n      let left = j + 1;\n      let right = nums.length - 1;\n      let remaining = target - nums[i] - nums[j];\n      \n      while (left < right) {\n        let sum = nums[left] + nums[right];\n        \n        if (sum === remaining) {\n          // Found a quadruplet!\n          result.push([nums[i], nums[j], nums[left], nums[right]]);\n          \n          // Skip duplicates\n          while (left < right && nums[left] === nums[left + 1]) left++;\n          while (left < right && nums[right] === nums[right - 1]) right--;\n          \n          left++;\n          right--;\n        }\n      }\n    }\n  }\n}",
+      "action": "continue",
+      "next": "coding-adjust-pointers-js"
+    },
+    {
+      "stepId": "coding-adjust-pointers-js",
+      "mentorSays": "If the sum is not equal to remaining, adjust the pointers based on whether the sum is too small or too large.",
+      "example": "function fourSum(nums, target) {\n  nums.sort((a, b) => a - b);\n  let result = [];\n  \n  for (let i = 0; i < nums.length - 3; i++) {\n    if (i > 0 && nums[i] === nums[i - 1]) {\n      continue;\n    }\n    \n    for (let j = i + 1; j < nums.length - 2; j++) {\n      if (j > i + 1 && nums[j] === nums[j - 1]) {\n        continue;\n      }\n      \n      let left = j + 1;\n      let right = nums.length - 1;\n      let remaining = target - nums[i] - nums[j];\n      \n      while (left < right) {\n        let sum = nums[left] + nums[right];\n        \n        if (sum === remaining) {\n          result.push([nums[i], nums[j], nums[left], nums[right]]);\n          while (left < right && nums[left] === nums[left + 1]) left++;\n          while (left < right && nums[right] === nums[right - 1]) right--;\n          left++;\n          right--;\n        } else if (sum < remaining) {\n          // Sum is too small, move left pointer right\n          left++;\n        } else {\n          // Sum is too large, move right pointer left\n          right--;\n        }\n      }\n    }\n  }\n  \n  return result;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved 4Sum!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}
+
+================================================================================
+FILE: fruit-into-baskets.json
+================================================================================
+
+{
+  "id": "fruit-into-baskets",
+  "title": "Fruit Into Baskets",
+  "pattern": "sliding-window",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "draft",
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Hey! Welcome to the Fruit Into Baskets lesson.\n\nIn this lesson, you'll learn a problem-solving pattern that shows up in coding interviews.\n\nAfter this, you'll be able to:\n- Understand the Fruit Into Baskets problem\n- Recognize the sliding-window pattern\n- Build a complete solution step-by-step\n\nLet's dive in!",
+      "action": "continue",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "Before we dive into the problem, which programming language would you like to use?\n\nThis will help me make sure you have the right building blocks.",
+      "choices": [
+        {
+          "label": "JavaScript",
+          "next": "prereq-check-js"
+        },
+        {
+          "label": "Python",
+          "next": "prereq-check-python"
+        },
+        {
+          "label": "Java",
+          "next": "prereq-check-java"
+        },
+        {
+          "label": "C++",
+          "next": "prereq-check-cpp"
+        },
+        {
+          "label": "TypeScript",
+          "next": "prereq-check-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in JavaScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-js"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-js"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Python, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-python"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-python"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in Java, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-java"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-java"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in C++, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-cpp"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-cpp"
+        }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "Great choice! Before we start, let me make sure you have the building blocks.\n\nTo solve this problem in TypeScript, you'll need to know:\n- **Arrays** - How to store and access lists of values\n- **Loops** - How to iterate through data\n- **Conditionals** - How to make decisions in code\n\nDo you feel confident with these concepts?",
+      "choices": [
+        {
+          "label": "Yes, I know them all",
+          "next": "problem-understanding"
+        },
+        {
+          "label": "No, please explain them",
+          "next": "teach-prereqs-ts"
+        },
+        {
+          "label": "I know some, not all",
+          "next": "select-prereqs-ts"
+        }
+      ]
+    },
+    {
+      "stepId": "teach-all-prereqs-js",
+      "mentorSays": "Great! Let me teach you the JavaScript concepts you'll need.",
+      "action": "continue",
+      "next": "function-check-js"
+    },
+    {
+      "stepId": "function-check-js",
+      "mentorSays": "Before we start coding, let me ask: Do you know what a function is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "function-explanation-js",
+      "mentorSays": "A function is a reusable block of code. You give it inputs (called parameters), and it can return an output.\n\nThink of it like a recipe: you provide ingredients (parameters), the function does the work, and gives you a result (return value).",
+      "example": "function totalFruit(fruits) {\n    // This function takes fruits array\n    // It returns the maximum number of fruits\n    return 0;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-check-js",
+      "mentorSays": "To solve this problem, we'll need to use loops. Do you know what a loop is in JavaScript?",
+      "example": "",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "loop-explanation-js",
+      "mentorSays": "A loop lets you repeat code multiple times. A 'for' loop in JavaScript runs code for each value in a sequence.\n\nFor example, 'for (let right = 0; right < fruits.length; right++)' means: run the code for each index from 0 to the length of the array. This lets us move our right pointer through the array.",
+      "example": "for (let right = 0; right < 3; right++) {\n    console.log(right);\n}\n\nThis prints: 0, 1, 2",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "teach-all-prereqs-python",
+      "mentorSays": "Let me explain the Python concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-java",
+      "mentorSays": "Let me explain the Java concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-cpp",
+      "mentorSays": "Let me explain the C++ concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "teach-all-prereqs-ts",
+      "mentorSays": "Let me explain the TypeScript concepts you'll need.\n\n[Prerequisite teaching will be expanded in Phase 2]\n\nFor now, let's continue to the problem!",
+      "action": "continue",
+      "next": "problem-understanding"
+    },
+    {
+      "stepId": "problem-understanding",
+      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand what the Fruit Into Baskets problem asks for\n2. Recognize this as a sliding window problem with at most 2 distinct values\n3. Use a hash map to track fruit types and their frequencies\n4. Expand and shrink the window to maintain at most 2 distinct types\n5. Implement the solution step by step in your chosen language",
+      "example": null,
+      "action": "continue",
+      "next": "approach-exploration"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Now that you understand the problem, how would YOU approach solving it?\n\nThink about it for a moment.",
+      "choices": [
+        {
+          "label": "Check every possibility",
+          "next": "explore-brute-force"
+        },
+        {
+          "label": "Use a smarter approach",
+          "next": "explore-optimal"
+        },
+        {
+          "label": "I'm not sure, show me",
+          "next": "explore-optimal"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-solution",
+      "mentorSays": "Let me show you the optimal approach for this problem. [Strategy will be extracted from original lesson]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "approach-exploration",
+      "mentorSays": "Now that you understand the problem, let's think about how to solve it.\n\nWhat approach feels natural to you?",
+      "choices": [
+        {
+          "label": "Try the straightforward approach first",
+          "next": "explore-solution"
+        },
+        {
+          "label": "Show me the optimal solution",
+          "next": "explore-solution"
+        }
+      ]
+    },
+    {
+      "stepId": "explore-brute-force",
+      "mentorSays": "The brute force approach would check every possibility.\n\nThis works but is usually slow (O(n squared) or worse).\n\nLet's look at a smarter approach!",
+      "action": "continue",
+      "next": "explore-optimal"
+    },
+    {
+      "stepId": "explore-optimal",
+      "mentorSays": "The optimal approach uses a smarter strategy to avoid unnecessary work.\n\n[Strategy details will be added in Phase 2]",
+      "action": "continue",
+      "next": "solution-finalized"
+    },
+    {
+      "stepId": "solution-finalized",
+      "mentorSays": "Perfect! We've explored the approach. Now let's code the optimal solution.\n\nReady to write some code?",
+      "action": "continue",
+      "next": "coding-start-js"
+    },
+    {
+      "stepId": "coding-start-js",
+      "mentorSays": "Perfect! Let's implement the fruit into baskets solution in JavaScript. We'll create a function that takes a fruits array and returns the maximum number of fruits we can collect.",
+      "example": "function totalFruit(fruits) {\n  \n}",
+      "action": "continue",
+      "next": "coding-init-vars-js"
+    },
+    {
+      "stepId": "coding-init-vars-js",
+      "mentorSays": "First, let's initialize our variables: left pointer, frequency map to track fruit types, and maxLen to track the maximum length.",
+      "example": "function totalFruit(fruits) {\n  let left = 0;\n  let maxLen = 0;\n  const freq = {};  // Track frequency of each fruit type\n  \n}",
+      "action": "continue",
+      "next": "coding-outer-loop-js"
+    },
+    {
+      "stepId": "coding-outer-loop-js",
+      "mentorSays": "Create a loop that moves the right pointer through the array. This will expand our window.",
+      "example": "function totalFruit(fruits) {\n  let left = 0;\n  let maxLen = 0;\n  const freq = {};\n  \n  // Expand window by moving right pointer\n  for (let right = 0; right < fruits.length; right++) {\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-add-fruit-js"
+    },
+    {
+      "stepId": "coding-add-fruit-js",
+      "mentorSays": "Inside the loop, add the current fruit type to our frequency map. This expands the window.",
+      "example": "function totalFruit(fruits) {\n  let left = 0;\n  let maxLen = 0;\n  const freq = {};\n  \n  for (let right = 0; right < fruits.length; right++) {\n    // Add current fruit to frequency map\n    const type = fruits[right];\n    freq[type] = (freq[type] || 0) + 1;\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-shrink-window-js"
+    },
+    {
+      "stepId": "coding-shrink-window-js",
+      "mentorSays": "If we have more than 2 distinct types, we need to shrink the window from the left. Remove fruits until we're back to 2 types.",
+      "example": "function totalFruit(fruits) {\n  let left = 0;\n  let maxLen = 0;\n  const freq = {};\n  \n  for (let right = 0; right < fruits.length; right++) {\n    const type = fruits[right];\n    freq[type] = (freq[type] || 0) + 1;\n    \n    // Shrink window if we have more than 2 distinct types\n    while (Object.keys(freq).length > 2) {\n      const leftType = fruits[left];\n      freq[leftType]--;\n      if (freq[leftType] === 0) {\n        delete freq[leftType];\n      }\n      left++;\n    }\n    \n  }\n}",
+      "action": "continue",
+      "next": "coding-update-maxlen-js"
+    },
+    {
+      "stepId": "coding-update-maxlen-js",
+      "mentorSays": "After potentially shrinking, update maxLen with the current window size. The window now has at most 2 distinct types.",
+      "example": "function totalFruit(fruits) {\n  let left = 0;\n  let maxLen = 0;\n  const freq = {};\n  \n  for (let right = 0; right < fruits.length; right++) {\n    const type = fruits[right];\n    freq[type] = (freq[type] || 0) + 1;\n    \n    while (Object.keys(freq).length > 2) {\n      const leftType = fruits[left];\n      freq[leftType]--;\n      if (freq[leftType] === 0) {\n        delete freq[leftType];\n      }\n      left++;\n    }\n    \n    // Update maxLen with current window size\n    maxLen = Math.max(maxLen, right - left + 1);\n  }\n}",
+      "action": "continue",
+      "next": "coding-return-js"
+    },
+    {
+      "stepId": "coding-return-js",
+      "mentorSays": "Finally, return maxLen, which contains the maximum number of fruits we can collect.",
+      "example": "function totalFruit(fruits) {\n  let left = 0;\n  let maxLen = 0;\n  const freq = {};\n  \n  for (let right = 0; right < fruits.length; right++) {\n    const type = fruits[right];\n    freq[type] = (freq[type] || 0) + 1;\n    \n    while (Object.keys(freq).length > 2) {\n      const leftType = fruits[left];\n      freq[leftType]--;\n      if (freq[leftType] === 0) {\n        delete freq[leftType];\n      }\n      left++;\n    }\n    \n    maxLen = Math.max(maxLen, right - left + 1);\n  }\n  \n  return maxLen;\n}",
+      "action": "continue",
+      "next": "completion"
+    },
+    {
+      "stepId": "completion",
+      "mentorSays": "🎉 **Congratulations!** You just solved Fruit Into Baskets!\n\n**What you've mastered:**\n✓ Understanding the problem requirements\n✓ Choosing an efficient approach\n✓ Building a complete solution from scratch\n\nYou're now ready to tackle more algorithms. Keep going! 🚀",
+      "action": "complete"
+    }
+  ],
+  "migrated": true,
+  "migration_version": "5.0-light-touch",
+  "migration_date": "2025-12-30"
+}

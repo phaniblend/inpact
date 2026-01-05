@@ -1,0 +1,84 @@
+{
+  "id": "selection-sort",
+  "title": "Selection Sort",
+  "difficulty": "easy",
+  "pattern": "selection + iteration",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of numbers in random order.\n\nYour task is to sort the list in **ascending order**.\n\nWe will learn a simple sorting method called **Selection Sort**.",
+      "example": "Input: [5, 3, 4, 1]",
+      "action": "next"
+    },
+    {
+      "stepId": "real-world-analogy",
+      "mentorSays": "Think of arranging cards in your hand.\n\nYou repeatedly:\n• look at all remaining cards\n• pick the smallest one\n• place it in the correct position\n\nThat is exactly how selection sort works.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s sort a small list.\n\nInput: [5, 3, 4, 1]\n\nStep 1:\n• smallest number is 1\n• place it at position 0\n\nNow list looks like:\n[1, 3, 4, 5] (conceptually)",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nAfter placing the smallest number at the first position, what should we do next?",
+      "choices": [
+        {
+          "label": "Repeat the same process for the remaining elements",
+          "next": "core-idea"
+        },
+        {
+          "label": "Start over from the beginning",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe repeat the same process:\n\n• Ignore the already sorted part\n• Find the smallest number in the remaining list\n• Place it in the next position",
+      "action": "next"
+    },
+    {
+      "stepId": "step-by-step-walkthrough",
+      "mentorSays": "Full walkthrough:\n\nInput: [5, 3, 4, 1]\n\nPass 1:\n• smallest = 1 → place at index 0\n\nPass 2 (ignore index 0):\n• remaining: [3, 4, 5]\n• smallest = 3 → place at index 1\n\nPass 3:\n• remaining: [4, 5]\n• smallest = 4 → place at index 2\n\nList is now sorted.",
+      "action": "next"
+    },
+    {
+      "stepId": "important-observation",
+      "mentorSays": "Important observation:\n\n• Selection sort always makes the same number of comparisons\n• Even if the list is already sorted\n\nThis makes it simple, but not very efficient.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "for each position i from 0 to n-1:",
+        "  assume smallest element is at i",
+        "  scan the rest of the list to find the true smallest",
+        "  swap smallest element with element at i",
+        "return sorted list"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let’s translate the logic into JavaScript.\n\nType the code yourself to build muscle memory.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function selectionSort(nums) {\n  const n = nums.length;\n\n  for (let i = 0; i < n; i++) {\n    let minIndex = i;\n\n    for (let j = i + 1; j < n; j++) {\n      if (nums[j] < nums[minIndex]) {\n        minIndex = j;\n      }\n    }\n\n    if (minIndex !== i) {\n      [nums[i], nums[minIndex]] = [nums[minIndex], nums[i]];\n    }\n  }\n\n  return nums;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example check:\n\nInput: [5, 3, 4, 1]\n\nOutput: [1, 3, 4, 5]\n\nSelection sort works correctly.",
+      "action": "complete"
+    }
+  ]
+}

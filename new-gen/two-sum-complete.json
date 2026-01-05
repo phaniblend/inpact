@@ -1,0 +1,296 @@
+{
+  "id": "two-sum-complete",
+  "title": "Two Sum",
+  "pattern": "hash map lookup",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "COMPLETE",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 1,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-01",
+    "introduces": [
+      "complement-calculation",
+      "index-storage",
+      "one-pass-hash-map",
+      "return-array",
+      "space-time-tradeoff"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "array-indexing",
+      "loops",
+      "for-loop",
+      "functions",
+      "return-statement",
+      "comparison-operators",
+      "objects",
+      "key-value-pairs",
+      "hash-map-concept"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["valid-anagram", "three-sum"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Create an empty map to store number → index pairs." },
+    { "id": "ps2", "text": "For each index i and number in the array:" },
+    { "id": "ps3", "text": "  Calculate complement = target - current number." },
+    { "id": "ps4", "text": "  If complement exists in the map, return [map[complement], i]." },
+    { "id": "ps5", "text": "  Otherwise, store current number → index in the map." },
+    { "id": "ps6", "text": "Return empty array if no solution (problem guarantees one exists)." }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Welcome to **Two Sum**!\n\nThis is THE most famous coding interview question. It's asked at Google, Amazon, Facebook, Microsoft, and countless other companies.\n\n**What you'll learn:**\n- How to use hash maps for instant lookups\n- The complement calculation pattern\n- Space-time tradeoffs in algorithms\n- How to solve problems in O(n) instead of O(n²)\n\n**By the end, you'll be able to:**\n- Explain why brute force is slow\n- Use a hash map to find pairs efficiently\n- Handle edge cases confidently\n- Discuss your solution clearly in interviews\n\nReady to master this classic problem?",
+      "action": "next",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "First, choose your programming language.\n\nThis lesson is available in:\n- JavaScript\n- Python\n- Java\n- C++\n- TypeScript\n\nWhich language would you like to use?",
+      "choices": [
+        { "label": "JavaScript", "next": "prereq-check-js" },
+        { "label": "Python", "next": "prereq-check-python" },
+        { "label": "Java", "next": "prereq-check-java" },
+        { "label": "C++", "next": "prereq-check-cpp" },
+        { "label": "TypeScript", "next": "prereq-check-ts" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Two Sum, let's make sure you're comfortable with the JavaScript constructs we'll use:\n\n**1. Variables (`const`, `let`)**\n- Used to store the hash map and loop counters\n- Example: `const map = {};`\n\n**2. Arrays**\n- The input is an array of numbers\n- We'll access elements by index: `nums[i]`\n\n**3. Objects (Hash Maps)**\n- JavaScript objects act as hash maps\n- We'll store number → index pairs: `map[number] = index`\n- We'll check if a key exists: `complement in map`\n\n**4. For Loops**\n- We'll iterate through the array: `for (let i = 0; i < nums.length; i++)`\n- We need both the index `i` and the value `nums[i]`\n\n**5. Functions and Return**\n- We'll write a function that takes `nums` and `target`\n- We'll return an array of two indices: `return [index1, index2]`\n\n**6. Conditional Statements**\n- We'll check if complement exists: `if (complement in map)`\n\n**7. Arithmetic Operations**\n- We'll calculate the complement: `target - nums[i]`\n\nDo you feel comfortable with these JavaScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-js" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Two Sum, let's make sure you're comfortable with the Python constructs we'll use:\n\n**1. Variables**\n- Used to store the dictionary and loop counters\n- Example: `map = {}`\n\n**2. Lists**\n- The input is a list of numbers\n- We'll access elements by index: `nums[i]`\n\n**3. Dictionaries (Hash Maps)**\n- Python dictionaries act as hash maps\n- We'll store number → index pairs: `map[number] = index`\n- We'll check if a key exists: `complement in map`\n\n**4. For Loops with enumerate**\n- We'll iterate through the list: `for i, num in enumerate(nums):`\n- This gives us both the index `i` and the value `num`\n\n**5. Functions and Return**\n- We'll write a function that takes `nums` and `target`\n- We'll return a list of two indices: `return [index1, index2]`\n\n**6. Conditional Statements**\n- We'll check if complement exists: `if complement in map:`\n\n**7. Arithmetic Operations**\n- We'll calculate the complement: `target - num`\n\nDo you feel comfortable with these Python constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-python" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Two Sum, let's make sure you're comfortable with the Java constructs we'll use:\n\n**1. Variables and Data Types**\n- We'll use `int[]` for arrays and `HashMap<Integer, Integer>` for the map\n- Example: `HashMap<Integer, Integer> map = new HashMap<>();`\n\n**2. Arrays**\n- The input is an array of integers: `int[] nums`\n- We'll access elements by index: `nums[i]`\n\n**3. HashMap**\n- Java's HashMap class provides hash map functionality\n- We'll store number → index pairs: `map.put(number, index)`\n- We'll check if a key exists: `map.containsKey(complement)`\n- We'll get a value: `map.get(complement)`\n\n**4. For Loops**\n- We'll iterate through the array: `for (int i = 0; i < nums.length; i++)`\n- We need both the index `i` and the value `nums[i]`\n\n**5. Methods and Return**\n- We'll write a method that takes `int[] nums` and `int target`\n- We'll return an array of two indices: `return new int[]{index1, index2}`\n\n**6. Conditional Statements**\n- We'll check if complement exists: `if (map.containsKey(complement))`\n\n**7. Arithmetic Operations**\n- We'll calculate the complement: `target - nums[i]`\n\nDo you feel comfortable with these Java constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-java" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Two Sum, let's make sure you're comfortable with the C++ constructs we'll use:\n\n**1. Variables and Data Types**\n- We'll use `vector<int>` for arrays and `unordered_map<int, int>` for the map\n- Example: `unordered_map<int, int> map;`\n\n**2. Vectors**\n- The input is a vector of integers: `vector<int>& nums`\n- We'll access elements by index: `nums[i]`\n\n**3. unordered_map**\n- C++'s unordered_map provides hash map functionality\n- We'll store number → index pairs: `map[number] = index`\n- We'll check if a key exists: `map.find(complement) != map.end()`\n- We'll get a value: `map[complement]`\n\n**4. For Loops**\n- We'll iterate through the vector: `for (int i = 0; i < nums.size(); i++)`\n- We need both the index `i` and the value `nums[i]`\n\n**5. Functions and Return**\n- We'll write a function that takes `vector<int>& nums` and `int target`\n- We'll return a vector of two indices: `return {index1, index2}`\n\n**6. Conditional Statements**\n- We'll check if complement exists: `if (map.find(complement) != map.end())`\n\n**7. Arithmetic Operations**\n- We'll calculate the complement: `target - nums[i]`\n\nDo you feel comfortable with these C++ constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-cpp" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Two Sum, let's make sure you're comfortable with the TypeScript constructs we'll use:\n\n**1. Variables with Types (`const`, `let`)**\n- Used to store the hash map and loop counters with type annotations\n- Example: `const map: { [key: number]: number } = {};`\n\n**2. Arrays with Types**\n- The input is an array of numbers: `nums: number[]`\n- We'll access elements by index: `nums[i]`\n\n**3. Objects (Hash Maps) with Types**\n- TypeScript objects act as hash maps with type safety\n- We'll store number → index pairs: `map[number] = index`\n- We'll check if a key exists: `complement in map`\n\n**4. For Loops**\n- We'll iterate through the array: `for (let i = 0; i < nums.length; i++)`\n- We need both the index `i` and the value `nums[i]`\n\n**5. Functions and Return with Types**\n- We'll write a function with types: `function twoSum(nums: number[], target: number): number[]`\n- We'll return an array of two indices: `return [index1, index2]`\n\n**6. Conditional Statements**\n- We'll check if complement exists: `if (complement in map)`\n\n**7. Arithmetic Operations**\n- We'll calculate the complement: `target - nums[i]`\n\nDo you feel comfortable with these TypeScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-ts" }
+      ]
+    },
+    {
+      "stepId": "algorithm-prereq-check",
+      "mentorSays": "### PHASE 2: Algorithm Prerequisites\n\n**Prerequisites for Two Sum:**\n\n**Required Concepts:**\n1. **Arrays and Indexing** - You need to understand how to access array elements by index\n2. **Hash Maps** - You need to understand that hash maps allow O(1) lookups\n3. **Loops** - You need to iterate through arrays\n4. **Basic Math** - You need to understand addition and subtraction\n\n**No Advanced Prerequisites:**\n- You don't need to know sorting algorithms\n- You don't need to know dynamic programming\n- You don't need to know recursion\n- You don't need to know graph algorithms\n\nThis is a **foundation-level** problem. If you understand arrays, loops, and basic hash map operations, you're ready!\n\nDo you feel ready to proceed?",
+      "choices": [
+        { "label": "Yes, I'm ready!", "next": "problem-statement" },
+        { "label": "I need to review prerequisites", "next": "review-prerequisites" }
+      ]
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### PHASE 3: Problem Statement\n\n**Problem:**\n\nGiven an array of integers `nums` and an integer `target`, return the **indices** of the two numbers that add up to `target`.\n\n**Input:**\n- `nums`: An array of integers (e.g., `[2, 7, 11, 15]`)\n- `target`: An integer (e.g., `9`)\n\n**Output:**\n- An array containing two indices `[index1, index2]` such that `nums[index1] + nums[index2] = target`\n\n**Constraints:**\n- Each input has exactly one solution\n- You cannot use the same element twice\n- You can return the indices in any order\n\n**Example:**\n```\nInput: nums = [2, 7, 11, 15], target = 9\nOutput: [0, 1]\n\nExplanation: nums[0] + nums[1] = 2 + 7 = 9\n```\n\n**Understanding the Variables:**\n- `i`: The current index we're examining in the array\n- `nums[i]`: The value at index `i`\n- `complement`: The number we're looking for (target - nums[i])\n- `map`: Our hash map storing numbers we've seen and their indices\n\n**Comprehension Check:**\n\nFor `nums = [3, 2, 4]` and `target = 6`, what should we return?",
+      "choices": [
+        { "label": "[0, 1] because 3 + 2 = 5", "next": "wrong-answer-1" },
+        { "label": "[1, 2] because 2 + 4 = 6", "next": "correct-answer" },
+        { "label": "[0, 2] because 3 + 4 = 7", "next": "wrong-answer-2" }
+      ]
+    },
+    {
+      "stepId": "wrong-answer-1",
+      "mentorSays": "Not quite! Let's check: 3 + 2 = 5, which is not equal to our target of 6.\n\nRemember: We need two numbers that **add up to the target**.\n\nLet's try again. For `nums = [3, 2, 4]` and `target = 6`:\n- nums[0] = 3\n- nums[1] = 2  → 3 + 2 = 5 ✗\n- nums[2] = 4  → 3 + 4 = 7 ✗\n- nums[1] = 2, nums[2] = 4 → 2 + 4 = 6 ✓\n\nSo the answer is [1, 2]!",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "wrong-answer-2",
+      "mentorSays": "Not quite! Let's check: 3 + 4 = 7, which is not equal to our target of 6.\n\nRemember: We need two numbers that **add up to the target**.\n\nLet's try again. For `nums = [3, 2, 4]` and `target = 6`:\n- nums[0] = 3\n- nums[1] = 2  → 3 + 2 = 5 ✗\n- nums[2] = 4  → 3 + 4 = 7 ✗\n- nums[1] = 2, nums[2] = 4 → 2 + 4 = 6 ✓\n\nSo the answer is [1, 2]!",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "correct-answer",
+      "mentorSays": "Perfect! 2 + 4 = 6, so we return [1, 2].\n\nYou've got the problem! Now let's think about how to solve it.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "how-would-you-solve",
+      "mentorSays": "### PHASE 4: How Would You Solve It?\n\nBefore I show you the solution, let's think about different approaches.\n\nHere are three ways we could solve this:\n\n**Approach A: Check Every Pair**\n- Use two nested loops\n- For each number, check it against every other number\n- If their sum equals target, return their indices\n- This is straightforward but checks many pairs\n\n**Approach B: Sort and Use Two Pointers**\n- Sort the array first\n- Use two pointers (one at start, one at end)\n- Move pointers based on whether sum is too small or too large\n- But we need to track original indices since sorting changes positions\n\n**Approach C: Use a Hash Map**\n- For each number, calculate what we need (target - number)\n- Check if we've seen that \"complement\" before\n- If yes, return both indices\n- If no, remember this number for later\n\nWhich approach would you like to explore first?",
+      "choices": [
+        { "label": "Approach A: Check Every Pair", "next": "walkthrough-brute-force" },
+        { "label": "Approach B: Sort and Two Pointers", "next": "walkthrough-sort" },
+        { "label": "Approach C: Hash Map", "next": "walkthrough-optimal" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-brute-force",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Approach A (Brute Force)\n\nLet's walk through checking every pair step by step.\n\n**Example:** `nums = [2, 7, 11, 15]`, `target = 9`\n\n**Step 1: Initialize**\n```\nArray: [2, 7, 11, 15]\nIndices: 0  1   2   3\nTarget: 9\n```\n\n**Step 2: First outer loop iteration (i = 0)**\n- We're looking at nums[0] = 2\n- Now check it with every number after it\n\n**Decision Point 1:** What should we check first?\n[A] Check 2 + 2 = 4\n[B] Check 2 + 7 = 9\n[C] Check 2 + 11 = 13",
+      "choices": [
+        { "label": "[A] Check 2 + 2 = 4", "next": "wrong-same-element" },
+        { "label": "[B] Check 2 + 7 = 9", "next": "correct-pair-found" },
+        { "label": "[C] Check 2 + 11 = 13", "next": "continue-checking" }
+      ]
+    },
+    {
+      "stepId": "wrong-same-element",
+      "mentorSays": "Wait! We can't use the same element twice. The problem says \"you cannot use the same element twice.\"\n\nSo we can't check nums[0] + nums[0]. We need to check nums[0] with nums[1], nums[2], etc.\n\nLet's continue with the correct approach.",
+      "action": "next",
+      "next": "brute-force-continued"
+    },
+    {
+      "stepId": "continue-checking",
+      "mentorSays": "2 + 11 = 13, which is not 9. We need to keep checking.\n\nIn brute force, we systematically check:\n- i=0, j=1: 2 + 7 = 9? Let's check...",
+      "action": "next",
+      "next": "brute-force-continued"
+    },
+    {
+      "stepId": "correct-pair-found",
+      "mentorSays": "Excellent! 2 + 7 = 9, which equals our target!\n\nSo we found the answer: [0, 1]\n\nBut let's see what happens if the answer isn't in the first few checks...",
+      "action": "next",
+      "next": "brute-force-continued"
+    },
+    {
+      "stepId": "brute-force-continued",
+      "mentorSays": "**Brute Force Algorithm:**\n\n```\nFor i from 0 to length-1:\n  For j from i+1 to length-1:\n    If nums[i] + nums[j] == target:\n      Return [i, j]\n```\n\n**Example Walkthrough:** `nums = [3, 2, 4]`, `target = 6`\n\n**Iteration 1:** i=0 (value=3), j=1 (value=2)\n- Check: 3 + 2 = 5 ≠ 6\n- Continue\n\n**Iteration 2:** i=0 (value=3), j=2 (value=4)\n- Check: 3 + 4 = 7 ≠ 6\n- Continue\n\n**Iteration 3:** i=1 (value=2), j=2 (value=4)\n- Check: 2 + 4 = 6 = 6 ✓\n- Return [1, 2]\n\n**Operation Count Table:**\n\nFor array of size n:\n- Outer loop: n iterations\n- Inner loop: (n-1) + (n-2) + ... + 1 = n(n-1)/2 iterations\n- Total comparisons: n(n-1)/2 ≈ n²/2\n\n**For n = 10,000:**\n- Comparisons: 10,000 × 9,999 / 2 = 49,995,000\n- That's almost 50 million comparisons!\n\n**Time Complexity: O(n²)**\n**Space Complexity: O(1)**\n\nThis works, but it's slow for large arrays. Want to learn a faster approach?",
+      "choices": [
+        { "label": "Yes, show me the faster approach!", "next": "walkthrough-optimal" },
+        { "label": "I want to see the code for brute force first", "next": "brute-force-code" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-sort",
+      "mentorSays": "### Approach B: Sort and Two Pointers\n\n**The Idea:**\n1. Sort the array: [2, 7, 11, 15] (already sorted)\n2. Use two pointers: left at start, right at end\n3. If sum is too small, move left pointer right\n4. If sum is too large, move right pointer left\n5. If sum equals target, we found it!\n\n**Problem:** We need to return **indices**, not values!\n\nIf we sort, the original positions change:\n```\nOriginal: [3, 2, 4] at indices [0, 1, 2]\nSorted:   [2, 3, 4] at indices [0, 1, 2]\n```\n\nWe'd need to track original indices, which adds complexity.\n\n**Better approach:** Use a hash map - it's simpler and doesn't modify the array!\n\nLet's explore the hash map approach instead.",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-optimal",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Optimal Approach (Hash Map)\n\n**The Key Insight:**\n\nIf `a + b = target`, then `b = target - a`\n\nWe call `b` the **complement** of `a`.\n\n**Strategy:**\n1. As we iterate through the array, remember numbers we've seen\n2. For each number, calculate its complement\n3. Check if we've seen the complement before\n4. If yes, we found our pair!\n5. If no, remember this number for later\n\n**Example:** `nums = [2, 7, 11, 15]`, `target = 9`\n\n**Initial State:**\n```\nArray: [2, 7, 11, 15]\nMap:   {}\nIndex: 0\n```\n\n**Decision Point 1:** At index 0, value = 2\nWhat should we do first?\n[A] Store 2 in the map\n[B] Calculate complement: 9 - 2 = 7\n[C] Return [0, 0]",
+      "choices": [
+        { "label": "[A] Store 2 in the map", "next": "wrong-store-first" },
+        { "label": "[B] Calculate complement: 9 - 2 = 7", "next": "correct-calculate-first" },
+        { "label": "[C] Return [0, 0]", "next": "wrong-return-first" }
+      ]
+    },
+    {
+      "stepId": "wrong-store-first",
+      "mentorSays": "Not yet! If we store 2 in the map first, then when we check if 2 exists in the map, we'll find it and incorrectly think we can use the same element twice.\n\n**Correct order:**\n1. First, calculate the complement\n2. Check if complement exists\n3. Then, store the current number\n\nThis ensures we never use the same element twice.",
+      "action": "next",
+      "next": "walkthrough-step-1"
+    },
+    {
+      "stepId": "wrong-return-first",
+      "mentorSays": "We can't return yet - we haven't found a pair! We need to check if the complement exists first.",
+      "action": "next",
+      "next": "walkthrough-step-1"
+    },
+    {
+      "stepId": "correct-calculate-first",
+      "mentorSays": "Perfect! We calculate the complement first: 9 - 2 = 7\n\nNow we ask: \"Have we seen 7 before?\"\n\n**Decision Point 2:** Is 7 in the map?\n[A] Yes, return the indices\n[B] No, store 2 and continue",
+      "choices": [
+        { "label": "[A] Yes, return the indices", "next": "wrong-7-not-seen" },
+        { "label": "[B] No, store 2 and continue", "next": "correct-store-2" }
+      ]
+    },
+    {
+      "stepId": "wrong-7-not-seen",
+      "mentorSays": "The map is empty, so we haven't seen 7 yet. We can't return yet!\n\nWe need to store 2 first, then continue to the next element.",
+      "action": "next",
+      "next": "correct-store-2"
+    },
+    {
+      "stepId": "correct-store-2",
+      "mentorSays": "Correct! The map is empty, so 7 is not in it.\n\nWe store: map[2] = 0\n\n**State after iteration 1:**\n```\nArray: [2, 7, 11, 15]\nMap:   {2: 0}\nIndex: 1 (next)\n```\n\n**Decision Point 3:** At index 1, value = 7\nWhat should we do?\n[A] Calculate complement: 9 - 7 = 2\n[B] Store 7 in the map\n[C] Return [1, 1]",
+      "choices": [
+        { "label": "[A] Calculate complement: 9 - 7 = 2", "next": "correct-calc-7" },
+        { "label": "[B] Store 7 in the map", "next": "wrong-store-before-check" },
+        { "label": "[C] Return [1, 1]", "next": "wrong-return-same" }
+      ]
+    },
+    {
+      "stepId": "wrong-store-before-check",
+      "mentorSays": "Remember the order: calculate complement FIRST, then check, then store!\n\nIf we store before checking, we might incorrectly use the same element.",
+      "action": "next",
+      "next": "correct-calc-7"
+    },
+    {
+      "stepId": "wrong-return-same",
+      "mentorSays": "We can't return [1, 1] - that would be using the same element twice, which the problem forbids!",
+      "action": "next",
+      "next": "correct-calc-7"
+    },
+    {
+      "stepId": "correct-calc-7",
+      "mentorSays": "Perfect! We calculate: 9 - 7 = 2\n\n**Decision Point 4:** Is 2 in the map?\n[A] Yes! Return [map[2], 1] = [0, 1]\n[B] No, store 7 and continue",
+      "choices": [
+        { "label": "[A] Yes! Return [0, 1]", "next": "found-solution" },
+        { "label": "[B] No, store 7 and continue", "next": "wrong-missed-solution" }
+      ]
+    },
+    {
+      "stepId": "wrong-missed-solution",
+      "mentorSays": "Wait! We stored 2 in the map at index 0. So map[2] = 0 exists!\n\nThis means we've found our pair:\n- nums[0] = 2\n- nums[1] = 7\n- 2 + 7 = 9 ✓\n\nWe should return [0, 1]!",
+      "action": "next",
+      "next": "found-solution"
+    },
+    {
+      "stepId": "found-solution",
+      "mentorSays": "**Solution Found!**\n\nWe found that:\n- map[2] = 0 (we saw 2 at index 0)\n- Current index = 1 (we're looking at 7)\n- 2 + 7 = 9 = target ✓\n\n**Return [0, 1]**\n\n**Why This Works:**\n- We only needed 2 iterations (not n²)\n- The hash map gave us instant lookup: O(1) instead of O(n)\n- We found the answer in linear time!\n\n**Operation Count:**\n- For array of size n: n iterations\n- Each iteration: O(1) map operations\n- Total: O(n) time\n\n**For n = 10,000:**\n- Iterations: 10,000\n- Much faster than 50 million comparisons!",
+      "action": "next",
+      "next": "pseudocode-phase"
+    },
+    {
+      "stepId": "pseudocode-phase",
+      "mentorSays": "### PHASE 6: Pseudocode\n\nNow let's write the logic in plain English (pseudocode):\n\n**Step 1:** Create an empty map to store number → index pairs.\n\n**Step 2:** For each index i and number in the array:\n\n**Step 3:** Calculate complement = target - current number.\n\n**Step 4:** If complement exists in the map, return [map[complement], i].\n\n**Step 5:** Otherwise, store current number → index in the map.\n\n**Step 6:** Return empty array if no solution (problem guarantees one exists).\n\nThis pseudocode matches exactly what we walked through!",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6"],
+      "action": "next",
+      "next": "code-implementation"
+    },
+    {
+      "stepId": "code-implementation",
+      "mentorSays": "### PHASE 7: Code Implementation\n\nNow let's translate the pseudocode into JavaScript code.\n\n**Step 1: Create the function and map**\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n}\n```\nThis matches pseudocode Step 1: \"Create an empty map\"\n\n**Step 2: Loop through the array**\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    \n  }\n}\n```\nThis matches pseudocode Step 2: \"For each index i and number\"\n\n**Step 3: Calculate complement**\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    \n  }\n}\n```\nThis matches pseudocode Step 3: \"Calculate complement\"\n\n**Step 4: Check if complement exists**\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    \n    if (complement in map) {\n      return [map[complement], i];\n    }\n  }\n}\n```\nThis matches pseudocode Step 4: \"If complement exists, return indices\"\n\n**Step 5: Store current number**\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    \n    if (complement in map) {\n      return [map[complement], i];\n    }\n    \n    map[nums[i]] = i;\n  }\n}\n```\nThis matches pseudocode Step 5: \"Store current number → index\"\n\n**Step 6: Return empty array (safety)**\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    \n    if (complement in map) {\n      return [map[complement], i];\n    }\n    \n    map[nums[i]] = i;\n  }\n  \n  return [];\n}\n```\nThis matches pseudocode Step 6: \"Return empty array if no solution\"\n\n**Final Code:**\n```javascript\nfunction twoSum(nums, target) {\n  const map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    \n    if (complement in map) {\n      return [map[complement], i];\n    }\n    \n    map[nums[i]] = i;\n  }\n  \n  return [];\n}\n```",
+      "example": "function twoSum(nums, target) {\n  const map = {};\n  \n  for (let i = 0; i < nums.length; i++) {\n    const complement = target - nums[i];\n    \n    if (complement in map) {\n      return [map[complement], i];\n    }\n    \n    map[nums[i]] = i;\n  }\n  \n  return [];\n}",
+      "action": "next",
+      "next": "complexity-analysis"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "### PHASE 8: Complexity Analysis\n\n**Time Complexity Analysis:**\n\n**Step-by-step breakdown:**\n1. Creating empty map: O(1)\n2. Loop through array: n iterations\n3. Each iteration:\n   - Calculate complement: O(1)\n   - Check if key in map: O(1) average case\n   - Store in map: O(1) average case\n4. Return statement: O(1)\n\n**Total Time: O(n)**\n\n**Space Complexity Analysis:**\n\n**What we store:**\n- The map: In worst case, we store n-1 entries (all but the last number)\n- Loop variables: O(1)\n\n**Total Space: O(n)**\n\n**Comparison Table:**\n\n| Approach | Time | Space | For n=10,000 |\n|----------|------|-------|--------------|\n| Brute Force | O(n²) | O(1) | ~50M comparisons |\n| Hash Map | O(n) | O(n) | ~10K iterations |\n\n**Why Optimal is Better:**\n\nFor n = 10,000:\n- Brute force: 49,995,000 comparisons\n- Hash map: 10,000 iterations\n\nThat's **5,000x faster**!\n\n**Tradeoff:** We use O(n) extra space to achieve O(n) time instead of O(n²) time.\n\nThis is a classic **space-time tradeoff** - a fundamental concept in algorithm design.",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "### PHASE 9: Edge Cases\n\n**Edge Case 1: Array with two elements**\n```\nnums = [3, 3], target = 6\n```\n**Why it matters:** Tests if we handle duplicate values correctly.\n**How algorithm handles it:**\n- i=0: complement = 6-3 = 3, not in map, store map[3]=0\n- i=1: complement = 6-3 = 3, IS in map (map[3]=0), return [0, 1] ✓\n\n**Edge Case 2: Solution at beginning**\n```\nnums = [2, 7, 11, 15], target = 9\n```\n**Why it matters:** Tests if we find solution quickly.\n**How algorithm handles it:** Found in 2 iterations ✓\n\n**Edge Case 3: Solution at end**\n```\nnums = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], target = 19\n```\n**Why it matters:** Tests if we handle late solutions.\n**How algorithm handles it:**\n- We store all numbers until we find complement at the end ✓\n\n**Edge Case 4: Negative numbers**\n```\nnums = [-1, -2, -3, -4, -6], target = -8\n```\n**Why it matters:** Tests if complement calculation works with negatives.\n**How algorithm handles it:**\n- complement = -8 - (-2) = -6, works correctly ✓\n\n**Edge Case 5: Large numbers**\n```\nnums = [1000000, 2000000], target = 3000000\n```\n**Why it matters:** Tests if JavaScript handles large integers.\n**How algorithm handles it:** Works correctly (JavaScript numbers are 64-bit floats) ✓\n\n**Edge Case 6: Zero in array**\n```\nnums = [0, 4, 3, 0], target = 0\n```\n**Why it matters:** Tests if zero is handled correctly.\n**How algorithm handles it:**\n- complement = 0 - 0 = 0, found in map, returns [0, 3] ✓",
+      "action": "next",
+      "next": "lesson-complete"
+    },
+    {
+      "stepId": "lesson-complete",
+      "mentorSays": "### PHASE 10: Lesson Complete\n\n**Summary:**\n\n**Problem:** Find two numbers in an array that sum to a target.\n\n**Key Insight:** Use complement calculation (target - current) and hash map for O(1) lookups.\n\n**Non-optimal vs Optimal:**\n- Brute force: O(n²) time, O(1) space - checks all pairs\n- Hash map: O(n) time, O(n) space - instant complement lookup\n\n**Techniques Learned:**\n1. Complement calculation pattern\n2. Hash map for instant lookups\n3. Space-time tradeoffs\n4. One-pass algorithm design\n\n**Edge Cases Covered:**\n- Duplicate values\n- Solutions at different positions\n- Negative numbers\n- Large numbers\n- Zero values\n\n**Related Problems:**\n1. **Three Sum** - Extends two sum to three numbers\n2. **Four Sum** - Further extension\n3. **Two Sum II (Sorted Array)** - Variant with sorted input (use two pointers!)\n4. **Subarray Sum Equals K** - Similar hash map pattern\n\n**Congratulations!** You've mastered the most famous interview question. This pattern appears in countless problems!\n\n**Next Steps:**\n- Try solving \"Three Sum\" to extend this pattern\n- Practice explaining your solution in 30 seconds\n- Review the space-time tradeoff concept",
+      "action": "complete"
+    }
+  ]
+}
+

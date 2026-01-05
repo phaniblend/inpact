@@ -1,0 +1,88 @@
+{
+  "id": "permutations-ii",
+  "title": "Permutations II (With Duplicates)",
+  "difficulty": "medium",
+  "pattern": "backtracking + duplicate control",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of numbers that **may contain duplicates**.\n\nYour task is to return **all unique permutations**.\n\nThe result must not contain repeated orderings.",
+      "example": "nums = [1,1,2]",
+      "action": "next"
+    },
+    {
+      "stepId": "why-duplicates-are-a-problem",
+      "mentorSays": "If we treat duplicate values as distinct, we will generate repeated permutations.\n\nExample:\nUsing the two 1s separately would produce the same ordering multiple times.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Example:\n\nnums = [1,1,2]\n\nUnique permutations should be:\n[1,1,2]\n[1,2,1]\n[2,1,1]\n\nOnly 3 results — not more.",
+      "action": "next"
+    },
+    {
+      "stepId": "key-idea",
+      "mentorSays": "Key idea:\n\n• Sort the list first\n• When choosing numbers at the same position:\n  - skip a number if it is the same as the previous one\n  - and the previous one was not used in this position",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nWhy does sorting help us avoid duplicates?",
+      "choices": [
+        {
+          "label": "Duplicates become adjacent, making them easy to detect",
+          "next": "skip-rule"
+        },
+        {
+          "label": "It makes recursion faster",
+          "next": "skip-rule"
+        }
+      ]
+    },
+    {
+      "stepId": "skip-rule",
+      "mentorSays": "Correct.\n\nBecause duplicates are next to each other after sorting, we can apply a simple rule:\n\nSkip nums[i] if:\n• nums[i] === nums[i - 1]\n• and nums[i - 1] has NOT been used in the current path",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example walkthrough:\n\nnums = [1,1,2] (sorted)\n\nAt the first position:\n• pick the first 1\n• skip the second 1 at the same level\n\nThis prevents duplicate permutations.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "sort the list",
+        "create result list",
+        "create used array",
+        "define helper function:",
+        "  if path length equals nums length:",
+        "    add copy to result",
+        "    return",
+        "  for each index i:",
+        "    if used[i], continue",
+        "    if i > 0 and nums[i] == nums[i - 1] and used[i - 1] is false, skip",
+        "    choose nums[i]",
+        "    mark used",
+        "    recurse",
+        "    undo choice"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Now translate the logic into JavaScript.",
+      "code": "function permuteUnique(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n  const used = Array(nums.length).fill(false);\n\n  function backtrack(path) {\n    if (path.length === nums.length) {\n      result.push([...path]);\n      return;\n    }\n\n    for (let i = 0; i < nums.length; i++) {\n      if (used[i]) continue;\n\n      if (i > 0 && nums[i] === nums[i - 1] && !used[i - 1]) continue;\n\n      used[i] = true;\n      path.push(nums[i]);\n\n      backtrack(path);\n\n      path.pop();\n      used[i] = false;\n    }\n  }\n\n  backtrack([]);\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final checks:\n\n[1,1,2] → 3 unique permutations\n[1,2,2] → [[1,2,2],[2,1,2],[2,2,1]]\n\nNo duplicate permutations are produced.",
+      "action": "complete"
+    }
+  ]
+}

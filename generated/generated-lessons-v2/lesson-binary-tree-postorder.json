@@ -1,0 +1,77 @@
+{
+  "id": "binary-tree-postorder",
+  "title": "Binary Tree Postorder Traversal",
+  "pattern": "tree + recursion",
+  "difficulty": "medium",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the **root of a binary tree**.\n\nYour task is to return the values of the nodes using **postorder traversal**.\n\nPostorder traversal follows a specific visiting order that we will build carefully.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-tree-example",
+      "mentorSays": "Let’s start with a very small tree.\n\n      2\n     / \\\n    1   3\n\nThis tree has:\n- a root (2)\n- a left child (1)\n- a right child (3)",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Before learning the rule, pause and think.\n\nIf you had to **visit every node**, when do you think the root should be visited?\n\n- Before the children?\n- Between the children?\n- After both children?\n\nDifferent traversal styles answer this differently.",
+      "action": "next"
+    },
+    {
+      "stepId": "define-postorder",
+      "mentorSays": "In **postorder traversal**, the rule is:\n\n1. Visit the **left subtree**\n2. Visit the **right subtree**\n3. Visit the **current node**\n\nThe node itself is visited **last**.",
+      "action": "next"
+    },
+    {
+      "stepId": "walkthrough-example",
+      "mentorSays": "Let’s apply the rule to our tiny tree.\n\n      2\n     / \\\n    1   3\n\nStep-by-step:\n- Go left → visit 1\n- Go right → visit 3\n- Visit current node → 2\n\nSo the postorder result is:\n[1, 3, 2]",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Notice the pattern.\n\nEach subtree is itself a **smaller tree**.\n\nThe same visiting rule applies again and again.\n\nThis makes **recursion** a natural way to solve this problem.",
+      "action": "next"
+    },
+    {
+      "stepId": "concept-recursion",
+      "mentorSays": "Using recursion for trees means:\n\n- If the node is null → stop\n- Otherwise:\n  - Traverse left subtree\n  - Traverse right subtree\n  - Process the current node\n\nThis exactly matches postorder traversal.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic in plain steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "create an empty result list",
+        "define a recursive function",
+        "if node is null, return",
+        "traverse left subtree",
+        "traverse right subtree",
+        "add node value to result",
+        "call recursive function with root",
+        "return result"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, we can translate it into JavaScript.\n\nType the code yourself to reinforce recursion understanding.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function postorderTraversal(root) {\n  const result = [];\n\n  function traverse(node) {\n    if (node === null) return;\n\n    traverse(node.left);\n    traverse(node.right);\n    result.push(node.val);\n  }\n\n  traverse(root);\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "If the tree is:\n\n      2\n     / \\\n    1   3\n\nThe output will be:\n[1, 3, 2]\n\nThis confirms the postorder traversal sequence.",
+      "action": "complete"
+    }
+  ]
+}

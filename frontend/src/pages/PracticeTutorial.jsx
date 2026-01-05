@@ -61,12 +61,19 @@ export default function PracticeTutorial() {
     const loadLesson = async () => {
       try {
         // Fetch lesson from API
-        const response = await fetch(`http://localhost:3001/api/lessons/algorithms/${slug}`);
+        // Try to use proxy first, fallback to direct URL
+        const apiUrl = import.meta.env.DEV
+          ? `/api/lessons/algorithms/${slug}`  // Use Vite proxy in development
+          : `http://localhost:3001/api/lessons/algorithms/${slug}`;  // Direct URL in production
+        const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error('Lesson not found');
         }
         const result = await response.json();
         const loadedLesson = result.data;
+        
+        console.log('Loaded lesson:', loadedLesson.title);
+        console.log('Lesson flow steps:', loadedLesson.flow?.map(s => s.stepId));
         
         setLesson(loadedLesson);
         
@@ -74,37 +81,103 @@ export default function PracticeTutorial() {
         const langParam = searchParams.get('language');
         if (langParam) {
           setSelectedLanguage(langParam);
-          // Navigate directly to prereq-check step for selected language
-          const langMap = {
+          
+          // Check if lesson has language selection structure
+          const langSelectionStep = loadedLesson.flow?.find(s => s.stepId === 'language-selection');
+          const prereqStepId = {
             'javascript': 'prereq-check-js',
             'python': 'prereq-check-python',
             'java': 'prereq-check-java',
             'cpp': 'prereq-check-cpp',
             'typescript': 'prereq-check-ts'
-          };
-          const prereqStepId = langMap[langParam];
-          if (prereqStepId && loadedLesson.flow.find(s => s.stepId === prereqStepId)) {
-            // Find the language-selection step to build proper path
-            const langSelectionStep = loadedLesson.flow.find(s => s.stepId === 'language-selection');
-            if (langSelectionStep) {
-              setCurrentStepId(prereqStepId);
-              setVisitedSteps(['objectives', 'language-selection', prereqStepId]);
-            } else {
-              // Fallback to first step if structure is different
-              const firstStepId = loadedLesson.flow[0].stepId;
-              setCurrentStepId(firstStepId);
-              setVisitedSteps([firstStepId]);
+          }[langParam];
+          
+          const hasPrereqStep = prereqStepId && loadedLesson.flow?.find(s => s.stepId === prereqStepId);
+          
+          if (langSelectionStep && hasPrereqStep) {
+            // Lesson has full language selection structure - go to prereq step
+            console.log('Lesson has language selection, going to:', prereqStepId);
+            setCurrentStepId(prereqStepId);
+            setVisitedSteps(['objectives', 'language-selection', prereqStepId]);
+          } else if (!hasPrereqStep) {
+            // Lesson doesn't have prereq-check step - inject one dynamically
+            const langName = {
+              'javascript': 'JavaScript',
+              'python': 'Python',
+              'java': 'Java',
+              'cpp': 'C++',
+              'typescript': 'TypeScript'
+            }[langParam] || langParam;
+            
+            // Get language constructs needed for this algorithm (from curriculum or default)
+            const constructs = loadedLesson.curriculum?.assumesAlreadyTaught || 
+              ['variables', 'arrays', 'loops', 'functions', 'objects'];
+            
+            const constructsText = constructs.slice(0, 5).join(', ') + (constructs.length > 5 ? '...' : '');
+            
+            // Find the problem statement step (should be first, but find it explicitly)
+            const problemStep = loadedLesson.flow?.find(s => 
+              s.stepId === 'problem-statement' || 
+              s.stepId === 'lesson-start' ||
+              s.stepId.startsWith('problem')
+            ) || loadedLesson.flow?.[0];
+            
+            // Create dynamic prereq-check step
+            const dynamicPrereqStep = {
+              stepId: prereqStepId,
+              mentorSays: `In solving this algorithm, we'll be using the following **${langName}** language constructs:\n\n**${constructsText}**\n\nAre you comfortable using these constructs?`,
+              choices: [
+                {
+                  label: "Yes, I'm well-versed. Proceed.",
+                  next: problemStep?.stepId || 'problem-statement'
+                },
+                {
+                  label: "No, please explain.",
+                  next: 'teach-language-constructs-' + langParam
+                }
+              ]
+            };
+            
+            // Inject the prereq-check step at the beginning of the flow
+            if (!loadedLesson.flow) loadedLesson.flow = [];
+            loadedLesson.flow = [dynamicPrereqStep, ...loadedLesson.flow];
+            
+            // Also create a teach-language-constructs step if it doesn't exist
+            const teachStepId = 'teach-language-constructs-' + langParam;
+            if (!loadedLesson.flow.find(s => s.stepId === teachStepId)) {
+              const firstProblemStep = loadedLesson.flow.find(s => 
+                s.stepId === 'problem-statement' || 
+                s.stepId === 'lesson-start' || 
+                s.stepId.startsWith('problem')
+              ) || loadedLesson.flow[0];
+              
+              const teachStep = {
+                stepId: teachStepId,
+                mentorSays: `Let me explain the key **${langName}** constructs you'll need for this algorithm:\n\n${constructs.map(c => `- **${c}**`).join('\n')}\n\nThese are fundamental concepts. If you're not familiar with any of them, I recommend reviewing them before proceeding.\n\nOnce you're ready, we'll proceed to the problem.`,
+                action: 'next',
+                next: firstProblemStep?.stepId || loadedLesson.flow[0]?.stepId || 'problem-statement'
+              };
+              // Insert after prereq-check
+              const prereqIndex = loadedLesson.flow.findIndex(s => s.stepId === prereqStepId);
+              if (prereqIndex >= 0) {
+                loadedLesson.flow.splice(prereqIndex + 1, 0, teachStep);
+              }
             }
+            
+            console.log('Injected prereq-check step, starting at:', prereqStepId);
+            setCurrentStepId(prereqStepId);
+            setVisitedSteps([prereqStepId]);
           } else {
-            // Fallback to first step
-            const firstStepId = loadedLesson.flow[0].stepId;
-            setCurrentStepId(firstStepId);
-            setVisitedSteps([firstStepId]);
+            // Lesson has prereq step but no language selection - go to prereq step
+            console.log('Lesson has prereq step, going to:', prereqStepId);
+            setCurrentStepId(prereqStepId);
+            setVisitedSteps([prereqStepId]);
           }
         } else {
           // Set initial step (first step in flow)
           if (loadedLesson.flow && loadedLesson.flow.length > 0) {
             const firstStepId = loadedLesson.flow[0].stepId;
+            console.log('No language param, starting at:', firstStepId);
             setCurrentStepId(firstStepId);
             setVisitedSteps([firstStepId]);
           }
@@ -121,8 +194,14 @@ export default function PracticeTutorial() {
 
   // Get current step from flow
   const getCurrentStep = () => {
-    if (!lesson) return null;
-    return lesson.flow.find(step => step.stepId === currentStepId);
+    if (!lesson || !currentStepId) return null;
+    const step = lesson.flow.find(step => step.stepId === currentStepId);
+    if (!step) {
+      console.error(`Step not found: ${currentStepId}. Available steps:`, lesson.flow.map(s => s.stepId));
+      // Fallback to first step if current step not found
+      return lesson.flow[0] || null;
+    }
+    return step;
   };
 
   const currentStep = getCurrentStep();
@@ -137,12 +216,14 @@ export default function PracticeTutorial() {
     if (nextStepId.includes('-ts')) setSelectedLanguage('typescript');
     
     // Check if this is a "teach language constructs" step
+    // Note: We now show it as a regular step with explanation, not a modal
+    // The modal is only for detailed construct-by-construct teaching
     if (nextStepId.includes('teach-language-constructs-')) {
-      // Show modal with first construct
-      setCurrentConstruct('variables');
-      setShowConstructModal(true);
-      // Don't navigate yet - wait for user to go through constructs
-      return;
+      // Navigate to the teach step normally
+      // If we want to show modal instead, uncomment below:
+      // setCurrentConstruct('variables');
+      // setShowConstructModal(true);
+      // return;
     }
     
     setCurrentStepId(nextStepId);
@@ -185,6 +266,15 @@ export default function PracticeTutorial() {
   const handleContinue = () => {
     if (currentStep?.next) {
       handleChoice(currentStep.next);
+    } else if (currentStep?.action === 'next') {
+      // Find the next step in the flow array
+      if (lesson && lesson.flow) {
+        const currentIndex = lesson.flow.findIndex(s => s.stepId === currentStepId);
+        if (currentIndex >= 0 && currentIndex < lesson.flow.length - 1) {
+          const nextStep = lesson.flow[currentIndex + 1];
+          handleChoice(nextStep.stepId);
+        }
+      }
     } else if (currentStep?.action === 'complete') {
       // Save completion status here (future: API call)
       navigate('/algorithms');
@@ -212,19 +302,6 @@ export default function PracticeTutorial() {
     }
   };
 
-  // Calculate progress
-  const totalSteps = lesson?.flow.length || 1;
-  const currentStepIndex = lesson?.flow.findIndex(s => s.stepId === currentStepId) || 0;
-  const progress = ((currentStepIndex + 1) / totalSteps) * 100;
-
-  if (!lesson || !currentStep) {
-    return (
-      <div className="min-h-screen bg-inpact-dark flex items-center justify-center">
-        <div className="text-white text-xl">Loading lesson...</div>
-      </div>
-    );
-  }
-
   // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -239,6 +316,19 @@ export default function PracticeTutorial() {
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
   }, [showLanguageDropdown, showLanguageDropdownEditor]);
+
+  // Calculate progress
+  const totalSteps = lesson?.flow.length || 1;
+  const currentStepIndex = lesson?.flow.findIndex(s => s.stepId === currentStepId) || 0;
+  const progress = ((currentStepIndex + 1) / totalSteps) * 100;
+
+  if (!lesson || !currentStep) {
+    return (
+      <div className="min-h-screen bg-inpact-dark flex items-center justify-center">
+        <div className="text-white text-xl">Loading lesson...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="h-screen flex flex-col bg-inpact-dark">
@@ -352,6 +442,20 @@ export default function PracticeTutorial() {
               );
             })}
           </div>
+
+          {/* Show pseudocode if present */}
+          {currentStep.pseudocode && (
+            <div className="mt-6 bg-gray-50 border-l-4 border-inpact-green p-4 rounded">
+              <h3 className="text-sm font-bold text-gray-800 mb-3">Step-by-Step Algorithm:</h3>
+              <ol className="space-y-2 list-decimal list-inside">
+                {currentStep.pseudocode.map((step, idx) => (
+                  <li key={idx} className="text-sm text-gray-700 font-mono pl-2">
+                    {step}
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
 
           {/* Show example if present */}
           {currentStep.example && (

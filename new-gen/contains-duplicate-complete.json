@@ -1,0 +1,277 @@
+{
+  "id": "contains-duplicate-complete",
+  "title": "Contains Duplicate",
+  "pattern": "hash set lookup",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "COMPLETE",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonNumber": 5,
+    "tier": "FOUNDATION",
+    "lessonOrderTag": "FOUNDATION-05",
+    "introduces": [
+      "hash-set-lookup",
+      "seen-before-pattern",
+      "early-termination"
+    ],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "loops",
+      "for-loop",
+      "functions",
+      "return-statement",
+      "objects",
+      "hash-sets"
+    ],
+    "prerequisiteCheckRequired": true,
+    "nextRecommended": ["valid-anagram", "single-number"]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Create an empty set to store numbers we've seen." },
+    { "id": "ps2", "text": "For each number in the array:" },
+    { "id": "ps3", "text": "  If number exists in set, return true (duplicate found)." },
+    { "id": "ps4", "text": "  Otherwise, add number to set." },
+    { "id": "ps5", "text": "If loop completes, return false (no duplicates)." }
+  ],
+  "flow": [
+    {
+      "stepId": "objectives",
+      "mentorSays": "Welcome to **Contains Duplicate**!\n\nThis lesson teaches the \"have I seen this before?\" pattern using hash sets - one of the most common patterns in coding interviews.\n\n**What you'll learn:**\n- How to use hash sets for instant lookups\n- The \"seen before\" pattern\n- Early termination optimization\n- O(n) time solution\n\n**By the end, you'll be able to:**\n- Detect duplicates efficiently\n- Use hash sets for membership testing\n- Explain why sets are faster than arrays for lookups\n- Apply this pattern to other problems\n\nReady to master duplicate detection?",
+      "action": "next",
+      "next": "language-selection"
+    },
+    {
+      "stepId": "language-selection",
+      "mentorSays": "First, choose your programming language.\n\nThis lesson is available in:\n- JavaScript\n- Python\n- Java\n- C++\n- TypeScript\n\nWhich language would you like to use?",
+      "choices": [
+        { "label": "JavaScript", "next": "prereq-check-js" },
+        { "label": "Python", "next": "prereq-check-python" },
+        { "label": "Java", "next": "prereq-check-java" },
+        { "label": "C++", "next": "prereq-check-cpp" },
+        { "label": "TypeScript", "next": "prereq-check-ts" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-js",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Contains Duplicate, let's make sure you're comfortable with the JavaScript constructs we'll use:\n\n**1. Sets (Hash Sets)**\n- Create: `const set = new Set()`\n- Add: `set.add(value)`\n- Check: `set.has(value)` - returns true/false\n- Size: `set.size`\n\n**2. Arrays**\n- Access: `nums[i]`\n- Length: `nums.length`\n- Iterate: `for (let i = 0; i < nums.length; i++)`\n\n**3. Variables**\n- We'll use a Set to track seen numbers\n\n**4. For Loops**\n- Iterate through array\n\n**5. Conditional Statements**\n- Check if number exists: `if (set.has(num))`\n- Return true/false\n\n**6. Functions**\n- Function that takes array, returns boolean\n\nDo you feel comfortable with these JavaScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-js" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-python",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Contains Duplicate, let's make sure you're comfortable with the Python constructs we'll use:\n\n**1. Sets**\n- Create: `seen = set()`\n- Add: `seen.add(value)`\n- Check: `value in seen` - returns True/False\n- Size: `len(seen)`\n\n**2. Lists**\n- Access: `nums[i]`\n- Length: `len(nums)`\n- Iterate: `for num in nums:`\n\n**3. Variables**\n- We'll use a set to track seen numbers\n\n**4. For Loops**\n- Iterate through list\n\n**5. Conditional Statements**\n- Check if number exists: `if num in seen:`\n- Return True/False\n\n**6. Functions**\n- Function that takes list, returns boolean\n\nDo you feel comfortable with these Python constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-python" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-java",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Contains Duplicate, let's make sure you're comfortable with the Java constructs we'll use:\n\n**1. HashSet**\n- Create: `HashSet<Integer> set = new HashSet<>()`\n- Add: `set.add(value)`\n- Check: `set.contains(value)` - returns true/false\n- Size: `set.size()`\n\n**2. Arrays**\n- Access: `nums[i]`\n- Length: `nums.length`\n- Iterate: `for (int i = 0; i < nums.length; i++)`\n\n**3. Variables**\n- We'll use a HashSet to track seen numbers\n\n**4. For Loops**\n- Iterate through array\n\n**5. Conditional Statements**\n- Check if number exists: `if (set.contains(num))`\n- Return true/false\n\n**6. Methods**\n- Method that takes array, returns boolean\n\nDo you feel comfortable with these Java constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-java" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-cpp",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Contains Duplicate, let's make sure you're comfortable with the C++ constructs we'll use:\n\n**1. unordered_set**\n- Create: `unordered_set<int> set`\n- Add: `set.insert(value)`\n- Check: `set.find(value) != set.end()` or `set.count(value) > 0`\n- Size: `set.size()`\n\n**2. Vectors/Arrays**\n- Access: `nums[i]`\n- Length: `nums.size()`\n- Iterate: `for (int i = 0; i < nums.size(); i++)`\n\n**3. Variables**\n- We'll use an unordered_set to track seen numbers\n\n**4. For Loops**\n- Iterate through vector\n\n**5. Conditional Statements**\n- Check if number exists: `if (set.find(num) != set.end())`\n- Return true/false\n\n**6. Functions**\n- Function that takes vector, returns bool\n\nDo you feel comfortable with these C++ constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-cpp" }
+      ]
+    },
+    {
+      "stepId": "prereq-check-ts",
+      "mentorSays": "### PHASE 1: Language Constructs Check\n\nBefore we solve Contains Duplicate, let's make sure you're comfortable with the TypeScript constructs we'll use:\n\n**1. Sets with Types**\n- Create: `const set = new Set<number>()`\n- Add: `set.add(value)`\n- Check: `set.has(value)` - returns boolean\n- Size: `set.size`\n\n**2. Arrays with Types**\n- Access: `nums[i]`\n- Length: `nums.length`\n- Iterate: `for (let i = 0; i < nums.length; i++)`\n\n**3. Variables with Types**\n- We'll use a Set<number> to track seen numbers\n\n**4. For Loops**\n- Iterate through array\n\n**5. Conditional Statements**\n- Check if number exists: `if (set.has(num))`\n- Return boolean\n\n**6. Functions with Types**\n- `function containsDuplicate(nums: number[]): boolean`\n\nDo you feel comfortable with these TypeScript constructs?",
+      "choices": [
+        { "label": "Yes, let's go!", "next": "algorithm-prereq-check" },
+        { "label": "No, teach me these first", "next": "teach-language-constructs-ts" }
+      ]
+    },
+    {
+      "stepId": "algorithm-prereq-check",
+      "mentorSays": "### PHASE 2: Algorithm Prerequisites\n\n**Prerequisites for Contains Duplicate:**\n\n**Required Concepts:**\n1. **Hash Sets** - Understanding that sets provide O(1) membership testing\n2. **Arrays** - Iterating through arrays\n3. **Basic Logic** - Understanding \"have I seen this before?\"\n\n**No Advanced Prerequisites:**\n- You don't need to know sorting\n- You don't need to know complex data structures\n\nThis is a **foundation-level** problem. If you understand sets and basic iteration, you're ready!\n\nDo you feel ready to proceed?",
+      "choices": [
+        { "label": "Yes, I'm ready!", "next": "problem-statement" },
+        { "label": "I need to review prerequisites", "next": "review-prerequisites" }
+      ]
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### PHASE 3: Problem Statement\n\n**Problem:**\n\nGiven an integer array `nums`, return `true` if any value appears **at least twice** in the array, and return `false` if every element is distinct.\n\n**Input:**\n- `nums`: An array of integers (e.g., `[1, 2, 3, 1]`)\n\n**Output:**\n- `true` if array contains duplicates, `false` otherwise\n\n**Constraints:**\n- 1 <= nums.length <= 10^5\n- -10^9 <= nums[i] <= 10^9\n\n**Example 1:**\n```\nInput: nums = [1, 2, 3, 1]\nOutput: true\n\nExplanation: 1 appears twice.\n```\n\n**Example 2:**\n```\nInput: nums = [1, 2, 3, 4]\nOutput: false\n\nExplanation: All elements are distinct.\n```\n\n**Understanding the Variables:**\n- `nums`: The input array\n- `set`: Hash set storing numbers we've seen\n- `num`: Current number being processed\n- `i`: Current index in the array\n\n**Comprehension Check:**\n\nFor `nums = [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]`, does it contain duplicates?",
+      "choices": [
+        { "label": "Yes, it has duplicates", "next": "correct-has-duplicates" },
+        { "label": "No, all numbers are distinct", "next": "wrong-all-distinct" },
+        { "label": "I need to count them", "next": "correct-counting-approach" }
+      ]
+    },
+    {
+      "stepId": "wrong-all-distinct",
+      "mentorSays": "Let's check: [1, 1, 1, 3, 3, 4, 3, 2, 4, 2]\n\n- 1 appears 3 times (duplicate!)\n- 3 appears 3 times (duplicate!)\n- 4 appears 2 times (duplicate!)\n- 2 appears 2 times (duplicate!)\n\nSo yes, it definitely contains duplicates!",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "correct-counting-approach",
+      "mentorSays": "Good thinking! Let's count:\n\n- 1 appears 3 times\n- 3 appears 3 times\n- 4 appears 2 times\n- 2 appears 2 times\n\nSince multiple numbers appear more than once, the array contains duplicates!\n\nNow let's think about how to detect this efficiently.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "correct-has-duplicates",
+      "mentorSays": "Perfect! The array has many duplicates:\n- 1 appears 3 times\n- 3 appears 3 times\n- 4 appears 2 times\n- 2 appears 2 times\n\nYou've got the problem! Now let's think about how to solve it.",
+      "action": "next",
+      "next": "how-would-you-solve"
+    },
+    {
+      "stepId": "how-would-you-solve",
+      "mentorSays": "### PHASE 4: How Would You Solve It?\n\nBefore I show you the solution, let's think about different approaches.\n\nHere are three ways we could solve this:\n\n**Approach A: Nested Loops (Brute Force)**\n- For each number, check if it appears again later in the array\n- Use two nested loops\n- If we find a match, return true\n- Simple but O(n²) time\n\n**Approach B: Sort Then Check Adjacent**\n- Sort the array first\n- Check if any adjacent elements are equal\n- If yes, return true\n- O(n log n) time due to sorting\n\n**Approach C: Hash Set (Optimal)**\n- Use a set to remember numbers we've seen\n- For each number, check if it's already in the set\n- If yes, return true (duplicate found)\n- If no, add it to the set\n- O(n) time, O(n) space\n\nWhich approach would you like to explore first?",
+      "choices": [
+        { "label": "Approach A: Nested Loops", "next": "walkthrough-brute-force" },
+        { "label": "Approach B: Sort Then Check", "next": "walkthrough-sort" },
+        { "label": "Approach C: Hash Set", "next": "walkthrough-optimal" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-brute-force",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Approach A (Brute Force)\n\nLet's walk through checking every pair.\n\n**Example:** `nums = [1, 2, 3, 1]`\n\n**Algorithm:**\n```\nFor i from 0 to length-1:\n  For j from i+1 to length-1:\n    If nums[i] == nums[j]:\n      Return true\nReturn false\n```\n\n**Walkthrough:**\n\n**i=0, nums[0]=1:**\n- j=1: nums[1]=2, 1 != 2, continue\n- j=2: nums[2]=3, 1 != 3, continue\n- j=3: nums[3]=1, 1 == 1 ✓ Found duplicate!\n- Return true\n\n**Operation Count:**\n- Outer loop: n iterations\n- Inner loop: (n-1) + (n-2) + ... + 1 = n(n-1)/2\n- Total: O(n²) comparisons\n\n**For n = 10,000:**\n- Comparisons: 10,000 × 9,999 / 2 ≈ 50 million\n\n**Time Complexity: O(n²)**\n**Space Complexity: O(1)**\n\nThis works, but it's slow for large arrays. Want to learn a faster approach?",
+      "choices": [
+        { "label": "Yes, show me the faster approach!", "next": "walkthrough-optimal" },
+        { "label": "I want to see the code for brute force first", "next": "brute-force-code" }
+      ]
+    },
+    {
+      "stepId": "walkthrough-sort",
+      "mentorSays": "### Approach B: Sort Then Check Adjacent\n\n**Step 1: Sort the array**\n```\nOriginal: [1, 2, 3, 1]\nSorted:   [1, 1, 2, 3]\n```\n\n**Step 2: Check adjacent elements**\n```\nCompare nums[0] and nums[1]: 1 == 1? Yes! ✓\nReturn true\n```\n\n**Time Complexity:** O(n log n) - sorting dominates\n**Space Complexity:** O(1) or O(n) depending on sort implementation\n\n**Better approach:** Use a hash set for O(n) time!",
+      "action": "next",
+      "next": "walkthrough-optimal"
+    },
+    {
+      "stepId": "walkthrough-optimal",
+      "mentorSays": "### PHASE 5: Guided Walkthrough - Optimal Approach (Hash Set)\n\n**The Key Insight:**\n\nIf we've seen a number before, it's a duplicate!\n\n**Strategy:**\n1. Create an empty set\n2. For each number in the array:\n   - If number is in set, return true (duplicate!)\n   - Otherwise, add number to set\n3. If loop completes, return false (no duplicates)\n\n**Example:** `nums = [1, 2, 3, 1]`\n\n**Initial State:**\n```\nArray: [1, 2, 3, 1]\nSet:   {}\nIndex: 0\n```\n\n**Decision Point 1:** At index 0, num = 1\nWhat should we do first?\n[A] Add 1 to the set\n[B] Check if 1 is in the set\n[C] Return true",
+      "choices": [
+        { "label": "[A] Add 1 to the set", "next": "wrong-add-first" },
+        { "label": "[B] Check if 1 is in the set", "next": "correct-check-first" },
+        { "label": "[C] Return true", "next": "wrong-return-early" }
+      ]
+    },
+    {
+      "stepId": "wrong-add-first",
+      "mentorSays": "If we add 1 to the set first, then when we check if 1 is in the set, we'll always find it (even though it's the first time we're seeing it)!\n\n**Correct order:**\n1. Check if number exists in set\n2. If yes, return true (duplicate found)\n3. If no, add it to set\n\nLet's check first!",
+      "action": "next",
+      "next": "correct-check-first"
+    },
+    {
+      "stepId": "wrong-return-early",
+      "mentorSays": "We can't return true yet! This is the first time we're seeing 1. We need to check if we've seen it before first.",
+      "action": "next",
+      "next": "correct-check-first"
+    },
+    {
+      "stepId": "correct-check-first",
+      "mentorSays": "Perfect! We check: Is 1 in the set?\n\nSet is empty, so 1 is NOT in the set.\n\n**Decision Point 2:** What should we do now?\n[A] Add 1 to the set and continue\n[B] Return false\n[C] Skip 1",
+      "choices": [
+        { "label": "[A] Add 1 to the set and continue", "next": "correct-add-and-continue" },
+        { "label": "[B] Return false", "next": "wrong-return-false" },
+        { "label": "[C] Skip 1", "next": "wrong-skip" }
+      ]
+    },
+    {
+      "stepId": "wrong-return-false",
+      "mentorSays": "We can't return false yet! We've only checked the first element. We need to remember that we've seen 1, then continue checking the rest of the array.",
+      "action": "next",
+      "next": "correct-add-and-continue"
+    },
+    {
+      "stepId": "wrong-skip",
+      "mentorSays": "We shouldn't skip it! We need to remember that we've seen 1, so if we see it again later, we can detect the duplicate.\n\nLet's add it to the set.",
+      "action": "next",
+      "next": "correct-add-and-continue"
+    },
+    {
+      "stepId": "correct-add-and-continue",
+      "mentorSays": "Correct! We add 1 to the set.\n\n**State after index 0:**\n```\nArray: [1, 2, 3, 1]\nSet:   {1}\nIndex: 1\n```\n\n**Decision Point 3:** At index 1, num = 2\nWhat should we do?\n[A] Check if 2 is in set, then add if not\n[B] Add 2 directly\n[C] Return true",
+      "choices": [
+        { "label": "[A] Check if 2 is in set, then add if not", "next": "correct-process-2" },
+        { "label": "[B] Add 2 directly", "next": "wrong-add-directly" },
+        { "label": "[C] Return true", "next": "wrong-return-true" }
+      ]
+    },
+    {
+      "stepId": "wrong-add-directly",
+      "mentorSays": "Remember the pattern: check first, then add! We should check if 2 is in the set first.",
+      "action": "next",
+      "next": "correct-process-2"
+    },
+    {
+      "stepId": "wrong-return-true",
+      "mentorSays": "We can't return true yet! 2 is not a duplicate - we haven't seen it before. Let's check and add it.",
+      "action": "next",
+      "next": "correct-process-2"
+    },
+    {
+      "stepId": "correct-process-2",
+      "mentorSays": "Perfect! We check: Is 2 in set? No (set has {1}).\n\nWe add 2 to set.\n\n**State after index 1:**\n```\nArray: [1, 2, 3, 1]\nSet:   {1, 2}\nIndex: 2\n```\n\n**Continue:**\n- Index 2, num = 3: Check → not in set → add → Set: {1, 2, 3}\n\n**Decision Point 4:** At index 3, num = 1\nWhat should we do?\n[A] Check if 1 is in set\n[B] Add 1 to set\n[C] Skip 1",
+      "choices": [
+        { "label": "[A] Check if 1 is in set", "next": "correct-find-duplicate" },
+        { "label": "[B] Add 1 to set", "next": "wrong-add-duplicate" },
+        { "label": "[C] Skip 1", "next": "wrong-skip-duplicate" }
+      ]
+    },
+    {
+      "stepId": "wrong-add-duplicate",
+      "mentorSays": "If we add 1 without checking, we'll miss the duplicate! We need to check first.\n\nSet already has {1, 2, 3}, so 1 IS in the set - that means we've seen it before → duplicate!",
+      "action": "next",
+      "next": "correct-find-duplicate"
+    },
+    {
+      "stepId": "wrong-skip-duplicate",
+      "mentorSays": "We shouldn't skip! We need to check if 1 is in the set. If it is, that's our duplicate!",
+      "action": "next",
+      "next": "correct-find-duplicate"
+    },
+    {
+      "stepId": "correct-find-duplicate",
+      "mentorSays": "Perfect! We check: Is 1 in set?\n\nSet = {1, 2, 3}\n1 IS in the set! ✓\n\n**This means:** We've seen 1 before (at index 0), and now we're seeing it again (at index 3).\n\n**Duplicate found! Return true!**\n\n**Why This Works:**\n- Set provides O(1) lookup time\n- We only need one pass through the array\n- Early termination: return as soon as we find a duplicate\n\n**Operation Count:**\n- For array of size n: n iterations (worst case)\n- Each iteration: O(1) set operations\n- Total: O(n) time\n\n**For n = 10,000:**\n- Iterations: 10,000 (vs 50 million for brute force!)\n- **5,000x faster!**",
+      "action": "next",
+      "next": "pseudocode-phase"
+    },
+    {
+      "stepId": "pseudocode-phase",
+      "mentorSays": "### PHASE 6: Pseudocode\n\nNow let's write the logic in plain English (pseudocode):\n\n**Step 1:** Create an empty set to store numbers we've seen.\n\n**Step 2:** For each number in the array:\n\n**Step 3:** If number exists in set, return true (duplicate found).\n\n**Step 4:** Otherwise, add number to set.\n\n**Step 5:** If loop completes, return false (no duplicates).\n\nThis pseudocode matches exactly what we walked through!",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5"],
+      "action": "next",
+      "next": "code-implementation"
+    },
+    {
+      "stepId": "code-implementation",
+      "mentorSays": "### PHASE 7: Code Implementation\n\nNow let's translate the pseudocode into JavaScript code.\n\n**Step 1: Create set**\n```javascript\nfunction containsDuplicate(nums) {\n  const set = new Set();\n}\n```\nThis matches pseudocode Step 1\n\n**Step 2: Loop through array**\n```javascript\nfunction containsDuplicate(nums) {\n  const set = new Set();\n  \n  for (let i = 0; i < nums.length; i++) {\n    \n  }\n}\n```\nThis matches pseudocode Step 2\n\n**Step 3: Check if number exists**\n```javascript\nfunction containsDuplicate(nums) {\n  const set = new Set();\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (set.has(nums[i])) {\n      return true;\n    }\n  }\n}\n```\nThis matches pseudocode Step 3\n\n**Step 4: Add number to set**\n```javascript\nfunction containsDuplicate(nums) {\n  const set = new Set();\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (set.has(nums[i])) {\n      return true;\n    }\n    \n    set.add(nums[i]);\n  }\n}\n```\nThis matches pseudocode Step 4\n\n**Step 5: Return false if no duplicates**\n```javascript\nfunction containsDuplicate(nums) {\n  const set = new Set();\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (set.has(nums[i])) {\n      return true;\n    }\n    \n    set.add(nums[i]);\n  }\n  \n  return false;\n}\n```\nThis matches pseudocode Step 5\n\n**Final Code:**\n```javascript\nfunction containsDuplicate(nums) {\n  const set = new Set();\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (set.has(nums[i])) {\n      return true;\n    }\n    \n    set.add(nums[i]);\n  }\n  \n  return false;\n}\n```",
+      "example": "function containsDuplicate(nums) {\n  const set = new Set();\n  \n  for (let i = 0; i < nums.length; i++) {\n    if (set.has(nums[i])) {\n      return true;\n    }\n    \n    set.add(nums[i]);\n  }\n  \n  return false;\n}",
+      "action": "next",
+      "next": "complexity-analysis"
+    },
+    {
+      "stepId": "complexity-analysis",
+      "mentorSays": "### PHASE 8: Complexity Analysis\n\n**Time Complexity Analysis:**\n\n**Step-by-step breakdown:**\n1. Create set: O(1)\n2. Loop through array: n iterations (worst case)\n3. Each iteration:\n   - Check if in set: O(1) average case\n   - Add to set: O(1) average case\n4. Return statement: O(1)\n\n**Total Time: O(n)**\n\n**Space Complexity Analysis:**\n\n**What we store:**\n- The set: In worst case, all numbers are unique, so we store n elements\n- In big-O: O(n)\n\n**Total Space: O(n)**\n\n**Comparison Table:**\n\n| Approach | Time | Space | Notes |\n|----------|------|-------|-------|\n| Brute Force | O(n²) | O(1) | Checks all pairs |\n| Sort | O(n log n) | O(1) | Sorting dominates |\n| Hash Set | O(n) | O(n) | Fast lookup |\n\n**Why Optimal is Better:**\n\n- **Time efficiency:** O(n) vs O(n²) - linear time instead of quadratic\n- **Early termination:** Can return immediately on first duplicate\n- **Simple logic:** Easy to understand and implement\n\n**For n = 10,000:**\n- Brute force: ~50 million comparisons\n- Hash set: 10,000 iterations\n- **5,000x faster!**\n\n**Tradeoff:** We use O(n) space to achieve O(n) time instead of O(n²) time.",
+      "action": "next",
+      "next": "edge-cases"
+    },
+    {
+      "stepId": "edge-cases",
+      "mentorSays": "### PHASE 9: Edge Cases\n\n**Edge Case 1: Single element**\n```\nnums = [1]\n```\n**Why it matters:** Tests minimum valid input.\n**How algorithm handles it:**\n- Check: 1 in set? No\n- Add 1 to set\n- Loop completes\n- Return false (no duplicates) ✓\n\n**Edge Case 2: All same number**\n```\nnums = [1, 1, 1, 1]\n```\n**Why it matters:** Tests multiple duplicates.\n**How algorithm handles it:**\n- Index 0: Add 1 to set\n- Index 1: 1 in set? Yes → return true ✓\n\n**Edge Case 3: No duplicates**\n```\nnums = [1, 2, 3, 4, 5]\n```\n**Why it matters:** Tests negative case.\n**How algorithm handles it:**\n- All numbers added to set\n- No duplicates found\n- Return false ✓\n\n**Edge Case 4: Duplicate at end**\n```\nnums = [1, 2, 3, 4, 1]\n```\n**Why it matters:** Tests late duplicate detection.\n**How algorithm handles it:**\n- Process 1, 2, 3, 4 (all added to set)\n- At index 4: 1 in set? Yes → return true ✓\n\n**Edge Case 5: Duplicate at beginning**\n```\nnums = [1, 1, 2, 3, 4]\n```\n**Why it matters:** Tests early duplicate detection.\n**How algorithm handles it:**\n- Index 0: Add 1 to set\n- Index 1: 1 in set? Yes → return true immediately ✓\n\n**Edge Case 6: Negative numbers**\n```\nnums = [-1, 2, -1, 4]\n```\n**Why it matters:** Tests if algorithm handles negatives.\n**How algorithm handles it:**\n- Sets work with any values, including negatives\n- Works correctly ✓\n\n**Edge Case 7: Large numbers**\n```\nnums = [1000000000, 2000000000, 1000000000]\n```\n**Why it matters:** Tests large integer handling.\n**How algorithm handles it:**\n- Sets handle large numbers correctly\n- Works correctly ✓",
+      "action": "next",
+      "next": "lesson-complete"
+    },
+    {
+      "stepId": "lesson-complete",
+      "mentorSays": "### PHASE 10: Lesson Complete\n\n**Summary:**\n\n**Problem:** Check if an array contains any duplicate values.\n\n**Key Insight:** Use a hash set to remember numbers we've seen. If we see a number that's already in the set, it's a duplicate!\n\n**Non-optimal vs Optimal:**\n- Brute force: O(n²) time, O(1) space - checks all pairs\n- Hash set: O(n) time, O(n) space - instant lookups\n\n**Techniques Learned:**\n1. Hash set for membership testing\n2. \"Have I seen this before?\" pattern\n3. Early termination on first duplicate\n4. Space-time tradeoff\n\n**Edge Cases Covered:**\n- Single element\n- All same number\n- No duplicates\n- Duplicate at end\n- Duplicate at beginning\n- Negative numbers\n- Large numbers\n\n**Related Problems:**\n1. **Contains Duplicate II** - Duplicate within k distance\n2. **Contains Duplicate III** - Duplicate within k distance and value difference\n3. **Find All Duplicates in an Array** - Find all duplicates\n4. **Single Number** - Find the number that appears once\n\n**Congratulations!** You've mastered the \"seen before\" pattern. This technique appears in countless problems!\n\n**Next Steps:**\n- Try solving \"Single Number\" to practice set operations\n- Review the hash set lookup pattern\n- Practice explaining your solution clearly",
+      "action": "complete"
+    }
+  ]
+}
+

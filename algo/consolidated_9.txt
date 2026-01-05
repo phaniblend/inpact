@@ -1,0 +1,1254 @@
+
+================================================================================
+FILE: search-rotated-sorted-array.json
+================================================================================
+
+{
+  "id": "search-rotated-sorted-array",
+  "title": "Search in Rotated Sorted Array",
+  "difficulty": "medium",
+  "pattern": "binary-search-variant",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of **distinct numbers** that was originally sorted in ascending order.\n\nAt some unknown point, the list was **rotated**.\n\nYou are also given a target number.\n\nYour task is to return the **index of the target**, or -1 if it does not exist.",
+      "example": "Input: nums = [4,5,6,7,0,1,2], target = 0",
+      "action": "next"
+    },
+    {
+      "stepId": "what-rotated-means",
+      "mentorSays": "What does **rotated** mean?\n\nTake a sorted list:\n[0,1,2,4,5,6,7]\n\nRotate it at some point:\n[4,5,6,7,0,1,2]\n\nNotice:\n• The list is no longer fully sorted\n• But **each half is still sorted**",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Tiny example:\n\nOriginal: [1,2,3,4]\nRotated:  [3,4,1,2]\n\nBoth halves:\n• [3,4]\n• [1,2]\nare sorted.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf the list was fully sorted, we would use binary search.\n\nBut now it is rotated.\n\nWhat property can we still rely on?",
+      "choices": [
+        {
+          "label": "At least one half is always sorted",
+          "next": "key-observation"
+        },
+        {
+          "label": "The entire list is random",
+          "next": "key-observation"
+        }
+      ]
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "Correct.\n\nAt **any point**, one of the two halves is guaranteed to be sorted.\n\nThat single fact allows us to keep using binary search logic.",
+      "action": "next"
+    },
+    {
+      "stepId": "decision-logic",
+      "mentorSays": "At each step:\n\n• Pick a middle index\n• Decide which half is sorted\n• Check if the target lies inside that sorted half\n• Narrow the search range accordingly",
+      "action": "next"
+    },
+    {
+      "stepId": "how-to-detect-sorted-half",
+      "mentorSays": "How do we know which half is sorted?\n\nIf:\nnums[left] ≤ nums[mid]\n\nThen the **left half is sorted**.\n\nOtherwise, the **right half is sorted**.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\nnums = [4,5,6,7,0,1,2], target = 0\n\nleft = 0, right = 6\nmid = 3 → nums[mid] = 7\n\nLeft half [4,5,6,7] is sorted.\nTarget 0 is not in this range.\n\nSo we search the right half.",
+      "action": "next"
+    },
+    {
+      "stepId": "logic-summary",
+      "mentorSays": "Repeat this process:\n\n• Identify sorted half\n• Check target range\n• Move left or right pointers\n\nEach step cuts the search space in half.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the steps clearly.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "set left = 0, right = length - 1",
+        "while left <= right:",
+        "  mid = floor((left + right) / 2)",
+        "  if nums[mid] == target, return mid",
+        "  if left half is sorted:",
+        "    if target in left half range:",
+        "      move right to mid - 1",
+        "    else:",
+        "      move left to mid + 1",
+        "  else:",
+        "    if target in right half range:",
+        "      move left to mid + 1",
+        "    else:",
+        "      move right to mid - 1",
+        "return -1"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Now translate the logic into JavaScript.",
+      "code": "function search(nums, target) {\n  let left = 0;\n  let right = nums.length - 1;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n\n    if (nums[mid] === target) return mid;\n\n    if (nums[left] <= nums[mid]) {\n      if (nums[left] <= target && target < nums[mid]) {\n        right = mid - 1;\n      } else {\n        left = mid + 1;\n      }\n    } else {\n      if (nums[mid] < target && target <= nums[right]) {\n        left = mid + 1;\n      } else {\n        right = mid - 1;\n      }\n    }\n  }\n\n  return -1;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final checks:\n\n[4,5,6,7,0,1,2], target=0 → index 4\n[4,5,6,7,0,1,2], target=3 → -1\n\nWorks correctly in all cases.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: selection-sort.json
+================================================================================
+
+{
+  "id": "selection-sort",
+  "title": "Selection Sort",
+  "difficulty": "easy",
+  "pattern": "selection + iteration",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of numbers in random order.\n\nYour task is to sort the list in **ascending order**.\n\nWe will learn a simple sorting method called **Selection Sort**.",
+      "example": "Input: [5, 3, 4, 1]",
+      "action": "next"
+    },
+    {
+      "stepId": "real-world-analogy",
+      "mentorSays": "Think of arranging cards in your hand.\n\nYou repeatedly:\n• look at all remaining cards\n• pick the smallest one\n• place it in the correct position\n\nThat is exactly how selection sort works.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s sort a small list.\n\nInput: [5, 3, 4, 1]\n\nStep 1:\n• smallest number is 1\n• place it at position 0\n\nNow list looks like:\n[1, 3, 4, 5] (conceptually)",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nAfter placing the smallest number at the first position, what should we do next?",
+      "choices": [
+        {
+          "label": "Repeat the same process for the remaining elements",
+          "next": "core-idea"
+        },
+        {
+          "label": "Start over from the beginning",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe repeat the same process:\n\n• Ignore the already sorted part\n• Find the smallest number in the remaining list\n• Place it in the next position",
+      "action": "next"
+    },
+    {
+      "stepId": "step-by-step-walkthrough",
+      "mentorSays": "Full walkthrough:\n\nInput: [5, 3, 4, 1]\n\nPass 1:\n• smallest = 1 → place at index 0\n\nPass 2 (ignore index 0):\n• remaining: [3, 4, 5]\n• smallest = 3 → place at index 1\n\nPass 3:\n• remaining: [4, 5]\n• smallest = 4 → place at index 2\n\nList is now sorted.",
+      "action": "next"
+    },
+    {
+      "stepId": "important-observation",
+      "mentorSays": "Important observation:\n\n• Selection sort always makes the same number of comparisons\n• Even if the list is already sorted\n\nThis makes it simple, but not very efficient.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "for each position i from 0 to n-1:",
+        "  assume smallest element is at i",
+        "  scan the rest of the list to find the true smallest",
+        "  swap smallest element with element at i",
+        "return sorted list"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now let’s translate the logic into JavaScript.\n\nType the code yourself to build muscle memory.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function selectionSort(nums) {\n  const n = nums.length;\n\n  for (let i = 0; i < n; i++) {\n    let minIndex = i;\n\n    for (let j = i + 1; j < n; j++) {\n      if (nums[j] < nums[minIndex]) {\n        minIndex = j;\n      }\n    }\n\n    if (minIndex !== i) {\n      [nums[i], nums[minIndex]] = [nums[minIndex], nums[i]];\n    }\n  }\n\n  return nums;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example check:\n\nInput: [5, 3, 4, 1]\n\nOutput: [1, 3, 4, 5]\n\nSelection sort works correctly.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: smallest-subarray-sum-s.json
+================================================================================
+
+{
+  "id": "smallest-subarray-sum-s",
+  "title": "Smallest Subarray with Sum ≥ S",
+  "difficulty": "medium",
+  "pattern": "sliding-window",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given:\n\n• a list of **positive numbers**\n• a target sum **S**\n\nYour task is to find the **length of the smallest contiguous subarray** whose sum is **greater than or equal to S**.\n\nIf no such subarray exists, return 0.",
+      "example": "Numbers: [2, 1, 5, 2, 3, 2]\nS = 7",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s start small.\n\nNumbers: [2, 3, 1]\nS = 5\n\nPossible subarrays:\n• [2] → sum 2 (too small)\n• [2,3] → sum 5 (valid, length 2)\n• [3,1] → sum 4 (too small)\n\nSmallest valid length = **2**",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-goal",
+      "mentorSays": "Important clarification:\n\nWe are NOT counting subarrays.\n\nWe are looking for:\n• the **shortest length**\n• among all subarrays whose sum ≥ S",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf the list is long, how would you check all subarrays?\n\nWould it be efficient to sum every start–end pair?",
+      "choices": [
+        {
+          "label": "Yes, checking all subarrays is fine",
+          "next": "bruteforce-discussion"
+        },
+        {
+          "label": "No, that would be too slow",
+          "next": "bruteforce-discussion"
+        }
+      ]
+    },
+    {
+      "stepId": "bruteforce-discussion",
+      "mentorSays": "Correct.\n\nA brute-force approach would:\n• start at every index\n• keep adding numbers\n• track the sum\n• stop when sum ≥ S\n\nThis works, but repeats many calculations.",
+      "action": "next"
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "Key observation:\n\nAll numbers are **positive**.\n\nSo:\n• expanding a subarray increases the sum\n• shrinking a subarray decreases the sum\n\nThis allows us to adjust a range instead of restarting.",
+      "action": "next"
+    },
+    {
+      "stepId": "window-idea",
+      "mentorSays": "Instead of checking every subarray from scratch:\n\n• expand a range to the right\n• keep track of the current sum\n• once the sum reaches S, try to shrink from the left\n\nWe always maintain a **valid window**.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\nNumbers: [2, 1, 5, 2, 3]\nS = 7\n\n• Add 2 → sum = 2\n• Add 1 → sum = 3\n• Add 5 → sum = 8 (valid)\n\nNow shrink:\n• Remove 2 → sum = 6 (invalid)\n\nMinimum length found so far = 3",
+      "action": "next"
+    },
+    {
+      "stepId": "what-changes",
+      "mentorSays": "Compared to other sliding window problems:\n\n• We care about **minimum length**, not count\n• Each time sum ≥ S, we try to shrink as much as possible",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "set left = 0",
+        "initialize sum = 0",
+        "initialize minLength = Infinity",
+        "for each right index:",
+        "  add nums[right] to sum",
+        "  while sum >= S:",
+        "    update minLength",
+        "    subtract nums[left] from sum",
+        "    move left forward",
+        "if minLength is Infinity, return 0",
+        "return minLength"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nWatch how the window expands and shrinks.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function smallestSubarraySum(S, nums) {\n  let left = 0;\n  let sum = 0;\n  let minLength = Infinity;\n\n  for (let right = 0; right < nums.length; right++) {\n    sum += nums[right];\n\n    while (sum >= S) {\n      minLength = Math.min(minLength, right - left + 1);\n      sum -= nums[left];\n      left++;\n    }\n  }\n\n  return minLength === Infinity ? 0 : minLength;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example checks:\n\n[2,1,5,2,3,2], S=7 → 2\n[1,1,1], S=5 → 0\n\nThis confirms the sliding-window solution works correctly.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: sort-colors.json
+================================================================================
+
+{
+  "id": "sort-colors",
+  "title": "Sort Colors",
+  "difficulty": "medium",
+  "pattern": "three-pointers",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list containing only three values:\n\n• 0\n• 1\n• 2\n\nEach value represents a color.\n\nYour task is to sort the list **in-place** so that all 0s come first, then 1s, then 2s.\n\nYou must not use built-in sorting.",
+      "example": "Input: [2,0,2,1,1,0]",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Start small.\n\nInput: [2, 0, 1]\n\nSorted result:\n[0, 1, 2]\n\nOnly three distinct values exist.",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-in-place",
+      "mentorSays": "Important clarification:\n\n• You must rearrange the existing list\n• You should not create another list\n\nThis forces us to think about **positions**, not copying.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nSince there are only three possible values, could we organize the list into **regions**?",
+      "choices": [
+        {
+          "label": "Yes, split the list into three regions",
+          "next": "region-idea"
+        },
+        {
+          "label": "No, we must compare everything",
+          "next": "region-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "region-idea",
+      "mentorSays": "Correct.\n\nWe can think of the list as having three regions:\n\n• left region → all 0s\n• middle region → all 1s\n• right region → all 2s\n\nOur goal is to grow these regions correctly.",
+      "action": "next"
+    },
+    {
+      "stepId": "three-pointers",
+      "mentorSays": "To manage these regions, we use three pointers:\n\n• low → boundary for 0s\n• mid → current position being checked\n• high → boundary for 2s\n\nEverything between low and high is still unsorted.",
+      "action": "next"
+    },
+    {
+      "stepId": "how-pointers-move",
+      "mentorSays": "Rules while scanning:\n\n• If value is 0:\n  - swap with low\n  - move low and mid forward\n\n• If value is 1:\n  - already in correct region\n  - move mid forward\n\n• If value is 2:\n  - swap with high\n  - move high backward\n  - do NOT move mid yet",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example:\nInput: [2,0,2,1]\n\nStart:\nlow=0, mid=0, high=3\n\nnums[mid]=2 → swap with high\n[1,0,2,2]\nhigh--\n\nnums[mid]=1 → mid++\n\nnums[mid]=0 → swap with low\n[0,1,2,2]\nlow++, mid++\n\nDone.",
+      "action": "next"
+    },
+    {
+      "stepId": "why-no-extra-pass",
+      "mentorSays": "Notice:\n\n• Every element is handled at most once\n• No sorting or extra scanning is required\n\nThis makes the solution efficient.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "set low = 0, mid = 0, high = length - 1",
+        "while mid <= high:",
+        "  if nums[mid] == 0:",
+        "    swap nums[low] and nums[mid]",
+        "    increment low and mid",
+        "  else if nums[mid] == 1:",
+        "    increment mid",
+        "  else:",
+        "    swap nums[mid] and nums[high]",
+        "    decrement high",
+        "return nums"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nPay attention to when pointers move.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function sortColors(nums) {\n  let low = 0;\n  let mid = 0;\n  let high = nums.length - 1;\n\n  while (mid <= high) {\n    if (nums[mid] === 0) {\n      [nums[low], nums[mid]] = [nums[mid], nums[low]];\n      low++;\n      mid++;\n    } else if (nums[mid] === 1) {\n      mid++;\n    } else {\n      [nums[mid], nums[high]] = [nums[high], nums[mid]];\n      high--;\n    }\n  }\n\n  return nums;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example checks:\n\n[2,0,2,1,1,0] → [0,0,1,1,2,2]\n[1,0,2] → [0,1,2]\n\nSorting works correctly in-place.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: sqrt-x.json
+================================================================================
+
+{
+  "id": "sqrt-x",
+  "title": "Square Root of a Number",
+  "difficulty": "easy",
+  "pattern": "binary-search",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a **non-negative number x**.\n\nYour task is to find the **integer square root** of x.\n\nThat means:\n• Find a number whose square is **less than or equal to x**\n• Return only the integer part (ignore decimals)",
+      "example": "x = 8",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Let’s look at very small examples.\n\nx = 4 → square root is 2\nx = 9 → square root is 3\nx = 8 → square root is 2 (because 2×2=4 and 3×3=9 is too big)",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-goal",
+      "mentorSays": "Important clarification:\n\nWe are **NOT** trying to find an exact decimal value.\n\nWe only care about the **largest integer** whose square does not exceed x.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf x is very large (say a billion), would checking every number from 1 upward be efficient?",
+      "choices": [
+        {
+          "label": "Yes, checking one by one is fine",
+          "next": "bruteforce-discussion"
+        },
+        {
+          "label": "No, that would be too slow",
+          "next": "bruteforce-discussion"
+        }
+      ]
+    },
+    {
+      "stepId": "bruteforce-discussion",
+      "mentorSays": "Correct.\n\nA brute force approach would:\n• Try 1×1, 2×2, 3×3...\n• Stop when the square becomes larger than x\n\nThis works, but it can be **very slow** for large x.",
+      "action": "next"
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "Here is the key observation:\n\nIf you square larger numbers, the result grows quickly.\n\nSo instead of checking one by one, we can **search smartly**.",
+      "action": "next"
+    },
+    {
+      "stepId": "introduce-binary-search",
+      "mentorSays": "We can use **binary search**.\n\nWhy?\n• The possible answers range from 0 to x\n• The correct square root lies somewhere in the middle\n• We can eliminate half the range each time",
+      "action": "next"
+    },
+    {
+      "stepId": "binary-search-walkthrough",
+      "mentorSays": "Example: x = 8\n\nSearch range: 0 to 8\n\n1. Pick middle = 4 → 4×4 = 16 (too big)\n2. Reduce range to 0–3\n3. Pick middle = 1 → 1×1 = 1 (too small)\n4. Pick middle = 2 → 2×2 = 4 (valid)\n5. Try higher but stay within range\n\nFinal answer = 2",
+      "action": "next"
+    },
+    {
+      "stepId": "logic-summary",
+      "mentorSays": "So the logic is:\n\n• Maintain a search range\n• Pick a middle number\n• Square it\n• Compare with x\n• Adjust range accordingly\n• Track the last valid answer",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write this as steps — no JavaScript yet.",
+      "pseudocode": [
+        "if x is 0 or 1, return x",
+        "set left = 1, right = x",
+        "set answer = 0",
+        "while left <= right:",
+        "  mid = floor((left + right) / 2)",
+        "  if mid * mid <= x:",
+        "    answer = mid",
+        "    move left to mid + 1",
+        "  else:",
+        "    move right to mid - 1",
+        "return answer"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Now convert the logic into JavaScript.",
+      "code": "function mySqrt(x) {\n  if (x === 0 || x === 1) return x;\n\n  let left = 1;\n  let right = x;\n  let answer = 0;\n\n  while (left <= right) {\n    const mid = Math.floor((left + right) / 2);\n    const square = mid * mid;\n\n    if (square <= x) {\n      answer = mid;\n      left = mid + 1;\n    } else {\n      right = mid - 1;\n    }\n  }\n\n  return answer;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final check:\n\nx = 8 → output = 2\nx = 16 → output = 4\nx = 1 → output = 1\n\nWorks correctly for all cases.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: squares-of-sorted-array.json
+================================================================================
+
+{
+  "id": "squares-of-sorted-array",
+  "title": "Squares of a Sorted Array",
+  "pattern": "two-pointers (from ends)",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-12",
+    "introduces": ["absolute-value-comparison", "fill-from-end"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "two-pointers",
+      "comparison"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Create a result array of the same length." },
+    { "id": "ps2", "text": "Set left at start and right at end of the input array." },
+    { "id": "ps3", "text": "Set write index at the end of the result array." },
+    { "id": "ps4", "text": "While left <= right:" },
+    { "id": "ps5", "text": "  Compare absolute values at left and right." },
+    { "id": "ps6", "text": "  Place the larger square at write index and move pointers." },
+    { "id": "ps7", "text": "Return the result array." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Squares of a Sorted Array**.\n\nThis lesson shows how **two pointers from both ends** can keep results sorted without extra sorting.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given a sorted array of integers (can include negatives).\n\nReturn a new array of the **squares** of each number, also sorted in non-decreasing order.",
+      "example": "nums = [-4, -1, 0, 3, 10]",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [-3, -1, 2] → [1, 4, 9]\n2) [-2, 0, 1] → [0, 1, 4]",
+      "action": "next",
+      "next": "why-not-square-then-sort"
+    },
+    {
+      "stepId": "why-not-square-then-sort",
+      "mentorSays": "A simple idea is to square everything and sort again.\n\nBut sorting costs extra time.\n\nBecause the input is already sorted, we can do better.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nWhere do the **largest squares** come from in a sorted array with negatives?",
+      "choices": [
+        { "label": "From the ends of the array", "next": "core-idea" },
+        { "label": "Always from the middle", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nLarge squares come from **large absolute values**, which live at the **ends**.\n\nSo we compare both ends and place the larger square at the back of the result.",
+      "action": "next",
+      "next": "two-pointers-explained"
+    },
+    {
+      "stepId": "two-pointers-explained",
+      "mentorSays": "### Two pointers from ends\n\n- left starts at index 0\n- right starts at last index\n- write index starts at the end of result array\n\nWe fill the result **from right to left**.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums = [-4, -1, 0, 3]\n\nCompare |-4| vs |3| → 4 is bigger\nPlace 16 at the end\n\nThen compare |-1| vs |3| → 3 is bigger\nPlace 9 next\n\nContinue until pointers meet",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5", "ps6", "ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself to reinforce learning.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.",
+      "example": "function sortedSquares(nums) {\n\n}",
+      "action": "next",
+      "next": "code-02-setup",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3"]
+    },
+    {
+      "stepId": "code-02-setup",
+      "mentorSays": "Step 2: Initialize result array and pointers.",
+      "example": "const result = new Array(nums.length);\nlet left = 0;\nlet right = nums.length - 1;\nlet write = nums.length - 1;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Loop while left <= right.",
+      "example": "while (left <= right) {\n\n}",
+      "action": "next",
+      "next": "code-04-compare",
+      "pseudocodeLineIds": ["ps5", "ps6"]
+    },
+    {
+      "stepId": "code-04-compare",
+      "mentorSays": "Step 4: Compare absolute values and place the larger square.",
+      "example": "const leftVal = nums[left] * nums[left];\nconst rightVal = nums[right] * nums[right];\n\nif (leftVal > rightVal) {\n  result[write] = leftVal;\n  left++;\n} else {\n  result[write] = rightVal;\n  right--;\n}\nwrite--;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function sortedSquares(nums) {\n  const result = new Array(nums.length);\n  let left = 0;\n  let right = nums.length - 1;\n  let write = nums.length - 1;\n\n  while (left <= right) {\n    const leftVal = nums[left] * nums[left];\n    const rightVal = nums[right] * nums[right];\n\n    if (leftVal > rightVal) {\n      result[write] = leftVal;\n      left++;\n    } else {\n      result[write] = rightVal;\n      right--;\n    }\n    write--;\n  }\n\n  return result;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how absolute values affect ordering\n- how to fill results from the end\n- another powerful two-pointer variation\n\nThis technique generalizes to many problems.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: subarray-product-less-than-k.json
+================================================================================
+
+{
+  "id": "subarray-product-less-than-k",
+  "title": "Subarray Product Less Than K",
+  "pattern": "sliding-window",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-13",
+    "introduces": ["sliding-window", "window-shrink"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "two-pointers"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "If k <= 1, return 0." },
+    { "id": "ps2", "text": "Initialize left = 0, product = 1, count = 0." },
+    { "id": "ps3", "text": "For right from 0 to end:" },
+    { "id": "ps4", "text": "  Multiply product by nums[right]." },
+    { "id": "ps5", "text": "  While product >= k, divide by nums[left] and move left." },
+    { "id": "ps6", "text": "  Add (right - left + 1) to count." },
+    { "id": "ps7", "text": "Return count." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Subarray Product Less Than K**.\n\nThis lesson introduces the **sliding window** pattern—used to process contiguous ranges efficiently.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array of positive numbers and a number `k`.\n\nCount how many **contiguous subarrays** have a product **less than k**.",
+      "example": "nums = [10,5,2,6], k = 100",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n1) [10,5] → products: 10, 50 → both < 100\n2) [5,2,6] → products: 5, 10, 60 → all < 100",
+      "action": "next",
+      "next": "why-not-bruteforce"
+    },
+    {
+      "stepId": "why-not-bruteforce",
+      "mentorSays": "Brute force checks every subarray.\n\nThat becomes slow as the array grows.\n\nWe need a way to **reuse work** as we move forward.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf we expand a window to the right and the product becomes too large, what can we do?",
+      "choices": [
+        { "label": "Shrink the window from the left", "next": "core-idea" },
+        { "label": "Restart from the next index", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe maintain a **window** with two pointers:\n- expand by moving `right`\n- shrink by moving `left` until the product is valid again",
+      "action": "next",
+      "next": "sliding-window-explained"
+    },
+    {
+      "stepId": "sliding-window-explained",
+      "mentorSays": "### Sliding window\n\nAt any moment, the window [left … right] has a product < k.\n\nAll subarrays ending at `right` and starting from `left` to `right` are valid.",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nnums=[10,5,2], k=100\n\n- right=0 → product=10 → add 1\n- right=1 → product=50 → add 2\n- right=2 → product=100 → shrink left → product=10 → add 1\n\nTotal = 4",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5","ps6","ps7"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself for strong retention.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function and handle k <= 1.",
+      "example": "function numSubarrayProductLessThanK(nums, k) {\n  if (k <= 1) return 0;\n\n}",
+      "action": "next",
+      "next": "code-02-setup",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-setup",
+      "mentorSays": "Step 2: Initialize window state.",
+      "example": "let left = 0;\nlet product = 1;\nlet count = 0;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps3","ps4"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Expand window with right pointer.",
+      "example": "for (let right = 0; right < nums.length; right++) {\n  product *= nums[right];\n\n}",
+      "action": "next",
+      "next": "code-04-shrink",
+      "pseudocodeLineIds": ["ps5"]
+    },
+    {
+      "stepId": "code-04-shrink",
+      "mentorSays": "Step 4: Shrink window while product is too large.",
+      "example": "while (product >= k) {\n  product /= nums[left];\n  left++;\n}",
+      "action": "next",
+      "next": "code-05-count",
+      "pseudocodeLineIds": ["ps6"]
+    },
+    {
+      "stepId": "code-05-count",
+      "mentorSays": "Step 5: Count valid subarrays ending at right.",
+      "example": "count += right - left + 1;",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function numSubarrayProductLessThanK(nums, k) {\n  if (k <= 1) return 0;\n\n  let left = 0;\n  let product = 1;\n  let count = 0;\n\n  for (let right = 0; right < nums.length; right++) {\n    product *= nums[right];\n\n    while (product >= k) {\n      product /= nums[left];\n      left++;\n    }\n\n    count += right - left + 1;\n  }\n\n  return count;\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- the sliding window pattern\n- how to grow and shrink a window\n- how to count subarrays efficiently\n\nThis pattern is essential for many range problems.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: subsets-ii.json
+================================================================================
+
+{
+  "id": "subsets-ii",
+  "title": "Subsets II",
+  "difficulty": "medium",
+  "pattern": "backtracking + duplicate-handling",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of numbers that **may contain duplicates**.\n\nYour task is to return **all possible unique subsets**.\n\nRules:\n• A subset can be empty\n• Order inside a subset does not matter\n• The same subset must not appear more than once",
+      "example": "Input: [1, 2, 2]",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s list subsets for a tiny example.\n\nInput: [1, 2, 2]\n\nPossible subsets (unique only):\n• []\n• [1]\n• [2]\n• [1,2]\n• [2,2]\n• [1,2,2]",
+      "action": "next"
+    },
+    {
+      "stepId": "what-changed",
+      "mentorSays": "This problem is almost the same as **Subsets**.\n\nThe only new challenge is:\n\n• Duplicate numbers can create duplicate subsets\n\nWe must prevent that.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf two numbers are the same, how could duplicate subsets be created?",
+      "choices": [
+        {
+          "label": "By choosing the same value from different positions",
+          "next": "root-cause"
+        },
+        {
+          "label": "Duplicates do not affect subsets",
+          "next": "root-cause"
+        }
+      ]
+    },
+    {
+      "stepId": "root-cause",
+      "mentorSays": "Correct.\n\nIf the same number appears multiple times, choosing it from different positions can create **identical subsets**.\n\nWe need a way to avoid exploring duplicate paths.",
+      "action": "next"
+    },
+    {
+      "stepId": "key-idea-sorting",
+      "mentorSays": "The key idea is **sorting**.\n\nWhen duplicates are next to each other:\n• We can detect them easily\n• We can decide when to skip them\n\nExample:\nInput: [2,1,2]\nSorted: [1,2,2]",
+      "action": "next"
+    },
+    {
+      "stepId": "skip-logic",
+      "mentorSays": "While building subsets:\n\n• If the current number is the same as the previous\n• And we are at the same recursion level\n• We **skip** it\n\nThis prevents duplicate subsets from being created.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example: [1, 2, 2]\n\nAt the same level:\n• First 2 → allowed\n• Second 2 → skipped\n\nBut deeper levels can still use the second 2 when appropriate.",
+      "action": "next"
+    },
+    {
+      "stepId": "connect-to-backtracking",
+      "mentorSays": "We still use the **same backtracking structure** as before.\n\nThe only difference is:\n• We skip duplicate choices at the same depth",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "sort the input list",
+        "start with empty subset",
+        "define backtracking function with start index",
+        "add current subset to result",
+        "for each index from start:",
+        "  if index > start and current value equals previous, skip",
+        "  include the number",
+        "  recurse to next index",
+        "  remove the number (backtrack)",
+        "return result"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nFocus on the **skip condition** — that is the only new part.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function subsetsWithDup(nums) {\n  nums.sort((a, b) => a - b);\n  const result = [];\n\n  function backtrack(start, current) {\n    result.push([...current]);\n\n    for (let i = start; i < nums.length; i++) {\n      if (i > start && nums[i] === nums[i - 1]) continue;\n\n      current.push(nums[i]);\n      backtrack(i + 1, current);\n      current.pop();\n    }\n  }\n\n  backtrack(0, []);\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example check:\n\nInput: [1,2,2]\n\nOutput:\n[[], [1], [1,2], [1,2,2], [2], [2,2]]\n\nAll subsets are unique.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: subsets.json
+================================================================================
+
+{
+  "id": "subsets",
+  "title": "Subsets",
+  "difficulty": "medium",
+  "pattern": "backtracking",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of **distinct numbers**.\n\nYour task is to return **all possible subsets**.\n\nA subset:\n• can be empty\n• can contain some or all elements\n• does not care about order",
+      "example": "Input: [1, 2]",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s list all subsets for a tiny input.\n\nInput: [1, 2]\n\nSubsets:\n• []\n• [1]\n• [2]\n• [1, 2]\n\nTotal subsets = 4",
+      "action": "next"
+    },
+    {
+      "stepId": "key-observation",
+      "mentorSays": "Important observation:\n\nFor each number, you always have **two choices**:\n• include it\n• exclude it\n\nEvery subset is built from these choices.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf the list has 3 numbers, and each number has 2 choices, how many total combinations will there be?",
+      "choices": [
+        {
+          "label": "2 × 2 × 2 = 8",
+          "next": "decision-tree-idea"
+        },
+        {
+          "label": "3",
+          "next": "decision-tree-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "decision-tree-idea",
+      "mentorSays": "Correct.\n\nEach number doubles the total possibilities.\n\nThis forms a **decision tree** where:\n• each level is a number\n• each branch is include or exclude",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-decision-tree",
+      "mentorSays": "Example: [1, 2]\n\nChoices:\n• include 1 → include 2 → [1,2]\n• include 1 → exclude 2 → [1]\n• exclude 1 → include 2 → [2]\n• exclude 1 → exclude 2 → []",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Notice the repetition:\n\nAt each step:\n• decide for the current number\n• then solve the rest of the list the same way\n\nThis repeating structure makes **recursion** a natural fit.",
+      "action": "next"
+    },
+    {
+      "stepId": "backtracking-meaning",
+      "mentorSays": "We build subsets **step by step**.\n\nWhen we finish exploring one choice, we **undo the last decision** and try the next one.\n\nThis process is called **backtracking**.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "start with an empty subset",
+        "define a recursive function with current index",
+        "add current subset to result",
+        "for each index starting from current:",
+        "  include the number",
+        "  recurse to next index",
+        "  remove the number (backtrack)",
+        "return result"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, let’s translate it into JavaScript.\n\nType the code yourself and observe how subsets grow and shrink.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function subsets(nums) {\n  const result = [];\n\n  function backtrack(start, current) {\n    result.push([...current]);\n\n    for (let i = start; i < nums.length; i++) {\n      current.push(nums[i]);\n      backtrack(i + 1, current);\n      current.pop();\n    }\n  }\n\n  backtrack(0, []);\n  return result;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Example check:\n\nInput: [1, 2]\n\nOutput:\n[[], [1], [1,2], [2]]\n\nThis confirms all subsets are generated correctly.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: symmetric-tree.json
+================================================================================
+
+{
+  "id": "symmetric-tree",
+  "title": "Symmetric Tree",
+  "difficulty": "easy",
+  "pattern": "tree + recursion",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the root of a binary tree.\n\nYour task is to determine whether the tree is **symmetric around its center**.\n\nIn other words, the left and right sides of the tree should be **mirror images** of each other.",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-symmetry",
+      "mentorSays": "What does **symmetric** mean here?\n\n• Left subtree mirrors the right subtree\n• Values must match\n• Structure must match\n\nMirror means: left child on one side matches right child on the other.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-valid-example",
+      "mentorSays": "Example of a symmetric tree:\n\n      1\n     / \\\n    2   2\n   / \\ / \\\n  3  4 4  3\n\nLeft and right are perfect mirrors.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-invalid-example",
+      "mentorSays": "Example of a non-symmetric tree:\n\n      1\n     / \\\n    2   2\n     \\   \\\n      3   3\n\nValues match, but structure does not mirror.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you are given **two nodes**, how would you check if they are mirror images?\n\nWhat conditions must be true?",
+      "choices": [
+        {
+          "label": "Values must match and children must be mirrored",
+          "next": "mirror-logic"
+        },
+        {
+          "label": "Only values need to match",
+          "next": "why-values-not-enough"
+        }
+      ]
+    },
+    {
+      "stepId": "why-values-not-enough",
+      "mentorSays": "Matching values alone is not sufficient.\n\nTwo trees can have the same values but different shapes.\n\nSo we must compare **both value and structure**.",
+      "action": "next"
+    },
+    {
+      "stepId": "mirror-logic",
+      "mentorSays": "Two nodes are mirrors if:\n\n• both are null → symmetric\n• only one is null → not symmetric\n• values are equal\n• left child of first mirrors right child of second\n• right child of first mirrors left child of second",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Each pair of children must satisfy the **same mirror rule**.\n\nThis repeating structure makes **recursion** the natural solution.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "if root is null, return true",
+        "define helper function isMirror(node1, node2)",
+        "if both nodes are null, return true",
+        "if only one is null, return false",
+        "if values differ, return false",
+        "return isMirror(node1.left, node2.right) AND isMirror(node1.right, node2.left)",
+        "call helper with root.left and root.right"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, let’s implement it in JavaScript.\n\nFocus on how the helper compares mirrored children.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function isSymmetric(root) {\n  if (root === null) return true;\n\n  function isMirror(left, right) {\n    if (left === null && right === null) return true;\n    if (left === null || right === null) return false;\n    if (left.val !== right.val) return false;\n\n    return (\n      isMirror(left.left, right.right) &&\n      isMirror(left.right, right.left)\n    );\n  }\n\n  return isMirror(root.left, root.right);\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "If the tree mirrors itself in both **value and structure**, the result is true.\n\nOtherwise, false.\n\nThis confirms correct symmetric-tree validation.",
+      "action": "complete"
+    }
+  ]
+}
+
+
+================================================================================
+FILE: target-sum.json
+================================================================================
+
+{
+  "id": "target-sum",
+  "title": "Target Sum",
+  "pattern": "dynamic-programming (subset-sum transform)",
+  "difficulty": "medium",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-15",
+    "introduces": ["state-transformation", "subset-sum-dp"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return",
+      "comparison",
+      "dynamic-programming"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Let total = sum of all numbers." },
+    { "id": "ps2", "text": "If (total + target) is odd or abs(target) > total, return 0." },
+    { "id": "ps3", "text": "Compute subsetSum = (total + target) / 2." },
+    { "id": "ps4", "text": "Create dp array where dp[s] = number of ways to reach sum s." },
+    { "id": "ps5", "text": "Initialize dp[0] = 1." },
+    { "id": "ps6", "text": "For each number n:" },
+    { "id": "ps7", "text": "  For s from subsetSum down to n: dp[s] += dp[s - n]." },
+    { "id": "ps8", "text": "Return dp[subsetSum]." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Target Sum**.\n\nThis lesson deepens **dynamic programming** by transforming the problem into a **subset-sum** question.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array of numbers.\n\nYou may assign a **+** or **−** sign to each number.\n\nHow many different expressions evaluate to the target value?",
+      "example": "nums = [1,1,1,1,1], target = 3",
+      "action": "next",
+      "next": "tiny-examples"
+    },
+    {
+      "stepId": "tiny-examples",
+      "mentorSays": "Tiny examples:\n\n[1,1], target=0 → 2 ways (+1−1, −1+1)\n[1,2], target=1 → 1 way (+1−2)",
+      "action": "next",
+      "next": "why-bruteforce"
+    },
+    {
+      "stepId": "why-bruteforce",
+      "mentorSays": "Brute force tries all sign combinations.\n\nThat creates **2ⁿ possibilities**, which grows too fast.",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nIf we split numbers into `+` and `−` groups, what does their difference equal?",
+      "choices": [
+        { "label": "target", "next": "core-idea" },
+        { "label": "total sum", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nLet:\n- P = sum of numbers with + sign\n- N = sum of numbers with − sign\n\nThen:\nP − N = target\nP + N = total\n\nSolving gives:\nP = (total + target) / 2",
+      "action": "next",
+      "next": "subset-sum-intuition"
+    },
+    {
+      "stepId": "subset-sum-intuition",
+      "mentorSays": "So the problem becomes:\n\n> How many subsets sum to `(total + target) / 2`?\n\nThis is a classic **subset-sum DP** problem.",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)",
+      "pseudocodeLineIds": ["ps1","ps2","ps3","ps4","ps5","ps6","ps7","ps8"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nThis DP counts **number of ways**, not just possibility.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function and compute total sum.",
+      "example": "function findTargetSumWays(nums, target) {\n  const total = nums.reduce((a,b) => a + b, 0);\n\n}",
+      "action": "next",
+      "next": "code-02-checks",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-02-checks",
+      "mentorSays": "Step 2: Handle impossible cases.",
+      "example": "if (Math.abs(target) > total || (total + target) % 2 !== 0) return 0;",
+      "action": "next",
+      "next": "code-03-dp-setup",
+      "pseudocodeLineIds": ["ps3","ps4","ps5"]
+    },
+    {
+      "stepId": "code-03-dp-setup",
+      "mentorSays": "Step 3: Initialize DP array.",
+      "example": "const subsetSum = (total + target) / 2;\nconst dp = Array(subsetSum + 1).fill(0);\ndp[0] = 1;",
+      "action": "next",
+      "next": "code-04-fill",
+      "pseudocodeLineIds": ["ps6","ps7"]
+    },
+    {
+      "stepId": "code-04-fill",
+      "mentorSays": "Step 4: Update DP counts.",
+      "example": "for (const num of nums) {\n  for (let s = subsetSum; s >= num; s--) {\n    dp[s] += dp[s - num];\n  }\n}",
+      "action": "next",
+      "next": "final-code"
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function findTargetSumWays(nums, target) {\n  const total = nums.reduce((a,b) => a + b, 0);\n\n  if (Math.abs(target) > total || (total + target) % 2 !== 0) return 0;\n\n  const subsetSum = (total + target) / 2;\n  const dp = Array(subsetSum + 1).fill(0);\n  dp[0] = 1;\n\n  for (const num of nums) {\n    for (let s = subsetSum; s >= num; s--) {\n      dp[s] += dp[s - num];\n    }\n  }\n\n  return dp[subsetSum];\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how to transform problems into DP-friendly forms\n- how counting DP differs from boolean DP\n- a core technique behind many partition problems\n\nThis unlocks a whole class of advanced problems.",
+      "action": "complete"
+    }
+  ]
+}
+

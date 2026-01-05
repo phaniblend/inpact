@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 
@@ -9,22 +9,84 @@ export default function AlgorithmsHub() {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [showLanguageModal, setShowLanguageModal] = useState(false);
   const [selectedAlgo, setSelectedAlgo] = useState(null);
+  const [lessons, setLessons] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 12;
 
-  // Mock lessons data
-  const lessons = [
-    { id: 1, slug: 'two-sum', title: 'Two Sum', difficulty: 'Easy', category: 'Arrays', description: 'Find two numbers that add up to a target', isPremium: false },
-    { id: 2, slug: 'three-sum', title: 'Three Sum', difficulty: 'Medium', category: 'Arrays', description: 'Find three numbers that sum to zero', isPremium: false },
-    { id: 3, slug: 'binary-search', title: 'Binary Search', difficulty: 'Easy', category: 'Searching', description: 'Search in sorted array', isPremium: false },
-    { id: 4, slug: 'merge-sort', title: 'Merge Sort', difficulty: 'Medium', category: 'Sorting', description: 'Sort using merge sort', isPremium: false },
-    { id: 5, slug: 'quick-sort', title: 'Quick Sort', difficulty: 'Medium', category: 'Sorting', description: 'Sort using quick sort', isPremium: false },
-    { id: 6, slug: 'longest-substring', title: 'Longest Substring', difficulty: 'Medium', category: 'Strings', description: 'Longest substring without repeating', isPremium: false },
-    { id: 7, slug: 'valid-parentheses', title: 'Valid Parentheses', difficulty: 'Easy', category: 'Stack', description: 'Check valid parentheses', isPremium: false },
-    { id: 8, slug: 'climbing-stairs', title: 'Climbing Stairs', difficulty: 'Easy', category: 'Dynamic Programming', description: 'Count ways to climb', isPremium: false },
-    { id: 9, slug: 'coin-change', title: 'Coin Change', difficulty: 'Medium', category: 'Dynamic Programming', description: 'Minimum coins needed', isPremium: false },
-    { id: 10, slug: 'house-robber', title: 'House Robber', difficulty: 'Medium', category: 'Dynamic Programming', description: 'Maximum money you can rob', isPremium: false },
-    { id: 11, slug: 'longest-palindrome', title: 'Longest Palindrome', difficulty: 'Hard', category: 'Strings', description: 'Find longest palindromic substring', isPremium: true },
-    { id: 12, slug: 'word-ladder', title: 'Word Ladder', difficulty: 'Hard', category: 'Graphs', description: 'Shortest transformation sequence', isPremium: true },
-  ];
+  // Fetch lessons from API
+  useEffect(() => {
+    const fetchLessons = async () => {
+      try {
+        setLoading(true);
+        console.log('Fetching lessons from API...');
+        // Try to use proxy first, fallback to direct URL
+        const apiUrl = import.meta.env.DEV 
+          ? '/api/lessons/algorithms'  // Use Vite proxy in development
+          : 'http://localhost:3001/api/lessons/algorithms';  // Direct URL in production
+        const response = await fetch(apiUrl);
+        console.log('Response status:', response.status);
+        
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error('API Error:', errorText);
+          throw new Error(`Failed to fetch lessons: ${response.status} ${errorText}`);
+        }
+        
+        const result = await response.json();
+        console.log('API Result:', result);
+        
+        if (result.success && result.data) {
+          console.log(`Loaded ${result.data.length} lessons from API`);
+          
+          // Map API data to frontend format
+          const mappedLessons = result.data.map(lesson => {
+            // Remove 'lesson-' prefix from slug if present
+            let cleanSlug = lesson.slug;
+            if (cleanSlug && cleanSlug.startsWith('lesson-')) {
+              cleanSlug = cleanSlug.replace(/^lesson-\d+-?/, '').replace(/^lesson-/, '');
+            }
+            
+            return {
+              id: lesson.id || 0,
+              slug: cleanSlug || 'unknown',
+              title: lesson.title || 'Untitled',
+              difficulty: (lesson.difficulty || 'medium').charAt(0).toUpperCase() + (lesson.difficulty || 'medium').slice(1),
+              category: mapPatternToCategory(lesson.pattern),
+              description: `${lesson.pattern || 'algorithm'} problem`,
+              isPremium: lesson.isPremium || false,
+            };
+          });
+          
+          console.log(`Mapped ${mappedLessons.length} lessons`);
+          setLessons(mappedLessons);
+        } else {
+          console.error('API returned unsuccessful result:', result);
+        }
+      } catch (error) {
+        console.error('Error fetching lessons:', error);
+        alert(`Error loading algorithms: ${error.message}. Please check if the backend server is running on port 3001.`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchLessons();
+  }, []);
+
+  // Map pattern to category
+  const mapPatternToCategory = (pattern) => {
+    const patternLower = pattern?.toLowerCase() || '';
+    if (patternLower.includes('sort')) return 'Sorting';
+    if (patternLower.includes('search') || patternLower.includes('binary')) return 'Searching';
+    if (patternLower.includes('tree') || patternLower.includes('bst')) return 'Trees';
+    if (patternLower.includes('graph')) return 'Graphs';
+    if (patternLower.includes('dynamic') || patternLower.includes('dp')) return 'Dynamic Programming';
+    if (patternLower.includes('string') || patternLower.includes('substring')) return 'Strings';
+    if (patternLower.includes('array') || patternLower.includes('two-pointer')) return 'Arrays';
+    if (patternLower.includes('stack') || patternLower.includes('queue')) return 'Stack';
+    return 'General';
+  };
 
   const languages = [
     { id: 'python', name: 'Python', emoji: '🐍' },
@@ -35,7 +97,17 @@ export default function AlgorithmsHub() {
   ];
 
   const difficulties = ['Easy', 'Medium', 'Hard'];
-  const categories = ['Arrays', 'Strings', 'Searching', 'Sorting', 'Dynamic Programming', 'Graphs', 'Stack', 'Trees'];
+  
+  // Extract unique categories from lessons
+  const categories = React.useMemo(() => {
+    const cats = new Set();
+    lessons.forEach(lesson => {
+      if (lesson.category) {
+        cats.add(lesson.category);
+      }
+    });
+    return Array.from(cats).sort();
+  }, [lessons]);
 
   // Filter logic
   const filteredLessons = lessons.filter(lesson => {
@@ -48,6 +120,17 @@ export default function AlgorithmsHub() {
     
     return matchesSearch && matchesDifficulty && matchesCategory;
   });
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredLessons.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedLessons = filteredLessons.slice(startIndex, endIndex);
+
+  // Reset to page 1 when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, selectedDifficulties, selectedCategories]);
 
   const toggleDifficulty = (diff) => {
     setSelectedDifficulties(prev =>
@@ -174,14 +257,23 @@ export default function AlgorithmsHub() {
 
         {/* RESULTS COUNT */}
         <div className="mb-4 text-inpact-gray">
-          Showing {filteredLessons.length} of {lessons.length} algorithms
+          Showing {startIndex + 1}-{Math.min(endIndex, filteredLessons.length)} of {filteredLessons.length} algorithms
+          {filteredLessons.length !== lessons.length && ` (${lessons.length} total)`}
         </div>
 
+        {/* LOADING STATE */}
+        {loading && (
+          <div className="text-center py-20">
+            <p className="text-2xl text-inpact-gray">Loading algorithms...</p>
+          </div>
+        )}
+
         {/* ALGORITHMS GRID (2 COLUMNS) */}
-        <div className="grid md:grid-cols-2 gap-6">
-          {filteredLessons.map(lesson => (
+        {!loading && (
+          <div className="grid md:grid-cols-2 gap-6">
+            {paginatedLessons.map(lesson => (
             <div
-              key={lesson.id}
+              key={lesson.slug || lesson.id || `lesson-${lesson.title}`}
               onClick={() => handleAlgoClick(lesson)}
               className="bg-white rounded-xl p-6 shadow-card hover:shadow-card-hover transition-all duration-200 cursor-pointer"
             >
@@ -216,10 +308,60 @@ export default function AlgorithmsHub() {
               </div>
             </div>
           ))}
-        </div>
+          </div>
+        )}
+
+        {/* PAGINATION */}
+        {!loading && totalPages > 1 && (
+          <div className="mt-8 flex items-center justify-center gap-2">
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+              disabled={currentPage === 1}
+              className="px-4 py-2 bg-white rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+            >
+              Previous
+            </button>
+            
+            <div className="flex gap-1">
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => {
+                // Show first page, last page, current page, and pages around current
+                if (
+                  page === 1 ||
+                  page === totalPages ||
+                  (page >= currentPage - 1 && page <= currentPage + 1)
+                ) {
+                  return (
+                    <button
+                      key={page}
+                      onClick={() => setCurrentPage(page)}
+                      className={`px-4 py-2 rounded-lg border transition ${
+                        currentPage === page
+                          ? 'bg-inpact-green text-black font-bold border-inpact-green'
+                          : 'bg-white border-gray-300 hover:bg-gray-50'
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  );
+                } else if (page === currentPage - 2 || page === currentPage + 2) {
+                  return <span key={page} className="px-2">...</span>;
+                }
+                return null;
+              })}
+            </div>
+            
+            <button
+              onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+              disabled={currentPage === totalPages}
+              className="px-4 py-2 bg-white rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+            >
+              Next
+            </button>
+          </div>
+        )}
 
         {/* NO RESULTS */}
-        {filteredLessons.length === 0 && (
+        {!loading && filteredLessons.length === 0 && (
           <div className="text-center py-20">
             <p className="text-2xl text-inpact-gray">No algorithms found</p>
             <button

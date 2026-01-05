@@ -1,0 +1,165 @@
+{
+  "id": "reverse-string",
+  "title": "Reverse String",
+  "pattern": "two-pointers",
+  "difficulty": "easy",
+  "language": "javascript",
+  "status": "PERFECT",
+  "standardsVersion": "lessonStandards.v1",
+  "curriculum": {
+    "lessonOrderTag": "FOUNDATION-04",
+    "introduces": ["two-pointers", "in-place-swap"],
+    "assumesAlreadyTaught": [
+      "variables",
+      "arrays",
+      "indexes",
+      "loops",
+      "functions",
+      "return"
+    ]
+  },
+  "pseudocode": [
+    { "id": "ps1", "text": "Set left = 0 and right = last index." },
+    { "id": "ps2", "text": "While left < right:" },
+    { "id": "ps3", "text": "  Swap characters at left and right." },
+    { "id": "ps4", "text": "  Move left forward and right backward." },
+    { "id": "ps5", "text": "Stop when pointers meet or cross." }
+  ],
+  "flow": [
+    {
+      "stepId": "lesson-start",
+      "mentorSays": "You selected **Reverse String**.\n\nThis lesson introduces a simple but powerful idea called **two pointers**, used widely in array and string problems.",
+      "action": "next",
+      "next": "problem-statement"
+    },
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "### Problem\nYou are given an array of characters.\n\nYour task is to reverse the array **in place**.\n\nThat means:\n- Do not create a new array\n- Modify the original one",
+      "example": "chars = ['h','e','l','l','o']",
+      "action": "next",
+      "next": "what-in-place-means"
+    },
+    {
+      "stepId": "what-in-place-means",
+      "mentorSays": "### What does \"in place\" mean?\n\nIt means we reuse the same array and do not allocate another one.\n\nSo:\n`['h','e','l','l','o'] → ['o','l','l','e','h']`\n\nThe original array itself changes.",
+      "action": "next",
+      "next": "tiny-example"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Tiny example:\n\n['a','b','c']\n\nAfter reversing:\n['c','b','a']",
+      "action": "next",
+      "next": "thinking-challenge"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Thinking challenge:\n\nWhich two positions should we swap first?",
+      "choices": [
+        { "label": "First and last", "next": "core-idea" },
+        { "label": "First and second", "next": "core-idea" }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe swap the **first and last** characters, then move inward.\n\nThis is the **two-pointer technique**:\n- one pointer starts at the left\n- one pointer starts at the right",
+      "action": "next",
+      "next": "two-pointers-explained"
+    },
+    {
+      "stepId": "two-pointers-explained",
+      "mentorSays": "### Two pointers\n\n- `left` points to the start of the array\n- `right` points to the end of the array\n\nAfter each swap:\n- left moves forward\n- right moves backward",
+      "action": "next",
+      "next": "walkthrough-mini"
+    },
+    {
+      "stepId": "walkthrough-mini",
+      "mentorSays": "Mini walkthrough:\n\nchars = ['h','e','l','l','o']\n\n- left=0 ('h'), right=4 ('o') → swap\n- chars = ['o','e','l','l','h']\n- left=1, right=3 → swap\n- chars = ['o','l','l','e','h']\n\nPointers meet → stop",
+      "action": "next",
+      "next": "pseudocode-step"
+    },
+    {
+      "stepId": "pseudocode-step",
+      "mentorSays": "### Pseudocode (logic plan)\nEach coding step maps to this.",
+      "pseudocodeLineIds": ["ps1", "ps2", "ps3", "ps4", "ps5"],
+      "action": "next",
+      "next": "coding-intro"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now we write JavaScript.\n\nType the code yourself for muscle memory.",
+      "action": "next",
+      "next": "code-01-function",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-01-function",
+      "mentorSays": "Step 1: Create the function.\n\nThe function modifies the array directly.",
+      "example": "function reverseString(chars) {\n\n}",
+      "action": "next",
+      "next": "code-02-pointers",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-02-pointers",
+      "mentorSays": "Step 2: Initialize left and right pointers.",
+      "example": "let left = 0;\nlet right = chars.length - 1;",
+      "action": "next",
+      "next": "code-03-loop",
+      "pseudocodeLineIds": ["ps1"]
+    },
+    {
+      "stepId": "code-03-loop",
+      "mentorSays": "Step 3: Loop while left < right.",
+      "example": "while (left < right) {\n\n}",
+      "action": "next",
+      "next": "code-04-swap",
+      "pseudocodeLineIds": ["ps2"]
+    },
+    {
+      "stepId": "code-04-swap",
+      "mentorSays": "Step 4: Swap the characters at left and right.\n\nWe use a temporary variable.",
+      "example": "const temp = chars[left];\nchars[left] = chars[right];\nchars[right] = temp;",
+      "action": "next",
+      "next": "code-05-move",
+      "pseudocodeLineIds": ["ps3"]
+    },
+    {
+      "stepId": "code-05-move",
+      "mentorSays": "Step 5: Move both pointers inward.",
+      "example": "left++;\nright--;",
+      "action": "next",
+      "next": "final-code",
+      "pseudocodeLineIds": ["ps4"]
+    },
+    {
+      "stepId": "final-code",
+      "mentorSays": "### Final JavaScript code",
+      "example": "function reverseString(chars) {\n  let left = 0;\n  let right = chars.length - 1;\n\n  while (left < right) {\n    const temp = chars[left];\n    chars[left] = chars[right];\n    chars[right] = temp;\n\n    left++;\n    right--;\n  }\n}",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "pattern-generalization",
+      "mentorSays": "### This Pattern Applies To...\n\nThe two-pointer technique (starting from both ends) is used in many problems:\n\n1. **Reverse array** - Swap elements from both ends\n2. **Valid palindrome** - Compare characters from both ends\n3. **Move zeros to end** - Two pointers moving in same direction\n4. **Container with most water** - Two pointers finding max area\n5. **Two sum (sorted array)** - Two pointers finding pairs\n6. **Trapping rain water** - Two pointers finding boundaries\n\n**Key insight:** When you need to process elements from both ends or find pairs, think two pointers!",
+      "action": "next",
+      "next": "common-mistakes"
+    },
+    {
+      "stepId": "common-mistakes",
+      "mentorSays": "### Common Mistakes\n\n1. **Losing the next pointer** - Always save `temp = curr.next` before reassigning\n2. **Wrong loop condition** - Use `left < right` not `left <= right` (avoid swapping middle element twice)\n3. **Forgetting to move pointers** - Must increment left and decrement right after swap\n4. **Array vs string** - Strings are immutable in some languages, need to convert to array first\n5. **Off-by-one errors** - Right pointer should start at `length - 1` not `length`",
+      "action": "next",
+      "next": "interview-talk-track"
+    },
+    {
+      "stepId": "interview-talk-track",
+      "mentorSays": "### Interview Talk Track (30 seconds)\n\n**How to explain this solution in an interview:**\n\n1. **\"I use two pointers starting from both ends of the array\"**\n2. **\"I swap the elements at both pointers\"**\n3. **\"Then I move both pointers inward: left increments, right decrements\"**\n4. **\"I continue until the pointers meet or cross\"**\n5. **\"This gives us O(n) time complexity with O(1) space, reversing in-place\"**",
+      "action": "next",
+      "next": "wrap-up"
+    },
+    {
+      "stepId": "wrap-up",
+      "mentorSays": "Wrap-up:\n\nYou learned:\n- how two pointers work\n- how to reverse in place\n- how to swap values safely\n- pattern recognition for two-pointer problems\n\nTwo pointers will appear again in upcoming lessons.\n\n**Follow-up variant:**\n\n**Reverse Words in a String:** Given a string, reverse the order of words. How would you use two pointers to solve this?",
+      "action": "complete"
+    }
+  ]
+}

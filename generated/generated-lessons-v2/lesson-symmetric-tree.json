@@ -1,0 +1,90 @@
+{
+  "id": "symmetric-tree",
+  "title": "Symmetric Tree",
+  "difficulty": "easy",
+  "pattern": "tree + recursion",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given the root of a binary tree.\n\nYour task is to determine whether the tree is **symmetric around its center**.\n\nIn other words, the left and right sides of the tree should be **mirror images** of each other.",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-symmetry",
+      "mentorSays": "What does **symmetric** mean here?\n\n• Left subtree mirrors the right subtree\n• Values must match\n• Structure must match\n\nMirror means: left child on one side matches right child on the other.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-valid-example",
+      "mentorSays": "Example of a symmetric tree:\n\n      1\n     / \\\n    2   2\n   / \\ / \\\n  3  4 4  3\n\nLeft and right are perfect mirrors.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-invalid-example",
+      "mentorSays": "Example of a non-symmetric tree:\n\n      1\n     / \\\n    2   2\n     \\   \\\n      3   3\n\nValues match, but structure does not mirror.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf you are given **two nodes**, how would you check if they are mirror images?\n\nWhat conditions must be true?",
+      "choices": [
+        {
+          "label": "Values must match and children must be mirrored",
+          "next": "mirror-logic"
+        },
+        {
+          "label": "Only values need to match",
+          "next": "why-values-not-enough"
+        }
+      ]
+    },
+    {
+      "stepId": "why-values-not-enough",
+      "mentorSays": "Matching values alone is not sufficient.\n\nTwo trees can have the same values but different shapes.\n\nSo we must compare **both value and structure**.",
+      "action": "next"
+    },
+    {
+      "stepId": "mirror-logic",
+      "mentorSays": "Two nodes are mirrors if:\n\n• both are null → symmetric\n• only one is null → not symmetric\n• values are equal\n• left child of first mirrors right child of second\n• right child of first mirrors left child of second",
+      "action": "next"
+    },
+    {
+      "stepId": "why-recursion",
+      "mentorSays": "Each pair of children must satisfy the **same mirror rule**.\n\nThis repeating structure makes **recursion** the natural solution.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "if root is null, return true",
+        "define helper function isMirror(node1, node2)",
+        "if both nodes are null, return true",
+        "if only one is null, return false",
+        "if values differ, return false",
+        "return isMirror(node1.left, node2.right) AND isMirror(node1.right, node2.left)",
+        "call helper with root.left and root.right"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now that the logic is clear, let’s implement it in JavaScript.\n\nFocus on how the helper compares mirrored children.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function isSymmetric(root) {\n  if (root === null) return true;\n\n  function isMirror(left, right) {\n    if (left === null && right === null) return true;\n    if (left === null || right === null) return false;\n    if (left.val !== right.val) return false;\n\n    return (\n      isMirror(left.left, right.right) &&\n      isMirror(left.right, right.left)\n    );\n  }\n\n  return isMirror(root.left, root.right);\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "If the tree mirrors itself in both **value and structure**, the result is true.\n\nOtherwise, false.\n\nThis confirms correct symmetric-tree validation.",
+      "action": "complete"
+    }
+  ]
+}

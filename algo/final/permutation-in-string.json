@@ -1,0 +1,96 @@
+{
+  "id": "permutation-in-string",
+  "title": "Permutation in String",
+  "difficulty": "medium",
+  "pattern": "sliding-window + frequency-count",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given two strings:\n\n• s1 (the pattern)\n• s2 (the text)\n\nYour task is to determine whether **any permutation of s1** exists as a **substring** inside s2.",
+      "example": "s1 = \"ab\", s2 = \"eidbaooo\"",
+      "action": "next"
+    },
+    {
+      "stepId": "clarify-what-is-asked",
+      "mentorSays": "Important clarification:\n\n• You are NOT asked to generate permutations\n• You are NOT asked to reorder s2\n• You only need to check if some substring of s2 contains the same characters as s1",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Example:\n\ns1 = \"ab\"\ns2 = \"eidbaooo\"\n\nSubstring \"ba\" exists in s2.\n\n\"ba\" is a permutation of \"ab\" → answer is true.",
+      "action": "next"
+    },
+    {
+      "stepId": "what-makes-a-permutation",
+      "mentorSays": "Two strings are permutations of each other if:\n\n• they have the same length\n• they contain the same characters\n• with the same frequency",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf we slide a window of length s1 over s2, what should we compare to know if it’s a permutation?",
+      "choices": [
+        {
+          "label": "Character frequency counts",
+          "next": "core-idea"
+        },
+        {
+          "label": "Sorted substrings",
+          "next": "core-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "core-idea",
+      "mentorSays": "Correct.\n\nWe will:\n\n• count character frequencies in s1\n• slide a window of the same length over s2\n• keep frequency counts of the window\n• compare the two counts efficiently",
+      "action": "next"
+    },
+    {
+      "stepId": "why-sliding-window",
+      "mentorSays": "Instead of checking every substring from scratch:\n\n• we reuse previous work\n• remove one character from the left\n• add one character to the right\n\nThis makes the solution efficient.",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example walkthrough:\n\ns1 = \"ab\"\ns2 = \"eidbaooo\"\n\nWindow size = 2\n\nCheck:\n\"ei\" → no\n\"id\" → no\n\"db\" → no\n\"ba\" → yes",
+      "action": "next"
+    },
+    {
+      "stepId": "frequency-tracking",
+      "mentorSays": "We use two frequency maps:\n\n• need → frequency of characters in s1\n• window → frequency of characters in current window of s2",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "if s1 is longer than s2, return false",
+        "build frequency map for s1",
+        "initialize empty frequency map for window",
+        "set left = 0",
+        "for right from 0 to s2 length:",
+        "  add s2[right] to window",
+        "  if window size > s1 length:",
+        "    remove s2[left] from window",
+        "    move left forward",
+        "  if window frequencies match s1 frequencies:",
+        "    return true",
+        "return false"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Now translate the logic into JavaScript.",
+      "code": "function checkInclusion(s1, s2) {\n  if (s1.length > s2.length) return false;\n\n  const need = {};\n  const window = {};\n\n  for (const ch of s1) {\n    need[ch] = (need[ch] || 0) + 1;\n  }\n\n  let left = 0;\n  let matches = 0;\n  const required = Object.keys(need).length;\n\n  for (let right = 0; right < s2.length; right++) {\n    const char = s2[right];\n    window[char] = (window[char] || 0) + 1;\n\n    if (need[char] && window[char] === need[char]) {\n      matches++;\n    }\n\n    while (right - left + 1 > s1.length) {\n      const leftChar = s2[left];\n      if (need[leftChar] && window[leftChar] === need[leftChar]) {\n        matches--;\n      }\n      window[leftChar]--;\n      left++;\n    }\n\n    if (matches === required) return true;\n  }\n\n  return false;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final checks:\n\ns1=\"ab\", s2=\"eidbaooo\" → true\ns1=\"ab\", s2=\"eidboaoo\" → false\n\nThe function correctly detects permutations using a sliding window.",
+      "action": "complete"
+    }
+  ]
+}

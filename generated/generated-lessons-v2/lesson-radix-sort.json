@@ -1,0 +1,90 @@
+{
+  "id": "radix-sort",
+  "title": "Radix Sort",
+  "difficulty": "medium",
+  "pattern": "digit-based sorting (non-comparison)",
+  "language": "javascript",
+  "quality": "PERFECT",
+  "version": "v1.0-fixed",
+  "flow": [
+    {
+      "stepId": "problem-statement",
+      "mentorSays": "You are given a list of **non-negative integers**.\n\nYour task is to sort the list in **ascending order**.\n\nUnlike other sorting algorithms, this method does **not compare numbers directly**.",
+      "example": "Input: [170, 45, 75, 90, 802, 24, 2, 66]",
+      "action": "next"
+    },
+    {
+      "stepId": "why-different",
+      "mentorSays": "Most sorting algorithms work by comparing two numbers.\n\nRadix Sort works differently:\n\n• It sorts numbers **digit by digit**\n• It processes numbers from **least significant digit to most significant digit**",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-example",
+      "mentorSays": "Let’s start with a tiny example.\n\nNumbers: [21, 13, 12]\n\nLook at the **last digit**:\n• 21 → 1\n• 13 → 3\n• 12 → 2\n\nIf we group by last digit, we can start organizing the numbers.",
+      "action": "next"
+    },
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf we sort numbers by the last digit, will the entire number be sorted?",
+      "choices": [
+        {
+          "label": "No, higher digits still matter",
+          "next": "key-idea"
+        },
+        {
+          "label": "Yes, one pass is enough",
+          "next": "key-idea"
+        }
+      ]
+    },
+    {
+      "stepId": "key-idea",
+      "mentorSays": "Correct.\n\nSorting by one digit is not enough.\n\nBut if we:\n• first sort by the last digit\n• then by the second-last digit\n• then by the third-last digit\n\nWe can gradually build the correct order.",
+      "action": "next"
+    },
+    {
+      "stepId": "stability-idea",
+      "mentorSays": "Important requirement:\n\nWhen sorting by digits, the sorting at each step must be **stable**.\n\nStable means:\n• numbers with the same digit keep their relative order",
+      "action": "next"
+    },
+    {
+      "stepId": "digit-passes",
+      "mentorSays": "Process overview:\n\n1. Find the maximum number to know how many digits we need\n2. Start from the least significant digit (ones place)\n3. Use buckets (0–9) to group numbers\n4. Rebuild the list\n5. Move to the next digit",
+      "action": "next"
+    },
+    {
+      "stepId": "tiny-walkthrough",
+      "mentorSays": "Example (ones place):\n\n[170, 45, 75, 90]\n\nBuckets:\n0 → 170, 90\n5 → 45, 75\n\nRebuild list:\n[170, 90, 45, 75]\n\nNext, move to tens place.",
+      "action": "next"
+    },
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Let’s write the logic as steps.\n\nNo JavaScript yet.",
+      "pseudocode": [
+        "find the maximum number",
+        "for digit place = 1; while max / place > 0:",
+        "  create 10 empty buckets (0–9)",
+        "  place each number into bucket based on current digit",
+        "  rebuild list from buckets in order",
+        "  move to next digit place"
+      ],
+      "action": "next"
+    },
+    {
+      "stepId": "coding-intro",
+      "mentorSays": "Now translate the logic into JavaScript.\n\nWe will use arrays as buckets to maintain stability.",
+      "action": "next"
+    },
+    {
+      "stepId": "coding-js",
+      "mentorSays": "Here is the JavaScript implementation.",
+      "code": "function radixSort(nums) {\n  const maxNum = Math.max(...nums);\n\n  for (let place = 1; Math.floor(maxNum / place) > 0; place *= 10) {\n    const buckets = Array.from({ length: 10 }, () => []);\n\n    for (const num of nums) {\n      const digit = Math.floor(num / place) % 10;\n      buckets[digit].push(num);\n    }\n\n    nums = [].concat(...buckets);\n  }\n\n  return nums;\n}",
+      "action": "next"
+    },
+    {
+      "stepId": "final-check",
+      "mentorSays": "Final check:\n\n[170,45,75,90,802,24,2,66]\n→ [2,24,45,66,75,90,170,802]\n\nRadix Sort correctly sorts the list without comparisons.",
+      "action": "complete"
+    }
+  ]
+}

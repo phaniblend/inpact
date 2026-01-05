@@ -1,0 +1,96 @@
+{
+  "id": "word-search",
+  "title": "Word Search",
+  "difficulty": "medium",
+  "pattern": "backtracking",
+  "language": "javascript",
+  "status": "PERFECT",
+  "teachingVersion": "v1.0",
+  "flow": [
+    {
+      "stepId": "problem-intro",
+      "mentorSays": "You are given a grid of letters and a word.\n\nYour task is to check whether the word exists in the grid.\n\nYou may start from any cell. From a cell, you may move:\n- up\n- down\n- left\n- right\n\nEach cell can be used only once for a single word.",
+      "example": "Grid:\n[\n  [A, B, C],\n  [D, E, F],\n  [G, H, I]\n]\n\nWord: \"BEH\"",
+      "action": "next"
+    },
+
+    {
+      "stepId": "tiny-clarification",
+      "mentorSays": "Important clarifications:\n\n• You cannot jump diagonally\n• You cannot reuse the same cell twice\n• You are only checking if the word exists (true / false)\n\nWe are NOT trying to return the path.",
+      "action": "next"
+    },
+
+    {
+      "stepId": "thinking-challenge",
+      "mentorSays": "Pause and think.\n\nIf the grid were very small, how would you manually check whether the word exists?",
+      "choices": [
+        {
+          "label": "Start from each cell and try matching letters",
+          "next": "bruteforce-logic"
+        },
+        {
+          "label": "I am not sure",
+          "next": "bruteforce-logic"
+        }
+      ]
+    },
+
+    {
+      "stepId": "bruteforce-logic",
+      "mentorSays": "A natural idea is:\n\n1. Pick a starting cell\n2. If the letter matches the first character of the word:\n   - try moving in all 4 directions\n3. Continue matching the next character\n4. If a path fails, backtrack and try another direction\n\nThis guarantees correctness.",
+      "example": "Word: \"AB\"\nStart at cell A → try neighbors for B",
+      "action": "next"
+    },
+
+    {
+      "stepId": "pain-point",
+      "mentorSays": "But there is a problem.\n\nIf you do not track visited cells:\n• you may reuse the same cell\n• you may loop infinitely\n\nSo we need a way to remember:\n\"Have I already used this cell in the current path?\"",
+      "action": "next"
+    },
+
+    {
+      "stepId": "core-idea",
+      "mentorSays": "This is where a **recursive exploration with backtracking** is useful.\n\nAt each step:\n• mark the cell as visited\n• explore neighbors\n• undo the mark when backing out",
+      "action": "next"
+    },
+
+    {
+      "stepId": "pseudocode",
+      "mentorSays": "Here is the idea written as steps (not code):",
+      "example": [
+        "For each cell in the grid:",
+        "  If cell matches first letter:",
+        "    Try to build the word from here",
+        "",
+        "To build the word from a cell:",
+        "  If all letters are matched → success",
+        "  If out of bounds or mismatch → stop",
+        "  Mark current cell as visited",
+        "  Try all 4 directions",
+        "  Unmark current cell (backtrack)"
+      ],
+      "action": "next"
+    },
+
+    {
+      "stepId": "concept-check",
+      "mentorSays": "Key idea to remember:\n\nWe explore possibilities, but we always clean up after ourselves.\n\nThis pattern is called **backtracking**.",
+      "action": "next"
+    },
+
+    {
+      "stepId": "coding-start",
+      "mentorSays": "Now that the logic is clear, we can write code.\n\nWe will:\n• loop through the grid\n• use a recursive helper\n• mark cells temporarily\n\nType the code yourself. Do not copy.",
+      "example": "function exist(board, word) {\n  // implementation\n}",
+      "action": "start-coding"
+    }
+  ],
+
+  "qualityChecklist": {
+    "no-assumptions": true,
+    "tiny-examples-only": true,
+    "logic-before-code": true,
+    "explicit-backtracking": true,
+    "jargon-explained": true
+  }
+}
