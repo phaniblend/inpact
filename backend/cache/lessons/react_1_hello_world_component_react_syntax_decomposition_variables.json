@@ -1,0 +1,39 @@
+{
+  "challengeId": "react-1-hello-world-component",
+  "domain": "react",
+  "contentType": "syntax_decomposition",
+  "constructName": "variables",
+  "content": {
+    "slides": [
+      {
+        "title": "What is variables?",
+        "content": "A variable is like a labeled box where you can store a value. Imagine you have a box with a label that says 'Age'. Inside the box, you can put the number 25. Whenever you want to know your age, you can just look inside that box instead of remembering the number.",
+        "codeExample": "let age = 25;"
+      },
+      {
+        "title": "Why do we need variables?",
+        "content": "Using values directly can be confusing and repetitive. If you want to use the same number multiple times, it’s easier to use a variable. For example, if you want to add 10 and 10, you have to remember the numbers each time. With a variable, you can just refer to it instead.",
+        "codeExample": "// Without variables:\nconsole.log(10 + 10);\nconsole.log(10 * 2);\n\n// With variables:\nlet x = 10;\nconsole.log(x + x);\nconsole.log(x * 2);"
+      },
+      {
+        "title": "How to create variables",
+        "content": "In JavaScript, you create a variable using keywords like 'let', 'const', or 'var'. A good rule is to use 'const' for values that don't change and 'let' when you need to change the value later. For example, 'let age = 25;' means the age can change, while 'const name = 'Alice';' means the name stays the same.",
+        "codeExample": "let age = 25;\nconst name = 'Alice';"
+      },
+      {
+        "title": "Common types/forms",
+        "content": "Variables can hold different types of values. For example, numbers, words (strings), or even true/false values (booleans). Think of a variable as a box that can hold different things: a number box, a word box, or a truth box.",
+        "codeExample": "let score = 100; // Number\nconst greeting = 'Hello!'; // String\nlet isActive = true; // Boolean"
+      },
+      {
+        "title": "Common mistakes",
+        "content": "One common mistake is trying to use a variable before you create it. This can lead to errors. Remember to always create your variable before using it. Also, don’t forget that variable names are case-sensitive; 'age' and 'Age' are different.",
+        "codeExample": "// Mistake: Using before declaration\nconsole.log(x);\nlet x = 10;\n\n// Mistake: Case sensitivity\nlet age = 25;\nconsole.log(Age); // This will cause an error."
+      }
+    ],
+    "syntax": "Variables in JavaScript can be created using 'let', 'const', or 'var'. Use 'const' for unchanging values and 'let' for changing values.",
+    "microExample": "let age = 25; // A box labeled 'age' holding the value 25\nconsole.log(age); // Outputs: 25",
+    "isBaseConstruct": true
+  },
+  "cachedAt": "2026-01-10T15:39:14.436Z"
+}

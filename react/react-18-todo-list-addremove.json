@@ -13,32 +13,35 @@
   "flow": [
     {
       "stepId": "title",
-      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Todo List (Add/Remove) in React\n2. Implement the solution using Array manipulation, state updates\n3. Apply React best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write clean, maintainable React code",
+      "mentorSays": "By the end of this lesson, the learner will be able to:\n\n1. Create a React component that renders a list of items from an array.\n\n2. Implement list rendering using the map() method to transform array data.\n\n3. Apply the key prop correctly to each list item for React's reconciliation.\n\n4. Use JSX to render dynamic list content within the component output.\n\n5. Bind array data to component props and render the list in the browser.\n\n6. Verify that list items update correctly when the array data changes.",
       "action": "continue",
       "next": "problem-illustration"
     },
     {
       "stepId": "problem-illustration",
-      "mentorSays": "Have you ever needed to implement a todo list with add/remove in React?\n\n**The Challenge:**\nCreate a todo list component with:\n- Input to add new todos\n- Each todo has a delete button\n- Can't add empty todos\n- Show \"No todos yet\" when list is empty\n- Clear input after adding\n\n**What We're Building:**\nThis challenge tests your understanding of todo list functionality in React. You'll need to create a React component that demonstrates these concepts effectively while following React best practices.\n\n**Why This Matters:**\nTodo List is a fundamental React concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in React teams\n\n**Real-World Applications:**\nAmazon's product list uses map() to render product cards from an array of items. Each product gets its own card component, creating a dynamic, scrollable grid.\n\nThis pattern is essential for building modern, interactive web applications.",
+      "mentorSays": "**The Challenge:**\n\nCreate a todo list component with:\n- Input to add new todos\n- Each todo has a delete button\n- Can't add empty todos\n- Show \"No todos yet\" when list is empty\n- Clear input after adding\n\n**What to Build:**\nImplement the solution according to the requirements above.\n\n---\n\n**Need Help?** (Click to expand)\n\n**Why This Matters:**\n\nTodo List is a fundamental React concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in React teams\n\n**Real-World Examples:**\n\nAmazon's product list uses map() to render product cards from an array of items. Each product gets its own card component, creating a dynamic, scrollable grid.\n\nThis pattern is essential for building modern, interactive web applications.",
       "example": "// Create a todo list with:\n// - Input to add new todos\n// - Each todo has a delete button\n// - Can't add empty todos\n// - Show \"No todos yet\" when list is empty\n// - Clear input after adding",
       "action": "continue",
       "next": "thinking-challenge"
     },
     {
       "stepId": "thinking-challenge",
-      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Todo List challenge?\n\nThink about it for a moment. What approach feels natural to you?",
+      "mentorSays": "**How would you like to build this component?**\n\nChoose how you want to start implementing the Todo List (Add/Remove):",
       "choices": [
         {
-          "label": "I'll start with the basic approach and build up",
+          "label": "Build it step by step",
+          "description": "Write the component incrementally and run it as we go.",
           "next": "explore-approach-1"
         },
         {
-          "label": "I want to see the optimal solution directly",
+          "label": "Show me the full component first",
+          "description": "See a complete working example, then break it down.",
           "next": "explore-optimal"
         },
         {
-          "label": "I need more context about the problem",
-          "next": "problem-illustration"
+          "label": "Remind me of the basics before I start",
+          "description": "Quick recap of JSX and components, then we code.",
+          "next": "basics-recap"
         }
       ]
     },

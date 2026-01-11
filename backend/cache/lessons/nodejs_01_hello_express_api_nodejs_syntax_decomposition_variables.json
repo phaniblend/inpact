@@ -1,0 +1,12 @@
+{
+  "challengeId": "nodejs-01-hello-express-api",
+  "domain": "nodejs",
+  "contentType": "syntax_decomposition",
+  "constructName": "variables",
+  "content": {
+    "syntax": "const message = 'Hello, Express!';",
+    "explanation": "This line declares a constant variable named 'message' and assigns it the string value 'Hello, Express!'.",
+    "microExample": "console.log(message);"
+  },
+  "cachedAt": "2026-01-10T15:28:06.594Z"
+}

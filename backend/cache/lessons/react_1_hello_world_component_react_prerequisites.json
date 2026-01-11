@@ -1,0 +1,13 @@
+{
+  "challengeId": "react-1-hello-world-component",
+  "domain": "react",
+  "contentType": "prerequisites",
+  "constructName": null,
+  "content": {
+    "prerequisites": [
+      "Components",
+      "JSX"
+    ]
+  },
+  "cachedAt": "2026-01-10T16:27:57.599Z"
+}

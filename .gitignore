@@ -16,6 +16,7 @@ backend/build/
 .env.production
 frontend/.env
 backend/.env
+.env.*
 
 # Logs
 *.log
@@ -58,3 +59,6 @@ consolidate.py
 # Any other temp/test files
 *_temp.txt
 *_test.py
+
+# Railway
+.railway/

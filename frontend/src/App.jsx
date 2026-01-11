@@ -1,30 +1,39 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './contexts/AuthContext';
 import Landing from './pages/Landing';
 import AlgorithmsHub from './pages/AlgorithmsHub';
 import CodingHub from './pages/CodingHub';
 import PracticeTutorial from './pages/PracticeTutorial';
+import LessonEngineView from './components/lesson/LessonEngineView';
+import CodingChallengeLesson from './ccLesson.jsx';
 import Dashboard from './pages/Dashboard';
 import Profile from './pages/Profile';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AuthCallback from './pages/AuthCallback';
 import NotFound from './pages/NotFound';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Landing />} />
-        <Route path="/algorithms" element={<AlgorithmsHub />} />
-        <Route path="/coding" element={<CodingHub />} />
-        <Route path="/learn/:type/:slug" element={<PracticeTutorial />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/algorithms" element={<AlgorithmsHub />} />
+          <Route path="/coding" element={<CodingHub />} />
+          <Route path="/learn/:type/:slug" element={<PracticeTutorial />} />
+          <Route path="/lesson-engine/:domain/:challengeId" element={<CodingChallengeLesson />} />
+          <Route path="/lesson-engine/:challengeId" element={<LessonEngineView />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/auth/callback" element={<AuthCallback />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

@@ -13,32 +13,35 @@
   "flow": [
     {
       "stepId": "title",
-      "mentorSays": "At the end of this lesson, you will be able to:\n\n1. Understand Optimistic UI Updates in React\n2. Implement the solution using Optimistic patterns, rollback\n3. Apply React best practices and patterns\n4. Handle edge cases and error scenarios\n5. Write clean, maintainable React code",
+      "mentorSays": "By the end of this lesson, the learner will be able to:\n\n1. Create a React functional component that implements optimistic ui updates.\n\n2. Implement component logic using React hooks and JSX syntax.\n\n3. Apply event handlers and state management to make the component interactive.\n\n4. Use JSX to render the component output with proper structure.\n\n5. Bind component props and state to the rendered elements.\n\n6. Run the component and verify it displays and functions correctly in the browser.",
       "action": "continue",
       "next": "problem-illustration"
     },
     {
       "stepId": "problem-illustration",
-      "mentorSays": "Have you ever needed to implement optimistic ui updates in React?\n\n**The Challenge:**\nImplement optimistic updates for todos using API: https://jsonplaceholder.typicode.com/todos\n\n**Requirements:**\n- Add todos optimistically\n- Delete todos optimistically\n- If API call fails, rollback the change\n- Show success/error notifications\n- Handle network errors gracefully\n\n**What We're Building:**\nThis challenge tests your understanding of optimistic ui updates in React. You'll need to create a React component that demonstrates these concepts effectively while following React best practices.\n\n**Why This Matters:**\nOptimistic UI Updates is a fundamental React concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in React teams\n\n**Real-World Applications:**\nTwitter uses optimistic updates to make the app feel instant. When you like a tweet, the heart turns red immediately—even before the server confirms. If the request fails, it reverts to the previous state and shows an error.\n\nThis pattern is essential for building modern, interactive web applications.",
+      "mentorSays": "**The Challenge:**\n\nImplement optimistic updates for todos using API: https://jsonplaceholder.typicode.com/todos\n\n**What to Build:**\nImplement the solution according to the requirements above.\n\n---\n\n**Need Help?** (Click to expand)\n\n**Why This Matters:**\n\nOptimistic UI Updates is a fundamental React concept that you'll use in every application. Understanding this is essential for:\n- Building production-ready React applications\n- Following React best practices and patterns\n- Writing maintainable, scalable code\n- Passing technical interviews\n- Working effectively in React teams\n\n**Real-World Examples:**\n\nTwitter uses optimistic updates to make the app feel instant. When you like a tweet, the heart turns red immediately—even before the server confirms. If the request fails, it reverts to the previous state and shows an error.\n\nThis pattern is essential for building modern, interactive web applications.",
       "example": "// Implement optimistic updates for todos:\n// API: https://jsonplaceholder.typicode.com/todos\n//\n// Requirements:\n// - Add todos optimistically\n// - Delete todos optimistically\n// - If API call fails, rollback the change\n// - Show success/error notifications\n// - Handle network errors gracefully",
       "action": "continue",
       "next": "thinking-challenge"
     },
     {
       "stepId": "thinking-challenge",
-      "mentorSays": "Now that you understand what the problem wants, here's the real question:\n\nHow would YOU solve this Optimistic UI Updates challenge?\n\nThink about it for a moment. What approach feels natural to you?",
+      "mentorSays": "**How would you like to build this component?**\n\nChoose how you want to start implementing the Optimistic UI Updates:",
       "choices": [
         {
-          "label": "I'll start with the basic approach and build up",
+          "label": "Build it step by step",
+          "description": "Write the component incrementally and run it as we go.",
           "next": "explore-approach-1"
         },
         {
-          "label": "I want to see the optimal solution directly",
+          "label": "Show me the full component first",
+          "description": "See a complete working example, then break it down.",
           "next": "explore-optimal"
         },
         {
-          "label": "I need more context about the problem",
-          "next": "problem-illustration"
+          "label": "Remind me of the basics before I start",
+          "description": "Quick recap of JSX and components, then we code.",
+          "next": "basics-recap"
         }
       ]
     },

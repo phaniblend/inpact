@@ -1,8 +1,13 @@
 import React from 'react';
 import BaseModal from './BaseModal';
 
-export default function LanguageConstructModal({ isOpen, onClose, construct, language, explainedConcepts = new Set(), onConceptExplained }) {
+export default function LanguageConstructModal({ isOpen, onClose, onNext, onPrev, construct, language, explainedConcepts = new Set(), onConceptExplained }) {
   const scrollContainerRef = React.useRef(null);
+  const [showQuestionModal, setShowQuestionModal] = React.useState(false);
+  const [question, setQuestion] = React.useState('');
+  const [answer, setAnswer] = React.useState('');
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [validationMessage, setValidationMessage] = React.useState('');
 
   // Auto-scroll to top when construct changes
   React.useLayoutEffect(() => {
@@ -98,396 +103,717 @@ export default function LanguageConstructModal({ isOpen, onClose, construct, lan
 
   const constructExplanations = {
     variables: {
-      title: 'Variables - Containers for Values',
-      context: `In programming, we often need to store values so we can reuse them. Think of variables like labeled boxes where you can put things and refer to them by name.
+      title: 'Variables',
+      realLifeExample: {
+        javascript: `Think of a variable as a labeled box where you can store something.
 
-For example, if you want to add two numbers, you don't just say "add 5 and 7" every time. Instead, you create containers called variables that can hold different numbers, making your code reusable and flexible.`,
-      syntax: {
-        javascript: `In JavaScript, we create these containers using keywords like \`let\`, \`const\`, or \`var\`:
+**Real life example:**
+
+You have a box
+You put a label on it: "My Favorite Color"
+You put something inside: "Blue"
+Later, you can look at the box and know what's inside`,
+        python: `Think of a variable as a labeled box where you can store something.
+
+**Real life example:**
+
+You have a box
+You put a label on it: "My Favorite Color"
+You put something inside: "Blue"
+Later, you can look at the box and know what's inside`,
+        java: `Think of a variable as a labeled box where you can store something.
+
+**Real life example:**
+
+You have a box
+You put a label on it: "My Favorite Color"
+You put something inside: "Blue"
+Later, you can look at the box and know what's inside`,
+        cpp: `Think of a variable as a labeled box where you can store something.
+
+**Real life example:**
+
+You have a box
+You put a label on it: "My Favorite Color"
+You put something inside: "Blue"
+Later, you can look at the box and know what's inside`,
+        typescript: `Think of a variable as a labeled box where you can store something.
+
+**Real life example:**
+
+You have a box
+You put a label on it: "My Favorite Color"
+You put something inside: "Blue"
+Later, you can look at the box and know what's inside`
+      },
+      codeExample: {
+        javascript: `\`\`\`javascript
+let myFavoriteColor = "Blue";
+\`\`\`
+
+That's it! You created a variable (box) called \`myFavoriteColor\` and put "Blue" inside it.`,
+        python: `\`\`\`python
+my_favorite_color = "Blue"
+\`\`\`
+
+That's it! You created a variable (box) called \`my_favorite_color\` and put "Blue" inside it.`,
+        java: `\`\`\`java
+String myFavoriteColor = "Blue";
+\`\`\`
+
+That's it! You created a variable (box) called \`myFavoriteColor\` and put "Blue" inside it.`,
+        cpp: `\`\`\`cpp
+string myFavoriteColor = "Blue";
+\`\`\`
+
+That's it! You created a variable (box) called \`myFavoriteColor\` and put "Blue" inside it.`,
+        typescript: `\`\`\`typescript
+let myFavoriteColor: string = "Blue";
+\`\`\`
+
+That's it! You created a variable (box) called \`myFavoriteColor\` and put "Blue" inside it.`
+      },
+      breakingDown: {
+        javascript: `**🔑 Breaking It Down**
 
 \`\`\`javascript
-let num1 = 5;  // "let" tells JavaScript: "Create a container named num1 that holds the value 5"
-let num2 = 7;  // Another container named num2 holding 7
-let sum = num1 + num2;  // We can use these containers to perform operations
-
-// The name (num1, num2) is just a label for our convenience - we could call it anything!
-let myNumber = 10;
-let price = 25.99;
+let myFavoriteColor = "Blue";
 \`\`\`
 
-- \`let\` - Creates a variable that can be changed later
-- \`const\` - Creates a variable that cannot be changed (constant)
-- \`var\` - Older way (still works, but \`let\` is preferred)`,
-        python: `In Python, we create variables simply by assigning values:
+Three parts:
+
+- \`let\` = "Hey computer, I'm making a new box!"
+- \`myFavoriteColor\` = The label/name on the box
+- \`"Blue"\` = What you're putting inside the box
+
+**💡 Note:** JavaScript also has \`const\` (for values that won't change) and \`var\` (older way). We're using \`let\` here, but you'll see \`const\` used in other algorithms when we need values that shouldn't be reassigned.`,
+        python: `**🔑 Breaking It Down**
 
 \`\`\`python
-num1 = 5  # Python automatically creates a container named num1 holding 5
-num2 = 7  # Another container named num2 holding 7
-sum = num1 + num2  # Use these containers to perform operations
-
-# The name is just a label - we could call it anything!
-my_number = 10
-price = 25.99
+my_favorite_color = "Blue"
 \`\`\`
 
-Python is smart - it figures out what type of data you're storing (number, text, etc.) automatically!`,
-        java: `In Java, we must specify the type of data the container will hold:
+Three parts:
+
+- \`my_favorite_color\` = The label/name on the box
+- \`=\` = "Put this inside the box"
+- \`"Blue"\` = What you're putting inside the box
+
+**💡 Note:** Python variables are simple - just assign with \`=\`. There's no need for keywords like \`let\` or \`const\` like in other languages. Python figures out the type automatically!`,
+        java: `**🔑 Breaking It Down**
 
 \`\`\`java
-int num1 = 5;  // "int" means integer (whole number), num1 is the container name
-int num2 = 7;  // Another integer container
-int sum = num1 + num2;  // Use containers to perform operations
-
-// Java requires you to declare the type before using the variable
-double price = 25.99;  // "double" means decimal number
-String name = "John";  // "String" means text
+String myFavoriteColor = "Blue";
 \`\`\`
 
-Java is strict - you must tell it exactly what type of data each container holds!`,
-        cpp: `In C++, we also specify the type of data:
+Three parts:
+
+- \`String\` = "This box will hold text"
+- \`myFavoriteColor\` = The label/name on the box
+- \`"Blue"\` = What you're putting inside the box`,
+        cpp: `**🔑 Breaking It Down**
 
 \`\`\`cpp
-int num1 = 5;  // "int" means integer, num1 is the container name
-int num2 = 7;  // Another integer container
-int sum = num1 + num2;  // Use containers to perform operations
-
-// C++ requires type declaration
-double price = 25.99;  // "double" for decimal numbers
-string name = "John";  // "string" for text
+string myFavoriteColor = "Blue";
 \`\`\`
 
-C++ is similar to Java - you must declare the type before using variables!`,
-        typescript: `In TypeScript, we can optionally specify types (but it's recommended):
+Three parts:
+
+- \`string\` = "This box will hold text"
+- \`myFavoriteColor\` = The label/name on the box
+- \`"Blue"\` = What you're putting inside the box`,
+        typescript: `**🔑 Breaking It Down**
 
 \`\`\`typescript
-let num1: number = 5;  // ": number" tells TypeScript this container holds numbers
-let num2: number = 7;  // Another number container
-let sum: number = num1 + num2;  // Use containers to perform operations
-
-// TypeScript can also infer types automatically
-let myNumber = 10;  // TypeScript knows this is a number
-let price = 25.99;  // TypeScript knows this is a number
+let myFavoriteColor: string = "Blue";
 \`\`\`
 
-TypeScript gives you the flexibility of JavaScript with the safety of type checking!`
+Three parts:
+
+- \`let\` = "Hey computer, I'm making a new box!"
+- \`myFavoriteColor: string\` = The label/name on the box (and it will hold text)
+- \`"Blue"\` = What you're putting inside the box`
       }
     },
     arrays: {
-      title: 'Arrays - Lists of Values',
-      context: `Sometimes you need to store multiple values together, like a shopping list or a list of scores. Arrays are like numbered shelves where each item has a position number (starting from 0).
+      title: 'Arrays',
+      realLifeExample: {
+        javascript: `Think of an array as a numbered shelf where each slot holds one item.
 
-Think of it like apartment building floors - the first floor is floor 0, second is floor 1, etc. Each "floor" can hold one value, and you access it by its number.`,
-      syntax: {
-        javascript: `In JavaScript, arrays are created with square brackets:
+**Real life example:**
+
+You have a bookshelf with 4 shelves
+Shelf 0: Math book
+Shelf 1: Science book  
+Shelf 2: History book
+Shelf 3: English book
+You can ask "What's on shelf 2?" and get "History book"`,
+        python: `Think of an array as a numbered shelf where each slot holds one item.
+
+**Real life example:**
+
+You have a bookshelf with 4 shelves
+Shelf 0: Math book
+Shelf 1: Science book  
+Shelf 2: History book
+Shelf 3: English book
+You can ask "What's on shelf 2?" and get "History book"`,
+        java: `Think of an array as a numbered shelf where each slot holds one item.
+
+**Real life example:**
+
+You have a bookshelf with 4 shelves
+Shelf 0: Math book
+Shelf 1: Science book  
+Shelf 2: History book
+Shelf 3: English book
+You can ask "What's on shelf 2?" and get "History book"`,
+        cpp: `Think of an array as a numbered shelf where each slot holds one item.
+
+**Real life example:**
+
+You have a bookshelf with 4 shelves
+Shelf 0: Math book
+Shelf 1: Science book  
+Shelf 2: History book
+Shelf 3: English book
+You can ask "What's on shelf 2?" and get "History book"`,
+        typescript: `Think of an array as a numbered shelf where each slot holds one item.
+
+**Real life example:**
+
+You have a bookshelf with 4 shelves
+Shelf 0: Math book
+Shelf 1: Science book  
+Shelf 2: History book
+Shelf 3: English book
+You can ask "What's on shelf 2?" and get "History book"`
+      },
+      codeExample: {
+        javascript: `\`\`\`javascript
+let books = ["Math", "Science", "History", "English"];
+\`\`\`
+
+That's it! You created an array (shelf) with 4 items.`,
+        python: `\`\`\`python
+books = ["Math", "Science", "History", "English"]
+\`\`\`
+
+That's it! You created an array (shelf) with 4 items.`,
+        java: `\`\`\`java
+String[] books = {"Math", "Science", "History", "English"};
+\`\`\`
+
+That's it! You created an array (shelf) with 4 items.`,
+        cpp: `\`\`\`cpp
+string books[] = {"Math", "Science", "History", "English"};
+\`\`\`
+
+That's it! You created an array (shelf) with 4 items.`,
+        typescript: `\`\`\`typescript
+let books: string[] = ["Math", "Science", "History", "English"];
+\`\`\`
+
+That's it! You created an array (shelf) with 4 items.`
+      },
+      breakingDown: {
+        javascript: `**🔑 Breaking It Down**
 
 \`\`\`javascript
-let nums = [2, 7, 11, 15];  // Create an array with 4 numbers
-
-// Access elements by their position (index) - remember, counting starts at 0!
-nums[0]  // Gets the first element: 2
-nums[1]  // Gets the second element: 7
-nums[2]  // Gets the third element: 11
-nums[3]  // Gets the fourth element: 15
-
-nums.length  // Gets how many items are in the array: 4
-
-// You can change values too
-nums[0] = 5;  // Now the first element is 5 instead of 2
+let books = ["Math", "Science", "History", "English"];
+books[0]  // Gets "Math" (first item, position 0)
+books[2]  // Gets "History" (third item, position 2)
 \`\`\`
 
-Arrays are super useful when you need to work with multiple values!`,
-        python: `In Python, arrays are called "lists" and work similarly:
+Three parts:
+
+- \`books\` = The name of your shelf
+- \`[0]\` = Which shelf number (starts at 0, not 1!)
+- \`"Math"\` = What's stored on that shelf`,
+        python: `**🔑 Breaking It Down**
 
 \`\`\`python
-nums = [2, 7, 11, 15]  # Create a list with 4 numbers
-
-# Access elements by index (position) - counting starts at 0!
-nums[0]  # Gets the first element: 2
-nums[1]  # Gets the second element: 7
-nums[2]  # Gets the third element: 11
-nums[3]  # Gets the fourth element: 15
-
-len(nums)  # Gets how many items: 4
-
-# You can change values
-nums[0] = 5  # Now first element is 5
+books = ["Math", "Science", "History", "English"]
+books[0]  # Gets "Math" (first item, position 0)
+books[2]  # Gets "History" (third item, position 2)
 \`\`\`
 
-Python lists are very flexible - you can mix different types of data too!`,
-        java: `In Java, arrays have a fixed size and must specify the type:
+Three parts:
+
+- \`books\` = The name of your shelf
+- \`[0]\` = Which shelf number (starts at 0, not 1!)
+- \`"Math"\` = What's stored on that shelf`,
+        java: `**🔑 Breaking It Down**
 
 \`\`\`java
-int[] nums = {2, 7, 11, 15};  // Create array of integers
-
-// Access by index (starts at 0)
-nums[0]  // First element: 2
-nums[1]  // Second element: 7
-nums.length  // Number of elements: 4
-
-// Change values
-nums[0] = 5;  // First element becomes 5
+String[] books = {"Math", "Science", "History", "English"};
+books[0]  // Gets "Math" (first item, position 0)
+books[2]  // Gets "History" (third item, position 2)
 \`\`\`
 
-Java arrays are efficient but have a fixed size once created!`,
-        cpp: `In C++, arrays work similarly to Java:
+Three parts:
+
+- \`books\` = The name of your shelf
+- \`[0]\` = Which shelf number (starts at 0, not 1!)
+- \`"Math"\` = What's stored on that shelf`,
+        cpp: `**🔑 Breaking It Down**
 
 \`\`\`cpp
-int nums[] = {2, 7, 11, 15};  // Create array
-// or
-vector<int> nums = {2, 7, 11, 15};  // Using vector (more flexible)
-
-// Access by index
-nums[0]  // First element: 2
-nums[1]  // Second element: 7
-
-// With vector:
-nums.size()  // Number of elements
+string books[] = {"Math", "Science", "History", "English"};
+books[0]  // Gets "Math" (first item, position 0)
+books[2]  // Gets "History" (third item, position 2)
 \`\`\`
 
-C++ gives you both fixed arrays and flexible vectors!`,
-        typescript: `In TypeScript, arrays work like JavaScript but with type safety:
+Three parts:
+
+- \`books\` = The name of your shelf
+- \`[0]\` = Which shelf number (starts at 0, not 1!)
+- \`"Math"\` = What's stored on that shelf`,
+        typescript: `**🔑 Breaking It Down**
 
 \`\`\`typescript
-let nums: number[] = [2, 7, 11, 15];  // Array of numbers
-
-// Access by index
-nums[0]  // First element: 2
-nums[1]  // Second element: 7
-nums.length  // Number of elements: 4
-
-// Change values
-nums[0] = 5;  // First element becomes 5
+let books: string[] = ["Math", "Science", "History", "English"];
+books[0]  // Gets "Math" (first item, position 0)
+books[2]  // Gets "History" (third item, position 2)
 \`\`\`
 
-TypeScript arrays are like JavaScript but with type checking!`
+Three parts:
+
+- \`books\` = The name of your shelf
+- \`[0]\` = Which shelf number (starts at 0, not 1!)
+- \`"Math"\` = What's stored on that shelf`
       }
     },
-    forLoops: {
-      title: 'For Loops - Repeating Actions',
-      context: `When you need to do something multiple times, like checking each item in a list, you use loops. Instead of writing the same code over and over, loops let you say "do this for each item" once.
+    loops: {
+      title: 'Loops',
+      realLifeExample: {
+        javascript: `Think of a loop as repeating the same action multiple times.
 
-Think of it like a teacher checking each student's homework - instead of checking student 1, then student 2, then student 3 separately, you say "for each student, check their homework" and the loop does it automatically.`,
-      syntax: {
-        javascript: `In JavaScript, for loops let you repeat code:
+**Real life example:**
 
-\`\`\`javascript
-let nums = [2, 7, 11, 15];
+You need to check homework for 5 students
+Instead of saying:
+"Check student 1's homework"
+"Check student 2's homework"
+"Check student 3's homework"
+... (5 times)
 
-// This loop says: "Start at 0, go up to nums.length, increase by 1 each time"
-for (let i = 0; i < nums.length; i++) {
-  console.log(nums[i]);  // Print each number
-  // i starts at 0, then becomes 1, then 2, then 3
-  // Each time, nums[i] gets a different value from the array
+You say: "For each student from 1 to 5, check their homework"
+The loop does it automatically!`,
+        python: `Think of a loop as repeating the same action multiple times.
+
+**Real life example:**
+
+You need to check homework for 5 students
+Instead of saying:
+"Check student 1's homework"
+"Check student 2's homework"
+"Check student 3's homework"
+... (5 times)
+
+You say: "For each student from 1 to 5, check their homework"
+The loop does it automatically!`,
+        java: `Think of a loop as repeating the same action multiple times.
+
+**Real life example:**
+
+You need to check homework for 5 students
+Instead of saying:
+"Check student 1's homework"
+"Check student 2's homework"
+"Check student 3's homework"
+... (5 times)
+
+You say: "For each student from 1 to 5, check their homework"
+The loop does it automatically!`,
+        cpp: `Think of a loop as repeating the same action multiple times.
+
+**Real life example:**
+
+You need to check homework for 5 students
+Instead of saying:
+"Check student 1's homework"
+"Check student 2's homework"
+"Check student 3's homework"
+... (5 times)
+
+You say: "For each student from 1 to 5, check their homework"
+The loop does it automatically!`,
+        typescript: `Think of a loop as repeating the same action multiple times.
+
+**Real life example:**
+
+You need to check homework for 5 students
+Instead of saying:
+"Check student 1's homework"
+"Check student 2's homework"
+"Check student 3's homework"
+... (5 times)
+
+You say: "For each student from 1 to 5, check their homework"
+The loop does it automatically!`
+      },
+      codeExample: {
+        javascript: `\`\`\`javascript
+let numbers = [2, 7, 11, 15];
+for (let i = 0; i < numbers.length; i++) {
+  console.log(numbers[i]);
 }
-
-// What happens:
-// i = 0: prints nums[0] which is 2
-// i = 1: prints nums[1] which is 7
-// i = 2: prints nums[2] which is 11
-// i = 3: prints nums[3] which is 15
-// i = 4: stops (because 4 is not < 4)
 \`\`\`
 
-Loops save you from writing the same code many times!`,
-        python: `In Python, for loops are simpler:
-
-\`\`\`python
-nums = [2, 7, 11, 15]
-
-# This loop says: "For each number in nums, do something with it"
-for num in nums:
-    print(num)  # Print each number
-    # Python automatically gives you each value, one at a time
-
-# Or if you need the index:
-for i in range(len(nums)):
-    print(nums[i])  # Access by index like JavaScript
+That's it! The loop automatically goes through each number and prints it.`,
+        python: `\`\`\`python
+numbers = [2, 7, 11, 15]
+for num in numbers:
+    print(num)
 \`\`\`
 
-Python's for loops are very readable - they read almost like English!`,
-        java: `In Java, for loops work like JavaScript:
-
-\`\`\`java
-int[] nums = {2, 7, 11, 15};
-
-// Start at 0, continue while i < nums.length, increase i by 1
-for (int i = 0; i < nums.length; i++) {
-    System.out.println(nums[i]);  // Print each number
+That's it! The loop automatically goes through each number and prints it.`,
+        java: `\`\`\`java
+int[] numbers = {2, 7, 11, 15};
+for (int i = 0; i < numbers.length; i++) {
+    System.out.println(numbers[i]);
 }
 \`\`\`
 
-Java loops are very similar to JavaScript - same pattern!`,
-        cpp: `In C++, for loops are similar:
-
-\`\`\`cpp
-int nums[] = {2, 7, 11, 15};
-
-// Same pattern: start, condition, increment
+That's it! The loop automatically goes through each number and prints it.`,
+        cpp: `\`\`\`cpp
+int numbers[] = {2, 7, 11, 15};
 for (int i = 0; i < 4; i++) {
-    cout << nums[i] << endl;  // Print each number
+    cout << numbers[i] << endl;
 }
 \`\`\`
 
-C++ loops follow the same pattern as Java and JavaScript!`,
-        typescript: `In TypeScript, for loops work exactly like JavaScript:
-
-\`\`\`typescript
-let nums: number[] = [2, 7, 11, 15];
-
-// Same pattern as JavaScript
-for (let i = 0; i < nums.length; i++) {
-    console.log(nums[i]);  // Print each number
+That's it! The loop automatically goes through each number and prints it.`,
+        typescript: `\`\`\`typescript
+let numbers: number[] = [2, 7, 11, 15];
+for (let i = 0; i < numbers.length; i++) {
+  console.log(numbers[i]);
 }
 \`\`\`
 
-TypeScript loops are identical to JavaScript!`
-      }
-    },
-    hashMaps: {
-      title: 'Hash Maps - Fast Lookups',
-      context: `Sometimes you need to quickly find information by a "key" - like looking up a phone number by someone's name. Hash maps (also called dictionaries or objects) let you store pairs: a key (like a name) and a value (like a phone number).
-
-Think of it like a real dictionary - you look up a word (key) to find its definition (value). Hash maps let you do this lookup instantly, which is much faster than searching through a list!`,
-      syntax: {
-        javascript: `In JavaScript, you can use objects \`{}\` or \`Map\`:
+That's it! The loop automatically goes through each number and prints it.`
+      },
+      breakingDown: {
+        javascript: `**🔑 Breaking It Down**
 
 \`\`\`javascript
-// Using objects (most common)
-let map = {};  // Empty container for key-value pairs
-
-map[2] = 0;  // Store: key is 2, value is 0 (like "when I see 2, remember it's at position 0")
-map[7] = 1;  // Store: key is 7, value is 1
-
-// Check if a key exists
-if (2 in map) {  // "Is 2 in our map?"
-    console.log(map[2]);  // Get the value: 0
+for (let i = 0; i < numbers.length; i++) {
+  console.log(numbers[i]);
 }
-
-// Or using Map (more features)
-let myMap = new Map();
-myMap.set(2, 0);  // Store key-value pair
-myMap.get(2);  // Get value: 0
-myMap.has(2);  // Check if exists: true
 \`\`\`
 
-Hash maps are perfect when you need to quickly find if you've seen something before!`,
-        python: `In Python, hash maps are called "dictionaries":
+Three parts:
+
+- \`let i = 0\` = Start counting at 0
+- \`i < numbers.length\` = Keep going while i is less than array size
+- \`i++\` = After each time, increase i by 1
+
+**💡 Note:** JavaScript has other loop types too! We'll use \`while\` loops, \`forEach\`, \`for...in\`, and \`for...of\` in other algorithms. For now, we're focusing on the \`for\` loop since it's perfect for this algorithm.`,
+        python: `**🔑 Breaking It Down**
 
 \`\`\`python
-# Create empty dictionary
-map = {}
-
-map[2] = 0  # Store: key 2 maps to value 0
-map[7] = 1  # Store: key 7 maps to value 1
-
-# Check if key exists
-if 2 in map:  # "Is 2 in our dictionary?"
-    print(map[2])  # Get value: 0
-
-# Or use .get() method (safer)
-value = map.get(2)  # Returns 0 if exists, None if not
+for num in numbers:
+    print(num)
 \`\`\`
 
-Python dictionaries are very intuitive and powerful!`,
-        java: `In Java, use \`HashMap\`:
+Two parts:
+
+- \`for num in numbers\` = "For each item in the list, call it 'num'"
+- \`print(num)\` = Do something with that item
+
+**💡 Note:** Python also has \`while\` loops and you can use \`enumerate()\` to get both index and value. We'll explore these in other algorithms when they're more suitable.`,
+        java: `**🔑 Breaking It Down**
 
 \`\`\`java
-import java.util.HashMap;
-
-HashMap<Integer, Integer> map = new HashMap<>();
-
-map.put(2, 0);  // Store: key 2, value 0
-map.put(7, 1);  // Store: key 7, value 1
-
-// Check if key exists
-if (map.containsKey(2)) {  // "Does map contain key 2?"
-    System.out.println(map.get(2));  // Get value: 0
+for (int i = 0; i < numbers.length; i++) {
+    System.out.println(numbers[i]);
 }
 \`\`\`
 
-Java HashMaps are type-safe and efficient!`,
-        cpp: `In C++, use \`unordered_map\`:
+Three parts:
+
+- \`int i = 0\` = Start counting at 0
+- \`i < numbers.length\` = Keep going while i is less than array size
+- \`i++\` = After each time, increase i by 1
+
+**💡 Note:** Java also has \`while\` loops, \`do-while\` loops, and enhanced \`for\` loops (for-each). We'll use these in other algorithms when they fit better.`,
+        cpp: `**🔑 Breaking It Down**
 
 \`\`\`cpp
-#include <unordered_map>
-
-unordered_map<int, int> map;
-
-map[2] = 0;  // Store: key 2, value 0
-map[7] = 1;  // Store: key 7, value 1
-
-// Check if key exists
-if (map.count(2)) {  // "Does map have key 2?"
-    cout << map[2] << endl;  // Get value: 0
+for (int i = 0; i < 4; i++) {
+    cout << numbers[i] << endl;
 }
 \`\`\`
 
-C++ unordered_maps are very fast for lookups!`,
-        typescript: `In TypeScript, use \`Map\`:
+Three parts:
+
+- \`int i = 0\` = Start counting at 0
+- \`i < 4\` = Keep going while i is less than 4
+- \`i++\` = After each time, increase i by 1
+
+**💡 Note:** C++ also has \`while\` loops, \`do-while\` loops, and range-based \`for\` loops. We'll explore these in other algorithms when they're more appropriate.`,
+        typescript: `**🔑 Breaking It Down**
 
 \`\`\`typescript
-let map = new Map<number, number>();
-
-map.set(2, 0);  // Store: key 2, value 0
-map.set(7, 1);  // Store: key 7, value 1
-
-// Check if key exists
-if (map.has(2)) {  // "Does map have key 2?"
-    console.log(map.get(2));  // Get value: 0
+for (let i = 0; i < numbers.length; i++) {
+  console.log(numbers[i]);
 }
 \`\`\`
 
-TypeScript Maps provide type safety with JavaScript flexibility!`
+Three parts:
+
+- \`let i = 0\` = Start counting at 0
+- \`i < numbers.length\` = Keep going while i is less than array size
+- \`i++\` = After each time, increase i by 1
+
+**💡 Note:** TypeScript (like JavaScript) also has \`while\` loops, \`forEach\`, \`for...in\`, and \`for...of\`. We'll use these in other algorithms when they're better suited for the task.`
+      }
+    },
+    functions: {
+      title: 'Functions',
+      realLifeExample: {
+        javascript: `Think of a function as a recipe you write once and reuse.
+
+**Real life example:**
+
+You have a recipe for making pizza
+Instead of writing the steps every time you want pizza, you write it once
+Then whenever you want pizza, you just say "make pizza" and follow the recipe
+The recipe (function) does the work for you!`,
+        python: `Think of a function as a recipe you write once and reuse.
+
+**Real life example:**
+
+You have a recipe for making pizza
+Instead of writing the steps every time you want pizza, you write it once
+Then whenever you want pizza, you just say "make pizza" and follow the recipe
+The recipe (function) does the work for you!`,
+        java: `Think of a function as a recipe you write once and reuse.
+
+**Real life example:**
+
+You have a recipe for making pizza
+Instead of writing the steps every time you want pizza, you write it once
+Then whenever you want pizza, you just say "make pizza" and follow the recipe
+The recipe (function) does the work for you!`,
+        cpp: `Think of a function as a recipe you write once and reuse.
+
+**Real life example:**
+
+You have a recipe for making pizza
+Instead of writing the steps every time you want pizza, you write it once
+Then whenever you want pizza, you just say "make pizza" and follow the recipe
+The recipe (function) does the work for you!`,
+        typescript: `Think of a function as a recipe you write once and reuse.
+
+**Real life example:**
+
+You have a recipe for making pizza
+Instead of writing the steps every time you want pizza, you write it once
+Then whenever you want pizza, you just say "make pizza" and follow the recipe
+The recipe (function) does the work for you!`
+      },
+      codeExample: {
+        javascript: `\`\`\`javascript
+function addNumbers(a, b) {
+  return a + b;
+}
+
+let result = addNumbers(5, 7);  // result is 12
+\`\`\`
+
+That's it! You created a function (recipe) that adds two numbers.`,
+        python: `\`\`\`python
+def add_numbers(a, b):
+    return a + b
+
+result = add_numbers(5, 7)  # result is 12
+\`\`\`
+
+That's it! You created a function (recipe) that adds two numbers.`,
+        java: `\`\`\`java
+public int addNumbers(int a, int b) {
+    return a + b;
+}
+
+int result = addNumbers(5, 7);  // result is 12
+\`\`\`
+
+That's it! You created a function (recipe) that adds two numbers.`,
+        cpp: `\`\`\`cpp
+int addNumbers(int a, int b) {
+    return a + b;
+}
+
+int result = addNumbers(5, 7);  // result is 12
+\`\`\`
+
+That's it! You created a function (recipe) that adds two numbers.`,
+        typescript: `\`\`\`typescript
+function addNumbers(a: number, b: number): number {
+  return a + b;
+}
+
+let result = addNumbers(5, 7);  // result is 12
+\`\`\`
+
+That's it! You created a function (recipe) that adds two numbers.`
+      },
+      breakingDown: {
+        javascript: `**🔑 Breaking It Down**
+
+\`\`\`javascript
+function addNumbers(a, b) {
+  return a + b;
+}
+\`\`\`
+
+Three parts:
+
+- \`function addNumbers\` = The name of your recipe
+- \`(a, b)\` = The ingredients you need (parameters)
+- \`return a + b\` = What the recipe produces (result)`,
+        python: `**🔑 Breaking It Down**
+
+\`\`\`python
+def add_numbers(a, b):
+    return a + b
+\`\`\`
+
+Three parts:
+
+- \`def add_numbers\` = The name of your recipe
+- \`(a, b)\` = The ingredients you need (parameters)
+- \`return a + b\` = What the recipe produces (result)`,
+        java: `**🔑 Breaking It Down**
+
+\`\`\`java
+public int addNumbers(int a, int b) {
+    return a + b;
+}
+\`\`\`
+
+Four parts:
+
+- \`public int\` = The type of result (integer)
+- \`addNumbers\` = The name of your recipe
+- \`(int a, int b)\` = The ingredients with their types
+- \`return a + b\` = What the recipe produces`,
+        cpp: `**🔑 Breaking It Down**
+
+\`\`\`cpp
+int addNumbers(int a, int b) {
+    return a + b;
+}
+\`\`\`
+
+Four parts:
+
+- \`int\` = The type of result (integer)
+- \`addNumbers\` = The name of your recipe
+- \`(int a, int b)\` = The ingredients with their types
+- \`return a + b\` = What the recipe produces`,
+        typescript: `**🔑 Breaking It Down**
+
+\`\`\`typescript
+function addNumbers(a: number, b: number): number {
+  return a + b;
+}
+\`\`\`
+
+Four parts:
+
+- \`function addNumbers\` = The name of your recipe
+- \`(a: number, b: number)\` = The ingredients with their types
+- \`: number\` = The type of result
+- \`return a + b\` = What the recipe produces`
       }
     },
     objects: {
-      title: 'Objects - Grouping Related Data',
-      context: `Objects let you group related information together. Instead of having separate variables for a person's name, age, and email, you can create one "person" object that contains all that information.
+      title: 'Objects',
+      realLifeExample: {
+        javascript: `Think of an object as a contact card that groups related information together.
 
-Think of it like a contact card - instead of having "name = John", "age = 25", "email = john@email.com" scattered around, you have one card with all the information organized together.`,
-      syntax: {
-        javascript: `In JavaScript, objects are created with curly braces:
+**Real life example:**
 
-\`\`\`javascript
-// Create an object with properties
+You have a contact card for a friend
+Instead of having separate pieces of paper:
+- Name: "John"
+- Age: 25
+- Email: "john@email.com"
+
+You have ONE card with all the information organized together
+The card (object) keeps everything related in one place!`,
+        python: `Think of an object as a contact card that groups related information together.
+
+**Real life example:**
+
+You have a contact card for a friend
+Instead of having separate pieces of paper:
+- Name: "John"
+- Age: 25
+- Email: "john@email.com"
+
+You have ONE card with all the information organized together
+The card (object) keeps everything related in one place!`,
+        java: `Think of an object as a contact card that groups related information together.
+
+**Real life example:**
+
+You have a contact card for a friend
+Instead of having separate pieces of paper:
+- Name: "John"
+- Age: 25
+- Email: "john@email.com"
+
+You have ONE card with all the information organized together
+The card (object) keeps everything related in one place!`,
+        cpp: `Think of an object as a contact card that groups related information together.
+
+**Real life example:**
+
+You have a contact card for a friend
+Instead of having separate pieces of paper:
+- Name: "John"
+- Age: 25
+- Email: "john@email.com"
+
+You have ONE card with all the information organized together
+The card (object) keeps everything related in one place!`,
+        typescript: `Think of an object as a contact card that groups related information together.
+
+**Real life example:**
+
+You have a contact card for a friend
+Instead of having separate pieces of paper:
+- Name: "John"
+- Age: 25
+- Email: "john@email.com"
+
+You have ONE card with all the information organized together
+The card (object) keeps everything related in one place!`
+      },
+      codeExample: {
+        javascript: `\`\`\`javascript
 let person = {
-    name: "John",  // Property "name" has value "John"
-    age: 25,       // Property "age" has value 25
-    email: "john@email.com"
+  name: "John",
+  age: 25,
+  email: "john@email.com"
 };
-
-// Access properties
-person.name   // Gets "John"
-person["age"] // Gets 25 (alternative syntax)
-
-// Change properties
-person.age = 26;  // Update age to 26
 \`\`\`
 
-Objects help organize related data together!`,
-        python: `In Python, dictionaries work as objects:
-
-\`\`\`python
-# Create dictionary (works like JavaScript objects)
+That's it! You created an object (contact card) with all the person's information together.`,
+        python: `\`\`\`python
 person = {
     "name": "John",
     "age": 25,
     "email": "john@email.com"
 }
-
-# Access properties
-person["name"]  # Gets "John"
-person.get("age")  # Gets 25
-
-# Change properties
-person["age"] = 26  # Update age
 \`\`\`
 
-Python dictionaries are very similar to JavaScript objects!`,
-        java: `In Java, you'd typically create a class, but for simple cases:
-
-\`\`\`java
-// Java uses classes for objects
+That's it! You created an object (contact card) with all the person's information together.`,
+        java: `\`\`\`java
 class Person {
     String name;
     int age;
@@ -499,11 +825,8 @@ person.name = "John";
 person.age = 25;
 \`\`\`
 
-Java objects are more structured with classes!`,
-        cpp: `In C++, similar to Java with classes:
-
-\`\`\`cpp
-// C++ uses classes or structs
+That's it! You created an object (contact card) with all the person's information together.`,
+        cpp: `\`\`\`cpp
 struct Person {
     string name;
     int age;
@@ -515,181 +838,89 @@ person.name = "John";
 person.age = 25;
 \`\`\`
 
-C++ objects use structs or classes!`,
-        typescript: `In TypeScript, objects have types:
-
-\`\`\`typescript
-// Define object type
+That's it! You created an object (contact card) with all the person's information together.`,
+        typescript: `\`\`\`typescript
 let person: {name: string, age: number, email: string} = {
-    name: "John",
-    age: 25,
-    email: "john@email.com"
+  name: "John",
+  age: 25,
+  email: "john@email.com"
 };
+\`\`\`
 
-// Access properties
+That's it! You created an object (contact card) with all the person's information together.`
+      },
+      breakingDown: {
+        javascript: `**🔑 Breaking It Down**
+
+\`\`\`javascript
+let person = {
+  name: "John",
+  age: 25
+};
 person.name  // Gets "John"
-person.age   // Gets 25
 \`\`\`
 
-TypeScript objects have type safety!`
-      }
-    },
-    functions: {
-      title: 'Functions - Reusable Code Blocks',
-      context: `Functions are like recipes - instead of writing the same cooking steps every time you want to make a dish, you write the recipe once and just say "make pasta" when you need it.
+Three parts:
 
-In programming, functions let you write code once and reuse it many times. Instead of copying the same code over and over, you create a function and call it whenever you need that functionality.`,
-      syntax: {
-        javascript: `In JavaScript, functions are created with \`function\`:
-
-\`\`\`javascript
-// Create a function (the recipe)
-function addNumbers(a, b) {
-    let sum = a + b;  // Do the work
-    return sum;       // Give back the result
-}
-
-// Use the function (cook the dish)
-let result = addNumbers(5, 7);  // result is now 12
-let another = addNumbers(10, 20);  // another is now 30
-
-// The function is reusable - same code, different inputs!
-\`\`\`
-
-Functions save you from repeating code!`,
-        python: `In Python, functions use \`def\`:
+- \`person\` = The name of your contact card
+- \`name\` = A property (piece of information) on the card
+- \`"John"\` = The value stored in that property`,
+        python: `**🔑 Breaking It Down**
 
 \`\`\`python
-# Create function
-def add_numbers(a, b):
-    sum = a + b  # Do the work
-    return sum   # Give back result
-
-# Use the function
-result = add_numbers(5, 7)  # result is 12
-another = add_numbers(10, 20)  # another is 30
+person = {
+    "name": "John",
+    "age": 25
+}
+person["name"]  # Gets "John"
 \`\`\`
 
-Python functions are clean and readable!`,
-        java: `In Java, functions are called "methods" and belong to classes:
+Three parts:
+
+- \`person\` = The name of your contact card
+- \`"name"\` = A property (piece of information) on the card
+- \`"John"\` = The value stored in that property`,
+        java: `**🔑 Breaking It Down**
 
 \`\`\`java
-// Methods belong to classes
-public int addNumbers(int a, int b) {
-    int sum = a + b;
-    return sum;
-}
-
-// Call the method
-int result = addNumbers(5, 7);  // result is 12
+Person person = new Person();
+person.name = "John";
+person.name  // Gets "John"
 \`\`\`
 
-Java methods are part of classes!`,
-        cpp: `In C++, functions work similarly:
+Three parts:
+
+- \`person\` = The name of your contact card
+- \`.name\` = A property (piece of information) on the card
+- \`"John"\` = The value stored in that property`,
+        cpp: `**🔑 Breaking It Down**
 
 \`\`\`cpp
-// Define function
-int addNumbers(int a, int b) {
-    int sum = a + b;
-    return sum;
-}
-
-// Call function
-int result = addNumbers(5, 7);  // result is 12
+Person person;
+person.name = "John";
+person.name  // Gets "John"
 \`\`\`
 
-C++ functions are similar to Java!`,
-        typescript: `In TypeScript, functions have types:
+Three parts:
+
+- \`person\` = The name of your contact card
+- \`.name\` = A property (piece of information) on the card
+- \`"John"\` = The value stored in that property`,
+        typescript: `**🔑 Breaking It Down**
 
 \`\`\`typescript
-// Function with types
-function addNumbers(a: number, b: number): number {
-    let sum = a + b;
-    return sum;
-}
-
-// Use function
-let result = addNumbers(5, 7);  // result is 12
+let person = {
+  name: "John",
+  age: 25
+};
+person.name  // Gets "John"
 \`\`\`
 
-TypeScript functions have type safety!`
-      }
-    },
-    functionParameters: {
-      title: 'Function Parameters - Passing Data',
-      context: `Function parameters are like the ingredients you give to a recipe. When you call a function, you pass in values (parameters) that the function will use to do its work.
+Three parts:
 
-Think of it like ordering a pizza - you tell the pizza place what toppings you want (parameters), and they use those to make your pizza (the function does its work with those values).`,
-      syntax: {
-        javascript: `In JavaScript, parameters go in parentheses:
-
-\`\`\`javascript
-// Function definition - a and b are parameters (placeholders)
-function addNumbers(a, b) {
-    return a + b;
-}
-
-// When calling, you provide actual values (arguments)
-addNumbers(5, 7);    // 5 and 7 are the arguments passed to parameters a and b
-addNumbers(10, 20);  // 10 and 20 are new arguments
-
-// Parameters are like variables that get their values when you call the function
-\`\`\`
-
-Parameters make functions flexible - same function, different inputs!`,
-        python: `In Python, parameters work the same way:
-
-\`\`\`python
-# a and b are parameters
-def add_numbers(a, b):
-    return a + b
-
-# Provide arguments when calling
-add_numbers(5, 7)    # 5 goes to a, 7 goes to b
-add_numbers(10, 20)   # 10 goes to a, 20 goes to b
-\`\`\`
-
-Python parameters are straightforward!`,
-        java: `In Java, parameters have types:
-
-\`\`\`java
-// Parameters must have types
-public int addNumbers(int a, int b) {
-    return a + b;
-}
-
-// Call with arguments
-addNumbers(5, 7);    // 5 → a, 7 → b
-addNumbers(10, 20);  // 10 → a, 20 → b
-\`\`\`
-
-Java requires you to specify parameter types!`,
-        cpp: `In C++, parameters also have types:
-
-\`\`\`cpp
-// Parameters with types
-int addNumbers(int a, int b) {
-    return a + b;
-}
-
-// Call with arguments
-addNumbers(5, 7);    // 5 → a, 7 → b
-\`\`\`
-
-C++ parameters need type declarations!`,
-        typescript: `In TypeScript, parameters have types:
-
-\`\`\`typescript
-// Parameters with types
-function addNumbers(a: number, b: number): number {
-    return a + b;
-}
-
-// Call with arguments
-addNumbers(5, 7);    // 5 → a, 7 → b
-\`\`\`
-
-TypeScript parameters are type-safe!`
+- \`person\` = The name of your contact card
+- \`name\` = A property (piece of information) on the card
+- \`"John"\` = The value stored in that property`
       }
     }
   };
@@ -697,86 +928,581 @@ TypeScript parameters are type-safe!`
   const explanation = constructExplanations[construct];
   if (!explanation) return null;
 
-  const syntax = explanation.syntax[language] || explanation.syntax.javascript;
+  // Get construct order - use the order from PracticeTutorial
+  const constructOrder = ['variables', 'arrays', 'loops', 'functions', 'objects'];
+  const currentIndex = constructOrder.indexOf(construct);
+  const isFirst = currentIndex === 0;
+  const isLast = currentIndex === constructOrder.length - 1;
+  const totalConstructs = constructOrder.length;
+
+  // Handle navigation
+  const handlePrevious = () => {
+    if (!isFirst && onPrev) {
+      onPrev();
+    }
+  };
+
+  const handleNext = () => {
+    if (!isLast && onNext) {
+      onNext();
+    } else if (isLast && onClose) {
+      // Close modal on last construct
+      onClose();
+    }
+  };
+
+  // Validate if question is about current construct
+  const validateQuestion = (questionText) => {
+    const questionLower = questionText.toLowerCase().trim();
+    
+    // Keywords for each construct (more specific to avoid false positives)
+    const constructKeywords = {
+      variables: ['variable', 'var ', 'let ', 'const ', 'declare', 'assign', 'store', 'container', 'box', 'value'],
+      arrays: ['array', 'list', 'index', 'element', 'position', 'shelf', 'bracket', 'length', 'items'],
+      loops: ['loop', 'for ', 'while ', 'iterate', 'repeat', 'each', 'iteration', 'cycle', 'through'],
+      functions: ['function', 'method', 'def ', 'call', 'invoke', 'return', 'parameter', 'argument'],
+      objects: ['object', 'property', 'key', 'dictionary', 'map', 'dot notation', 'class', 'struct']
+    };
+
+    const currentKeywords = constructKeywords[construct] || [];
+    const otherConstructs = Object.keys(constructKeywords).filter(c => c !== construct);
+    
+    // Count mentions of current vs other constructs
+    let currentMentions = 0;
+    let otherMentions = 0;
+    let detectedOtherConstruct = null;
+
+    // Check for current construct keywords
+    for (const keyword of currentKeywords) {
+      if (questionLower.includes(keyword)) {
+        currentMentions++;
+      }
+    }
+
+    // Check for other construct keywords
+    for (const otherConstruct of otherConstructs) {
+      const otherKeywords = constructKeywords[otherConstruct];
+      for (const keyword of otherKeywords) {
+        if (questionLower.includes(keyword)) {
+          otherMentions++;
+          if (!detectedOtherConstruct) {
+            detectedOtherConstruct = otherConstruct;
+          }
+        }
+      }
+    }
+
+    // If question is too short
+    if (questionLower.length < 10) {
+      return {
+        isValid: false,
+        message: 'Please ask a more specific question about the current concept.'
+      };
+    }
+
+    // If question mentions other constructs more prominently than current construct
+    if (otherMentions > currentMentions && detectedOtherConstruct) {
+      const constructNames = {
+        variables: 'variables',
+        arrays: 'arrays',
+        loops: 'loops',
+        functions: 'functions',
+        objects: 'objects'
+      };
+      
+      return {
+        isValid: false,
+        message: `While we appreciate your enthusiasm in learning, we recommend taking it slow and learning about ${constructNames[detectedOtherConstruct]} when we get to that concept. Right now, let's focus on ${constructNames[construct]}. Feel free to ask questions about ${constructNames[construct]}!`
+      };
+    }
+
+    // If question mentions other constructs but also mentions current construct, allow it
+    // (might be a comparison question which is fine)
+    if (otherMentions > 0 && currentMentions > 0) {
+      return { isValid: true, message: '' };
+    }
+
+    // If question only mentions other constructs strongly, block it
+    if (otherMentions >= 2 && currentMentions === 0 && detectedOtherConstruct) {
+      const constructNames = {
+        variables: 'variables',
+        arrays: 'arrays',
+        loops: 'loops',
+        functions: 'functions',
+        objects: 'objects'
+      };
+      
+      return {
+        isValid: false,
+        message: `While we appreciate your enthusiasm in learning, we recommend taking it slow and learning about ${constructNames[detectedOtherConstruct]} when we get to that concept. Right now, let's focus on ${constructNames[construct]}. Feel free to ask questions about ${constructNames[construct]}!`
+      };
+    }
+
+    // Otherwise, allow the question
+    return { isValid: true, message: '' };
+  };
+
+  const handleAskQuestion = async () => {
+    const trimmedQuestion = question.trim();
+    if (!trimmedQuestion) return;
+
+    // Validate question
+    const validation = validateQuestion(trimmedQuestion);
+    if (!validation.isValid) {
+      setValidationMessage(validation.message);
+      return;
+    }
+
+    setValidationMessage('');
+    setIsLoading(true);
+    setAnswer('');
+
+    try {
+      const apiUrl = import.meta.env.DEV
+        ? `/api/mentor/ask-question`
+        : `/api/mentor/ask-question`;
+
+      const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          concept: construct,
+          question: trimmedQuestion,
+          language: language || 'javascript'
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
+        console.error('API Error:', response.status, errorData);
+        throw new Error(errorData.message || `Server error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      // Handle backend response format: { success: true, answer: ... } or { success: false, message: ... }
+      if (data.success && data.answer) {
+        setAnswer(data.answer);
+      } else if (data.message) {
+        // Backend returned an error message
+        throw new Error(data.message);
+      } else {
+        throw new Error('Unexpected response format from server');
+      }
+    } catch (err) {
+      console.error('Failed to submit question:', err);
+      setAnswer(`Sorry, there was an error getting an answer: ${err.message}. Please check that the backend server is running and try again.`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleCloseQuestionModal = () => {
+    setShowQuestionModal(false);
+    setQuestion('');
+    setAnswer('');
+    setValidationMessage('');
+  };
+
+  // Check if explanation has new format (realLifeExample, codeExample, breakingDown)
+  const hasNewFormat = explanation.realLifeExample && explanation.codeExample && explanation.breakingDown;
+
+  if (hasNewFormat) {
+    // New format: Real-life example, Code example, Breaking it down
+    const realLife = explanation.realLifeExample[language] || explanation.realLifeExample.javascript;
+    const codeExample = explanation.codeExample[language] || explanation.codeExample.javascript;
+    const breakingDown = explanation.breakingDown[language] || explanation.breakingDown.javascript;
+
+    return (
+      <BaseModal ref={scrollContainerRef} isOpen={isOpen} onClose={onClose} title={`${lang.emoji} ${explanation.title} in ${lang.name}`}>
+        <div className="space-y-6 break-words">
+          {/* Real-life Example Section */}
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+            <p className="text-blue-800 whitespace-pre-line leading-relaxed break-words">
+              {realLife.split('**').map((part, i) => 
+                i % 2 === 1 ? <strong key={i} className="font-bold">{part}</strong> : part
+              )}
+            </p>
+          </div>
+
+          {/* Code Example Section */}
+          <div className="bg-gray-50 border-l-4 border-gray-400 p-4 rounded">
+            <h3 className="font-bold text-gray-900 mb-2">In programming:</h3>
+            <div className="mt-3">
+              {codeExample.split('```').map((part, idx) => {
+                if (idx % 2 === 1) {
+                  // Code block
+                  const lines = part.split('\n');
+                  const code = lines.slice(1, -1).join('\n');
+                  
+                  return (
+                    <pre key={idx} className="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm whitespace-pre-wrap break-words">
+                      <code className="whitespace-pre-wrap break-words">{code}</code>
+                    </pre>
+                  );
+                } else if (part.trim()) {
+                  // Regular text
+                  return (
+                    <p key={idx} className="text-gray-700 mb-3 leading-relaxed whitespace-pre-line break-words">
+                      {part.split('`').map((text, i) => 
+                        i % 2 === 0 ? text : <code key={i} className="bg-gray-200 px-1 rounded text-sm break-words">{text}</code>
+                      )}
+                    </p>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          </div>
+
+          {/* Breaking It Down Section */}
+          <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+            <div className="mt-3">
+              {breakingDown.split('```').map((part, idx) => {
+                if (idx % 2 === 1) {
+                  // Code block
+                  const lines = part.split('\n');
+                  const code = lines.slice(1, -1).join('\n');
+                  
+                  return (
+                    <pre key={idx} className="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm whitespace-pre-wrap break-words">
+                      <code className="whitespace-pre-wrap break-words">{code}</code>
+                    </pre>
+                  );
+                } else if (part.trim()) {
+                  // Regular text
+                  return (
+                    <p key={idx} className="text-yellow-800 mb-3 leading-relaxed whitespace-pre-line break-words">
+                      {part.split('`').map((text, i) => 
+                        i % 2 === 0 ? text : <code key={i} className="bg-yellow-100 px-1 rounded text-sm break-words">{text}</code>
+                      )}
+                    </p>
+                  );
+                }
+                return null;
+              })}
+            </div>
+          </div>
+
+          {/* Ask a Question Button */}
+          <div className="pt-4 border-t">
+            <button
+              onClick={() => setShowQuestionModal(true)}
+              className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-semibold flex items-center justify-center gap-2"
+            >
+              <span>💬</span>
+              Ask a Question About {explanation.title}
+            </button>
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between items-center pt-4 border-t">
+            <button
+              onClick={handlePrevious}
+              disabled={isFirst}
+              className={`px-6 py-2 border-2 rounded-lg font-semibold transition ${
+                isFirst 
+                  ? 'border-gray-300 text-gray-400 cursor-not-allowed' 
+                  : 'border-inpact-green text-inpact-green hover:bg-inpact-green hover:text-black'
+              }`}
+            >
+              ← Previous
+            </button>
+            <div className="text-sm text-gray-500">
+              {currentIndex + 1} of {totalConstructs}
+            </div>
+            <button
+              onClick={handleNext}
+              className="px-6 py-2 bg-inpact-green text-black font-bold rounded-lg hover:shadow-lg transition"
+            >
+              {isLast ? 'Got it! Continue →' : 'Next →'}
+            </button>
+          </div>
+        </div>
+
+        {/* Ask Question Modal */}
+        {showQuestionModal && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black bg-opacity-70">
+            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] flex flex-col overflow-hidden">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b">
+                <h2 className="text-xl font-bold text-inpact-dark">Ask a Question About {explanation.title}</h2>
+                <button
+                  onClick={handleCloseQuestionModal}
+                  className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 overflow-y-auto flex-1 space-y-4">
+                {!answer ? (
+                  <>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        What would you like to know about {construct}?
+                      </label>
+                      <textarea
+                        value={question}
+                        onChange={(e) => {
+                          setQuestion(e.target.value);
+                          setValidationMessage('');
+                        }}
+                        placeholder="Type your question here..."
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-inpact-green focus:border-transparent resize-none"
+                        rows="4"
+                        disabled={isLoading}
+                      />
+                    </div>
+
+                    {validationMessage && (
+                      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                        <p className="text-yellow-800 text-sm leading-relaxed">{validationMessage}</p>
+                      </div>
+                    )}
+
+                    <button
+                      onClick={handleAskQuestion}
+                      disabled={isLoading || !question.trim()}
+                      className="w-full px-6 py-3 bg-inpact-green text-black font-bold rounded-lg hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isLoading ? 'Asking...' : 'Ask Question'}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                      <h3 className="font-bold text-blue-900 mb-2">Your Question:</h3>
+                      <p className="text-blue-800">{question}</p>
+                    </div>
+
+                    <div className="bg-gray-50 border-l-4 border-gray-400 p-4 rounded">
+                      <h3 className="font-bold text-gray-900 mb-2">Answer:</h3>
+                      <p className="text-gray-700 whitespace-pre-line leading-relaxed">{answer}</p>
+                    </div>
+
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => {
+                          setQuestion('');
+                          setAnswer('');
+                          setValidationMessage('');
+                        }}
+                        className="flex-1 px-4 py-2 border-2 border-inpact-green text-inpact-green rounded-lg hover:bg-inpact-green hover:text-black transition font-semibold"
+                      >
+                        Ask Another Question
+                      </button>
+                      <button
+                        onClick={handleCloseQuestionModal}
+                        className="flex-1 px-4 py-2 bg-inpact-green text-black rounded-lg hover:shadow-lg transition font-semibold"
+                      >
+                        Got it, thanks!
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
+      </BaseModal>
+    );
+  }
+
+  // Fallback to old format (for backwards compatibility)
+  const syntax = explanation.syntax?.[language] || explanation.syntax?.javascript || '';
 
   return (
     <BaseModal ref={scrollContainerRef} isOpen={isOpen} onClose={onClose} title={`${lang.emoji} ${explanation.title} in ${lang.name}`}>
       <div className="space-y-6 break-words">
         {/* Context Section */}
-        <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
-          <h3 className="font-bold text-blue-900 mb-2">💡 Why do we need this?</h3>
-          <p className="text-blue-800 whitespace-pre-line leading-relaxed break-words">
-            {explanation.context}
-          </p>
-        </div>
+        {explanation.context && (
+          <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+            <h3 className="font-bold text-blue-900 mb-2">💡 Why do we need this?</h3>
+            <p className="text-blue-800 whitespace-pre-line leading-relaxed break-words">
+              {explanation.context}
+            </p>
+          </div>
+        )}
 
         {/* Syntax Section */}
-        <div className="bg-gray-50 border-l-4 border-gray-400 p-4 rounded">
-          <h3 className="font-bold text-gray-900 mb-2">📝 How to use it in {lang.name}:</h3>
-          <div className="mt-3">
-            {syntax.split('```').map((part, idx) => {
-              if (idx % 2 === 1) {
-                // Code block
-                const lines = part.split('\n');
-                const codeLang = lines[0].trim();
-                const code = lines.slice(1, -1).join('\n');
-                const newConcepts = detectNewConcepts(code, language);
-                
-                return (
-                  <div key={idx}>
-                    <pre className="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm whitespace-pre-wrap break-words">
-                      <code className="whitespace-pre-wrap break-words">{code}</code>
-                    </pre>
-                    {newConcepts.length > 0 && (
-                      <div className="mt-4 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
-                        <h4 className="font-bold text-yellow-900 mb-2">💡 New Concept Detected:</h4>
-                        {newConcepts.map((concept, cIdx) => {
-                          // Mark this concept as explained
-                          if (onConceptExplained && concept.key) {
-                            onConceptExplained(concept.key);
-                          }
-                          return (
-                            <div key={cIdx} className="mb-3 last:mb-0">
-                              <p className="text-yellow-800 font-semibold mb-1">
-                                <code className="bg-yellow-100 px-2 py-1 rounded text-sm">{concept.keyword}</code>
-                              </p>
-                              <p className="text-yellow-800 whitespace-pre-line leading-relaxed break-words text-sm">
-                                {concept.explanation}
-                              </p>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              } else if (part.trim()) {
-                // Regular text
-                return (
-                  <p key={idx} className="text-gray-700 mb-3 leading-relaxed whitespace-pre-line break-words">
-                    {part.split('`').map((text, i) => 
-                      i % 2 === 0 ? text : <code key={i} className="bg-gray-200 px-1 rounded text-sm break-words">{text}</code>
-                    )}
-                  </p>
-                );
-              }
-              return null;
-            })}
+        {syntax && (
+          <div className="bg-gray-50 border-l-4 border-gray-400 p-4 rounded">
+            <h3 className="font-bold text-gray-900 mb-2">📝 How to use it in {lang.name}:</h3>
+            <div className="mt-3">
+              {syntax.split('```').map((part, idx) => {
+                if (idx % 2 === 1) {
+                  // Code block
+                  const lines = part.split('\n');
+                  const codeLang = lines[0].trim();
+                  const code = lines.slice(1, -1).join('\n');
+                  const newConcepts = detectNewConcepts(code, language);
+                  
+                  return (
+                    <div key={idx}>
+                      <pre className="bg-gray-900 text-green-400 p-4 rounded overflow-x-auto text-sm whitespace-pre-wrap break-words">
+                        <code className="whitespace-pre-wrap break-words">{code}</code>
+                      </pre>
+                      {newConcepts.length > 0 && (
+                        <div className="mt-4 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded">
+                          <h4 className="font-bold text-yellow-900 mb-2">💡 New Concept Detected:</h4>
+                          {newConcepts.map((concept, cIdx) => {
+                            if (onConceptExplained && concept.key) {
+                              onConceptExplained(concept.key);
+                            }
+                            return (
+                              <div key={cIdx} className="mb-3 last:mb-0">
+                                <p className="text-yellow-800 font-semibold mb-1">
+                                  <code className="bg-yellow-100 px-2 py-1 rounded text-sm">{concept.keyword}</code>
+                                </p>
+                                <p className="text-yellow-800 whitespace-pre-line leading-relaxed break-words text-sm">
+                                  {concept.explanation}
+                                </p>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  );
+                } else if (part.trim()) {
+                  // Regular text
+                  return (
+                    <p key={idx} className="text-gray-700 mb-3 leading-relaxed whitespace-pre-line break-words">
+                      {part.split('`').map((text, i) => 
+                        i % 2 === 0 ? text : <code key={i} className="bg-gray-200 px-1 rounded text-sm break-words">{text}</code>
+                      )}
+                    </p>
+                  );
+                }
+                return null;
+              })}
+            </div>
           </div>
+        )}
+
+        {/* Ask a Question Button */}
+        <div className="pt-4 border-t">
+          <button
+            onClick={() => setShowQuestionModal(true)}
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition font-semibold flex items-center justify-center gap-2"
+          >
+            <span>💬</span>
+            Ask a Question About {explanation.title}
+          </button>
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between pt-4 border-t">
+        <div className="flex justify-between items-center pt-4 border-t">
+          <button
+            onClick={handlePrevious}
+            disabled={isFirst}
+            className={`px-6 py-2 border-2 rounded-lg font-semibold transition ${
+              isFirst 
+                ? 'border-gray-300 text-gray-400 cursor-not-allowed' 
+                : 'border-inpact-green text-inpact-green hover:bg-inpact-green hover:text-black'
+            }`}
+          >
+            ← Previous
+          </button>
           <div className="text-sm text-gray-500">
-            {['variables', 'arrays', 'forLoops', 'hashMaps', 'objects', 'functions', 'functionParameters'].indexOf(construct) + 1} of 7
+            {currentIndex + 1} of {totalConstructs}
           </div>
           <button
-            onClick={onClose}
+            onClick={handleNext}
             className="px-6 py-2 bg-inpact-green text-black font-bold rounded-lg hover:shadow-lg transition"
           >
-            {construct === 'functionParameters' ? 'Got it! Continue →' : 'Next →'}
+            {isLast ? 'Got it! Continue →' : 'Next →'}
           </button>
         </div>
+
+        {/* Ask Question Modal */}
+        {showQuestionModal && (
+          <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black bg-opacity-70">
+            <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full mx-4 max-h-[80vh] flex flex-col overflow-hidden">
+              {/* Header */}
+              <div className="flex items-center justify-between p-6 border-b">
+                <h2 className="text-xl font-bold text-inpact-dark">Ask a Question About {explanation.title}</h2>
+                <button
+                  onClick={handleCloseQuestionModal}
+                  className="text-gray-400 hover:text-gray-600 text-2xl font-bold"
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 overflow-y-auto flex-1 space-y-4">
+                {!answer ? (
+                  <>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        What would you like to know about {construct}?
+                      </label>
+                      <textarea
+                        value={question}
+                        onChange={(e) => {
+                          setQuestion(e.target.value);
+                          setValidationMessage('');
+                        }}
+                        placeholder="Type your question here..."
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-inpact-green focus:border-transparent resize-none"
+                        rows="4"
+                        disabled={isLoading}
+                      />
+                    </div>
+
+                    {validationMessage && (
+                      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded">
+                        <p className="text-yellow-800 text-sm leading-relaxed">{validationMessage}</p>
+                      </div>
+                    )}
+
+                    <button
+                      onClick={handleAskQuestion}
+                      disabled={isLoading || !question.trim()}
+                      className="w-full px-6 py-3 bg-inpact-green text-black font-bold rounded-lg hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed"
+                    >
+                      {isLoading ? 'Asking...' : 'Ask Question'}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded">
+                      <h3 className="font-bold text-blue-900 mb-2">Your Question:</h3>
+                      <p className="text-blue-800">{question}</p>
+                    </div>
+
+                    <div className="bg-gray-50 border-l-4 border-gray-400 p-4 rounded">
+                      <h3 className="font-bold text-gray-900 mb-2">Answer:</h3>
+                      <p className="text-gray-700 whitespace-pre-line leading-relaxed">{answer}</p>
+                    </div>
+
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => {
+                          setQuestion('');
+                          setAnswer('');
+                          setValidationMessage('');
+                        }}
+                        className="flex-1 px-4 py-2 border-2 border-inpact-green text-inpact-green rounded-lg hover:bg-inpact-green hover:text-black transition font-semibold"
+                      >
+                        Ask Another Question
+                      </button>
+                      <button
+                        onClick={handleCloseQuestionModal}
+                        className="flex-1 px-4 py-2 bg-inpact-green text-black rounded-lg hover:shadow-lg transition font-semibold"
+                      >
+                        Got it, thanks!
+                      </button>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </BaseModal>
   );

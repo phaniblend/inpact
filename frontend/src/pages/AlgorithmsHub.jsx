@@ -23,7 +23,7 @@ export default function AlgorithmsHub() {
         // Try to use proxy first, fallback to direct URL
         const apiUrl = import.meta.env.DEV 
           ? '/api/lessons/algorithms'  // Use Vite proxy in development
-          : 'http://localhost:3001/api/lessons/algorithms';  // Direct URL in production
+          : '/api/lessons/algorithms';  // Relative path works in both dev and production
         const response = await fetch(apiUrl);
         console.log('Response status:', response.status);
         

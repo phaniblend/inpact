@@ -61,10 +61,8 @@ export default function PracticeTutorial() {
     const loadLesson = async () => {
       try {
         // Fetch lesson from API
-        // Try to use proxy first, fallback to direct URL
-        const apiUrl = import.meta.env.DEV
-          ? `/api/lessons/algorithms/${slug}`  // Use Vite proxy in development
-          : `http://localhost:3001/api/lessons/algorithms/${slug}`;  // Direct URL in production
+        // Use relative path - works in both dev (Vite proxy) and production (same origin)
+        const apiUrl = `/api/lessons/algorithms/${slug}`;
         const response = await fetch(apiUrl);
         if (!response.ok) {
           throw new Error('Lesson not found');
@@ -216,14 +214,15 @@ export default function PracticeTutorial() {
     if (nextStepId.includes('-ts')) setSelectedLanguage('typescript');
     
     // Check if this is a "teach language constructs" step
-    // Note: We now show it as a regular step with explanation, not a modal
-    // The modal is only for detailed construct-by-construct teaching
+    // Show modal with construct-by-construct explanations
     if (nextStepId.includes('teach-language-constructs-')) {
-      // Navigate to the teach step normally
-      // If we want to show modal instead, uncomment below:
-      // setCurrentConstruct('variables');
-      // setShowConstructModal(true);
-      // return;
+      // Extract language from step ID
+      const lang = nextStepId.replace('teach-language-constructs-', '');
+      setSelectedLanguage(lang);
+      // Start with first construct
+      setCurrentConstruct('variables');
+      setShowConstructModal(true);
+      return; // Don't navigate to the step, show modal instead
     }
     
     setCurrentStepId(nextStepId);
@@ -237,29 +236,50 @@ export default function PracticeTutorial() {
   };
 
   // Handle construct modal navigation
+  const constructs = ['variables', 'arrays', 'loops', 'functions', 'objects'];
+  
   const handleConstructNext = () => {
-    const constructs = ['variables', 'arrays', 'forLoops', 'hashMaps', 'objects', 'functions', 'functionParameters'];
     const currentIndex = constructs.indexOf(currentConstruct);
     
     if (currentIndex < constructs.length - 1) {
-      // Show next construct - scroll will be handled by useEffect in modal
+      // Show next construct
       setCurrentConstruct(constructs[currentIndex + 1]);
     } else {
-      // All constructs shown, close modal and continue to prereq check
+      // All constructs shown, close modal and continue to problem
       setShowConstructModal(false);
-      const lang = selectedLanguage || 'javascript';
-      const langMap = {
-        'javascript': 'prereq-check-js',
-        'python': 'prereq-check-python',
-        'java': 'prereq-check-java',
-        'cpp': 'prereq-check-cpp',
-        'typescript': 'prereq-check-ts'
-      };
-      const prereqStepId = langMap[lang];
-      if (prereqStepId && lesson) {
-        setCurrentStepId(prereqStepId);
-        setVisitedSteps([...visitedSteps, prereqStepId]);
+      // Find the problem statement step to continue
+      const problemStep = lesson?.flow?.find(s => 
+        s.stepId === 'problem-statement' || 
+        s.stepId === 'lesson-start' ||
+        s.stepId.startsWith('problem')
+      ) || lesson?.flow?.[0];
+      
+      if (problemStep) {
+        setCurrentStepId(problemStep.stepId);
+        setVisitedSteps([...visitedSteps, problemStep.stepId]);
       }
+    }
+  };
+
+  const handleConstructPrev = () => {
+    const currentIndex = constructs.indexOf(currentConstruct);
+    if (currentIndex > 0) {
+      setCurrentConstruct(constructs[currentIndex - 1]);
+    }
+  };
+
+  const handleConstructModalClose = () => {
+    setShowConstructModal(false);
+    // Continue to problem statement
+    const problemStep = lesson?.flow?.find(s => 
+      s.stepId === 'problem-statement' || 
+      s.stepId === 'lesson-start' ||
+      s.stepId.startsWith('problem')
+    ) || lesson?.flow?.[0];
+    
+    if (problemStep) {
+      setCurrentStepId(problemStep.stepId);
+      setVisitedSteps([...visitedSteps, problemStep.stepId]);
     }
   };
 
@@ -587,7 +607,9 @@ export default function PracticeTutorial() {
       {/* Language Construct Modal */}
       <LanguageConstructModal
         isOpen={showConstructModal}
-        onClose={handleConstructNext}
+        onClose={handleConstructModalClose}
+        onNext={handleConstructNext}
+        onPrev={handleConstructPrev}
         construct={currentConstruct}
         language={selectedLanguage || 'javascript'}
         explainedConcepts={explainedConcepts}
