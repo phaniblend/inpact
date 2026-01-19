@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Objectives Generator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Lesson Objectives Generator</h1>
+        <p class="subtitle">Discover what you'll learn by building coding projects</p>
+        
+        <form id="objectivesForm">
+            <div class="form-group">
+                <label for="task">Coding Task</label>
+                <input 
+                    type="text" 
+                    id="task" 
+                    placeholder="e.g., build a login form, create a todo app"
+                    required
+                >
+            </div>
+            
+            <div class="form-group">
+                <label for="tech">Technology/Framework</label>
+                <input 
+                    type="text" 
+                    id="tech" 
+                    placeholder="e.g., React, Vue, vanilla JavaScript"
+                    required
+                >
+            </div>
+            
+            <button type="submit" id="submitBtn">Generate Learning Objectives</button>
+        </form>
+        
+        <div id="loading" class="loading hidden">
+            <div class="spinner"></div>
+            <p>Generating objectives...</p>
+        </div>
+        
+        <div id="results" class="results hidden">
+            <h2>Learning Objectives</h2>
+            <div id="objectivesContent"></div>
+        </div>
+        
+        <div id="error" class="error hidden"></div>
+    </div>
+    
+    <script src="/js/app.js"></script>
+</body>
+</html>
